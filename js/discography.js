@@ -1,7 +1,7 @@
 const API_URL =
-"https://SCRIPT_URL_KAMU/exec";
+"https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec";
 
-fetch(API_URL)
+fetch(https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec)
 .then(res=>res.json())
 .then(data=>{
 
