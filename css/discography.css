@@ -1,11 +1,12 @@
 /* ================= TITLE ================= */
 
 .dscr-title{
-  font-size:28px;
+  font-size:26px;
   font-weight:700;
   color:#243634;
   padding:0 20px 0;
   margin-bottom:20px !important;
+  margin-top:10px;
   text-align:center;
   display:flex;
 }
