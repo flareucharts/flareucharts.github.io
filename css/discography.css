@@ -49,6 +49,8 @@
   border-radius:12px;
   box-shadow:0 4px 12px rgba(0,0,0,.08);
   margin-bottom:8px;
+  border:1px solid rgba(0,0,0,0.10);
+  backdrop-filter:blur(10px);
 }
 
 /* ================= INFO ================= */
