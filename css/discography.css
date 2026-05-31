@@ -1,6 +1,4 @@
-#home .desktop-layout{
-  padding:0;
-}
+
 
 /* ================= TITLE ================= */
 
@@ -8,26 +6,24 @@
   font-size:28px;
   font-weight:700;
   color:#243634;
+  padding:0 20px;
   margin-bottom:20px !important;
 }
 
 /* ================= GRID ================= */
 
 .discography-grid{
-  display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:18px 14px;
 }
 
-/* TABLET */
-
+/* tablet */
 @media (min-width:768px){
   .discography-grid{
     grid-template-columns:repeat(3,1fr);
   }
 }
 
-/* DESKTOP */
+/* desktop */
 @media (min-width:1024px){
   .discography-grid{
     grid-template-columns:repeat(4,1fr);
