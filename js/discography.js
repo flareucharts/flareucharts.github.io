@@ -1,25 +1,36 @@
-fetch(API_URL)
-.then(res => res.json())
-.then(data => {
+const API_URL =
+"https://SCRIPT_URL_KAMU/exec";
 
-  const albums = data.discography
-    .sort((a,b)=>
+fetch(API_URL)
+.then(res=>res.json())
+.then(data=>{
+
+  const container =
+    document.getElementById(
+      "discography"
+    );
+
+  const albums =
+    data.discography.sort(
+      (a,b)=>
       new Date(b.releaseDate) -
       new Date(a.releaseDate)
     );
 
-  const container =
-    document.getElementById("discography");
-
   container.innerHTML = "";
 
-  albums.forEach(album => {
+  albums.forEach(album=>{
 
     container.innerHTML += `
       <div class="album-card">
-        <img src="${album.cover}">
+
+        <img
+          src="/images/albums/${album.cover}"
+          alt="${album.title}"
+        >
 
         <div class="album-info">
+
           <div class="album-title">
             ${album.title}
           </div>
@@ -31,9 +42,12 @@ fetch(API_URL)
           <div class="album-date">
             ${album.releaseDate.replaceAll("-",".")}
           </div>
+
         </div>
+
       </div>
     `;
+
   });
 
 });
