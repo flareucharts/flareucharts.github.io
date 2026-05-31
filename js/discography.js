@@ -1,7 +1,7 @@
 const API_URL =
 "https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec";
 
-fetch(https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec)
+fetch("https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec")
 .then(res=>res.json())
 .then(data=>{
 
@@ -25,7 +25,7 @@ fetch(https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlB
       <div class="album-card">
 
         <img
-          src="/images/albums/${album.cover}"
+          src="../images/albums/${album.cover}"
           alt="${album.title}"
         >
 
