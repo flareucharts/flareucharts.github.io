@@ -14,7 +14,7 @@
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:18px 14px;
-  padding:24 20px 30px;
+  padding:24px 20px 30px;
 }
 
 /* ================= CARD ================= */
