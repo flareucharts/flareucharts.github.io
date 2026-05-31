@@ -6,7 +6,7 @@
   font-size:28px;
   font-weight:700;
   color:#243634;
-  padding:0 0 20px;
+  padding:0 20px;
   margin-bottom:20px !important;
 }
 
@@ -14,12 +14,14 @@
 
 .discography-grid{
   grid-template-columns:repeat(2,1fr);
+  padding:0;
 }
 
 /* tablet */
 @media (min-width:768px){
   .discography-grid{
     grid-template-columns:repeat(3,1fr);
+    padding:0;
   }
 }
 
@@ -27,6 +29,7 @@
 @media (min-width:1024px){
   .discography-grid{
     grid-template-columns:repeat(4,1fr);
+  padding:0;
   }
 }
 
