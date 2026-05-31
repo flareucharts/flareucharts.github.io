@@ -1,60 +1,91 @@
-/* TITLE */
+<style>
+/* ================= TITLE ================= */
+
 .dscr-title{
   font-size:28px;
   font-weight:700;
   color:#243634;
-  margin-bottom:4px;
-  align-items:fixed;
-  display:flex;
-  position:relative;
-  padding:0px 20px 0px;
+  margin-bottom:20px;
+  padding:0 20px;
 }
 
-/* GRID */
+/* ================= GRID ================= */
+
 .discography-grid{
   display:grid;
-  grid-template-columns:
-  repeat(2,1fr);
-  gap:20px 16px;
-  padding:0px 20px 0px;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px 14px;
+  padding:0 20px 30px;
 }
 
-/* CARD */
+/* ================= CARD ================= */
+
 .album-card{
   width:100%;
 }
 
-/* IMAGE */
+/* ================= COVER ================= */
+
 .album-card img{
   width:100%;
   aspect-ratio:1/1;
-  border-radius:24px;
   object-fit:cover;
   display:block;
+
+  border-radius:12px;
+
   box-shadow:
-  0 10px 24px rgba(0,0,0,0.08);
+  0 4px 12px rgba(0,0,0,.08);
 }
 
-/* INFO */
+/* ================= INFO ================= */
+
 .album-info{
-  margin-top:10px;
+  margin-top:8px;
 }
 
-.album-info h3{
-  font-size:15px;
+/* TITLE */
+
+.album-title{
+  font-size:14px;
   font-weight:700;
   color:#243634;
+  line-height:1.35;
+
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+
+  min-height:38px;
+}
+
+/* ARTIST */
+
+.album-artist{
+  margin-top:2px;
+  font-size:12px;
+  color:#6f8682;
   line-height:1.3;
 }
 
-.album-info p{
-  margin-top:4px;
-  font-size:13px;
-  color:#708784;
+/* DATE */
+
+.album-date{
+  margin-top:2px;
+  font-size:11px;
+  color:#95aaa6;
+  line-height:1.3;
 }
 
-/* LOADING */
+/* ================= LOADING ================= */
+
 .loading{
+  grid-column:1/-1;
+  text-align:center;
+  padding:40px 0;
   font-size:14px;
   color:#4e6662;
 }
+
+</style>
