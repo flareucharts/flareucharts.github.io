@@ -1,4 +1,3 @@
-<script>
 console.log("Discography JS Loaded");
 
 const API_URL =
@@ -54,4 +53,3 @@ fetch("https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHl
   });
 
 });
-</script>
