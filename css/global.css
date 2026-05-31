@@ -510,6 +510,7 @@ width:100%;
     grid-template-columns:420px 1fr;
     gap:50px;
     align-items:flex-start;
+    outline:2px solid red;
 }
 
 .grid{
