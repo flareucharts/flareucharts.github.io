@@ -1,7 +1,7 @@
 .album-page{
   max-width:768px;
   margin:auto;
-  padding:0 16px;
+  padding:20px;
   box-sizing:border-box;
   margin-top:10px;
 }
@@ -11,12 +11,23 @@
 .back-btn{
   display:inline-block;
   margin-bottom:25px;
+  transition:
+    transform .25s cubic-bezier(.34,1.56,.64,1),
+    filter .25s ease;
 }
 
 .back-btn img{
   width:30px;
   height:30px;
   display:block;
+}
+
+.back-btn:hover{
+  filter:brightness(1.05);
+}
+
+.back-btn:active{
+  transform:scale(.95);
 }
 
 /* MOBILE */
@@ -45,12 +56,23 @@
   position:absolute;
   right:-18px;
   bottom:8px;
+  transition:
+    transform .25s cubic-bezier(.34,1.56,.64,1),
+    filter .25s ease;
 }
 
 .play-btn img{
   width:50px;
   height:50px;
   display:block;
+}
+
+.play-btn:hover{
+  filter:brightness(1.05);
+}
+
+.play-btn:active{
+  transform:scale(.95);
 }
 
 /* INFO */
@@ -219,6 +241,7 @@
   text-decoration:none;
   color:#243634;
   border-bottom:1px solid #eeeeee;
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1);
 }
 
 .platform:last-child{
@@ -236,6 +259,15 @@
   font-size:17px;
   font-weight:500;
   color:#243634;
+}
+
+.platform:hover{
+  background:#f8f8f8;
+}
+
+.platform:active{
+  transform:scale(0.98);
+  background:#f2f2f2;
 }
 
 @media (min-width:768px){
