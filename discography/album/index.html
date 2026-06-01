@@ -170,8 +170,17 @@ if(!album){
   document.getElementById("albumArtist").textContent =
     album.artist;
 
-  document.getElementById("albumVideo").src =
-    album.video;
+  function getYoutubeEmbed(url){
+  const match = url.match(
+    /(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/shorts\/|m\.youtube\.com\/watch\?v=|music\.youtube\.com\/watch\?v=)([^&?/]+)/
+  );
+  if(match){
+    return `https://www.youtube.com/embed/${match[1]}`;
+  }
+  return url;
+}
+document.getElementById("albumVideo").src =
+  getYoutubeEmbed(album.video);
 
   document.getElementById("spotifyLink").href =
     album.spotify;
