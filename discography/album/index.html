@@ -200,13 +200,13 @@ if(!album){
 
   trackList.innerHTML = "";
 
+  if(album.tracks){
   album.tracks
     .split("|")
     .forEach(track => {
-
-      trackList.innerHTML +=
-      `<li>${track}</li>`;
-
+      trackList.innerHTML += `<li>${track}</li>`;
+    });
+}
     });
 
 });
