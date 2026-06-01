@@ -647,7 +647,7 @@ false
 );
   
 function loadPage() {
-  fetch("https://script.google.com/macros/s/AKfycbw8xjMmi2QuRA4Xdst1UHmt5Yi8_SNqCqMuU7hoFcRKghUy8-g1M-AN2MlGN-DlHMP08w/exec")
+  fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec")
     .then(res => res.json())
     .then(data => {
       console.log("DATA:", data);
@@ -1354,8 +1354,49 @@ document
   });
 
 });
+
+fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec")
+  .then(res => res.json())
+  .then(data => {
+
+    const discographyScroll =
+      document.getElementById("discographyScroll");
+
+    const latestAlbums =
+      data.discography
+        .slice()
+        .reverse()
+        .slice(0,3);
+
+    discographyScroll.innerHTML = "";
+
+    latestAlbums.forEach(album=>{
+
+      discographyScroll.innerHTML += `
+        <a
+          href="./discography/album/?slug=${album.slug}"
+          class="music-card">
+
+          <img
+            src="./images/albums/${album.cover}"
+            class="music-cover">
+
+          <div class="music-title">
+            ${album.title}
+          </div>
+
+          <div class="music-sub">
+            ${album.artist}
+          </div>
+
+        </a>
+      `;
+    });
+
+  });
   
 loadPage();
+loadDiscography();
 
 </script>
 
