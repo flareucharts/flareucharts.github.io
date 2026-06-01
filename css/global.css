@@ -530,8 +530,21 @@ display:block;
 }
   
 .nav-icon{
-font-size:22px;
-line-height:1;
+  width:22px;
+  height:22px;
+  display:block;
+  margin:0 auto 4px;
+  opacity:.4;
+  transition:.25s;
+}
+
+.bottom-nav button.active .nav-icon{
+  opacity:1;
+  transform:translateY(-2px);
+}
+
+.bottom-nav button.active span{
+  color:#2f6e65;
 }
   
 .bottom-nav span{
