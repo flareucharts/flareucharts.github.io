@@ -200,10 +200,25 @@
   }
 }
 
-.listen-sheet{
-  background:#fff;
-  border-radius:20px 20px 0 0;
-  padding:30px 0;
+.play-sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-100%;
+  z-index:9999;
+  transition:.3s;
+}
+
+.play-sheet.show{
+  bottom:0;
+}
+
+.sheet-title{
+  text-align:center;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:10px;
+  color:#243634;
 }
 
 .platform{
@@ -213,13 +228,13 @@
   padding:5px 20px;
   text-decoration:none;
   color:#243634;
+  border-bottom:1px solid #eeeeee;
 }
 
 .platform img{
   width:20px;
   height:20px;
   object-fit:contain;
-  flex-shrink:0;
 }
 
 .platform span{
