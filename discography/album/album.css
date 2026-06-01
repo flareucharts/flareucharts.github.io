@@ -206,11 +206,18 @@
   right:0;
   bottom:-100%;
   z-index:9999;
-  transition:.3s;
+  transition:.3s ease;
 }
 
 .play-sheet.show{
   bottom:0;
+}
+
+.listen-sheet{
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:30px 0;
+  box-shadow:0 -4px 20px rgba(0,0,0,.08);
 }
 
 .sheet-title{
@@ -225,10 +232,14 @@
   display:flex;
   align-items:center;
   gap:16px;
-  padding:5px 20px;
+  padding:14px 20px;
   text-decoration:none;
   color:#243634;
   border-bottom:1px solid #eeeeee;
+}
+
+.platform:last-child{
+  border-bottom:none;
 }
 
 .platform img{
