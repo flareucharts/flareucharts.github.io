@@ -206,25 +206,24 @@
   right:0;
   bottom:-100%;
   z-index:9999;
-  transition:.3s ease;
-  pointer-events:none;
+  transition:.3s;
 }
 
 .play-sheet.show{
   bottom:0;
-  pointer-events:auto;
 }
 
 .listen-sheet{
-  background:#ffffff;
-  border-radius:24px 24px 0 0;
-  padding:24px 0;
-  box-shadow:0 -10px 30px rgba(0,0,0,.15);
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:30px 0;
 }
 
 .sheet-title{
   text-align:center;
-  margin-bottom:12px;
+  font-size:25px;
+  font-weight:700;
+  margin-bottom:10px;
   color:#243634;
 }
 
@@ -232,23 +231,39 @@
   display:flex;
   align-items:center;
   gap:16px;
-  padding:14px 20px;
+  padding:5px 20px;
   text-decoration:none;
   color:#243634;
   border-bottom:1px solid #eeeeee;
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1);
+}
+
+.platform:hover{
+  background:#f8f8f8;
+}
+
+.platform:active{
+  transform:scale(0.98);
+  background:#f2f2f2;
 }
 
 .platform:last-child{
   border-bottom:none;
 }
 
+.platform:hover{
+  background:#f8f8f8;
+}
+
 .platform img{
   width:20px;
   height:20px;
   object-fit:contain;
+  flex-shrink:0;
 }
 
 .platform span{
   font-size:18px;
   font-weight:500;
+  line-height:1;
 }
