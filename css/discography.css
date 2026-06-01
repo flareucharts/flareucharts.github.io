@@ -38,6 +38,15 @@
 
 /* ================= CARD ================= */
 
+.album-card,
+.album-card:visited{
+  text-decoration:none;
+  color:inherit;
+  display:block;
+  cursor:pointer;
+  transition:transform .15s ease;
+}
+
 
 /* ================= COVER ================= */
 
@@ -51,6 +60,9 @@
   margin-bottom:8px;
   border:1px solid rgba(0,0,0,0.10);
   backdrop-filter:blur(10px);
+
+.album-card:active{
+  transform:scale(.98);
 }
 
 /* ================= INFO ================= */
