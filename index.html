@@ -1362,6 +1362,8 @@ fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTN
     const discographyScroll =
       document.getElementById("discographyScroll");
 
+console.log(data.discography[0]);
+
     const latestAlbums = data.discography
   .slice()
   .sort((a, b) =>
