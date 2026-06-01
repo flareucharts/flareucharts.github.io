@@ -148,11 +148,19 @@ fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTN
 .then(data => {
 
   const album =
-    data.discography.find(
-      item => item.slug === slug
-    );
+  data.discography.find(
+    item => item.slug?.trim().toLowerCase() ===
+            slug?.trim().toLowerCase()
+  );
 
-  if(!album) return;
+console.log("URL slug:", slug);
+console.log("Discography:", data.discography);
+console.log("Album found:", album);
+
+if(!album){
+  alert("Album not found");
+  return;
+}
 
   document.getElementById("albumCover").src =
     "../images/albums/" + album.cover;
