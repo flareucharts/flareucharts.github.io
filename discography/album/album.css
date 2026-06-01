@@ -1,7 +1,7 @@
 .album-page{
-  max-width:1100px;
+  max-width:768px;
   margin:auto;
-  padding:20px;
+  padding:0;
 }
 
 /* BACK */
@@ -48,7 +48,6 @@
     transform .25s cubic-bezier(.34,1.56,.64,1),
     filter .25s ease;
 }
-
 
 .play-btn img{
   width:50px;
