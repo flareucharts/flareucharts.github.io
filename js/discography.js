@@ -1,9 +1,9 @@
 console.log("Discography JS Loaded");
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec";
+"https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec";
 
-fetch("https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec")
+fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec")
 .then(res=>res.json())
 .then(data=>{
 
