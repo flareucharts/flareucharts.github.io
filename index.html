@@ -1362,11 +1362,13 @@ fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTN
     const discographyScroll =
       document.getElementById("discographyScroll");
 
-    const latestAlbums =
-  data.discography
-    .slice()
-    .reverse()
-    .slice(0,3);
+    const latestAlbums = data.discography
+  .slice()
+  .sort((a, b) =>
+    new Date(b.release_date) -
+    new Date(a.release_date)
+  )
+  .slice(0, 3);
 
     discographyScroll.innerHTML = "";
 
