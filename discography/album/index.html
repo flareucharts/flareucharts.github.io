@@ -148,7 +148,7 @@ fetch("https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHl
 .then(data => {
 
   const album =
-    data.albumDetail.find(
+    data.discography.find(
       item => item.slug === slug
     );
 
