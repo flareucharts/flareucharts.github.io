@@ -140,5 +140,68 @@ const slug =
     window.location.search
   ).get("slug");
 
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec";
+
+fetch("https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHlBjvkXQlrsZuv7MHBOpS2TqG-rPav-ojj_p5w/exec")
+.then(res => res.json())
+.then(data => {
+
+  const album =
+    data.albumDetail.find(
+      item => item.slug === slug
+    );
+
+  if(!album) return;
+
+  document.getElementById("albumCover").src =
+    "../images/albums/" + album.cover;
+
+  document.getElementById("albumType").textContent =
+    album.albumType;
+
+  document.getElementById("albumTitle").textContent =
+    album.title;
+
+  document.getElementById("albumArtist").textContent =
+    album.artist;
+
+  document.getElementById("albumVideo").src =
+    album.video;
+
+  document.getElementById("spotifyLink").href =
+    album.spotify;
+
+  document.getElementById("appleLink").href =
+    album.apple;
+
+  document.getElementById("youtubeMusicLink").href =
+    album.youtubeMusic;
+
+  document.getElementById("melonLink").href =
+    album.melon;
+
+  document.getElementById("genieLink").href =
+    album.genie;
+
+  document.getElementById("bugsLink").href =
+    album.bugs;
+
+  const trackList =
+    document.getElementById("trackList");
+
+  trackList.innerHTML = "";
+
+  album.tracks
+    .split("|")
+    .forEach(track => {
+
+      trackList.innerHTML +=
+      `<li>${track}</li>`;
+
+    });
+
+});
+
 </script>
 </html>
