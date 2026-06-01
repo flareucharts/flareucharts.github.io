@@ -4,6 +4,9 @@
   padding:20px;
   box-sizing:border-box;
   margin-top:10px;
+  position:relative;
+  min-height:100vh;
+  transition:background .5s ease;
 }
 
 /* BACK */
