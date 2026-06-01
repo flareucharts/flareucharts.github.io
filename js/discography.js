@@ -23,32 +23,35 @@ fetch("https://script.google.com/macros/s/AKfycbwqo3c7Mq7EQjSm5eoidLyQaQ4Q5NudHl
 
   albums.forEach(album=>{
 
-    container.innerHTML += `
-      <div class="album-card">
+  container.innerHTML += `
+  <a
+    href="./album/?slug=${album.slug}"
+    class="album-card"
+  >
 
-        <img
-          src="../images/albums/${album.cover}"
-          alt="${album.title}"
-        >
+    <img
+      src="../images/albums/${album.cover}"
+      alt="${album.title}"
+    >
 
-        <div class="album-info">
+    <div class="album-info">
 
-          <div class="album-title">
-            ${album.title}
-          </div>
-
-          <div class="album-artist">
-            ${album.artist}
-          </div>
-
-          <div class="album-date">
-            ${album.releaseDate.replaceAll("-",".")}
-          </div>
-
-        </div>
-
+      <div class="album-title">
+        ${album.title}
       </div>
-    `;
+
+      <div class="album-artist">
+        ${album.artist}
+      </div>
+
+      <div class="album-date">
+        ${album.releaseDate.replaceAll("-",".")}
+      </div>
+
+    </div>
+
+  </a>
+`;
 
   });
 
