@@ -21,5 +21,126 @@
 <div class="home-content">
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Youth Error</title>
+
+</head>
+<body>
+
+<div class="album-page">
+
+  <!-- BACK -->
+
+  <a href="../discography/" class="back-btn">
+    <img src="https://cdn-icons-png.flaticon.com/512/2732/2732652.png">
+  </a>
+
+  <div class="album-layout">
+
+    <!-- LEFT -->
+    <div class="album-left">
+      <div class="cover-wrap">
+          <img id="albumCover" class="cover">
+
+        <a href="#" class="play-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/483/483054.png">
+        </a>
+      </div>
+      <div class="album-info">
+<div
+  class="album-type"
+  id="albumType">
+</div>
+<h4
+  class="album-title"
+  id="albumTitle">
+</h4>
+        <div
+  class="artist"
+  id="albumArtist">
+</div>
+      </div>
+    </div>
+<div class="section-divider">•••</div>
+    <!-- RIGHT -->
+
+    <div class="album-right">
+      <div class="tracklist">
+        <h5>Tracklist</h5>
+        <ol id="trackList"></ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-section">
+    <h6>VIDEO:</h6>
+    <div class="video-card">
+      <iframe id="albumVideo" allowfullscreen></iframe>
+    </div>
+  </div>
+<div class="play-sheet" id="playSheet">
+  <div class="listen-sheet">
+  <h3 class="sheet-title">
+    Listen on 🎧
+  </h3>
+  <a id="spotifyLink" class="platform">
+    <img src="https://i.postimg.cc/PrYKbZcy/51rtt-Y7a-9L.png" alt="Spotify">
+    <span>Spotify</span>
+  </a>
+
+  <a id="appleLink" class="platform">
+    <img src="https://i.postimg.cc/dQzJXP1K/Apple-Music-icon-svg.png" alt="Apple Music">
+    <span>Apple Music</span>
+  </a>
+
+  <a id="youtubeMusicLink" class="platform">
+    <img src="icons/youtubemusic.png" alt="YouTube Music">
+    <span>YouTube Music</span>
+  </a>
+
+  <a id="melonLink" class="platform">
+    <img src="icons/melon.png" alt="Melon">
+    <span>Melon</span>
+  </a>
+
+  <a id="genieLink" class="platform">
+    <img src="icons/genie.png" alt="Genie">
+    <span>Genie</span>
+  </a>
+
+  <a id="bugsLink" class="platform">
+    <img src="icons/bugs.png" alt="Bugs">
+    <span>Bugs</span>
+  </a>
+</div>
+</div>
+</div>
+  
+</body>
+
+<script>
+const playBtn = document.querySelector(".play-btn");
+const playSheet = document.getElementById("playSheet");
+
+playBtn.addEventListener("click", (e)=>{
+  e.preventDefault();
+  playSheet.classList.add("show");
+});
+
+document.addEventListener("click",(e)=>{
+  if(
+    !playSheet.contains(e.target) &&
+    !playBtn.contains(e.target)
+  ){
+    playSheet.classList.remove("show");
+  }
+});
+</script>
 </body>  
 </html>
