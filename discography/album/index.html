@@ -158,8 +158,43 @@ if(!album){
   return;
 }
 
-  document.getElementById("albumCover").src =
-    "../../images/albums/" + album.cover;
+  const albumCover =
+  document.getElementById("albumCover");
+
+albumCover.src =
+  "../../images/albums/" + album.cover;
+albumCover.onload = () => {
+  const canvas =
+    document.createElement("canvas");
+  const ctx =
+    canvas.getContext("2d");
+  canvas.width = 100;
+  canvas.height = 100;
+  ctx.drawImage(
+    albumCover,
+    0,0,100,100
+  );
+  const data =
+    ctx.getImageData(
+      0,0,100,100
+    ).data;
+  let r=0,g=0,b=0,count=0;
+  for(let i=0;i<data.length;i+=4){
+    r += data[i];
+    g += data[i+1];
+    b += data[i+2];
+    count++;
+  }
+  r = Math.round(r/count);
+  g = Math.round(g/count);
+  b = Math.round(b/count);
+  document.body.style.background =
+  `linear-gradient(
+    180deg,
+    rgb(${r},${g},${b}) 0%,
+    #f4fffc 100%
+  )`;
+};
 
   document.getElementById("albumType").textContent =
     album.albumType;
