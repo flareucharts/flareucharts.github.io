@@ -113,10 +113,11 @@
 </div>
 </div>
 </div>
-  
+</div>
 </body>
 
 <script>
+
 const playBtn = document.querySelector(".play-btn");
 const playSheet = document.getElementById("playSheet");
 
@@ -133,5 +134,11 @@ document.addEventListener("click",(e)=>{
     playSheet.classList.remove("show");
   }
 });
+
+const slug =
+  new URLSearchParams(
+    window.location.search
+  ).get("slug");
+
 </script>
 </html>
