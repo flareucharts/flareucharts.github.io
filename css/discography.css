@@ -38,8 +38,7 @@
 
 /* ================= CARD ================= */
 
-.album-card,
-.album-card:visited{
+.album-card{
   text-decoration:none;
   color:inherit;
   display:block;
