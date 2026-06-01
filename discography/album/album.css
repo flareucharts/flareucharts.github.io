@@ -78,9 +78,11 @@
   font-size:24px;
   font-weight:800;
   margin-bottom:5px;
+    color:#243634;
 }
 .artist{
   font-size:20px;
+    color:#6f8682;
 }
   
 .section-divider{
@@ -158,10 +160,13 @@
   }
   .tracklist{
     margin-top:0;
-    padding-top:40px;
+    padding-top:0px;
   }
   .section-divider{
     display:none;
+  }
+  .play-sheet{
+    max-width:768px;
   }
 }
 
@@ -187,7 +192,7 @@
 
 .sheet-title{
   text-align:center;
-  font-size:25px;
+  font-size:20px;
   font-weight:700;
   margin-bottom:10px;
   color:#243634;
