@@ -196,6 +196,20 @@ albumCover.onload = () => {
   )`;
 };
 
+document.documentElement.style.background =
+`linear-gradient(
+  180deg,
+  rgb(${r},${g},${b}) 0%,
+  #f4fffc 100%
+)`;
+
+document.body.style.background =
+`linear-gradient(
+  180deg,
+  rgb(${r},${g},${b}) 0%,
+  #f4fffc 100%
+)`;
+
   document.getElementById("albumType").textContent =
     album.albumType;
 
