@@ -17,13 +17,11 @@
   display:block;
 }
 
-/* DESKTOP LAYOUT */
+/* MOBILE */
 
 .album-layout{
   display:block;
 }
-
-/* COVER */
 
 .cover-wrap{
   width:50%;
@@ -40,6 +38,7 @@
 }
 
 /* PLAY BUTTON */
+
 .play-btn{
   position:absolute;
   right:-18px;
@@ -54,7 +53,7 @@
   height:50px;
   display:block;
 }
-  
+
 .play-btn:hover{
   filter:brightness(1.05);
 }
@@ -63,65 +62,80 @@
   transform:scale(.95);
 }
 
-
 /* INFO */
+
 .album-info{
-  text-align:center;
-  margin-top:15px;
+  margin-top:18px;
 }
+
 .album-type{
   font-size:15px;
-  margin-bottom:5px;
+  margin-bottom:8px;
+  color:#6f8682;
+  text-align:center;
 }
+
 .album-title{
   font-size:24px;
   font-weight:800;
   margin-bottom:5px;
-    color:#243634;
+  color:#243634;
+  text-align:center;
 }
+
 .artist{
   font-size:20px;
-    color:#6f8682;
+  color:#6f8682;
+  text-align:center;
 }
-  
+
 .section-divider{
   text-align:center;
-  margin:15px 0;
-  font-size:18px;
-  letter-spacing:8px;
+  margin:18px 0;
+  font-size:14px;
+  letter-spacing:6px;
+  color:#6f8682;
   opacity:.5;
 }
 
 /* TRACKLIST */
+
 .tracklist{
   margin-top:20px;
   background:rgba(255,255,255,.15);
   border-radius:20px;
   padding:20px;
 }
-  
+
 .tracklist h5{
   font-size:16px;
-  margin-bottom:10px;
+  font-weight:700;
+  margin-bottom:15px;
+  color:#243634;
 }
+
 .tracklist ol{
-  padding-left:20px;
+  padding-left:28px;
 }
+
 .tracklist li{
   font-size:15px;
-  margin-bottom:5px;
+  margin-bottom:8px;
+  color:#243634;
 }
 
 /* VIDEO */
 
 .video-section{
-  margin-top:25px;
+  margin-top:30px;
 }
 
 .video-section h6{
-  text-align:center;
-  font-size:20px;
-  margin-bottom:10px;
+  text-align:left;
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:12px;
+  color:#243634;
 }
 
 .video-card{
@@ -137,103 +151,51 @@
 }
 
 /* DESKTOP */
+
 @media (min-width:768px){
+
   .album-layout{
     display:flex;
     gap:60px;
     align-items:flex-start;
   }
+
   .album-left{
     flex:1;
   }
+
   .album-right{
     flex:1;
   }
+
   .cover-wrap{
     width:100%;
     max-width:340px;
     margin:0;
   }
+
   .album-info{
+    margin-top:20px;
+  }
+
+  .album-type,
+  .album-title,
+  .artist{
     text-align:left;
   }
+
   .tracklist{
     margin-top:0;
-    padding-top:0px;
   }
+
   .section-divider{
     display:none;
   }
+
   .play-sheet{
     max-width:768px;
+    margin:auto;
+    left:0;
+    right:0;
   }
-}
-
-
-.play-sheet{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:-100%;
-  z-index:9999;
-  transition:.3s;
-}
-
-.play-sheet.show{
-  bottom:0;
-}
-
-.listen-sheet{
-  background:#fff;
-  border-radius:20px 20px 0 0;
-  padding:30px 0;
-}
-
-.sheet-title{
-  text-align:center;
-  font-size:20px;
-  font-weight:700;
-  margin-bottom:10px;
-  color:#243634;
-}
-
-.platform{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:5px 20px;
-  text-decoration:none;
-  color:#243634;
-  border-bottom:1px solid #eeeeee;
-  transition:transform .12s cubic-bezier(.34,1.56,.64,1);
-}
-
-.platform:hover{
-  background:#f8f8f8;
-}
-
-.platform:active{
-  transform:scale(0.98);
-  background:#f2f2f2;
-}
-
-.platform:last-child{
-  border-bottom:none;
-}
-
-.platform:hover{
-  background:#f8f8f8;
-}
-
-.platform img{
-  width:20px;
-  height:20px;
-  object-fit:contain;
-  flex-shrink:0;
-}
-
-.platform span{
-  font-size:18px;
-  font-weight:500;
-  line-height:1;
 }
