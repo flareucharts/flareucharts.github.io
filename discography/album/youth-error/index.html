@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Youth Error</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,sans-serif;
+}
+
+body{
+  background:#9ddbd1;
+  color:#243634;
+}
+
+.album-page{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+/* BACK */
+
+.back-btn{
+  display:inline-block;
+  margin-bottom:25px;
+}
+
+.back-btn img{
+  width:30px;
+  height:30px;
+  display:block;
+}
+
+/* DESKTOP LAYOUT */
+
+.album-layout{
+  display:block;
+}
+
+/* COVER */
+
+.cover-wrap{
+  width:50%;
+  max-width:250px;
+  margin:auto;
+  position:relative;
+}
+
+.cover{
+  width:100%;
+  border-radius:10px;
+  display:block;
+  box-shadow:1px 5px 9px rgba(0,0,0,.12);
+}
+
+/* PLAY BUTTON */
+.play-btn{
+  position:absolute;
+  right:-18px;
+  bottom:8px;
+  transition:
+    transform .25s cubic-bezier(.34,1.56,.64,1),
+    filter .25s ease;
+}
+
+
+.play-btn img{
+  width:50px;
+  height:50px;
+  display:block;
+}
+  
+.play-btn:hover{
+  filter:brightness(1.05);
+}
+
+.play-btn:active{
+  transform:scale(.95);
+}
+
+
+/* INFO */
+.album-info{
+  text-align:center;
+  margin-top:15px;
+}
+.album-type{
+  font-size:15px;
+  margin-bottom:5px;
+}
+.album-title{
+  font-size:24px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+.artist{
+  font-size:20px;
+}
+  
+.section-divider{
+  text-align:center;
+  margin:15px 0;
+  font-size:18px;
+  letter-spacing:8px;
+  opacity:.5;
+}
+
+/* TRACKLIST */
+.tracklist{
+  margin-top:20px;
+  background:rgba(255,255,255,.15);
+  border-radius:20px;
+  padding:20px;
+}
+  
+.tracklist h5{
+  font-size:16px;
+  margin-bottom:10px;
+}
+.tracklist ol{
+  padding-left:20px;
+}
+.tracklist li{
+  font-size:15px;
+  margin-bottom:5px;
+}
+
+/* VIDEO */
+
+.video-section{
+  margin-top:25px;
+}
+
+.video-section h6{
+  text-align:center;
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+.video-card{
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:80px;
+}
+
+.video-card iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  border:none;
+}
+
+/* DESKTOP */
+@media (min-width:768px){
+  .album-layout{
+    display:flex;
+    gap:60px;
+    align-items:flex-start;
+  }
+  .album-left{
+    flex:1;
+  }
+  .album-right{
+    flex:1;
+  }
+  .cover-wrap{
+    width:100%;
+    max-width:340px;
+    margin:0;
+  }
+  .album-info{
+    text-align:left;
+  }
+  .tracklist{
+    margin-top:0;
+    padding-top:40px;
+  }
+  .section-divider{
+    display:none;
+  }
+}
+
+
+.play-sheet{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:-100%;
+  z-index:9999;
+  transition:.3s;
+}
+
+.play-sheet.show{
+  bottom:0;
+}
+
+.listen-sheet{
+  background:#fff;
+  border-radius:20px 20px 0 0;
+  padding:30px 0;
+}
+
+.sheet-title{
+  text-align:center;
+  font-size:25px;
+  font-weight:700;
+  margin-bottom:10px;
+  color:#243634;
+}
+
+.platform{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:5px 20px;
+  text-decoration:none;
+  color:#243634;
+  border-bottom:1px solid #eeeeee;
+  transition:transform .12s cubic-bezier(.34,1.56,.64,1);
+}
+
+.platform:hover{
+  background:#f8f8f8;
+}
+
+.platform:active{
+  transform:scale(0.98);
+  background:#f2f2f2;
+}
+
+.platform:last-child{
+  border-bottom:none;
+}
+
+.platform:hover{
+  background:#f8f8f8;
+}
+
+.platform img{
+  width:20px;
+  height:20px;
+  object-fit:contain;
+  flex-shrink:0;
+}
+
+.platform span{
+  font-size:18px;
+  font-weight:500;
+  line-height:1;
+}
+  
+  
+</style>
+</head>
+<body>
+
+<div class="album-page">
+
+  <!-- BACK -->
+
+  <a href="../discography/" class="back-btn">
+    <img src="https://cdn-icons-png.flaticon.com/512/2732/2732652.png">
+  </a>
+
+  <div class="album-layout">
+
+    <!-- LEFT -->
+    <div class="album-left">
+      <div class="cover-wrap">
+        <img
+          class="cover"
+          src="https://i.postimg.cc/Nj92WSx8/youth-error.jpg"
+          alt="Youth Error">
+        <a href="#" class="play-btn">
+          <img src="https://cdn-icons-png.flaticon.com/512/483/483054.png">
+        </a>
+      </div>
+      <div class="album-info">
+        <div class="album-type">
+          1st Mini Album • EP
+        </div>
+        <h4 class="album-title">
+          YOUTH ERROR
+        </h4>
+        <div class="artist">
+          FLARE U
+        </div>
+      </div>
+    </div>
+<div class="section-divider">•••</div>
+    <!-- RIGHT -->
+
+    <div class="album-right">
+      <div class="tracklist">
+        <h5>Tracklist</h5>
+        <ol>
+          <li>WAY 2 U</li>
+          <li>HYPER</li>
+          <li>DON'T CRY</li>
+          <li>MIRACLE</li>
+          <li>WOO-HOO</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-section">
+    <h6>VIDEO:</h6>
+    <div class="video-card">
+      <iframe
+      src="https://www.youtube.com/embed/jNQXAC9IVRw"
+      allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+<div class="play-sheet" id="playSheet">
+  <div class="listen-sheet">
+  <h3 class="sheet-title">
+    Listen on 🎧
+  </h3>
+  <a href="#" class="platform">
+    <img src="https://i.postimg.cc/PrYKbZcy/51rtt-Y7a-9L.png" alt="Spotify">
+    <span>Spotify</span>
+  </a>
+
+  <a href="#" class="platform">
+    <img src="https://i.postimg.cc/dQzJXP1K/Apple-Music-icon-svg.png" alt="Apple Music">
+    <span>Apple Music</span>
+  </a>
+
+  <a href="#" class="platform">
+    <img src="icons/youtubemusic.png" alt="YouTube Music">
+    <span>YouTube Music</span>
+  </a>
+
+  <a href="#" class="platform">
+    <img src="icons/melon.png" alt="Melon">
+    <span>Melon</span>
+  </a>
+
+  <a href="#" class="platform">
+    <img src="icons/genie.png" alt="Genie">
+    <span>Genie</span>
+  </a>
+
+  <a href="#" class="platform">
+    <img src="icons/bugs.png" alt="Bugs">
+    <span>Bugs</span>
+  </a>
+</div>
+</div>
+</div>
+  
+</body>
+
+<script>
+const playBtn = document.querySelector(".play-btn");
+const playSheet = document.getElementById("playSheet");
+
+playBtn.addEventListener("click", (e)=>{
+  e.preventDefault();
+  playSheet.classList.add("show");
+});
+
+document.addEventListener("click",(e)=>{
+  if(
+    !playSheet.contains(e.target) &&
+    !playBtn.contains(e.target)
+  ){
+    playSheet.classList.remove("show");
+  }
+});
+</script>
+</html>
