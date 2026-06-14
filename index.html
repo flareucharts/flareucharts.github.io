@@ -1410,9 +1410,10 @@ console.log(data.discography[0]);
   
 loadPage();
 
-window.onload = () => {
-  document.getElementById("splash").style.display = "none";
-};
+window.addEventListener("load", () => {
+  document.getElementById("splash").remove();
+  document.getElementById("app").style.display = "block";
+});
 
 </script>
 
