@@ -21,16 +21,25 @@ body{
 }
 
 .album-page{
-  max-width:1100px;
+  max-width:768px;
   margin:auto;
   padding:20px;
+  box-sizing:border-box;
+  margin-top:10px;
+  position:relative;
+  min-height:100vh;
+  transition:background .5s ease;
 }
 
 /* BACK */
 
 .back-btn{
   display:inline-block;
-  margin-bottom:25px;
+  margin-bottom:20px;
+  margin-top:10px;
+  transition:
+    transform .25s cubic-bezier(.34,1.56,.64,1),
+    filter .25s ease;
 }
 
 .back-btn img{
@@ -39,10 +48,38 @@ body{
   display:block;
 }
 
+/* MOBILE */
+
+.album-layout{
+  display:block;
+}
+
+.cover-wrap{
+  width:50%;
+  max-width:250px;
+  margin:auto;
+  position:relative;
+}
+
+.cover{
+  width:100%;
+  border-radius:10px;
+  display:block;
+  box-shadow:1px 5px 9px rgba(0,0,0,.12);
+}
+
 /* DESKTOP LAYOUT */
 
 .album-layout{
   display:block;
+}
+
+.back-btn:hover{
+  filter:brightness(1.05);
+}
+
+.back-btn:active{
+  transform:scale(.95);
 }
 
 /* COVER */
@@ -70,7 +107,6 @@ body{
     transform .25s cubic-bezier(.34,1.56,.64,1),
     filter .25s ease;
 }
-
 
 .play-btn img{
   width:50px;
@@ -265,8 +301,8 @@ body{
 
   <!-- BACK -->
 
-  <a href="../discography/" class="back-btn">
-    <img src="https://cdn-icons-png.flaticon.com/512/2732/2732652.png">
+  <a href="../../discography/" class="back-btn">
+    <img src="../../images//youth-error.png">
   </a>
 
   <div class="album-layout">
