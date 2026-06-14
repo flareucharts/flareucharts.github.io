@@ -1410,6 +1410,18 @@ console.log(data.discography[0]);
   
 loadPage();
 
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    splash.style.opacity = "0";
+
+    setTimeout(() => {
+      splash.remove();
+      app.style.display = "block";
+    }, 500);
+
+  }, 2000);
+});
+
 </script>
 
 
