@@ -13,7 +13,7 @@ const albums = [
     artist: "CHUEI LI YU",
     releaseDate: "2027.03.18",
     cover: "sweet-dream-jp.png"
-  }
+  }, 
 
   {
     title: "Sweet Dream",
