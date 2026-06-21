@@ -255,16 +255,16 @@ document.getElementById("albumVideo").src =
   document.getElementById("bugsLink").href =
     album.bugs;
 
-  const trackList =
-    document.getElementById("trackList");
+  const trackListEl = document.getElementById("trackList");
 
-  trackList.innerHTML = "";
+const tracks = album?.tracks || "";
 
-  if (album?.tracks) {
-  trackList.innerHTML = album.tracks
-    .split("|")
-    .map(t => `<li>${t}</li>`)
-    .join("");
+trackListEl.innerHTML = tracks
+  .split("|")
+  .map(t => t.trim())
+  .filter(t => t.length > 0)
+  .map(t => `<li>${t}</li>`)
+  .join("");
 }
 
 </script>
