@@ -1,4 +1,4 @@
-<<-----DISCOGRAPHY----->>
+<</-----DISCOGRAPHY----->>
 
 const container = document.getElementById("latest-albums");
 
