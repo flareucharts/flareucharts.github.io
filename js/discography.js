@@ -16,7 +16,8 @@ sorted.forEach(album => {
       <div class="album-info">
         <div class="album-title">${album.title}</div>
         <div class="album-artist">${album.artist}</div>
-        <div class="album-date">${album.releaseDate}</div>
+        <div class="album-date">
+          {album.releaseDate.replaceAll("-", ".")}</div>
       </div>
 
     </a>
