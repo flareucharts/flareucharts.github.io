@@ -26,7 +26,7 @@ window.ALBUMS = [
   {
     title: "Sweet Dream (Japan Edition)",
     artist: "CHUEI LI YU",
-    releaseDate: "2027-03-18",
+    releaseDate: "2026-03-18",
     cover: "sweet-dream-jp.png",
     tracklist: [
       "Flower pot"
