@@ -263,8 +263,6 @@ document.getElementById("albumVideo").src =
   if (album?.tracks) {
   trackList.innerHTML = album.tracks
     .split("|")
-    .map(t => t.trim())
-    .filter(Boolean)
     .map(t => `<li>${t}</li>`)
     .join("");
 }
