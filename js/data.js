@@ -54,7 +54,9 @@ window.discography = [
   }
 ];
 
-window.discography = window.discography.map(a => ({
-  ...a,
-  slug: makeSlug(a.title)
-}));
+window.discography = window.discography.map(a => {
+  if (!a.slug) {
+    a.slug = makeSlug(a.title);
+  }
+  return a;
+});
