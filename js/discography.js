@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const sorted = [...window.ALBUMS]
+  const sorted = [...window.discography]
     .sort((a,b) => new Date(b.releaseDate) - new Date(a.releaseDate));
 
   container.innerHTML = "";
