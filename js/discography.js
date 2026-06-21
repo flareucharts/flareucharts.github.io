@@ -1,25 +1,35 @@
 console.log("Discography JS Loaded");
 
-const container = document.getElementById("discography");
+const formatDate = (d) => d.replaceAll("-", ".");
 
-const sorted = [...ALBUMS]
-  .sort((a,b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+window.addEventListener("DOMContentLoaded", () => {
 
-container.innerHTML = "";
+  const container = document.getElementById("discography");
 
-sorted.forEach(album => {
-  container.innerHTML += `
-    <a href="./albums/${album.slug}" class="album-card">
+  if (!container) {
+    console.error("discography container not found");
+    return;
+  }
 
-      <img src="../images/albums/${album.cover}">
+  const sorted = [...window.ALBUMS]
+    .sort((a,b) => new Date(b.releaseDate) - new Date(a.releaseDate));
 
-      <div class="album-info">
-        <div class="album-title">${album.title}</div>
-        <div class="album-artist">${album.artist}</div>
-        <div class="album-date">
-          {album.releaseDate.replaceAll("-", ".")}</div>
-      </div>
+  container.innerHTML = "";
 
-    </a>
-  `;
+  sorted.forEach(album => {
+    container.innerHTML += `
+      <a href="./album/?slug=${album.slug}" class="album-card">
+
+        <img src="../images/albums/${album.cover}" alt="${album.title}">
+
+        <div class="album-info">
+          <div class="album-title">${album.title}</div>
+          <div class="album-artist">${album.artist}</div>
+          <div class="album-date">${formatDate(album.releaseDate)}</div>
+        </div>
+
+      </a>
+    `;
+  });
+
 });
