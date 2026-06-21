@@ -139,7 +139,7 @@ const slug =
   ).get("slug");
 
 const album =
-  discography.find(
+  window.discography.find(
     item => item.slug?.trim().toLowerCase() ===
             slug?.trim().toLowerCase()
   );
@@ -257,12 +257,13 @@ document.getElementById("albumVideo").src =
 
   trackList.innerHTML = "";
 
-  if(album.tracks){
-  album.tracks
+  if (album?.tracks) {
+  trackList.innerHTML = album.tracks
     .split("|")
-    .forEach(track => {
-      trackList.innerHTML += `<li>${track}</li>`;
-    });
+    .map(t => t.trim())
+    .filter(Boolean)
+    .map(t => `<li>${t}</li>`)
+    .join("");
 }
 
 </script>
