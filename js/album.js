@@ -41,7 +41,8 @@ const albums = {
   }
 };
 
-// ambil slug
+
+// ambil slug dari URL
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("slug");
 
