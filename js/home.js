@@ -16,7 +16,6 @@ top3.forEach(album => {
 
       <div class="music-title">${album.title}</div>
       <div class="music-sub">${album.artist}</div>
-      <div class="music-sub">${album.releaseDate.replaceAll("-", ".")}</div>
 
     </a>
   `;
