@@ -112,6 +112,8 @@
 </div>
 </body>
 
+<script src="../../js/data.js"></script>
+
 <script>
 
 const playBtn = document.querySelector(".play-btn");
@@ -136,27 +138,19 @@ const slug =
     window.location.search
   ).get("slug");
 
-const API_URL =
-"https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec";
-
-fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec")
-.then(res => res.json())
-.then(data => {
-
-  const album =
-  data.discography.find(
+const album =
+  discography.find(
     item => item.slug?.trim().toLowerCase() ===
             slug?.trim().toLowerCase()
   );
 
-console.log("URL slug:", slug);
-console.log("Discography:", data.discography);
-console.log("Album found:", album);
-
 if(!album){
   alert("Album not found");
-  return;
+  throw new Error("Album not found");
 }
+
+console.log("URL slug:", slug);
+console.log("Album found:", album);
 
   const albumCover =
   document.getElementById("albumCover");
@@ -268,8 +262,6 @@ document.getElementById("albumVideo").src =
       trackList.innerHTML += `<li>${track}</li>`;
     });
 }
-
-});
 
 </script>
 </html>
