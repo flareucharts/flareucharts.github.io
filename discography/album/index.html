@@ -257,17 +257,17 @@ document.getElementById("albumVideo").src =
   document.getElementById("bugsLink").href =
     album.bugs;
 
-  const trackListEl = document.getElementById("trackList");
+const trackList = document.getElementById("trackList");
 
-const tracks = album?.tracks || "";
-
-trackListEl.innerHTML = tracks
-  .split("|")
-  .map(t => t.trim())
-  .filter(t => t.length > 0)
-  .map(t => `<li>${t}</li>`)
-  .join("");
+if (typeof album?.tracks === "string") {
+  trackList.innerHTML = album.tracks
+    .split("|")
+    .map(t => t.trim())
+    .filter(Boolean)
+    .map(t => `<li>${t}</li>`)
+    .join("");
+} else {
+  trackList.innerHTML = "<li>No track data</li>";
 }
-
 </script>
 </html>
