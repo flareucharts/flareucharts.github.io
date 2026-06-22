@@ -20,7 +20,8 @@ window.discography = [
     melon: "",
     genie: "",
     bugs: "",
-    tracks: "WAY 2 U|Hyper|우니까 (Don't cry)|MIRACLE|WOO-HOO|놀이터 (Playground)"
+    tracks: "WAY 2 U|Hyper|우니까 (Don't cry)|MIRACLE|WOO-HOO|놀이터 (Playground)",
+    video: "https://youtu.be/dyxmlYXdxUs"
   },
 
   {
@@ -35,7 +36,8 @@ window.discography = [
     melon: "",
     genie: "",
     bugs: "",
-    tracks: "Flower pot"
+    tracks: "Flower pot",
+    video: "https://youtu.be/ZoI7nREAwPw"
   },
 
   {
@@ -50,7 +52,8 @@ window.discography = [
     melon: "",
     genie: "",
     bugs: "",
-    tracks: "UxYOUxU|Fresh|안녕 My Friend"
+    tracks: "UxYOUxU|Fresh|안녕 My Friend",
+    video: "https://youtu.be/HjsyPgCO5Vk"
   }
 ];
 
