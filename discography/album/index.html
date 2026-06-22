@@ -229,16 +229,23 @@ document.getElementById("home").style.background =
     album.artist;
 
   function getYoutubeEmbed(url){
+  if(!url) return "";
+
   const match = url.match(
     /(?:youtu\.be\/|youtube\.com\/watch\?v=|youtube\.com\/shorts\/|m\.youtube\.com\/watch\?v=|music\.youtube\.com\/watch\?v=)([^&?/]+)/
   );
+
   if(match){
     return `https://www.youtube.com/embed/${match[1]}`;
   }
+
   return url;
 }
-document.getElementById("albumVideo").src =
-  getYoutubeEmbed(album.video);
+
+if (album.video) {
+  document.getElementById("albumVideo").src =
+    getYoutubeEmbed(album.video);
+}
 
   document.getElementById("spotifyLink").href =
     album.spotify;
