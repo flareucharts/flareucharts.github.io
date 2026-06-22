@@ -149,18 +149,8 @@ if(!album){
   throw new Error("Album not found");
 }
 
-console.log("URL slug:", slug);
-console.log("ALBUM FULL:", album);
-console.log("TRACKS:", album.tracks);
-console.log("DISC:", window.discography);
-console.log("ALBUM:", album);
-console.log("TRACKS:", album?.tracks);
-console.log("RAW TRACKS:", album?.tracks);
-console.log("TYPE:", typeof album?.tracks);
-console.log("SLUG:", slug);
-console.log("FOUND ALBUM:", album);
-console.log(album.tracks);
-console.log(album.tracks.split("|"));
+console.log("Slug:", slug);
+console.log("Album:", album);
 
   const albumCover =
   document.getElementById("albumCover");
