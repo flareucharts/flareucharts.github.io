@@ -11,12 +11,9 @@ container.innerHTML = "";
 top3.forEach(album => {
   container.innerHTML += `
     <a href="./discography/album/index.html?slug=${album.slug}" class="music-card">
-
       <img src="./images/albums/${album.cover}" class="music-cover">
-
       <div class="music-title">${album.title}</div>
       <div class="music-sub">${album.artist}</div>
-
     </a>
   `;
 });
