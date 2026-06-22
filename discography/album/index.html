@@ -159,6 +159,8 @@ console.log("RAW TRACKS:", album?.tracks);
 console.log("TYPE:", typeof album?.tracks);
 console.log("SLUG:", slug);
 console.log("FOUND ALBUM:", album);
+console.log(album.tracks);
+console.log(album.tracks.split("|"));
 
   const albumCover =
   document.getElementById("albumCover");
@@ -271,6 +273,12 @@ const trackList =
   document.getElementById("trackList");
 alert("TRACKLIST");
 trackList.innerHTML =
-"<li>TEST 1</li><li>TEST 2</li>";
+album.tracks
+  .split("|")
+  .forEach(track => {
+    trackList.innerHTML += `
+      <li>${track.trim()}</li>
+    `;
+  });
 </script>
 </html>
