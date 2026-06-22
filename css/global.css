@@ -1,13 +1,6 @@
 /* RESET */
 html{
-  background:
-  linear-gradient(
-    180deg,
-    #91d3ca 0%,
-    #9ddbd1 35%,
-    #cceee8 70%,
-    #f4fffc 100%
-  );
+  background:#57d47d;
     -webkit-text-size-adjust:100%;
     width:100%;
     min-height:100dvh;
@@ -22,14 +15,7 @@ font-family:Inter, sans-serif;
 }
 
 body{
-  background:
-  linear-gradient(
-    180deg,
-    #91d3ca 0%,
-    #9ddbd1 35%,
-    #cceee8 70%,
-    #f4fffc 100%
-  );
+  background:#57d47d;
   width:100%;
   min-height:100dvh;
   overflow-x:hidden;
