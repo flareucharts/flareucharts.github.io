@@ -10,7 +10,7 @@ container.innerHTML = "";
 
 top3.forEach(album => {
   container.innerHTML += `
-    <a href="./albums/index.html?slug=${album.slug}" class="music-card">
+    <a href="./discography/album/index.html?slug=${album.slug}" class="music-card">
 
       <img src="./images/albums/${album.cover}" class="music-cover">
 
