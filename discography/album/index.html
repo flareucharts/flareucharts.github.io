@@ -268,17 +268,17 @@ if (album.video) {
     album.bugs;
 
 
-alert("SCRIPT START");
 const trackList =
   document.getElementById("trackList");
-alert("TRACKLIST");
-trackList.innerHTML =
-album.tracks
-  .split("|")
-  .forEach(track => {
-    trackList.innerHTML += `
-      <li>${track.trim()}</li>
-    `;
-  });
+
+trackList.innerHTML = "";
+
+console.log(album.tracks);
+
+album.tracks.split("|").forEach(track => {
+  const li = document.createElement("li");
+  li.textContent = track.trim();
+  trackList.appendChild(li);
+});
 </script>
 </html>
