@@ -12,8 +12,6 @@
   color:white;
   letter-spacing:3px;
   margin-bottom:0px;
-  background:
-    url("https://i.postimg.cc/T3HdF4ck/schedule-logo.png") center 20px / 75% auto no-repeat;
 }
   
 .calendar-nav{
@@ -33,7 +31,7 @@
     height:42px;
     border:none;
     border-radius:50%;
-    background:#ffffffee;
+    background:#ffffff;
     color:#4d8b7f;
     font-size:24px;
     font-weight:bold;
@@ -45,6 +43,7 @@
   font-weight:800;
   color:white;
   letter-spacing:2px;
+  
 }
 
 /* CALENDAR */
@@ -52,7 +51,7 @@
   position:relative;
   background:#fff;
   border-radius:0 0 26px 26px;
-  padding:0px 20px 0px;
+  padding:20px;
   box-shadow:0 10px 35px rgba(0,0,0,.08);
   margin-bottom:20px;
   margin-top:20px;
