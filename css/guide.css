@@ -1,5 +1,5 @@
 .guide-section{
-    padding:20px;
+    padding:0;
     color:#243634;
     font-size:20px;
     font-weight:700;
@@ -13,12 +13,12 @@
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:16px;
-    padding:20px;
+    padding:0;
 }
 
 .guide-card{
     border-radius:20px;
-    padding:0;
+    padding:16;
     min-height:145px;
     flex-direction:column;
     text-decoration:none;
