@@ -1,11 +1,15 @@
 .guide-section{
-    padding:20px;
+    padding:0;
 }
 
 .guide-section h2{
-    font-size:32px;
+    font-size:26px;
     font-weight:700;
     margin-bottom:20px;
+    color:#243634;
+    margin-top:5px;
+    text-align:center;
+    display:flex;
 }
 
 .guide-grid{
