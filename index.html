@@ -9,6 +9,7 @@
 
 <link rel="stylesheet" href="css/global.css">
 <link rel="stylesheet" href="css/chat.css">
+<link rel="stylesheet" href="css/guide.css">
 <link rel="stylesheet" href="css/vote.css">
 <link rel="stylesheet" href="css/schedule.css">
 
@@ -258,7 +259,28 @@ See All →</a>
   
 <!-- OTHER PAGES -->
 <div class="page" id="chart"><div class="card">Chart Page</div></div>
-<div class="page" id="guide"><div class="card">Guide Page</div></div>
+<div class="page" id="guide">
+<section class="guide-content">
+    <h1 class="page-title">Music Show Guide</h1>
+    <p class="page-subtitle">
+        Select a platform to view the guide.
+    </p>
+
+    <div class="guide-tabs">
+        <button class="guide-pill active" data-guide="mushow">Music Show</button>
+        <button class="guide-pill" data-guide="the-show">The Show</button>
+        <button class="guide-pill" data-guide="show-champ">Show Champion</button>
+        <button class="guide-pill" data-guide="emka">Mcountdown</button>
+        <button class="guide-pill" data-guide="mubank">Music Bank</button>
+        <button class="guide-pill" data-guide="mucore">Show! Music Core</button>
+        <button class="guide-pill" data-guide="inki">Inkigayo</button>
+    </div>
+
+    <div class="guide-viewer" id="guideViewer">
+        Loading...
+    </div>
+</section>
+</div>
   
 <!-- ================= VOTE PAGE ================= -->
 <div class="page" id="vote">
