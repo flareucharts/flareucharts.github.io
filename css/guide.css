@@ -18,7 +18,7 @@
 
 .guide-card{
     border-radius:20px;
-    padding:16;
+    padding:16px;
     min-height:145px;
     flex-direction:column;
     text-decoration:none;
@@ -33,6 +33,10 @@
     color:white;
     display:block;
     cursor:pointer;
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    margin-bottom:8px;
 }
 
 .guide-card:active{
