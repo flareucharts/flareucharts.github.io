@@ -15,12 +15,20 @@ font-family:Inter, sans-serif;
 }
 
 body{
-  background:#fff;
   width:100%;
   min-height:100dvh;
   overflow-x:hidden;
   margin:0;
   padding-bottom:env(safe-area-inset-bottom);
+
+  background:
+    linear-gradient(
+      180deg,
+      #91d3ca 0%,
+      #a8ddd6 15vh,
+      #dff2ef 30vh,
+      #ffffff 55vh
+    );
 }
   
 img,
