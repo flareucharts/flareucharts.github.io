@@ -1,7 +1,7 @@
 /* ================= SCHEDULE NEW ================= */
 
 .schedule-page{
-  padding:100px 20px 100px;
+  padding:0;
   min-height:100vh;
   background:
     url("https://i.postimg.cc/T3HdF4ck/schedule-logo.png") center 20px / 75% auto no-repeat;
@@ -23,7 +23,7 @@
     width:100%;
     display:flex;
     justify-content:space-between;
-    padding:0 12px;
+    padding:0;
     box-sizing:border-box;
     z-index:50;
 }
@@ -52,7 +52,7 @@
   position:relative;
   background:#fff;
   border-radius:0 0 26px 26px;
-  padding:28px 20px 24px;
+  padding:8px 0px 4px;
   box-shadow:0 10px 35px rgba(0,0,0,.08);
   margin-bottom:20px;
   margin-top:20px;
@@ -144,7 +144,7 @@ white;
 .event-header{
   background:white;
   display:inline-block;
-  padding:10px 18px;
+  padding:0 18px;
   border-radius:14px;
   font-size:14px;
   font-weight:700;
@@ -156,7 +156,7 @@ white;
   display:flex;
   align-items:flex-start;
   gap:2px;
-  padding:2px 0;
+  padding:0;
   border-bottom:1px solid #eee;
   background:none;
   box-shadow:none;
@@ -242,7 +242,7 @@ white;
   width:100%;
   background:none;
   border:none;
-  padding:8px 0;
+  padding:0;
   font-weight:700;
   font-size:16px;
   color:#444;
@@ -258,7 +258,7 @@ white;
 }
   
 .event-list{
-  padding:0px 0;
+  padding:0;
   animation:fadeIn .25s ease;
 }
 
