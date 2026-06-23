@@ -3,8 +3,6 @@
 .schedule-page{
   padding:0;
   min-height:100vh;
-  background:
-    url("https://i.postimg.cc/T3HdF4ck/schedule-logo.png") center 20px / 75% auto no-repeat;
 }
 
 .schedule-title-main{
@@ -14,6 +12,8 @@
   color:white;
   letter-spacing:3px;
   margin-bottom:0px;
+  background:
+    url("https://i.postimg.cc/T3HdF4ck/schedule-logo.png") center 20px / 75% auto no-repeat;
 }
   
 .calendar-nav{
