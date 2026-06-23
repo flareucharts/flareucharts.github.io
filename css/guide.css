@@ -3,7 +3,7 @@
     color:#243634;
     font-size:20px;
     font-weight:700;
-    margin-bottom:8px;
+    margin-bottom:20px;
     margin-top:5px;
     text-align:center;
     display:flex;
@@ -12,7 +12,7 @@
 .guide-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:16px;
+    gap:10px;
     padding:0;
 }
 
