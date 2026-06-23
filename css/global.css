@@ -372,7 +372,7 @@ display:block;
 }
   
 /* HOME CONTENT */
-.home-content{
+.global-content{
 position:relative;
 z-index:5;
 min-height:auto;
@@ -517,7 +517,7 @@ color:#e8e8e8;
     max-width:768px;
   }
   
-.home-content{
+.global-content{
 width:100%;
   max-width:768px;
   margin:0 auto;
