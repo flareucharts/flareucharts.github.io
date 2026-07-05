@@ -206,13 +206,9 @@ color:white;
   display:inline-block;
   margin-bottom:10px;
   padding:6px 12px;
-
   border-radius:999px;
-
   background:rgba(255,255,255,.22);
-
   backdrop-filter:blur(10px);
-
   font-size:11px;
   font-weight:700;
   letter-spacing:.6px;
@@ -240,10 +236,8 @@ color:white;
   border:none;
   border-radius:12px;
   padding:11px 18px;
-
   font-size:14px;
   font-weight:700;
-
   cursor:pointer;
 }
 
@@ -256,21 +250,11 @@ color:white;
   background:rgba(255,255,255,.15);
   color:white;
   border:1px solid rgba(255,255,255,.35);
-
   backdrop-filter:blur(12px);
 }
 
 .banner-btn:active{
   transform:scale(.97);
-}
-
-.banner-video,
-.banner-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 
