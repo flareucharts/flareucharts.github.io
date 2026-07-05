@@ -204,14 +204,14 @@ color:white;
   display:inline-flex;
   align-items:center;
   gap:5px;
-  margin-bottom:10px;
-  padding:4px 8px;
+  margin-bottom:12px;
+  padding:5px 10px;
   border-radius:999px;
   background:rgba(255,255,255,.18);
   backdrop-filter:blur(10px);
-  font-size:6px;
+  font-size:8px;
   font-weight:700;
-  letter-spacing:.4px;
+  letter-spacing:.5px;
 }
 
 .banner-badge .live-dot{
@@ -244,7 +244,7 @@ color:white;
 }
 
 .banner-content p{
-  font-size:8px;
+  font-size:10px;
   opacity:.92;
   margin-bottom:8px;
 }
@@ -257,8 +257,8 @@ color:white;
 .banner-btn{
   border:none;
   border-radius:12px;
-  padding:4px 8px;
-  font-size:8px;
+  padding:6px 10px;
+  font-size:10px;
   font-weight:700;
   cursor:pointer;
   transition:.2s;
