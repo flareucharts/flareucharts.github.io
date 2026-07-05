@@ -541,6 +541,20 @@ placeholder="Our idol vote / percentage (optional)">
 </div>
 
 <script>
+const video = document.getElementById("bannerVideo");
+const image = document.getElementById("bannerImage");
+
+// default: image disembunyikan kalau video jalan
+video.addEventListener("canplay", () => {
+  image.style.display = "none";
+});
+
+// kalau video error → pakai image
+video.addEventListener("error", () => {
+  video.style.display = "none";
+  image.style.display = "block";
+});
+
 
 /* NAV */
 function navigate(page, btn){
