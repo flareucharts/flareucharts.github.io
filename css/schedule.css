@@ -169,7 +169,7 @@ white;
 }
 
 .event-date-box{
-  min-width:50px;
+  min-width:72px;
   text-align:center;
 }
 
@@ -180,10 +180,11 @@ white;
 }
 
 .event-day{
-  font-size:20px;
+  font-size:18px;
   font-weight:800;
   color:#5aaea0;
   line-height:1;
+  padding-bottom:4px;
 }
 
 .event-info{
