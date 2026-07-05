@@ -605,7 +605,7 @@ height:65px;
 display:flex;
 justify-content:space-around;
 align-items:center;
-background:#91d3ca;
+background:#f3f4fa;
 backdrop-filter:blur(15px);
 border-radius:25px;
 z-index:999;
@@ -630,7 +630,7 @@ transition:.25s ease;
 }
 
 .bottom-nav button.active{
-color:#243634;
+color:#5DB7AB;
 }
 
 /* ================= DESKTOP FIX ================= */
@@ -686,6 +686,7 @@ display:block;
   margin:0 auto 4px;
   opacity:.4;
   transition:.25s;
+  color:#91D3CA;
 }
 
 .bottom-nav button.active .nav-icon{
@@ -694,11 +695,12 @@ display:block;
 }
 
 .bottom-nav button.active span{
-  color:#243634;
+  color:#5DB7AB;
 }
   
 .bottom-nav span{
 margin-top:5px;
 font-size:11px;
+color:#91D3CA;
 }
 }
