@@ -198,49 +198,28 @@ font-size:clamp(10px,1.8vw,11px);
 <!-- HOME CONTENT -->
 <div class="global-content">
 <div class="desktop-layout">
-<div class="video-card">
-<iframe src="https://www.youtube.com/embed/bHgc0kmHYTA?autoplay=1&mute=1&controls=1&loop=1&playlist=bHgc0kmHYTA"></iframe>
-  
-<div class="music-links">
 
-  <a href="https://open.spotify.com/track/4FsqRuZd7lPLSKGqy8skuS?si=9aAGCavKRzSnehZP4iLiUw" class="btn"
-   onmousedown="this.style.transform='scale(0.92)'"
-   onmouseup="this.style.transform='scale(1)'"
-   onmouseleave="this.style.transform='scale(1)'"
-   ontouchstart="this.style.transform='scale(0.92)'"
-   ontouchend="this.style.transform='scale(1)'">
-    <img src="https://cdn-icons-png.flaticon.com/512/174/174872.png">
-    <span>Spotify</span>
-    
-  </a>
+<section class="home-banner" id="latestBanner">
 
-  <a href="https://music.apple.com/id/album/way-2-u/6768207932?i=6768207933&ls" class="btn">
-    <img src="https://i.postimg.cc/dQzJXP1K/Apple-Music-icon-svg.png">
-    <span>Apple Music</span>
-  </a>
-
-  <a href="https://music.youtube.com/watch?v=iSvHBur_wTU&si=yf9D5qtuTRfAOXlG" class="btn">
-    <img src="https://i.postimg.cc/Vs3zTQ6y/unnamed-(11)-(14).png">
-    <span>YT Music</span>
-  </a>
-  
-  <a href="https://kko.to/_QCYuqTPT2" class="btn">
-    <img src="https://i.postimg.cc/GmLxnf7z/Copy-of-Votiiiing-20260411-210842-0000.png">
-    <span>Melon</span>
-  </a>
-  
-  <a href="http://genie.co.kr/ZZCPD6" class="btn">
-    <img src="https://i.postimg.cc/YCdfrxZ6/Copy-of-Votiiiing-20260411-210922-0000.png">
-    <span>Genie</span>
-  </a>
-
-  <a href="https://kko.to/_QCYuqTPT2" class="btn">
-    <img src="https://i.postimg.cc/CMWwtT1p/unnamed-(3).webp">
-    <span>Bugs</span>
-  </a>
-
-</div>
-</div>
+  <!-- VIDEO BACKGROUND -->
+  <video id="bannerVideo" class="banner-video" autoplay muted loop playsinline>
+    <source src="images/vidban.mp4" type="video/mp4">
+  </video>
+  <!-- FALLBACK IMAGE -->
+  <img id="bannerImage" class="banner-image" src="images/fallback.png" alt="Latest Release">
+  <!-- OVERLAY -->
+  <div class="banner-overlay"></div>
+  <!-- CONTENT -->
+  <div class="banner-content">
+    <span class="banner-badge">LATEST RELEASE</span>
+    <h8 id="bannerTitle">YOUTH ERROR</h8>
+    <p id="bannerSubtitle">Official MV Out Now!</p>
+    <div class="banner-buttons">
+      <button class="banner-btn primary" id="listenBtn">Listen Now</button>
+      <button class="banner-btn secondary" id="watchBtn">Watch MV</button>
+    </div>
+  </div>
+</section>
 
 <!-- PLAYLIST SECTION -->
 <div class="music-section">
