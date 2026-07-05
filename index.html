@@ -244,32 +244,29 @@ See All →</a>
 </div>
   
 <!-- OTHER PAGES -->
-<div class="page" id="chart"><div class="card">Chart Page</div></div>
+<div class="page" id="chart">
+<div class="card">Chart Page</div>
+</div>
+
 <div class="page" id="guide">
 <div class="global-content">
-<h2 class="guide-section">
-  Guide</h2>
-
+<h2 class="guide-section">Guide</h2>
   <div class="guide-grid">
-
     <a href="musicshow.html" class="guide-card">
       <span class="guide-subtitle">Watch & Support</span>
       <h3>Music Show Guide</h3>
       <div class="guide-icon">🎤</div>
     </a>
-
     <a href="streaming.html" class="guide-card">
-      <span class="guide-subtitle">Streaming Tutorial</span>
+    <span class="guide-subtitle">Streaming Tutorial</span>
       <h3>Streaming Guide</h3>
       <div class="guide-icon">🎧</div>
     </a>
-
     <a href="download.html" class="guide-card">
-      <span class="guide-subtitle">Install Apps Easily</span>
+    <span class="guide-subtitle">Easily to download</span>
       <h3>Download Guide</h3>
       <div class="guide-icon">📲</div>
     </a>
-
     <a href="voting.html" class="guide-card">
       <span class="guide-subtitle">Vote For FLARE U</span>
       <h3>Voting Guide</h3>
@@ -282,216 +279,69 @@ See All →</a>
 <!-- ================= VOTE PAGE ================= -->
 <div class="page" id="vote">
 <div class="global-content">
-  <div class="vote-page">
-    <!-- ADD VOTE BUTTON -->
-<button class="add-vote-btn" onclick="openPasswordModal()">
-  ＋
-</button>
-
-    <!-- TOP FILTER -->
-<div class="vote-top">
-  <!-- PILLS -->
-  <div class="vote-tabs">
-    <button
-      class="vote-tab active"
-      onclick="switchVoteTab('ongoing', this)">
-      Ongoing Vote</button>
-    <button
-      class="vote-tab"
-      onclick="switchVoteTab('daily', this)">
-      Daily Collection</button>
+  <div class="vote-title">
+  <h2>Vote</h2>
+  <p>Let's vote harder!!🔥🔥</p>
   </div>
 
-  <!-- ORDER -->
-  <select class="vote-order">
-    <option>
-      Early Ended
-    </option>
-    <option>
-      Last Ended
-    </option>
-    <option>
-      Widen Gap
-    </option>
-    <option>
-      Close Gap
-    </option>
-  </select>
-</div>
+<!-- Artist Filter -->
+  <div class="artist-filter">
+    <button class="artist-pill active">
+     All</button>
+    <button class="artist-pill">
+     FLARE U</button>
+    <button class="artist-pill">
+     CHUEI LI YU</button>
+    <button class="artist-pill">
+     KANG WOOJIN</button>
+  </div>
 
+<!-- Sort -->
+  <div class="vote-sort">
+    <button class="sort-btn">
+     Sort by
+    <span>↓</span></button>
+  </div>
 
-
-    <!-- ONGOING -->
-    <div class="vote-content active" id="ongoing">
-<!-- MEMBER SWIPE -->
-<div class="member-tabs">
-  <button class="member-tab active">
-    FLARE U
-  </button>
-  <button class="member-tab">
-    Chuei Li Yu
-  </button>
-  <button class="member-tab">
-    Kang Woojin
-  </button>
-
-</div>
-      <div class="vote-card"> 
-          
-    </div>
-    </div>
-<!-- PASSWORD MODAL -->
-<div class="vote-modal" id="passwordModal">
-  <div class="vote-modal-box">
-    <div class="vote-modal-title">
-      Admin Access
-    </div>
-
-    <input
-      type="password"
-      id="adminPassword"
-      placeholder="Enter password">
-
-    <div class="vote-modal-actions">
-      <button onclick="closePasswordModal()">
-        Cancel
-      </button>
-      <button onclick="checkPassword()">
-        Enter
-      </button>
+<!-- Vote List -->
+<section class="vote-list">
+<div class="vote-card">
+  <div class="vote-poster">
+    <img src="images/mama.jpg" alt="MAMA Awards">
+    <span class="vote-status">
+      <span class="live-dot"></span>
+      ONGOING
+    </span>
+    <div class="vote-app">
+      <img src="images/apps/mnetplus.png" alt="Mnet Plus">
     </div>
   </div>
-</div>
+
+<div class="vote-content">
+  <div class="vote-top">
+  <span class="vote-category">🏆 Award</span>
+  <span class="vote-time">🕒 3d 2h 45m 5s</span>
+  </div><h3>2026 MAMA Fans' Choice</h3>
     
-<!-- ADD VOTE MODAL -->
-<div class="vote-modal" id="voteModal">
-  <div class="vote-modal-box">
-    <div class="vote-modal-title">
-      Add Vote
-    </div>
-
-    <input type="text" id="voteTitle" placeholder="Title">
-    <input type="text" id="voteLink" placeholder="Link">
-    <select id="voteApp">
-      <option value="">Select App</option>
-      <option value="Mubeat">Mubeat</option>
-      <option value="Idol Champ">Idol Champ</option>
-      <option value="Higher">Higher</option>
-      <option value="Muniverse">Muniverse</option>
-      <option value="Fancast">Fancast</option>
-    </select>
-    
-    <select id="voteCategory">
-  <option value="FLARE U">FLARE U</option>
-  <option value="Chuei Li Yu">Chuei Li Yu</option>
-  <option value="Kang Woojin">Kang Woojin</option>
-</select>
-
-    <div class="vote-row">
-      <input type="datetime-local" id="voteStart">
-      <input type="datetime-local" id="voteEnd">
-    </div>
-
-    <input type="text" id="voteRank1"
-placeholder="#1 vote / percentage (optional)">
-
-<input type="text" id="voteOur"
-placeholder="Our idol vote / percentage (optional)">
-    <div class="vote-modal-actions">
-      <button onclick="closeVoteModal()">
-        Cancel
-      </button>
-
-      <button onclick="addVoteCard()">
-        Save
-      </button>
-    </div>
+<div class="vote-stats">
+  <div class="stat">
+  <span>Current rank:</span>
+  <strong>#1</strong>
   </div>
+   <div class="divider"></div>
+    <div class="stat">
+    <span>Gap:</span>
+    <strong>+2.6M</strong>
+    </div>
+   </div>
 
+  <div class="vote-buttons">
+  <button class="guide-btn">📖 Guide</button>
+  <button class="vote-btn">Vote Now ↗</button>
+  </div>
 </div>
-    <!-- DAILY COLLECTION -->
-    <div class="vote-content" id="daily">
-      <!-- ITEM -->
-      <div class="daily-item">
-        <label class="daily-check">
-          <input type="checkbox" onchange="saveChecklist()">
-          <span class="checkmark"></span>
-        </label>
-        <div class="daily-app">
-          <img src="https://play-lh.googleusercontent.com/w6b1f2dKxG2v4hM9g8XwYqf4v9G8cL8vY0z3f6W6L2M=s96">
-          <div>
-            <div class="daily-name">Idol Champ</div>
-            <div class="daily-sub">Collect hearts daily</div>
-          </div>
-        </div>
-
-        <a href="#" class="daily-open">
-          Open
-        </a>
-      </div>
-
-      <!-- ITEM -->
-      <div class="daily-item">
-        <label class="daily-check">
-          <input type="checkbox" onchange="saveChecklist()">
-          <span class="checkmark"></span>
-        </label>
-
-        <div class="daily-app">
-          <img src="https://play-lh.googleusercontent.com/jXz4L6mJQxI=s96">
-          <div>
-            <div class="daily-name">Fancast</div>
-            <div class="daily-sub">Daily attendance</div>
-          </div>
-        </div>
-        
-        <a href="#" class="daily-open">
-          Open
-        </a>
-      </div>
-
-      <!-- ITEM -->
-      <div class="daily-item">
-        <label class="daily-check">
-          <input type="checkbox" onchange="saveChecklist()">
-          <span class="checkmark"></span>
-        </label>
-
-        <div class="daily-app">
-          <img src="https://play-lh.googleusercontent.com/VkQvQ7Y=s96">
-          <div>
-            <div class="daily-name">Higher</div>
-            <div class="daily-sub">Watch ads & collect</div>
-          </div>
-          
-        </div>
-        <a href="#" class="daily-open">
-          Open
-        </a>
-      </div>
-
-      <!-- ITEM -->
-      <div class="daily-item">
-
-        <label class="daily-check">
-          <input type="checkbox" onchange="saveChecklist()">
-          <span class="checkmark"></span>
-        </label>
-
-        <div class="daily-app">
-          <img src="https://play-lh.googleusercontent.com/9N8Lh=s96">
-          <div>
-            <div class="daily-name">Muniverse</div>
-            <div class="daily-sub">Daily collection</div>
-          </div>
-        </div>
-
-        <a href="#" class="daily-open">
-          Open
-        </a>
-      </div>
-    </div>
-  </div>
+</div>
+</div>
 </div>
 </div>
   
