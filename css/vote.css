@@ -76,7 +76,7 @@ display:flex;
 gap:12px;
 padding:12px;
 background:#fff;
-border-radius:20px;
+border-radius:14px;
 box-shadow:0 8px 28px rgba(0,0,0,.08);
 margin-bottom:18px;
 }
@@ -110,7 +110,7 @@ left:8px;
 background:#2f8d79;
 color:#fff;
 padding:5px 10px;
-border-radius:8px;
+border-radius:5px;
 font-size:8px;
 font-weight:600;
 letter-spacing:.5px;
@@ -121,8 +121,8 @@ margin-bottom:0px;
 }
 
 .vote-status .live-dot{
-  width:3px;
-  height:3px;
+  width:5px;
+  height:5px;
   border-radius:50%;
   background:#ff3b30;
   animation:livePulse 1.6s ease-in-out infinite;
@@ -149,7 +149,7 @@ bottom:10px;
 width:25px;
 height:25px;
 background:#fff;
-border-radius:10px;
+border-radius:5px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -212,13 +212,13 @@ flex:1;
 }
 
 .stat span{
-font-size:7px;
+font-size:10px;
 color:#6f7f7d;
 margin-bottom:2px;
 }
 
 .stat strong{
-font-size:8px;
+font-size:10px;
 color:#2f8d79;
 }
 
