@@ -204,19 +204,19 @@ color:white;
   display:inline-flex;
   align-items:center;
   gap:6px;
-  margin-bottom:0px;
-  padding:5px 10px;
+  margin-bottom:4px;
+  padding:4px 8px;
   border-radius:999px;
   background:rgba(255,255,255,.18);
   backdrop-filter:blur(10px);
-  font-size:10px;
+  font-size:8px;
   font-weight:700;
   letter-spacing:.5px;
 }
 
 .banner-badge .live-dot{
-  width:6px;
-  height:6px;
+  width:5px;
+  height:5px;
   border-radius:50%;
   background:#ff3b30;
   animation:livePulse 1.6s ease-in-out infinite;
@@ -237,14 +237,14 @@ color:white;
 }
 
 .banner-content h2{
-  font-size:24px;
+  font-size:20px;
   font-weight:800;
   line-height:1.05;
   margin-bottom:4px;
 }
 
 .banner-content p{
-  font-size:14px;
+  font-size:12px;
   opacity:.92;
   margin-bottom:8px;
 }
@@ -257,8 +257,8 @@ color:white;
 .banner-btn{
   border:none;
   border-radius:12px;
-  padding:11px 18px;
-  font-size:14px;
+  padding:8px 14px;
+  font-size:12px;
   font-weight:700;
   cursor:pointer;
   transition:.2s;
