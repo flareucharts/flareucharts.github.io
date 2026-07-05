@@ -630,7 +630,7 @@ transition:.25s ease;
 }
 
 .bottom-nav button.active{
-color:#e8e8e8;
+color:#243634;
 }
 
 /* ================= DESKTOP FIX ================= */
@@ -694,7 +694,7 @@ display:block;
 }
 
 .bottom-nav button.active span{
-  color:#91d3ca;
+  color:#243634;
 }
   
 .bottom-nav span{
