@@ -299,8 +299,54 @@ function toggleEvents(month, btn){
 
 
 function downloadMonthSchedule(month){
-  console.log("download test");
+  const target =
+    document.getElementById("download-schedule");
+  const content =
+    document.getElementById("download-content");
+  const title =
+    document.getElementById("download-month");
+  const events =
+    allSchedule.filter(item =>
+      item.month === month
+    );
+
+  title.innerHTML =
+  `${month} 2026`;
+content.innerHTML =
+  events.map(e=>`
+    <div class="download-item">
+      <div class="download-date">
+        ${e.date}
+      </div>
+      <div class="download-time">
+        ${e.time}
+      </div>
+      <div class="download-title">
+        ${e.title}
+      </div>
+    </div>
+  `).join("");
+
+const bg =
+getComputedStyle(document.documentElement)
+.getPropertyValue("--bg-gradient");
+
+html2canvas(target,{
+  scale:2,
+  backgroundColor:bg,
+  useCORS:true
+  })
+  .then(canvas=>{
+    const link =
+      document.createElement("a");
+    link.download =
+      `FLARE-U-${month}-Schedule.png`;
+    link.href =
+      canvas.toDataURL("image/png");
+    link.click();
+  });
 }
+
 
 
 window.addEventListener("scroll", function(){
