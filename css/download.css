@@ -29,7 +29,7 @@
   0 12px 25px rgba(145,211,202,.35);
 }
 
-/* DOWNLOAD BUTTON */
+/* AREA GAMBAR DOWNLOAD */
 #download-schedule{
   position:fixed;
   left:0;
@@ -37,27 +37,82 @@
   opacity:0;
   pointer-events:none;
   width:390px;
-  padding:20px;
+  padding:25px 22px;
   background:#101616;
   color:white;
   border-radius:24px;
+  font-family:Inter,sans-serif;
 }
 
+
+/* HEADER */
 .download-header{
   text-align:center;
-  margin-bottom:20px;
+  margin-bottom:25px;
 }
 
 .download-header h2{
   margin:0;
-  font-size:22px;
+  font-size:24px;
   font-weight:900;
+  letter-spacing:.8px;
 }
 
 
+#download-month{
+  margin-top:8px;
+  color:#91d3ca;
+  font-size:15px;
+  font-weight:800;
+}
+
+
+/* LIST */
+#download-content{
+  margin-top:10px;
+}
+
+
+/* ITEM EVENT */
+.download-item{
+  display:flex;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:
+  1px solid rgba(255,255,255,.1);
+}
+
+
+/* TANGGAL */
+.download-date{
+  width:55px;
+  font-size:14px;
+  font-weight:900;
+  color:#91d3ca;
+}
+
+
+/* INFO */
+.download-time{
+  width:55px;
+  font-size:14px;
+  font-weight:800;
+}
+
+
+.download-title{
+  flex:1;
+  font-size:14px;
+  font-weight:700;
+}
+
+
+/* FOOTER */
 .download-footer{
   margin-top:25px;
   padding-top:15px;
+  border-top:
+  1px solid rgba(255,255,255,.12);
   text-align:center;
   font-size:12px;
   opacity:.6;
