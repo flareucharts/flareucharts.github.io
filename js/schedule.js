@@ -1,3 +1,19 @@
+function loadPage() {
+  fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec")
+    .then(res => res.json())
+    .then(data => {
+      console.log("DATA:", data);
+      if (!data.schedule) {
+        console.error("No schedule data!", data);
+        return;
+      }
+      renderSchedule(data.schedule);
+    })
+    .catch(err => {
+      console.error("Fetch error:", err);
+    });
+}
+
 let allSchedule = [];
 
 let currentMonthIndex = 0;
