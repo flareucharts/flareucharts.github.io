@@ -19,14 +19,14 @@
 
 /* ================= PLAYLIST ================= */
 
-.music-section{
+.home-dsc{
   margin-top:28px;
   width:100%;
   padding:0;     /* pastiin gak ada beda */
 }
 
 /* TOP */
-.section-top{
+.home-subtitle{
   width:100%;
   display:flex;
   justify-content:space-between;
@@ -35,7 +35,7 @@
   padding:0;
 }
 
-.section-top h2{
+.home-subtitle h2{
 font-size:18px;
 font-weight:700;
 color:#1f3f3a;
@@ -49,7 +49,7 @@ text-decoration:none;
 }
 
 /* SCROLL */
-.music-scroll{
+.home-scroll{
 display:flex;
 gap:12px;
 overflow-x:auto;
@@ -61,7 +61,7 @@ scrollbar-width:none;
 width:100%;
 }
 
-.music-scroll::-webkit-scrollbar{
+.home-scroll::-webkit-scrollbar{
 display:none;
 }
 
@@ -227,13 +227,13 @@ font-size:clamp(10px,1.8vw,11px);
 </section>
 
 <!-- PLAYLIST SECTION -->
-<div class="music-section">
-<div class="section-top">
+<div class="home-dsc">
+<div class="home-subtitle">
 <h2>Discography</h2>
 <a href="./discography/" class="see-all">
 See All →</a>
 </div>
-<div class="music-scroll" id="discographyScroll"></div>
+<div class="home-scroll" id="discographyScroll"></div>
 </div>
 
 <script src="./js/data.js"></script>
