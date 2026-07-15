@@ -275,3 +275,9 @@ function toggleEvents(month, btn){
     icon.style.transform = "rotate(135deg)";
   }
 }
+
+window.addEventListener("scroll", function(){
+  const popup = document.getElementById("event-popup");
+  if(popup){popup.classList.remove("show");
+  }
+});
