@@ -154,11 +154,16 @@ function renderSchedule(schedule){
         </div>
 
         <div class="event-section">
+  <button 
+    class="download-btn"
+    onclick="downloadMonthSchedule('${month}')">
+    ↓ Download ${month} Schedule
+  </button>
           <button
             class="event-toggle"
             onclick="toggleEvents('${month}', this)"
           >
-            <span>⭐ View All Events</span>
+            <span>⭐ View all events</span>
             <span class="dropdown-icon">
               ⌄
             </span>
