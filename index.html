@@ -355,18 +355,6 @@ See all →</a>
       <button onclick="nextMonth()">›</button>
     </div>
 
-<button id="downloadScheduleBtn" class="download-btn">
-  <svg class="download-icon" viewBox="0 0 24 24">
-    <path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"/>
-  </svg>
-  Download Schedule
-</button>
-
 <div id="schedule-content"></div>
     <div id="event-popup" class="event-popup"></div>
 
@@ -374,10 +362,9 @@ See all →</a>
 <div id="download-schedule">
   <div class="download-header">
     <h2>FLARE U SCHEDULE</h2>
+    <div id="download-month"></div>
   </div>
-  <div id="download-content">
-    <!-- schedule.js tetap isi otomatis dari Google Sheet -->
-  </div>
+  <div id="download-content"></div>
   <div class="download-footer">
     flareuglobal.com
   </div>
@@ -385,7 +372,7 @@ See all →</a>
 
 </div>
 </div>
-<script src="./js/download.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="./js/schedule.js"></script>
 
 <!-- BOTTOM NAV -->
