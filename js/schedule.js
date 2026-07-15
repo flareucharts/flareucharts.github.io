@@ -297,6 +297,48 @@ function toggleEvents(month, btn){
   }
 }
 
+function downloadMonthSchedule(month){
+  const target =
+    document.getElementById("download-schedule");
+  const content =
+    document.getElementById("download-content");
+  const title =
+    document.getElementById("download-month");
+  const events =
+    allSchedule.filter(item =>
+      item.month === month
+    );
+  title.innerHTML =
+    `${month} 2026`;
+  content.innerHTML =
+    events.map(e=>`
+      <div class="download-event">
+        <div class="download-date">
+          ${e.date}
+        </div>
+        <div class="download-info">
+          <b>${e.time}</b>
+          <span>${e.title}</span>
+        </div>
+      </div>
+    `).join("");
+
+  html2canvas(target,{
+    scale:2,
+    backgroundColor:"#101616",
+    useCORS:true
+  })
+  .then(canvas=>{
+    const link =
+      document.createElement("a");
+    link.download =
+      `FLARE-U-${month}-Schedule.png`;
+    link.href =
+      canvas.toDataURL("image/png");
+    link.click();
+  });
+}
+
 window.addEventListener("scroll", function(){
   const popup = document.getElementById("event-popup");
   if(popup){popup.classList.remove("show");
