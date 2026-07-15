@@ -298,10 +298,16 @@ function toggleEvents(month, btn){
 }
 
 function downloadMonthSchedule(month){
-  console.log("DOWNLOAD CLICK:", month);
   const target =
     document.getElementById("download-schedule");
-  console.log(target);
+  const content =
+    document.getElementById("download-content");
+  const title =
+    document.getElementById("download-month");
+  const events =
+    allSchedule.filter(item =>
+      item.month === month
+    );
 
   title.innerHTML =
   `${month} 2026`;
@@ -319,10 +325,6 @@ content.innerHTML =
       </div>
     </div>
   `).join("");
-
-const bg =
-getComputedStyle(document.documentElement)
-.getPropertyValue("--bg-gradient");
 
 html2canvas(target,{
   scale:2,
