@@ -308,24 +308,27 @@ function downloadMonthSchedule(month){
     allSchedule.filter(item =>
       item.month === month
     );
+
   title.innerHTML =
-    `${month} 2026`;
-  content.innerHTML =
-    events.map(e=>`
-      <div class="download-event">
-        <div class="download-date">
-          ${e.date}
-        </div>
-        <div class="download-info">
-          <b>${e.time}</b>
-          <span>${e.title}</span>
-        </div>
+  `${month} 2026`;
+content.innerHTML =
+  events.map(e=>`
+    <div class="download-item">
+      <div class="download-date">
+        ${e.date}
       </div>
-    `).join("");
+      <div class="download-time">
+        ${e.time}
+      </div>
+      <div class="download-title">
+        ${e.title}
+      </div>
+    </div>
+  `).join("");
 
   html2canvas(target,{
     scale:2,
-    backgroundColor:"#101616",
+    backgroundColor:var(--bg-gradient),
     useCORS:true
   })
   .then(canvas=>{
