@@ -24,4 +24,14 @@
   /* Spacing */
   --gap:12px;
   --padding:20px;
+
+  /* BG Gradient */
+  --bg-gradient: linear-gradient(
+    180deg,
+    #91d3ca 0%,
+    #a8ddd6 15vh,
+    #dff2ef 30vh,
+    #ffffff 55vh
+  );
+
 }
