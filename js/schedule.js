@@ -297,18 +297,11 @@ function toggleEvents(month, btn){
   }
 }
 
-
 function downloadMonthSchedule(month){
+  console.log("DOWNLOAD CLICK:", month);
   const target =
     document.getElementById("download-schedule");
-  const content =
-    document.getElementById("download-content");
-  const title =
-    document.getElementById("download-month");
-  const events =
-    allSchedule.filter(item =>
-      item.month === month
-    );
+  console.log(target);
 
   title.innerHTML =
   `${month} 2026`;
@@ -333,18 +326,16 @@ getComputedStyle(document.documentElement)
 
 html2canvas(target,{
   scale:2,
-  backgroundColor:bg,
   useCORS:true
-  })
-  .then(canvas=>{
-    const link =
-      document.createElement("a");
-    link.download =
-      `FLARE-U-${month}-Schedule.png`;
-    link.href =
-      canvas.toDataURL("image/png");
-    link.click();
-  });
+})
+.then(canvas=>{
+  const link = document.createElement("a");
+  link.download =
+  `FLARE-U-${month}-Schedule.png`;
+  link.href =
+  canvas.toDataURL("image/png");
+  link.click();
+});
 }
 
 
