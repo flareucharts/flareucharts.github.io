@@ -30,8 +30,7 @@ function renderSchedule(schedule){
     const date = new Date(item.date);
 
 const month = date.toLocaleString("en-US",{
-  month:"long",
-  year:"numeric"
+  month:"long"
 }).toUpperCase();
 
 if(!grouped[month]){
