@@ -170,8 +170,6 @@ month:"short"
             <div class="calendar-month">
               ${month}
             </div>
-
-            </div>
           </div>
 
           <div class="calendar-grid">
