@@ -30,7 +30,8 @@ function renderSchedule(schedule){
     const date = new Date(item.date);
 
 const month = date.toLocaleString("en-US",{
-  month:"long"
+  month:"long",
+  year:"numeric"
 }).toUpperCase();
 
 if(!grouped[month]){
@@ -170,8 +171,6 @@ month:"short"
               ${month}
             </div>
 
-            <div class="calendar-year">
-              ${year}
             </div>
           </div>
 
