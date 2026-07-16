@@ -406,3 +406,6 @@ window.addEventListener("scroll", function(){
   if(popup){popup.classList.remove("show");
   }
 });
+
+
+loadPage();
