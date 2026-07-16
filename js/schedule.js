@@ -63,10 +63,10 @@ const monthNames = {
   let html = `
 <div class="schedule-actions">
   <button
-    class="download-btn"
-    onclick="downloadUpcomingSchedule()">
-    ↓ Download Upcoming Schedule
-  </button>
+  class="download-btn"
+  onclick="alert('Klik berhasil')">
+  ↓ Download Upcoming Schedule
+</button>
 </div>
 `;
 
