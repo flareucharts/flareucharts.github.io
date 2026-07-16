@@ -368,6 +368,8 @@ const events = allSchedule
   })
   .sort((a,b)=>new Date(a.date)-new Date(b.date));
   
+console.log(events);
+
 if(events.length === 0){
   alert("No upcoming schedule.");
   return;
