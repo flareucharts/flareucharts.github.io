@@ -411,6 +411,11 @@ return `
 
 console.log(content.innerHTML);
 
+target.style.opacity = "1";
+target.style.pointerEvents = "auto";
+console.log(getComputedStyle(target).backgroundColor);
+console.log(getComputedStyle(document.querySelector(".download-item")).display);
+
 html2canvas(target,{
   scale:2,
   useCORS:true
