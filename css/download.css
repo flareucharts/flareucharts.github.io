@@ -1,34 +1,3 @@
-.download-icon{
-  width:15px;
-  height:15px;
-}
-
-.download-btn{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  margin:15px auto;
-  padding:8px 16px;
-  border:none;
-  border-radius:999px;
-  background:#91d3ca;
-  color:#102522;
-  font-size:14px;
-  font-weight:800;
-  letter-spacing:.3px;
-  cursor:pointer;
-  box-shadow:
-  0 8px 20px rgba(145,211,202,.25);
-  transition:.25s ease;
-}
-
-.download-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:
-  0 12px 25px rgba(145,211,202,.35);
-}
-
 /* AREA GAMBAR DOWNLOAD */
 #download-schedule{
   position:fixed;
@@ -43,20 +12,6 @@
   border-radius:24px;
   font-family:Inter,sans-serif;
 }
-
-.download-card{
-    position:relative;
-    z-index:1;
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding:16px;
-    margin-bottom:14px;
-    background:#171d1d;
-    border-radius:18px;
-    border:1px solid rgba(145,211,202,.15);
-}
-
 
 /* HEADER */
 .download-header{
@@ -80,74 +35,45 @@
     letter-spacing:2px;
 }
 
-
-#download-month{
-  margin-top:8px;
-  color:#91d3ca;
-  font-size:15px;
-  font-weight:800;
-}
-
-
 /* LIST */
 #download-content{
     position:relative;
     margin-top:15px;
 }
 
-#download-content::before{
-    content:"";
-    position:absolute;
-    left:52px;
-    top:18px;
-    bottom:18px;
-    width:2px;
-    background:rgba(145,211,202,.35);
-    z-index:0;
-}
-
-
 /* ITEM EVENT */
 .download-item{
-  display:flex;
-  align-items:center;
-  padding:12px 0;
-  border-bottom:
-  1px solid rgba(255,255,255,.1);
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    padding:16px;
+
+    margin-bottom:14px;
+
+    background:#171d1d;
+
+    border:1px solid rgba(145,211,202,.15);
+
+    border-radius:18px;
+box-shadow:0 8px 18px rgba(0,0,0,.18);
 }
 
 
 /* TANGGAL */
-.download-date{
-  width:55px;
-  font-size:14px;
-  font-weight:900;
-  color:#91d3ca;
-}
 
 .download-date-box{
     position:relative;
     width:72px;
     height:72px;
-    background:#111;
-    border:2px solid #91d3ca;
+    background:#91d3ca;
+border:none;
     border-radius:18px;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     flex-shrink:0;
-}
-
-.download-date-box::after{
-    content:"";
-    position:absolute;
-    right:-16px;
-    width:12px;
-    height:12px;
-    background:#91d3ca;
-    border-radius:50%;
-    box-shadow:0 0 12px rgba(145,211,202,.6);
 }
 
 /* INFO */
@@ -234,15 +160,11 @@
 .download-hint::after{
   content:"";
   position:absolute;
-
   right:-6px;
   top:50%;
-
   width:12px;
   height:12px;
-
   background:#fff;
-
   transform:translateY(-50%) rotate(45deg);
 }
 
@@ -260,50 +182,17 @@
   fill:none;
 }
 
-.download-card{
-    display:flex;
-    align-items:center;
-    gap:18px;
-
-    padding:16px;
-    margin-bottom:14px;
-
-    background:#171d1d;
-    border:1px solid rgba(145,211,202,.15);
-
-    border-radius:18px;
-}
-
-.download-date-box{
-
-    width:72px;
-    height:72px;
-
-    border-radius:18px;
-
-    background:#111;
-
-    border:2px solid #91d3ca;
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    flex-shrink:0;
-}
-
 .download-month{
     font-size:13px;
     font-weight:800;
-    color:#91d3ca;
+    color:#102522;
     letter-spacing:1px;
 }
 
 .download-day{
     font-size:34px;
     font-weight:900;
-    color:#fff;
+    color:#102522;
     line-height:1;
 }
 
@@ -312,18 +201,19 @@
 }
 
 .download-time{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    margin-bottom:8px;
-    color:#91d3ca;
-    font-size:14px;
-    font-weight:700;
+    display:inline-block;
+    padding:5px 12px;
+    margin-bottom:10px;
+    background:#91d3ca;
+    color:#102522;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:800;
 }
 
 .download-title{
-    color:white;
-    font-size:18px;
+    font-size:17px;
     font-weight:700;
-    line-height:1.4;
+    color:#fff;
+    line-height:1.35;
 }
