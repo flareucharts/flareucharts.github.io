@@ -61,13 +61,15 @@ const monthNames = {
 });
   
   let html = `
-<div class="schedule-actions">
-  <button
-  class="download-btn"
-  onclick="alert('Klik berhasil')">
-  ↓ Download Upcoming Schedule
-</button>
+<div class="download-hint" id="download-hint">
+  Download Upcoming Schedule
 </div>
+
+<button
+  class="download-fab"
+  onclick="downloadUpcomingSchedule(); hideDownloadHint();">
+  ⬇
+</button>
 `;
 
 groupedMonths.forEach(month=>{
@@ -196,7 +198,7 @@ month:"short"
   });
 
   container.innerHTML = html;
-
+showDownloadHint();
   // SHOW FIRST MONTH
   const sections = document.querySelectorAll(".month-section");
 
@@ -395,7 +397,24 @@ html2canvas(target,{
 });
 }
 
+function showDownloadHint(){
+  const hint = document.getElementById("download-hint");
+  if(!hint) return;
 
+  hint.classList.add("show");
+
+  clearTimeout(window.downloadHintTimeout);
+  window.downloadHintTimeout = setTimeout(()=>{
+    hint.classList.remove("show");
+  },3000);
+}
+
+function hideDownloadHint(){
+  const hint = document.getElementById("download-hint");
+  if(hint){
+    hint.classList.remove("show");
+  }
+}
 
 window.addEventListener("scroll", function(){
   const popup = document.getElementById("event-popup");
