@@ -207,3 +207,15 @@
 
   transform:translateY(-50%) rotate(45deg);
 }
+
+.download-fab svg{
+    width:26px;
+    height:26px;
+}
+
+.download-fab svg path{
+    stroke:#102522;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
