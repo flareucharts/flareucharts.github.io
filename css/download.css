@@ -117,3 +117,93 @@
   font-size:12px;
   opacity:.6;
 }
+
+/* FLOATING DOWNLOAD */
+
+.download-fab{
+  position:fixed;
+  right:18px;
+  bottom:90px; /* di atas bottom nav */
+
+  width:56px;
+  height:56px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border:none;
+  border-radius:50%;
+
+  background:#91d3ca;
+  color:#102522;
+
+  font-size:24px;
+  cursor:pointer;
+
+  box-shadow:0 10px 25px rgba(0,0,0,.18);
+
+  z-index:9998;
+
+  transition:.25s ease;
+}
+
+.download-fab:active{
+  transform:scale(.95);
+}
+
+.download-fab:hover{
+  transform:translateY(-2px);
+}
+
+
+/* HINT */
+
+.download-hint{
+  position:fixed;
+
+  right:86px;
+  bottom:98px;
+
+  background:#fff;
+  color:#102522;
+
+  padding:10px 14px;
+
+  border-radius:999px;
+
+  font-size:13px;
+  font-weight:700;
+
+  box-shadow:0 8px 22px rgba(0,0,0,.12);
+
+  opacity:0;
+  transform:translateX(20px);
+
+  transition:.35s ease;
+
+  z-index:9998;
+
+  pointer-events:none;
+}
+
+.download-hint.show{
+  opacity:1;
+  transform:translateX(0);
+}
+
+/* panah bubble */
+.download-hint::after{
+  content:"";
+  position:absolute;
+
+  right:-6px;
+  top:50%;
+
+  width:12px;
+  height:12px;
+
+  background:#fff;
+
+  transform:translateY(-50%) rotate(45deg);
+}
