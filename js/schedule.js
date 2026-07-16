@@ -1,5 +1,5 @@
 function loadPage() {
-  fetch("https://script.google.com/macros/s/AKfycbwsYIjF8eJTi54N40LE7pfyT6ZJw5wGTNKK5_2j26qf6T3AsmljVklTc5CReCaz4FbvQg/exec")
+  fetch("https://script.google.com/macros/s/AKfycby8hgSwCTJlSA4bhrPX2K0pGPJMDsiy07_LjP-5tY_H_fyI6Zd4ltKMpfObSKwMg_b4gg/exec")
     .then(res => res.json())
     .then(data => {
       console.log("DATA:", data);
@@ -20,19 +20,28 @@ let currentMonthIndex = 0;
 let groupedMonths = [];
 function renderSchedule(schedule){
   allSchedule = schedule;
+
   const container =
     document.getElementById("schedule-content");
 
   // GROUP PER MONTH
   const grouped = {};
   schedule.forEach(item=>{
-    if(!grouped[item.month]){
-      grouped[item.month] = [];
-    }
-    grouped[item.month].push(item);
+    const date = new Date(item.date);
+
+const month = date.toLocaleString("en-US",{
+  month:"long",
+  year:"numeric"
+}).toUpperCase();
+
+if(!grouped[month]){
+  grouped[month] = [];
+}
+
+grouped[month].push(item);
   });
-  groupedMonths = Object.keys(grouped);
-  const monthNames = {
+
+const monthNames = {
     JANUARY:0,
     FEBRUARY:1,
     MARCH:2,
@@ -47,19 +56,34 @@ function renderSchedule(schedule){
     DECEMBER:11
   };
 
-  let html = "";
+  groupedMonths = Object.keys(grouped).sort((a, b) => {
+  return new Date(grouped[a][0].date) - new Date(grouped[b][0].date);
+});
+  
+  let html = `
+<div class="schedule-actions">
+  <button
+    class="download-btn"
+    onclick="downloadUpcomingSchedule()">
+    ↓ Download Upcoming Schedule
+  </button>
+</div>
+`;
 
-  Object.keys(grouped).forEach(month => {
+groupedMonths.forEach(month=>{
     const events = grouped[month];
-    const monthIndex =
-      monthNames[month.toUpperCase()];
-    const year = 2026;
+    const date = new Date(events[0].date);
+
+const monthIndex = date.getMonth();
+const year = date.getFullYear();
     const firstDay =
       new Date(year, monthIndex, 1).getDay();
     const lastDate =
       new Date(year, monthIndex + 1, 0).getDate();
     const eventDates =
-      events.map(e => Number(e.date));
+events.map(e=>
+new Date(e.date).getDate()
+);
     const dayNames =
       ["SUN","MON","TUE","WED","THU","FRI","SAT"];
     
@@ -95,7 +119,8 @@ function renderSchedule(schedule){
     // GROUP EVENTS
     const groupedEvents = {};
     events.forEach(item=>{
-      const key = item.date;
+      const key =
+new Date(item.date).getDate();
       if(!groupedEvents[key]){
         groupedEvents[key] = [];
       }
@@ -109,11 +134,14 @@ function renderSchedule(schedule){
         <div class="event-card">
           <div class="event-date-box">
             <div class="event-month">
-              ${group[0].month}
+              ${new Date(group[0].date)
+.toLocaleString("en-US",{
+month:"short"
+}).toUpperCase()}
             </div>
 
             <div class="event-day">
-              ${group[0].date}
+              ${new Date(group[0].date).getDate()}
             </div>
           </div>
 
@@ -125,7 +153,7 @@ function renderSchedule(schedule){
                 </span>
 
                 <span class="event-name">
-                  ${e.title}
+  ${e.cat} ${e.title}
                 </span>
               </div>
 
@@ -154,11 +182,6 @@ function renderSchedule(schedule){
         </div>
 
         <div class="event-section">
-  <button 
-    class="download-btn"
-    onclick="downloadMonthSchedule('${month}')">
-    ↓ Download ${month} Schedule
-  </button>
           <button
             class="event-toggle"
             onclick="toggleEvents('${month}', this)"
@@ -179,13 +202,26 @@ function renderSchedule(schedule){
   container.innerHTML = html;
 
   // SHOW FIRST MONTH
-  const sections =
-    document.querySelectorAll(".month-section");
-  sections.forEach((sec, i)=>{
-    sec.style.display =
-      i === 0 ? "block" : "none";
+  const sections = document.querySelectorAll(".month-section");
 
-  });
+const now = new Date();
+
+const currentMonth = now.toLocaleString("en-US", {
+  month: "long",
+  year: "numeric"
+}).toUpperCase();
+
+currentMonthIndex = groupedMonths.indexOf(currentMonth);
+
+// kalau bulan sekarang tidak ada di data, tampilkan bulan pertama
+if (currentMonthIndex === -1) {
+  currentMonthIndex = 0;
+}
+
+sections.forEach((sec, i) => {
+  sec.style.display =
+    i === currentMonthIndex ? "block" : "none";
+});
 }
 
 function nextMonth(){
@@ -215,10 +251,16 @@ function prevMonth(){
 
   const popup = document.getElementById("event-popup");
 
-  const found = allSchedule.filter(item => 
-    item.month === month &&
-    Number(item.date) === Number(day)
-  );
+  const found = allSchedule.filter(item=>{
+  const d = new Date(item.date);
+  return (
+  d.toLocaleString("en-US",{
+    month:"long",
+    year:"numeric"
+  }).toUpperCase() === month &&
+  d.getDate() === day
+);
+});
 
   if(found.length === 0){
   popup.classList.remove("show");
@@ -227,14 +269,20 @@ function prevMonth(){
 
   popup.innerHTML = `
   <div class="popup-date">
-    ${found[0].month} ${found[0].date}, 2026
+    ${new Date(found[0].date).toLocaleString("en-US",{
+  month:"long"
+}).toUpperCase()}
+${new Date(found[0].date).getDate()},
+${new Date(found[0].date).getFullYear()}
   </div>
 
   <div class="popup-title">
     ${found.map(e => `
       <div class="popup-line">
         <span class="popup-time-inline">${e.time}</span>
-        <span class="popup-name">${e.title}</span>
+        <span class="popup-name">
+  ${e.cat} ${e.title}
+</span>
       </div>
     `).join("")}
   </div>
@@ -297,31 +345,43 @@ function toggleEvents(month, btn){
   }
 }
 
-function downloadMonthSchedule(month){
+function downloadUpcomingSchedule(){
   const target =
     document.getElementById("download-schedule");
   const content =
     document.getElementById("download-content");
   const title =
     document.getElementById("download-month");
-  const events =
-    allSchedule.filter(item =>
-      item.month === month
-    );
+  const today = new Date();
+today.setHours(0,0,0,0);
 
-  title.innerHTML =
-  `${month} 2026`;
+const events = allSchedule
+  .filter(item=>{
+    const d = new Date(item.date);
+    d.setHours(0,0,0,0);
+    return d >= today;
+  })
+  .sort((a,b)=>new Date(a.date)-new Date(b.date));
+  
+if(events.length === 0){
+  alert("No upcoming schedule.");
+  return;
+}
+
+  title.innerHTML = "UPCOMING SCHEDULE";
 content.innerHTML =
   events.map(e=>`
     <div class="download-item">
       <div class="download-date">
-        ${e.date}
+        ${new Date(e.date).getDate()}/${new Date(e.date).getMonth()+1}
       </div>
+
       <div class="download-time">
         ${e.time}
       </div>
+
       <div class="download-title">
-        ${e.title}
+        ${e.cat} ${e.title}
       </div>
     </div>
   `).join("");
@@ -332,8 +392,7 @@ html2canvas(target,{
 })
 .then(canvas=>{
   const link = document.createElement("a");
-  link.download =
-  `FLARE-U-${month}-Schedule.png`;
+  link.download = "FLARE-U-Upcoming-Schedule.png";
   link.href =
   canvas.toDataURL("image/png");
   link.click();
