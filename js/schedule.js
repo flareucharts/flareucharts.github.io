@@ -374,23 +374,36 @@ if(events.length === 0){
 }
 
   title.innerHTML = "UPCOMING SCHEDULE";
-content.innerHTML =
-  events.map(e=>`
-    <div class="download-item">
-      <div class="download-date">
-        ${new Date(e.date).getDate()}/${new Date(e.date).getMonth()+1}
-      </div>
+content.innerHTML = events.map(e => {
 
-      <div class="download-time">
-        ${e.time}
-      </div>
+const d = new Date(e.date);
 
-      <div class="download-title">
-        ${e.cat} ${e.title}
-      </div>
+const month = d.toLocaleString("en-US", {
+month:"short"
+}).toUpperCase();
+
+const day = d.getDate();
+
+return `
+<div class="download-item">
+
+    <div class="download-date-box">
+        <div class="download-month">${month}</div>
+        <div class="download-day">${day}</div>
     </div>
-  `).join("");
 
+    <div class="download-time">
+        ${e.time}
+    </div>
+
+    <div class="download-title">
+        ${e.cat} ${e.title}
+    </div>
+
+</div>
+`;
+
+}).join("");
 html2canvas(target,{
   scale:2,
   useCORS:true
