@@ -44,18 +44,40 @@
   font-family:Inter,sans-serif;
 }
 
+.download-card{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:16px;
+    margin-bottom:14px;
+    background:#171d1d;
+    border-radius:18px;
+    border:1px solid rgba(145,211,202,.15);
+}
+
 
 /* HEADER */
 .download-header{
-  text-align:center;
-  margin-bottom:25px;
+    text-align:center;
+    margin-bottom:28px;
 }
 
 .download-header h2{
-  margin:0;
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:.8px;
+    margin:0;
+    font-size:38px;
+    font-weight:900;
+    letter-spacing:3px;
+    color:white;
+}
+
+#download-month{
+    margin-top:8px;
+    color:#91d3ca;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:2px;
 }
 
 
@@ -69,7 +91,19 @@
 
 /* LIST */
 #download-content{
-  margin-top:10px;
+    position:relative;
+    margin-top:15px;
+}
+
+#download-content::before{
+    content:"";
+    position:absolute;
+    left:52px;
+    top:18px;
+    bottom:18px;
+    width:2px;
+    background:rgba(145,211,202,.35);
+    z-index:0;
 }
 
 
@@ -91,31 +125,40 @@
   color:#91d3ca;
 }
 
+.download-date-box{
+    position:relative;
+    width:72px;
+    height:72px;
+    background:#111;
+    border:2px solid #91d3ca;
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    flex-shrink:0;
+}
+
+.download-date-box::after{
+    content:"";
+    position:absolute;
+    right:-16px;
+    width:12px;
+    height:12px;
+    background:#91d3ca;
+    border-radius:50%;
+    box-shadow:0 0 12px rgba(145,211,202,.6);
+}
 
 /* INFO */
-.download-time{
-  width:55px;
-  font-size:14px;
-  font-weight:800;
-}
-
-
-.download-title{
-  flex:1;
-  font-size:14px;
-  font-weight:700;
-}
-
 
 /* FOOTER */
 .download-footer{
-  margin-top:25px;
-  padding-top:15px;
-  border-top:
-  1px solid rgba(255,255,255,.12);
-  text-align:center;
-  font-size:12px;
-  opacity:.6;
+    margin-top:28px;
+    text-align:center;
+    color:rgba(255,255,255,.5);
+    font-size:12px;
+    letter-spacing:1px;
 }
 
 /* FLOATING DOWNLOAD */
@@ -124,20 +167,15 @@
   position:fixed;
   right:18px;
   bottom:90px; /* di atas bottom nav */
-
   width:56px;
   height:56px;
-
   display:flex;
   align-items:center;
   justify-content:center;
-
   border:none;
   border-radius:50%;
-
   background:#91d3ca;
   color:#102522;
-
   font-size:24px;
   cursor:pointer;
 
@@ -220,4 +258,72 @@
   stroke-linecap:round;
   stroke-linejoin:round;
   fill:none;
+}
+
+.download-card{
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    padding:16px;
+    margin-bottom:14px;
+
+    background:#171d1d;
+    border:1px solid rgba(145,211,202,.15);
+
+    border-radius:18px;
+}
+
+.download-date-box{
+
+    width:72px;
+    height:72px;
+
+    border-radius:18px;
+
+    background:#111;
+
+    border:2px solid #91d3ca;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    flex-shrink:0;
+}
+
+.download-month{
+    font-size:13px;
+    font-weight:800;
+    color:#91d3ca;
+    letter-spacing:1px;
+}
+
+.download-day{
+    font-size:34px;
+    font-weight:900;
+    color:#fff;
+    line-height:1;
+}
+
+.download-info{
+    flex:1;
+}
+
+.download-time{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-bottom:8px;
+    color:#91d3ca;
+    font-size:14px;
+    font-weight:700;
+}
+
+.download-title{
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    line-height:1.4;
 }
