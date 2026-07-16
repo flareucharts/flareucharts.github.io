@@ -496,39 +496,51 @@ function toggleMenu(){
   
 /* HEADER HIDE */
 let lastScrollTop = 0;
-window.addEventListener(
-"scroll",
-function () {
+
+window.addEventListener("scroll", function () {
+
 const header = document.querySelector(".header");
 const nav = document.querySelector(".bottom-nav");
+const fab = document.querySelector(".download-fab");
+const hint = document.querySelector(".download-hint");
+
 let scrollTop =
 window.pageYOffset ||
 document.documentElement.scrollTop;
 
 /* SCROLL DOWN */
 if (scrollTop > lastScrollTop && scrollTop > 50) {
-header.style.transform = "translateY(-120px)";
-header.style.opacity = "0";
-nav.style.transform =
-"translateX(-50%) translateY(120px)";
-nav.style.opacity = "0";
+
+  header.style.transform = "translateY(-120px)";
+  header.style.opacity = "0";
+
+  nav.style.transform =
+  "translateX(-50%) translateY(120px)";
+  nav.style.opacity = "0";
+
+  if(fab) fab.style.bottom = "20px";
+  if(hint) hint.style.bottom = "90px";
+
 }
 
 /* SCROLL UP */
 else {
-header.style.transform = "translateY(0)";
-header.style.opacity = "1";
-nav.style.transform =
-"translateX(-50%) translateY(0)";
-nav.style.opacity = "1";
+
+  header.style.transform = "translateY(0)";
+  header.style.opacity = "1";
+
+  nav.style.transform =
+  "translateX(-50%) translateY(0)";
+  nav.style.opacity = "1";
+
+  if(fab) fab.style.bottom = "90px";
+  if(hint) hint.style.bottom = "160px";
 
 }
 
 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 
-},
-false
-);
+}, false);
   
 
 /* ================= VOTE TAB ================= */
