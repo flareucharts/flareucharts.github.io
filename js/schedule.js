@@ -408,6 +408,9 @@ return `
 `;
 
 }).join("");
+
+console.log(content.innerHTML);
+
 html2canvas(target,{
   scale:2,
   useCORS:true
