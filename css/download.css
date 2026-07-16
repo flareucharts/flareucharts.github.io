@@ -209,13 +209,15 @@
 }
 
 .download-fab svg{
-    width:26px;
-    height:26px;
+  width:26px;
+  height:26px;
+  display:block;
 }
 
 .download-fab svg path{
-    stroke:#102522;
-    stroke-width:2.2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
+  stroke:#102522;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  fill:none;
 }
