@@ -392,12 +392,16 @@ return `
         <div class="download-day">${day}</div>
     </div>
 
-    <div class="download-time">
-        ${e.time}
-    </div>
+    <div class="download-info">
 
-    <div class="download-title">
-        ${e.cat} ${e.title}
+        <div class="download-time">
+            ${e.time}
+        </div>
+
+        <div class="download-title">
+            ${e.cat} ${e.title}
+        </div>
+
     </div>
 
 </div>
