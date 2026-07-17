@@ -1,5 +1,3 @@
-function downloadUpcomingSchedule(){
-
 console.log("schedule-download.js READY");
 
 window.downloadUpcomingSchedule = function(){
