@@ -1,6 +1,9 @@
 function downloadUpcomingSchedule(){
 
 console.log("schedule-download.js READY");
+
+window.downloadUpcomingSchedule = function(){
+
 console.log("schedule-download.js loaded");
 console.log(window.allSchedule);
 
@@ -88,5 +91,3 @@ html2canvas(target,{
     link.click();
 });
 }
-
-window.downloadUpcomingSchedule = downloadUpcomingSchedule;
