@@ -69,12 +69,17 @@ console.log(window.allSchedule);
 
     }).join("");
 
-    target.style.left = "0";
+target.style.left = "0";
 target.style.visibility = "visible";
 target.style.opacity = "1";
 
+target.style.width = "1080px";
+target.style.height = "1350px";
+
 html2canvas(target,{
     scale:2,
+    width:1080,
+    height:1350,
     useCORS:true,
     backgroundColor:null
 }).then(canvas=>{
