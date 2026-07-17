@@ -389,23 +389,17 @@ const day = d.getDate();
 return `
 <div class="download-item">
 
-    <div class="download-date-box">
-        <div class="download-month">${month}</div>
-        <div class="download-day">${day}</div>
+    <div class="download-date">
+        ${day}<br>${month}
     </div>
 
-    <div class="download-info">
-
-        <div class="download-time">
-            ${e.time}
-        </div>
-
-        <div class="download-title">
-            ${e.cat} ${e.title}
-        </div>
-
+    <div class="download-time">
+        ${e.time || "-"}
     </div>
 
+    <div class="download-title">
+        ${e.cat} ${e.title}
+    </div>
 </div>
 `;
 
