@@ -87,3 +87,5 @@ html2canvas(target,{
     link.click();
 });
 }
+
+window.downloadUpcomingSchedule = downloadUpcomingSchedule;
