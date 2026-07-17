@@ -4,8 +4,6 @@ window.downloadUpcomingSchedule = function(){
 
 console.log("schedule-download.js loaded");
 console.log(window.allSchedule);
-console.log("END FILE");
-console.log(typeof downloadUpcomingSchedule);
 
     const target = document.getElementById("download-schedule");
     const content = document.getElementById("download-content");
@@ -91,3 +89,6 @@ html2canvas(target,{
     link.click();
 });
 };
+
+console.log("END FILE");
+console.log(typeof downloadUpcomingSchedule);
