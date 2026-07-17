@@ -1,5 +1,6 @@
 function downloadUpcomingSchedule(){
 
+console.log("schedule-download.js READY");
 console.log("schedule-download.js loaded");
 console.log(window.allSchedule);
 
