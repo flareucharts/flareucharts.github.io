@@ -86,3 +86,4 @@ html2canvas(target,{
     link.href = canvas.toDataURL("image/png");
     link.click();
 });
+}
