@@ -1,16 +1,18 @@
 /* AREA GAMBAR DOWNLOAD */
 #download-schedule{
-  position:fixed;
-  left:-99999px;
-  top:0;
   opacity:1;          /* jangan 0 */
   visibility:hidden;  /* sembunyikan pakai ini */
   pointer-events:none;
-  width:390px;
-  padding:25px 22px;
+  position:fixed;
+  left:-99999px;
+  top:0;
+  width:1080px;
+  height:1350px;
+  padding:60px;
+  box-sizing:border-box;
   background:var(--bg-gradient);
   color:#fff;
-  border-radius:24px;
+  border-radius:0;
   font-family:'Inter',sans-serif;
 }
 
