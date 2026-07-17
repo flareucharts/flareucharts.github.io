@@ -413,21 +413,20 @@ return `
 
 console.log(content.innerHTML);
 
-target.style.opacity = "1";
-target.style.pointerEvents = "auto";
-console.log(getComputedStyle(target).backgroundColor);
-console.log(getComputedStyle(document.querySelector(".download-item")).display);
+target.style.left = "0px";
 
 html2canvas(target,{
-  scale:2,
-  useCORS:true
-})
-.then(canvas=>{
-  const link = document.createElement("a");
-  link.download = "FLARE-U-Upcoming-Schedule.png";
-  link.href =
-  canvas.toDataURL("image/png");
-  link.click();
+    scale:2,
+    useCORS:true,
+    backgroundColor:"#fff"
+}).then(canvas=>{
+
+    target.style.left = "-99999px";
+
+    const link = document.createElement("a");
+    link.download = "FLARE-U-Upcoming-Schedule.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
 });
 }
 
