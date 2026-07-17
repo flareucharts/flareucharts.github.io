@@ -1,5 +1,8 @@
 function downloadUpcomingSchedule(){
 
+console.log("download-schedule.js loaded");
+console.log(window.allSchedule);
+
     const target = document.getElementById("download-schedule");
     const content = document.getElementById("download-content");
 
