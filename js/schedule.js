@@ -14,12 +14,13 @@ function loadPage() {
     });
 }
 
-let allSchedule = [];
+window.allSchedule = [];
 
 let currentMonthIndex = 0;
 let groupedMonths = [];
+
 function renderSchedule(schedule){
-  allSchedule = schedule;
+  window.allSchedule = schedule;
 
   const container =
     document.getElementById("schedule-content");
@@ -256,7 +257,7 @@ function prevMonth(){
 
   const popup = document.getElementById("event-popup");
 
-  const found = allSchedule.filter(item=>{
+  const found = window.allSchedule.filter(item=>{
   const d = new Date(item.date);
   return (
   d.toLocaleString("en-US",{
@@ -348,80 +349,6 @@ function toggleEvents(month, btn){
     box.style.display = "none";
     icon.style.transform = "rotate(135deg)";
   }
-}
-
-function downloadUpcomingSchedule(){
-  const target =
-    document.getElementById("download-schedule");
-  const content =
-    document.getElementById("download-content");
-  const title =
-    document.getElementById("download-month");
-  const today = new Date();
-today.setHours(0,0,0,0);
-
-const events = allSchedule
-  .filter(item=>{
-    const d = new Date(item.date);
-    d.setHours(0,0,0,0);
-    return d >= today;
-  })
-  .sort((a,b)=>new Date(a.date)-new Date(b.date));
-  
-console.log(events);
-
-if(events.length === 0){
-  alert("No upcoming schedule.");
-  return;
-}
-
-  title.innerHTML = "UPCOMING SCHEDULE";
-content.innerHTML = events.map(e => {
-
-const d = new Date(e.date);
-
-const month = d.toLocaleString("en-US", {
-month:"short"
-}).toUpperCase();
-
-const day = d.getDate();
-
-return `
-<div class="download-item">
-
-    <div class="download-date">
-        ${day}<br>${month}
-    </div>
-
-    <div class="download-time">
-        ${e.time || "-"}
-    </div>
-
-    <div class="download-title">
-        ${e.cat} ${e.title}
-    </div>
-</div>
-`;
-
-}).join("");
-
-console.log(content.innerHTML);
-
-target.style.left = "0px";
-
-html2canvas(target,{
-    scale:2,
-    useCORS:true,
-    backgroundColor:"#fff"
-}).then(canvas=>{
-
-    target.style.left = "-99999px";
-
-    const link = document.createElement("a");
-    link.download = "FLARE-U-Upcoming-Schedule.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
-});
 }
 
 function showDownloadHint(){
