@@ -67,23 +67,22 @@ console.log(window.allSchedule);
 
     }).join("");
 
-    target.style.left="0";
-    target.style.opacity="1";
+    target.style.left = "0";
+target.style.visibility = "visible";
+target.style.opacity = "1";
 
-    html2canvas(target,{
-        scale:2,
-        useCORS:true,
-        backgroundColor:"#ffffff"
-    }).then(canvas=>{
+html2canvas(target,{
+    scale:2,
+    useCORS:true,
+    backgroundColor:null
+}).then(canvas=>{
 
-        target.style.left="-99999px";
-        target.style.opacity="0";
+    target.style.left = "-99999px";
+    target.style.visibility = "hidden";
+    target.style.opacity = "1";
 
-        const link=document.createElement("a");
-        link.download="FLARE-U-Upcoming-Schedule.png";
-        link.href=canvas.toDataURL("image/png");
-        link.click();
-
-    });
-
-}
+    const link = document.createElement("a");
+    link.download = "FLARE-U-Upcoming-Schedule.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+});
