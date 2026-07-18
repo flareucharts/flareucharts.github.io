@@ -86,19 +86,17 @@ target.style.top = "20px";
 target.style.visibility = "visible";
 target.style.opacity = "1";
 
-html2canvas(target,{
-    scale:3;
-    useCORS:true,
-    backgroundColor:null
-}).then(canvas=>{
+htmlToImage.toPng(target,{
+    pixelRatio: 3,
+    cacheBust: true
+}).then(function(dataUrl){
 
-    // JANGAN DISEMBUNYIKAN DULU
-    // target.style.left = "-99999px";
-    // target.style.visibility = "hidden";
+    target.style.left = "-99999px";
+    target.style.visibility = "hidden";
 
     const link = document.createElement("a");
     link.download = "FLARE-U-Upcoming-Schedule.png";
-    link.href = canvas.toDataURL("image/png");
+    link.href = dataUrl;
     link.click();
 });
 };
