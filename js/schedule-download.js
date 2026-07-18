@@ -19,6 +19,10 @@ console.log(window.allSchedule);
         })
         .sort((a,b)=>new Date(a.date)-new Date(b.date));
 
+const maxEvents = 7;
+const hasMore = events.length > maxEvents;
+const displayEvents = events.slice(0, maxEvents);
+
     if(events.length===0){
         alert("No upcoming schedule.");
         return;
