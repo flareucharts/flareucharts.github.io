@@ -82,11 +82,9 @@ if (hasMore) {
 }
 
 target.style.left = "0";
+target.style.top = "20px";
 target.style.visibility = "visible";
 target.style.opacity = "1";
-
-target.style.width = "1080px";
-target.style.height = "1350px";
 
 html2canvas(target,{
     scale:2,
@@ -96,9 +94,9 @@ html2canvas(target,{
     backgroundColor:null
 }).then(canvas=>{
 
-    target.style.left = "-99999px";
-    target.style.visibility = "hidden";
-    target.style.opacity = "1";
+    // JANGAN DISEMBUNYIKAN DULU
+    // target.style.left = "-99999px";
+    // target.style.visibility = "hidden";
 
     const link = document.createElement("a");
     link.download = "FLARE-U-Upcoming-Schedule.png";
