@@ -73,6 +73,14 @@ const displayEvents = events.slice(0, maxEvents);
 
     }).join("");
 
+if (hasMore) {
+    content.innerHTML += `
+        <div class="download-more">
+            + ${events.length - maxEvents} MORE
+        </div>
+    `;
+}
+
 target.style.left = "0";
 target.style.visibility = "visible";
 target.style.opacity = "1";
