@@ -1,13 +1,13 @@
 /* AREA GAMBAR DOWNLOAD */
 #download-schedule{
   opacity:1;          /* jangan 0 */
-  visibility:hidden;  /* sembunyikan pakai ini */
-  pointer-events:none;
-  position:fixed;
+  visibility:visible;  /* sembunyikan pakai ini */
+  pointer-events:auto;
+  position:relative;
   left:-99999px;
   top:0;
-  width:1080px;
-  height:1350px;
+  width:390x;
+  margin:20px auto;
   padding:60px;
   box-sizing:border-box;
   background:var(--bg-gradient);
