@@ -87,9 +87,7 @@ target.style.visibility = "visible";
 target.style.opacity = "1";
 
 html2canvas(target,{
-    scale:2,
-    width:1080,
-    height:1350,
+    scale:3;
     useCORS:true,
     backgroundColor:null
 }).then(canvas=>{
