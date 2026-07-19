@@ -8,7 +8,7 @@ window.downloadUpcomingSchedule = async function () {
     console.log("schedule-download.js loaded");
     console.log(window.allSchedule);
 
-    const res = await fetch("./download/up-schedule.html");
+const res = await fetch("./download/up-schedule-temp.html");
 const html = await res.text();
 const wrapper = document.createElement("div");
 wrapper.innerHTML = html;
