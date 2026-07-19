@@ -9,14 +9,25 @@ window.downloadUpcomingSchedule = async function () {
     console.log(window.allSchedule);
 
 const res = await fetch("./download/up-schedule-temp.html");
+
+console.log("FETCH:", res.status);
+
 const html = await res.text();
+
+console.log("HTML LENGTH:", html.length);
 const wrapper = document.createElement("div");
 wrapper.innerHTML = html;
 const target = wrapper.querySelector("#download-schedule");
+
+console.log("TARGET TEMPLATE:", target);
+
+if(!target){
+    console.error("download-schedule tidak ditemukan");
+    return;
+}
+
 document.body.appendChild(target);
 
-
-// LOAD DOWNLOAD CSS
 // LOAD DOWNLOAD CSS ONCE
 if(!document.querySelector('link[href*="download.css"]')){
     const link = document.createElement("link");
@@ -206,7 +217,7 @@ console.log("HTML:", target.innerHTML);
 
 console.log("BEFORE PNG");
 console.log(target.offsetWidth, target.offsetHeight);
-console.log(document.querySelector(".download-logo").naturalWidth);
+console.log(target.querySelector(".download-logo").naturalWidth);
 
 const logo = target.querySelector(".download-logo");
 
