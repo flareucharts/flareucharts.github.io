@@ -8,6 +8,22 @@ function makeSlug(title){
 }
 
 window.discography = [
+{
+    albumType: "1st Mini Album",
+    title: "YOUTH ERROR - JAPAN",
+    artist: "FLARE U",
+    releaseDate: "2026-09-09",
+    cover: "youth-error.png",
+    spotify: "",
+    apple: "",
+    youtubeMusic: "",
+    melon: "",
+    genie: "",
+    bugs: "",
+    tracks: "WAY 2 U|Hyper|우니까 (Don't cry)|MIRACLE|WOO-HOO|놀이터 (Playground)",
+    video: "https://youtu.be/dyxmlYXdxUs"
+  },
+
   {
     albumType: "1st Mini Album",
     title: "YOUTH ERROR",
