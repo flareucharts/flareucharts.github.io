@@ -187,11 +187,10 @@ const hasMore = events.length > maxEvents;
 // SHOW FOR CAPTURE ONLY
 // =========================
 
-target.style.position="absolute";
-target.style.left="-99999px";
+target.style.position="fixed";
+target.style.left="0px";
 target.style.top="0px";
-target.style.visibility="visible";
-target.style.opacity="1";
+target.style.visibility="none";
 target.style.width="1080px";
 target.style.height="1350px";
 
