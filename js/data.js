@@ -20,7 +20,7 @@ window.discography = [
     melon: "",
     genie: "",
     bugs: "",
-    tracks: "???|WAY2U-Japanese ver.-|Hyper-Japanese ver.-|Don't Cry-Japanese ver.-|WAY 2 U|Hyper|Don't Cry|MIRACLE|WOO-HOO Playground",
+    tracks: "???|WAY 2 U -Japanese ver.-|Hyper -Japanese ver.-|Don't Cry -Japanese ver.-|WAY 2 U|Hyper|Don't Cry|MIRACLE|WOO-HOO|Playground",
     video: "https://youtu.be/dyxmlYXdxUs"
   },
 
