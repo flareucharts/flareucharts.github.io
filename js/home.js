@@ -4,7 +4,7 @@ const container = document.getElementById("discographyScroll");
 
 const top3 = [...window.discography]
   .sort((a,b) => new Date(b.releaseDate) - new Date(a.releaseDate))
-  .slice(0, 3);
+  .slice(0, 5);
 
 container.innerHTML = "";
 
