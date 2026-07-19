@@ -164,6 +164,8 @@ const hasMore = events.length > maxEvents;
     requestAnimationFrame(async ()=>{
 
 await document.fonts.ready;
+await new Promise(resolve => setTimeout(resolve, 500));
+
 const images = target.querySelectorAll("img");
 await Promise.all(
     [...images].map(img=>{
@@ -204,10 +206,14 @@ console.log(
     target.offsetHeight
 );
 
-            htmlToImage.toPng(target,{
-            pixelRatio:1,
-            cacheBust:true,
-            backgroundColor:"#91d3ca"
+            const fontEmbedCSS = await htmlToImage.getFontEmbedCSS(target);
+
+htmlToImage.toPng(target, {
+    pixelRatio: 1,
+    cacheBust: true,
+    backgroundColor: "#91d3ca",
+    fontEmbedCSS
+})
             }).then(function(dataUrl){
 
                 target.style.left="-99999px";
