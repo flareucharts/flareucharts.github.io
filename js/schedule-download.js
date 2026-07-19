@@ -200,22 +200,24 @@ console.log(target, content, yearEl, moreEl);
 
     // tunggu browser render
     requestAnimationFrame(()=>{
+    requestAnimationFrame(async ()=>{
 
-        requestAnimationFrame(()=>{
 await document.fonts.ready;
-
 const images = target.querySelectorAll("img");
-
 await Promise.all(
     [...images].map(img=>{
         if(img.complete) return Promise.resolve();
-
         return new Promise(resolve=>{
             img.onload = resolve;
             img.onerror = resolve;
         });
     })
 );
+
+console.log("TARGET:", target);
+console.log("SIZE:", target.offsetWidth, target.offsetHeight);
+console.log("HTML:", target.innerHTML);
+
             htmlToImage.toPng(target,{
                 pixelRatio:3,
                 cacheBust:true
