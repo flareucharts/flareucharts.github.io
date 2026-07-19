@@ -149,7 +149,6 @@ console.log(target, content, yearEl, moreEl);
     <span class="title">
         ${String(event.cat || "")} ${String(event.title || "")}
     </span>
-</div>
     </div>
     `
 );
