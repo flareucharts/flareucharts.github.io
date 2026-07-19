@@ -195,11 +195,12 @@ console.log(target, content, yearEl, moreEl);
     // SHOW
     // =========================
 
-    target.style.left = "50%";
-    target.style.top = "20px";
-    target.style.transform = "translateX(-50%)";
-    target.style.visibility = "visible";
-    target.style.opacity = "1";
+    target.style.position="fixed";
+    target.style.left="50%";
+    target.style.top="20px";
+    target.style.width="1080px";
+    target.style.height="1350px";
+    target.style.transform="translateX(-50%)";
 
     // tunggu browser render
     requestAnimationFrame(()=>{
@@ -225,15 +226,6 @@ console.log("BEFORE PNG");
 console.log(target.offsetWidth, target.offsetHeight);
 console.log(document.querySelector(".download-logo").naturalWidth);
 
-const logo = document.querySelector(".download-logo");
-
-console.log("LOGO CHECK:", {
-    src: logo.src,
-    width: logo.naturalWidth,
-    height: logo.naturalHeight,
-    complete: logo.complete
-});
-
 const logo = target.querySelector(".download-logo");
 
 console.log("LOGO:", {
@@ -242,6 +234,18 @@ console.log("LOGO:", {
     naturalWidth: logo?.naturalWidth,
     naturalHeight: logo?.naturalHeight
 });
+
+console.log("BEFORE FORCE SIZE");
+
+target.style.width = "1080px";
+target.style.height = "1350px";
+target.style.boxSizing = "border-box";
+
+console.log(
+    "AFTER FORCE SIZE:",
+    target.offsetWidth,
+    target.offsetHeight
+);
 
             htmlToImage.toPng(target,{
                 pixelRatio:1, 
