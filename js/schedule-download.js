@@ -1,4 +1,4 @@
-alert("SCHEDULE DOWNLOAD AKTIF");
+alert("SCHEDULE DOWNLOAD TELAH AKTIF");
 
 console.log("schedule-download.js READY");
 console.log("BEFORE FUNCTION");
