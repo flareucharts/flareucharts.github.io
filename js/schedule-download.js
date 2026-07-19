@@ -3,15 +3,32 @@ alert("SCHEDULE DOWNLOAD TELAH AKTIF");
 console.log("schedule-download.js READY");
 console.log("BEFORE FUNCTION");
 
-window.downloadUpcomingSchedule = function () {
+window.downloadUpcomingSchedule = async function () {
 
     console.log("schedule-download.js loaded");
     console.log(window.allSchedule);
 
-    const target = document.getElementById("download-schedule");
-    const content = document.getElementById("download-content");
-    const yearEl = document.getElementById("download-year");
-    const moreEl = document.getElementById("download-more");
+    const res = await fetch("./download/up-schedule.html");
+const html = await res.text();
+const wrapper = document.createElement("div");
+wrapper.innerHTML = html;
+const target = wrapper.querySelector("#download-schedule");
+document.body.appendChild(target);
+
+
+// LOAD DOWNLOAD CSS
+// LOAD DOWNLOAD CSS ONCE
+if(!document.querySelector('link[href*="download.css"]')){
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "./css/download.css";
+    document.head.appendChild(link);
+    await new Promise(resolve=>setTimeout(resolve,300));
+};
+
+const content = target.querySelector("#download-content");
+const yearEl = target.querySelector("#download-year");
+const moreEl = target.querySelector("#download-more");
 
 console.log(target, content, yearEl, moreEl);
 
@@ -148,17 +165,17 @@ const hasMore = events.length > maxEvents;
     moreEl.innerHTML = "";
 }
 
-    // =========================
-    // SHOW
-    // =========================
+// =========================
+// SHOW FOR CAPTURE ONLY
+// =========================
 
-target.style.position = "absolute";
-target.style.left = "-99999px";
-target.style.top = "0px";
-target.style.visibility = "visible";
-target.style.opacity = "1";
-target.style.width = "1080px";
-target.style.height = "1350px";
+target.style.position="absolute";
+target.style.left="-99999px";
+target.style.top="0px";
+target.style.visibility="visible";
+target.style.opacity="1";
+target.style.width="1080px";
+target.style.height="1350px";
 
     // tunggu browser render
     requestAnimationFrame(()=>{
@@ -224,30 +241,25 @@ htmlToImage.toPng(target, {
     cacheBust: true,
     backgroundColor: "#91d3ca",
     fontEmbedCSS
-            }).then(function(dataUrl){
+            })
+.then(function(dataUrl){
 
-                target.style.left="-99999px";
-                target.style.top="0";
-                target.style.transform="";
-                target.style.visibility="hidden";
+    const link=document.createElement("a");
+    link.download="FLARE-U-Upcoming-Schedule.png";
+    link.href=dataUrl;
+    link.click();
 
-                const link=document.createElement("a");
-                link.download="FLARE-U-Upcoming-Schedule.png";
-                link.href=dataUrl;
-                link.click();
+    setTimeout(()=>{
+        target.remove();
+    },500);
 
-            }).catch(function(err){
+})
+.catch(function(err){
+    console.error("PNG ERROR:", err);
+    target.remove();
+    alert("Failed to generate image.");
 
-                console.error("PNG ERROR:", err);
-
-                target.style.left="-99999px";
-                target.style.top="0";
-                target.style.transform="";
-                target.style.visibility="hidden";
-
-                alert("Failed to generate image.");
-
-            });
+});
 
         });
 
