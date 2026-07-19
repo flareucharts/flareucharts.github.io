@@ -248,8 +248,9 @@ console.log(
 );
 
             htmlToImage.toPng(target,{
-                pixelRatio:1, 
-                cacheBust:true
+            pixelRatio:1,
+            cacheBust:true,
+            backgroundColor:"#91d3ca"
             }).then(function(dataUrl){
 
                 target.style.left="-99999px";
