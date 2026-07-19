@@ -196,11 +196,11 @@ console.log(target, content, yearEl, moreEl);
     // =========================
 
     target.style.position="fixed";
-    target.style.left="50%";
-    target.style.top="20px";
+    target.style.left="0px";
+    target.style.top="0px";
+    target.style.transform="none";
     target.style.width="1080px";
     target.style.height="1350px";
-    target.style.transform="translateX(-50%)";
 
     // tunggu browser render
     requestAnimationFrame(()=>{
