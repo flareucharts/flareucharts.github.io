@@ -94,9 +94,21 @@
 }
 
 #download-schedule{
+    visibility:hidden;
+    pointer-events:none;
     width:1080px !important;
     height:1350px !important;
     box-sizing:border-box;
+    left:-20000px;
+    top:0;
+    position:absolute;
+    overflow:hidden;
+    background:#91d3ca;
+    color:white;
+    flex-direction:column;
+    font-family:"Inter", sans-serif;
+    display:flex;
+    z-index:-1;
 }
 
 #download-schedule img.download-logo{
@@ -105,17 +117,13 @@
     height:auto;
 }
 
-#download-schedule{
-    width:1080px !important;
-    height:1350px !important;
-    padding:60px 80px;
-    box-sizing:border-box;
-    background:#91d3ca;
-    color:white;
-    display:flex;
-    flex-direction:column;
-    font-family:"Inter", sans-serif;
-    display:flex;
+.download-hidden{
+    position:fixed;
+    left:-99999px;
+    top:0;
+    visibility:hidden;
+    opacity:0;
+    pointer-events:none;
 }
 
 #download-content{
@@ -243,12 +251,6 @@
 /* =========================
    DOWNLOAD CONFETTI
 ========================= */
-
-#download-schedule{
-    position:relative;
-    overflow:hidden;
-}
-
 
 /* AREA */
 .download-confetti{
