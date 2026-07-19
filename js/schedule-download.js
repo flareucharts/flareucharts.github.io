@@ -225,6 +225,15 @@ console.log("BEFORE PNG");
 console.log(target.offsetWidth, target.offsetHeight);
 console.log(document.querySelector(".download-logo").naturalWidth);
 
+const logo = document.querySelector(".download-logo");
+
+console.log("LOGO CHECK:", {
+    src: logo.src,
+    width: logo.naturalWidth,
+    height: logo.naturalHeight,
+    complete: logo.complete
+});
+
             htmlToImage.toPng(target,{
                 pixelRatio:3,
                 cacheBust:true
