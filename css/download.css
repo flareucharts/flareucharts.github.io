@@ -154,7 +154,7 @@
     text-align:left;
     box-sizing:border-box;
     overflow-wrap:break-word;
-    color:yellow;
+    color:#fdf5c4;
 }
 
 .download-month{
@@ -183,18 +183,19 @@
     font-weight:700;
     line-height:1;
     padding-top:2px;
+    color:#fdf5c4;
 }
 
 .download-events{
     display:flex;
     flex-direction:column;
     gap:14px;
-    margin-bottom:5px;
+    margin-bottom:10px;
 }
 
 .download-event{
     display:grid;
-    grid-template-columns:max-content 1fr;
+    grid-template-columns:170px 1fr;
     align-items:baseline;
     column-gap:24px;
 }
