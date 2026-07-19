@@ -14,6 +14,8 @@ console.log("FETCH:", res.status);
 
 const html = await res.text();
 
+console.log(html);
+
 console.log("HTML LENGTH:", html.length);
 const wrapper = document.createElement("div");
 wrapper.innerHTML = html;
@@ -74,6 +76,11 @@ console.log(target, content, yearEl, moreEl);
             )
         )
     ];
+
+console.log("target =", target);
+console.log("yearEl =", yearEl);
+console.log("content =", content);
+console.log("moreEl =", moreEl);
 
     yearEl.textContent =
         years.length===1
