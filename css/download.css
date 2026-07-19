@@ -129,7 +129,6 @@
     display:flex;
     justify-content:space-between;
     align-items:flex-start;
-
 }
 
 .download-year{
@@ -155,12 +154,13 @@
     text-align:left;
     box-sizing:border-box;
     overflow-wrap:break-word;
+    color:yellow;
 }
 
 .download-month{
     font-size:48px;
     font-weight:800;
-    margin-top:10px;
+    margin-top:15px;
 }
 
 .download-line{
@@ -189,6 +189,7 @@
     display:flex;
     flex-direction:column;
     gap:14px;
+    margin-bottom:5px;
 }
 
 .download-event{
