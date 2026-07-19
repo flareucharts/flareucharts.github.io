@@ -17,7 +17,7 @@ const html = await res.text();
 console.log("HTML LENGTH:", html.length);
 const wrapper = document.createElement("div");
 wrapper.innerHTML = html;
-const target = wrapper.querySelector("#download-schedule");
+const target = wrapper.firstElementChild;
 
 console.log("TARGET TEMPLATE:", target);
 
