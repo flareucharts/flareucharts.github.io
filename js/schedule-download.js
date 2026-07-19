@@ -234,6 +234,15 @@ console.log("LOGO CHECK:", {
     complete: logo.complete
 });
 
+const logo = target.querySelector(".download-logo");
+
+console.log("LOGO:", {
+    src: logo?.src,
+    complete: logo?.complete,
+    naturalWidth: logo?.naturalWidth,
+    naturalHeight: logo?.naturalHeight
+});
+
             htmlToImage.toPng(target,{
                 pixelRatio:3,
                 cacheBust:true
