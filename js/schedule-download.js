@@ -152,14 +152,13 @@ const hasMore = events.length > maxEvents;
     // SHOW
     // =========================
 
-target.style.position="absolute";
-target.style.left="-99999px";
-target.style.top="0px";
-target.style.transform="none";
-target.style.visibility="visible";
-target.style.opacity="1";
-target.style.width="1080px";
-target.style.height="1350px";
+target.style.position = "absolute";
+target.style.left = "-99999px";
+target.style.top = "0px";
+target.style.visibility = "visible";
+target.style.opacity = "1";
+target.style.width = "1080px";
+target.style.height = "1350px";
 
     // tunggu browser render
     requestAnimationFrame(()=>{
