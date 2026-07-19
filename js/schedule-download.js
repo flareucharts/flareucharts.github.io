@@ -253,4 +253,4 @@ console.log("HTML:", target.innerHTML);
 };
 
 console.log("END FILE");
-console.log(typeof downloadUpcomingSchedule);
+console.log(typeof window.downloadUpcomingSchedule);
