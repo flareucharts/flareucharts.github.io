@@ -94,14 +94,11 @@
 }
 
 #download-schedule{
-    visibility:hidden;
     pointer-events:none;
     width:1080px !important;
     height:1350px !important;
     box-sizing:border-box;
-    left:-20000px;
-    top:0;
-    position:absolute;
+    position:fixed;
     overflow:hidden;
     background:#91d3ca;
     color:white;
