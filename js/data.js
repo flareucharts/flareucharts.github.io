@@ -52,7 +52,7 @@ window.discography = [
     melon: "",
     genie: "",
     bugs: "",
-    tracks: "Flower pot",
+    tracks: "Flower pot|UxYOUxU|Fresh|Hello My Friend",
     video: "https://youtu.be/ZoI7nREAwPw"
   },
 
