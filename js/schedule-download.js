@@ -1,6 +1,7 @@
 alert("SCHEDULE DOWNLOAD AKTIF");
 
 console.log("schedule-download.js READY");
+console.log("BEFORE FUNCTION");
 
 window.downloadUpcomingSchedule = function () {
 
