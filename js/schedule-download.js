@@ -165,6 +165,13 @@ const hasMore = events.length > maxEvents;
 
 await document.fonts.ready;
 await new Promise(resolve => setTimeout(resolve, 500));
+await document.fonts.load("300 35px Inter"); // light
+await document.fonts.load("500 35px Inter"); // medium
+await document.fonts.load("600 35px Inter"); // semibold
+await document.fonts.load("700 30px Inter"); // bold
+await document.fonts.load("900 90px Inter"); // black
+await document.fonts.ready;
+await document.fonts.ready;
 
 const images = target.querySelectorAll("img");
 await Promise.all(
@@ -206,7 +213,7 @@ console.log(
     target.offsetHeight
 );
 
-            const fontEmbedCSS = await htmlToImage.getFontEmbedCSS(target);
+const fontEmbedCSS = await htmlToImage.getFontEmbedCSS(target);
 
 htmlToImage.toPng(target, {
     pixelRatio: 1,
