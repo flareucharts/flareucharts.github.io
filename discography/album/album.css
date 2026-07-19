@@ -3,7 +3,7 @@
   margin:auto;
   padding:0px;
   box-sizing:border-box;
-  margin-top:10px;
+  margin-top:0;
   position:relative;
   min-height:100vh;
   transition:background .5s ease;
