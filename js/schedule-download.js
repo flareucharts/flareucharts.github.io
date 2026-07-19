@@ -221,6 +221,10 @@ console.log("TARGET:", target);
 console.log("SIZE:", target.offsetWidth, target.offsetHeight);
 console.log("HTML:", target.innerHTML);
 
+console.log("BEFORE PNG");
+console.log(target.offsetWidth, target.offsetHeight);
+console.log(document.querySelector(".download-logo").naturalWidth);
+
             htmlToImage.toPng(target,{
                 pixelRatio:3,
                 cacheBust:true
@@ -238,7 +242,7 @@ console.log("HTML:", target.innerHTML);
 
             }).catch(function(err){
 
-                console.error(err);
+                console.error("PNG ERROR:", err);
 
                 target.style.left="-99999px";
                 target.style.top="0";
