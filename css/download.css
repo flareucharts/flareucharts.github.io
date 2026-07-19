@@ -110,6 +110,12 @@
     font-family:Inter,sans-serif;
 }
 
+#download-content{
+    width:100%;
+    max-width:none !important;
+    flex:1;
+}
+
 .download-top{
     display:flex;
     justify-content:space-between;
