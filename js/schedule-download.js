@@ -56,7 +56,7 @@ console.log(target, content, yearEl, moreEl);
     // MAX 7 DATES
     // =========================
 
-    const maxEvents = 12;
+    const maxEvents = 8;
 const displayEvents = events.slice(0, maxEvents);
 const hasMore = events.length > maxEvents;
     
