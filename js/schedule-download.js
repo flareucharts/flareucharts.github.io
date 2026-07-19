@@ -244,7 +244,7 @@ console.log("LOGO:", {
 });
 
             htmlToImage.toPng(target,{
-                pixelRatio:3,
+                pixelRatio:1, 
                 cacheBust:true
             }).then(function(dataUrl){
 
