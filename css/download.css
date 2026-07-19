@@ -166,7 +166,7 @@
 
 .download-day-group{
     display:grid;
-    grid-template-columns:150px 1fr;
+    grid-template-columns:100px 1fr;
     align-items:start;
     margin-bottom:14px;
 }
@@ -186,8 +186,9 @@
 
 .download-event{
     display:grid;
-    grid-template-columns:150px 1fr;
-    align-items:center;
+    grid-template-columns:max-content 1fr;
+    align-items:baseline;
+    column-gap:24px;
 }
 
 .download-event .time{
