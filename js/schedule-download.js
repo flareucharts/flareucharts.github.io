@@ -10,6 +10,8 @@ window.downloadUpcomingSchedule = function () {
     const yearEl = document.getElementById("download-year");
     const moreEl = document.getElementById("download-more");
 
+console.log(target, content, yearEl, moreEl);
+
     const today = new Date();
     today.setHours(0,0,0,0);
 
