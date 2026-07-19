@@ -19,12 +19,9 @@ window.downloadUpcomingSchedule = function () {
 
     const events = (window.allSchedule || [])
         .filter(item => {
-
             const d = new Date(item.date);
             d.setHours(0,0,0,0);
-
             return d >= today;
-
         })
         .sort((a,b)=>new Date(a.date)-new Date(b.date));
 
@@ -55,79 +52,56 @@ window.downloadUpcomingSchedule = function () {
     // =========================
 
     const maxDates = 7;
-
     let displayEvents = [];
     let lastDateKey = "";
     let totalDates = 0;
-
     for(const event of events){
-
         const dateKey =
             new Date(event.date)
             .toISOString()
             .slice(0,10);
-
         if(dateKey!==lastDateKey){
-
             totalDates++;
-
             if(totalDates>maxDates){
                 break;
             }
-
             lastDateKey = dateKey;
-
         }
 
         displayEvents.push(event);
-
     }
-
     const hasMore =
         displayEvents.length < events.length;
 
     // kosongkan isi lama
     content.innerHTML = "";
-
     // =========================
     // BUILD HTML
     // =========================
-
     let currentMonth = "";
     let currentDate = "";
-
     let dayGroup = null;
     let eventsBox = null;
-
     displayEvents.forEach(event=>{
-
         const d = new Date(event.date);
-
         const month = d.toLocaleString("en-US",{
             month:"long"
         }).toUpperCase();
-
         const dateKey = d.toISOString().slice(0,10);
-
         // =========================
         // MONTH
         // =========================
 
         if(month!==currentMonth){
-
             currentMonth = month;
-
             content.insertAdjacentHTML(
                 "beforeend",
-                `
                 <div class="download-month">
                     ${month}
                 </div>
-
                 <div class="download-line"></div>
                 `
             );
-
         }
 
         // =========================
@@ -152,9 +126,8 @@ window.downloadUpcomingSchedule = function () {
             `;
 
             content.appendChild(dayGroup);
-
             eventsBox =
-                dayGroup.querySelector(".download-events");
+        dayGroup.querySelector(".download-events");
 
         }
 
@@ -163,21 +136,19 @@ window.downloadUpcomingSchedule = function () {
         // =========================
 
         eventsBox.insertAdjacentHTML(
-            "beforeend",
-            `
-            <div class="download-event">
-
-                <span class="time">
-                    ${event.time || "-"}
-                </span>
-
-                <span class="title">
-                    ${event.cat ? event.cat + " " : ""}${event.title}
-                </span>
-
-            </div>
-            `
-        );
+    "beforeend",
+    `
+    <div class="download-event">
+    <span class="time">
+        ${event.time || "-"}
+    </span>
+    <span class="title">
+        ${String(event.cat || "")} ${String(event.title || "")}
+    </span>
+</div>
+    </div>
+    `
+);
 
     });
 
