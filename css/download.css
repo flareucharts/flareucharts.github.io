@@ -101,19 +101,21 @@
 #download-schedule{
     width:1080px !important;
     height:1350px !important;
-    padding:80px 90px;
+    padding:60px 80px;
     box-sizing:border-box;
     background:#91d3ca;
     color:white;
     display:flex;
     flex-direction:column;
     font-family:Inter,sans-serif;
+    display:flex;
 }
 
 #download-content{
     width:100%;
     max-width:none !important;
     flex:1;
+    overflow:hidden;
 }
 
 .download-top{
@@ -136,10 +138,11 @@
 .download-title{
     width:100%;
     max-width:100%;
-    margin:18px 0 45px;
+    margin:10px 0 25px;
     padding:0;
-    font-family:Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    font-size:128px;
+    font-family: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+    font-weight:900;
+    font-size:110px;
     line-height:.88;
     letter-spacing:-1px;
     text-align:left;
@@ -150,7 +153,7 @@
 .download-month{
     font-size:58px;
     font-weight:900;
-    margin-top:25px;
+    margin-top:20px;
 
 }
 
@@ -159,19 +162,18 @@
     background:white;
     opacity:.85;
     margin:18px 0 24px;
-    margin-top:5px;
+    margin-top:8px;
 }
 
 .download-day-group{
     display:grid;
-    grid-template-columns:180px 1fr;
-
-    margin-bottom:34px;
+    grid-template-columns:150px 1fr;
+    margin-bottom:20px;
 
 }
 
 .download-date{
-    font-size:62px;
+    font-size:58px;
     font-weight:900;
 
 }
@@ -189,27 +191,31 @@
 }
 
 .download-event .time{
-    font-size:40px;
+    font-size:30px;
     font-weight:600;
 }
 
 .download-event .title{
-    font-size:40px;
+    font-size:30px;
     font-weight:600;
 }
 
 .download-more{
-    margin-top:auto;
+    margin-top:20px;
     text-align:center;
     font-size:38px;
     font-weight:800;
 }
 
 .download-footer{
-    margin-top:18px;
+    margin-top:10px;
     text-align:center;
     color:#23453f;
     font-size:40px;
     font-weight:500;
+}
 
+.download-more,
+.download-footer{
+    flex-shrink:0;
 }
