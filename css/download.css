@@ -102,6 +102,7 @@
     overflow:hidden;
     background:#91d3ca;
     color:white;
+    padding:60px 80px;
     flex-direction:column;
     font-family:"Inter", sans-serif;
     display:flex;
