@@ -170,8 +170,6 @@ await document.fonts.load("500 35px Inter"); // medium
 await document.fonts.load("600 35px Inter"); // semibold
 await document.fonts.load("700 30px Inter"); // bold
 await document.fonts.load("900 90px Inter"); // black
-await document.fonts.ready;
-await document.fonts.ready;
 
 const images = target.querySelectorAll("img");
 await Promise.all(
@@ -211,6 +209,11 @@ console.log(
     "AFTER FORCE SIZE:",
     target.offsetWidth,
     target.offsetHeight
+);
+
+console.log(
+  "INTER CHECK:",
+  document.fonts.check("900 90px Inter")
 );
 
 const fontEmbedCSS = await htmlToImage.getFontEmbedCSS(target);
