@@ -97,13 +97,15 @@ console.log(target, content, yearEl, moreEl);
         if(month!==currentMonth){
             currentMonth = month;
             content.insertAdjacentHTML(
-                "beforeend",
-                <div class="download-month">
-                    ${month}
-                </div>
-                <div class="download-line"></div>
-                `
-            );
+    "beforeend",
+    `
+    <div class="download-month">
+        ${month}
+    </div>
+
+    <div class="download-line"></div>
+    `
+);
         }
 
         // =========================
