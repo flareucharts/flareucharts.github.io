@@ -107,7 +107,7 @@
     color:white;
     display:flex;
     flex-direction:column;
-    font-family:Inter,sans-serif;
+    font-family: "Inter", sans-serif;
     display:flex;
 }
 
@@ -140,9 +140,9 @@
     max-width:100%;
     margin:10px 0 25px;
     padding:0;
-    font-family: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight:900;
-    font-size:100px;
+    font-size:90px;
     line-height:.88;
     letter-spacing:-1px;
     text-align:left;
