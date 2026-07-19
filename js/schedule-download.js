@@ -202,7 +202,20 @@ console.log(target, content, yearEl, moreEl);
     requestAnimationFrame(()=>{
 
         requestAnimationFrame(()=>{
+await document.fonts.ready;
 
+const images = target.querySelectorAll("img");
+
+await Promise.all(
+    [...images].map(img=>{
+        if(img.complete) return Promise.resolve();
+
+        return new Promise(resolve=>{
+            img.onload = resolve;
+            img.onerror = resolve;
+        });
+    })
+);
             htmlToImage.toPng(target,{
                 pixelRatio:3,
                 cacheBust:true
