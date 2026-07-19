@@ -213,7 +213,6 @@ htmlToImage.toPng(target, {
     cacheBust: true,
     backgroundColor: "#91d3ca",
     fontEmbedCSS
-})
             }).then(function(dataUrl){
 
                 target.style.left="-99999px";
