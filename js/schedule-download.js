@@ -56,7 +56,9 @@ console.log(target, content, yearEl, moreEl);
     // MAX 7 DATES
     // =========================
 
-    const maxDates = 7;
+    const maxEvents = 12;
+const displayEvents = events.slice(0, maxEvents);
+const hasMore = events.length > maxEvents;
     let displayEvents = [];
     let lastDateKey = "";
     let totalDates = 0;
@@ -116,20 +118,14 @@ console.log(target, content, yearEl, moreEl);
         // =========================
 
         if(dateKey!==currentDate){
-
             currentDate = dateKey;
-
             dayGroup = document.createElement("div");
             dayGroup.className = "download-day-group";
-
             dayGroup.innerHTML = `
-
                 <div class="download-date">
                     ${d.getDate()}
                 </div>
-
                 <div class="download-events"></div>
-
             `;
 
             content.appendChild(dayGroup);
@@ -164,32 +160,13 @@ console.log(target, content, yearEl, moreEl);
     // =========================
 
     if(hasMore){
-
-        const hiddenDates = new Set();
-
-        events.slice(displayEvents.length).forEach(event=>{
-
-            hiddenDates.add(
-                new Date(event.date)
-                    .toISOString()
-                    .slice(0,10)
-            );
-
-        });
-
-        moreEl.innerHTML = `
-            More
-            <br>
-            ↓
-            <br>
-            +${hiddenDates.size} Date${hiddenDates.size>1?"s":""}
-        `;
-
-    }else{
-
-        moreEl.innerHTML = "";
-
-    }
+    const hiddenEvents = events.length - displayEvents.length;
+    moreEl.innerHTML = `
+        +${hiddenEvents} more ↓
+    `;
+}else{
+    moreEl.innerHTML = "";
+}
 
     // =========================
     // SHOW
