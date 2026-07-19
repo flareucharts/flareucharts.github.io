@@ -151,14 +151,13 @@
 }
 
 .download-month{
-    font-size:58px;
+    font-size:48px;
     font-weight:900;
     margin-top:20px;
-
 }
 
 .download-line{
-    height:4px;
+    height:5px;
     background:white;
     opacity:.85;
     margin:18px 0 24px;
@@ -168,51 +167,52 @@
 .download-day-group{
     display:grid;
     grid-template-columns:150px 1fr;
-    margin-bottom:20px;
-
+    align-items:start;
+    margin-bottom:14px;
 }
 
 .download-date{
-    font-size:58px;
+    font-size:35px;
     font-weight:900;
-
+    line-height:1;
+    padding-top:2px;
 }
 
 .download-events{
     display:flex;
     flex-direction:column;
-    gap:16px;
+    gap:14px;
 }
 
 .download-event{
     display:grid;
-    grid-template-columns:120px 1fr;
+    grid-template-columns:150px 1fr;
     align-items:center;
 }
 
 .download-event .time{
-    font-size:30px;
+    font-size:35px;
     font-weight:600;
 }
 
 .download-event .title{
-    font-size:30px;
+    font-size:35px;
     font-weight:600;
 }
 
 .download-more{
     margin-top:20px;
     text-align:center;
-    font-size:38px;
-    font-weight:800;
+    font-size:24px;
+    font-weight:500;
 }
 
 .download-footer{
     margin-top:10px;
     text-align:center;
     color:#23453f;
-    font-size:40px;
-    font-weight:500;
+    font-size:30px;
+    font-weight:700;
 }
 
 .download-more,
