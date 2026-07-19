@@ -1,104 +1,266 @@
 console.log("schedule-download.js READY");
 
-window.downloadUpcomingSchedule = function(){
+window.downloadUpcomingSchedule = function () {
 
-console.log("schedule-download.js loaded");
-console.log(window.allSchedule);
+    console.log("schedule-download.js loaded");
+    console.log(window.allSchedule);
 
     const target = document.getElementById("download-schedule");
     const content = document.getElementById("download-content");
+    const yearEl = document.getElementById("download-year");
+    const moreEl = document.getElementById("download-more");
 
     const today = new Date();
     today.setHours(0,0,0,0);
 
-    const events = window.allSchedule
-        .filter(item=>{
+    // =========================
+    // UPCOMING EVENTS
+    // =========================
+
+    const events = (window.allSchedule || [])
+        .filter(item => {
+
             const d = new Date(item.date);
             d.setHours(0,0,0,0);
+
             return d >= today;
+
         })
         .sort((a,b)=>new Date(a.date)-new Date(b.date));
-
-const maxEvents = 7;
-const hasMore = events.length > maxEvents;
-const displayEvents = events.slice(0, maxEvents);
 
     if(events.length===0){
         alert("No upcoming schedule.");
         return;
     }
 
+    // =========================
+    // YEAR
+    // =========================
+
+    const years = [
+        ...new Set(
+            events.map(e =>
+                new Date(e.date).getFullYear()
+            )
+        )
+    ];
+
+    yearEl.textContent =
+        years.length===1
+            ? years[0]
+            : `${years[0]}–${years[years.length-1]}`;
+
+    // =========================
+    // MAX 7 DATES
+    // =========================
+
+    const maxDates = 7;
+
+    let displayEvents = [];
+    let lastDateKey = "";
+    let totalDates = 0;
+
+    for(const event of events){
+
+        const dateKey =
+            new Date(event.date)
+            .toISOString()
+            .slice(0,10);
+
+        if(dateKey!==lastDateKey){
+
+            totalDates++;
+
+            if(totalDates>maxDates){
+                break;
+            }
+
+            lastDateKey = dateKey;
+
+        }
+
+        displayEvents.push(event);
+
+    }
+
+    const hasMore =
+        displayEvents.length < events.length;
+
+    // kosongkan isi lama
+    content.innerHTML = "";
+
+    // =========================
+    // BUILD HTML
+    // =========================
+
     let currentMonth = "";
+    let currentDate = "";
 
-    content.innerHTML = events.map(e=>{
+    let dayGroup = null;
+    let eventsBox = null;
 
-        const d = new Date(e.date);
+    displayEvents.forEach(event=>{
+
+        const d = new Date(event.date);
 
         const month = d.toLocaleString("en-US",{
-            month:"short"
+            month:"long"
         }).toUpperCase();
 
-        const day = String(d.getDate()).padStart(2,"0");
+        const dateKey = d.toISOString().slice(0,10);
 
-        const divider =
-        currentMonth!==month
-        ? `
-        <div class="month-divider">
-            <span>${month}</span>
-        </div>
-        `
-        : "";
+        // =========================
+        // MONTH
+        // =========================
 
-        currentMonth = month;
+        if(month!==currentMonth){
 
-        return `
-        ${divider}
+            currentMonth = month;
 
-        <div class="download-row">
+            content.insertAdjacentHTML(
+                "beforeend",
+                `
+                <div class="download-month">
+                    ${month}
+                </div>
 
-            <div class="download-date">
-                ${day}
+                <div class="download-line"></div>
+                `
+            );
+
+        }
+
+        // =========================
+        // DATE
+        // =========================
+
+        if(dateKey!==currentDate){
+
+            currentDate = dateKey;
+
+            dayGroup = document.createElement("div");
+            dayGroup.className = "download-day-group";
+
+            dayGroup.innerHTML = `
+
+                <div class="download-date">
+                    ${d.getDate()}
+                </div>
+
+                <div class="download-events"></div>
+
+            `;
+
+            content.appendChild(dayGroup);
+
+            eventsBox =
+                dayGroup.querySelector(".download-events");
+
+        }
+
+        // =========================
+        // EVENT
+        // =========================
+
+        eventsBox.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="download-event">
+
+                <span class="time">
+                    ${event.time || "-"}
+                </span>
+
+                <span class="title">
+                    ${event.cat ? event.cat + " " : ""}${event.title}
+                </span>
+
             </div>
+            `
+        );
 
-            <div class="download-time">
-                ${e.time || "-"}
-            </div>
+    });
 
-            <div class="download-title">
-                ${e.cat || ""} ${e.title}
-            </div>
 
-        </div>
+    // =========================
+    // MORE
+    // =========================
+
+    if(hasMore){
+
+        const hiddenDates = new Set();
+
+        events.slice(displayEvents.length).forEach(event=>{
+
+            hiddenDates.add(
+                new Date(event.date)
+                    .toISOString()
+                    .slice(0,10)
+            );
+
+        });
+
+        moreEl.innerHTML = `
+            More
+            <br>
+            ↓
+            <br>
+            +${hiddenDates.size} Date${hiddenDates.size>1?"s":""}
         `;
 
-    }).join("");
+    }else{
 
-if (hasMore) {
-    content.innerHTML += `
-        <div class="download-more">
-            + ${events.length - maxEvents} MORE
-        </div>
-    `;
-}
+        moreEl.innerHTML = "";
 
-target.style.left = "0";
-target.style.top = "20px";
-target.style.visibility = "visible";
-target.style.opacity = "1";
+    }
 
-htmlToImage.toPng(target,{
-    pixelRatio: 3,
-    cacheBust: true
-}).then(function(dataUrl){
+    // =========================
+    // SHOW
+    // =========================
 
-    target.style.left = "-99999px";
-    target.style.visibility = "hidden";
+    target.style.left = "50%";
+    target.style.top = "20px";
+    target.style.transform = "translateX(-50%)";
+    target.style.visibility = "visible";
+    target.style.opacity = "1";
 
-    const link = document.createElement("a");
-    link.download = "FLARE-U-Upcoming-Schedule.png";
-    link.href = dataUrl;
-    link.click();
-});
+    // tunggu browser render
+    requestAnimationFrame(()=>{
+
+        requestAnimationFrame(()=>{
+
+            htmlToImage.toPng(target,{
+                pixelRatio:3,
+                cacheBust:true
+            }).then(function(dataUrl){
+
+                target.style.left="-99999px";
+                target.style.top="0";
+                target.style.transform="";
+                target.style.visibility="hidden";
+
+                const link=document.createElement("a");
+                link.download="FLARE-U-Upcoming-Schedule.png";
+                link.href=dataUrl;
+                link.click();
+
+            }).catch(function(err){
+
+                console.error(err);
+
+                target.style.left="-99999px";
+                target.style.top="0";
+                target.style.transform="";
+                target.style.visibility="hidden";
+
+                alert("Failed to generate image.");
+
+            });
+
+        });
+
+    });
+
 };
 
 console.log("END FILE");
