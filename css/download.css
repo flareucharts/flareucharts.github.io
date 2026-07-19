@@ -81,8 +81,8 @@
 
 /* AREA GAMBAR DOWNLOAD */
 #download-schedule{
-    width:1080px;
-    height:1350px;
+    width:1080px !important;
+    height:1350px !important;
     padding:80px 90px;
     box-sizing:border-box;
     background:#91d3ca;
