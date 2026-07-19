@@ -59,27 +59,7 @@ console.log(target, content, yearEl, moreEl);
     const maxEvents = 12;
 const displayEvents = events.slice(0, maxEvents);
 const hasMore = events.length > maxEvents;
-    let displayEvents = [];
-    let lastDateKey = "";
-    let totalDates = 0;
-    for(const event of events){
-        const dateKey =
-            new Date(event.date)
-            .toISOString()
-            .slice(0,10);
-        if(dateKey!==lastDateKey){
-            totalDates++;
-            if(totalDates>maxDates){
-                break;
-            }
-            lastDateKey = dateKey;
-        }
-
-        displayEvents.push(event);
-    }
-    const hasMore =
-        displayEvents.length < events.length;
-
+    
     // kosongkan isi lama
     content.innerHTML = "";
     // =========================
