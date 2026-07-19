@@ -80,6 +80,24 @@
 
 
 /* AREA GAMBAR DOWNLOAD */
+/* DOWNLOAD OVERRIDE */
+#download-schedule,
+#download-schedule *{
+    max-width:none;
+}
+
+#download-schedule{
+    width:1080px !important;
+    height:1350px !important;
+    box-sizing:border-box;
+}
+
+#download-schedule img.download-logo{
+    max-width:none;
+    width:220px;
+    height:auto;
+}
+
 #download-schedule{
     width:1080px !important;
     height:1350px !important;
