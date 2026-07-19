@@ -8,7 +8,7 @@ window.downloadUpcomingSchedule = async function () {
     console.log("schedule-download.js loaded");
     console.log(window.allSchedule);
 
-const res = await fetch("./download/up-schedule-temp.html");
+const res = await fetch("/download/up-schedule-temp.html");
 
 console.log("FETCH:", res.status);
 
@@ -32,7 +32,7 @@ document.body.appendChild(target);
 if(!document.querySelector('link[href*="download.css"]')){
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = "./css/download.css";
+    link.href = "/css/download.css";
     document.head.appendChild(link);
     await new Promise(resolve=>setTimeout(resolve,300));
 };
