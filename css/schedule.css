@@ -16,6 +16,16 @@
   padding-top:0 !important;
 }
 
+.schedule-loading{
+    min-height:420px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#6b7280;
+    font-size:15px;
+    font-weight:600;
+}
+
 .schedule-title-main{
   text-align:center;
   font-size:34px;
