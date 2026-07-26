@@ -117,6 +117,15 @@
     font-weight:600;
 }
 
+/* Copyright */
+
+.footer-copy{
+    margin-top:8px;
+    font-size:11px;
+    color::#4b5563;
+    font-weight:600;
+}
+
 /* Disclaimer */
 
 .footer-disclaimer{
