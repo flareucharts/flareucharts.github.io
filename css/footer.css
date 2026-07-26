@@ -89,12 +89,12 @@
     width:25px;
     height:25px;
     display:flex;
-    align-items:flex-start;
+    align-items:center;
     justify-content:center;
     border-radius:50%;
     text-decoration:none;
     color:#fff;
-    background:#4b5563;
+    background:#9ca3af;
     transition:.25s;
 }
 
