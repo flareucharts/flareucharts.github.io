@@ -168,10 +168,11 @@ color:white;
   position:relative;
   width:100%;
   aspect-ratio:16/9;
-  border-radius:22px;
+  border-radius:18px;
   overflow:hidden;
   margin-bottom:28px;
   background:#d9d9d9;
+  mmargin-top:0;
 }
 
 .banner-image{
