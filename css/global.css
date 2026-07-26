@@ -596,10 +596,10 @@ border-radius:16px;
 
 .bottom-nav{
 position:fixed;
-bottom:15px;
+bottom:16px;
 left:50%;
 transform:translateX(-50%);
-width:90%;
+width:93%;
 max-width:420px;
 height:65px;
 display:flex;
