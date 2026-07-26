@@ -81,7 +81,7 @@
 
 .footer-social{
     display:flex;
-    justify-content:center;
+    justify-content:flex-start;
     gap:11px;
     margin-bottom:8px;
 }
@@ -120,7 +120,7 @@
 /* Copyright */
 
 .footer-contact{
-    margin-top:8px;
+    margin-bottom:8px;
     font-size:11px;
     color::#4b5563;
     font-weight:600;
