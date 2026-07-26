@@ -92,12 +92,14 @@ white;
 
 .calendar-top{
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
   margin-bottom:16px;
 }
 
 .calendar-month{
+  width:100%;
+  text-align:center;
   font-size:24px;
   font-weight:800;
   color:#2c7b6e;
@@ -317,8 +319,8 @@ white;
   flex-direction:column;
   align-items:flex-start;
   width:auto;
-  min-width:160px;
-  max-width:220px;
+  min-width:220px;
+  max-width:340px;
   background:rgba(0,0,0,0.58);
   backdrop-filter:blur(2px);
   -webkit-backdrop-filter:blur(2px);
