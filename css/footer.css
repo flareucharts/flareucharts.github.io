@@ -4,7 +4,8 @@
 
 .footer{
     margin-top:26px;
-    padding:30px 16px;
+    padding:16px;
+    margin-bottom:26px;
     text-align:left;
     border-top:1px solid rgba(255,255,255,.12);
     background:rgba(255,255,255,.04);
@@ -110,7 +111,7 @@
 /* Copyright */
 
 .footer-copy{
-    margin-top:12px;
+    margin-top:14px;
     font-size:11px;
     color::#4b5563;
     font-weight:600;
