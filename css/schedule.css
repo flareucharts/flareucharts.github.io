@@ -19,11 +19,27 @@
 .schedule-loading{
     min-height:420px;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
+    gap:14px;
     color:#6b7280;
-    font-size:15px;
     font-weight:600;
+}
+
+.loading-spinner{
+    width:30px;
+    height:30px;
+    border:3px solid #d9e6e3;
+    border-top-color:#91d3ca;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 .schedule-title-main{
