@@ -4,7 +4,7 @@
 
 .footer{
     margin-top:26px;
-    padding-bottom:26px;
+    padding-bottom:16px 26px;
     text-align:left;
     border-top:1px solid rgba(255,255,255,.12);
     background:rgba(255,255,255,.04);
@@ -112,7 +112,7 @@
 .footer-copy{
     margin-top:11px;
     font-size:11px;
-    color:#9ca3af;
+    color::#4b5563;
 }
 
 /* Disclaimer */
