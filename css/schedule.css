@@ -23,7 +23,6 @@
   color:white;
   letter-spacing:3px;
   margin-bottom:0px;
-  align-items:center;
 }
   
 .calendar-nav{
@@ -58,6 +57,7 @@
   font-weight:800;
   color:white;
   letter-spacing:2px;
+  align-items:center;
 }
 
 /* CALENDAR */
