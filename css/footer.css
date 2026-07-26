@@ -1,0 +1,138 @@
+/* ===========================
+   FOOTER
+=========================== */
+
+.footer{
+    margin-top:60px;
+    padding:40px 24px 90px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    position:relative;
+}
+
+/* Gradient line */
+.footer::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:120px;
+    height:2px;
+    border-radius:999px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.9),
+        transparent
+    );
+}
+
+/* Logo */
+
+.footer-logo{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+}
+
+.footer-logo img{
+    width:58px;
+    height:58px;
+    object-fit:contain;
+}
+
+.footer-logo h2{
+    margin:0;
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:2px;
+    color:#fff;
+}
+
+/* Description */
+
+.footer-desc{
+    max-width:320px;
+    margin:18px auto 30px;
+    font-size:14px;
+    line-height:1.7;
+    color:rgba(255,255,255,.75);
+}
+
+/* Links */
+
+.footer-links{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:28px;
+}
+
+.footer-links a{
+    color:#fff;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    opacity:.8;
+    transition:.25s;
+}
+
+.footer-links a:hover{
+    opacity:1;
+}
+
+/* Social */
+
+.footer-social{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-bottom:30px;
+}
+
+.footer-social a{
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    text-decoration:none;
+    color:#fff;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.1);
+    transition:.25s;
+}
+
+.footer-social a:hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,.15);
+}
+
+.footer-social i{
+    font-size:18px;
+}
+
+/* Copyright */
+
+.footer-copy{
+    margin:0;
+    font-size:13px;
+    color:rgba(255,255,255,.65);
+}
+
+/* Disclaimer */
+
+.footer-disclaimer{
+    max-width:340px;
+    margin:12px auto 0;
+    font-size:12px;
+    line-height:1.6;
+    color:rgba(255,255,255,.45);
+}
