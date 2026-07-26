@@ -503,9 +503,7 @@ min-height:auto;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
-padding:20px;
-padding-top:0px;
-padding-bottom:20px;
+padding:16px;
 }
   
 #home{
