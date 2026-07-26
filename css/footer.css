@@ -51,7 +51,7 @@
     font-size:18px;
     font-weight:700;
     letter-spacing:2px;
-    color:#fff;
+    color:#2d3748;
 }
 
 /* Description */
@@ -61,7 +61,7 @@
     margin:18px auto 30px;
     font-size:14px;
     line-height:1.7;
-    color:rgba(255,255,255,.75);
+    color:#6b7280;
 }
 
 /* Links */
@@ -75,7 +75,7 @@
 }
 
 .footer-links a{
-    color:#fff;
+    color:#4b5563;
     text-decoration:none;
     font-size:14px;
     font-weight:500;
@@ -124,7 +124,7 @@
 .footer-copy{
     margin:0;
     font-size:13px;
-    color:rgba(255,255,255,.65);
+    color:#9ca3af;
 }
 
 /* Disclaimer */
@@ -134,5 +134,5 @@
     margin:12px auto 0;
     font-size:12px;
     line-height:1.6;
-    color:rgba(255,255,255,.45);
+    color:#9ca3af;
 }
