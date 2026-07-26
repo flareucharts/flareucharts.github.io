@@ -1,5 +1,9 @@
 function loadPage() {
-  fetch("https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec")
+ 
+document.getElementById("schedule-content").innerHTML = `
+    <div class="schedule-loading">Loading...</div>
+`;
+ fetch("https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec")
     .then(res => res.json())
     .then(data => {
       console.log("DATA:", data);
