@@ -23,6 +23,16 @@
     margin-bottom:4px;
 }
 
+.upsche-date .dot{
+    color:#9a9a9a;
+}
+
+.upsche-date .time{
+    font-size:14px;
+    color:#8a8a8a;
+    font-weight:500;
+}
+
 .upsche-date .day{
     font-size:18px;
     font-weight:700;
@@ -35,13 +45,6 @@
     font-weight:700;
     line-height:1;
     color:#7b8a8a;
-}
-
-.upsche-time{
-    font-size:13px;
-    font-weight:500;
-    color:#8a8a8a;
-    margin-bottom:10px;
 }
 
 .upsche-title{
