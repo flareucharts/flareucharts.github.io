@@ -2,9 +2,9 @@
     display:block;
     position:relative;
     background:#fff;
-    border-radius:22px;
-    padding:18px;
-    min-height:150px;
+    border-radius:18px;
+    padding:14px;
+    min-height:100px;
     text-decoration:none;
     color:inherit;
     box-shadow:0 8px 25px rgba(0,0,0,.07);
@@ -28,20 +28,20 @@
 }
 
 .upsche-date .time{
-    font-size:14px;
+    font-size:11px;
     color:#8a8a8a;
     font-weight:500;
 }
 
 .upsche-date .day{
-    font-size:18px;
+    font-size:14px;
     font-weight:700;
     line-height:1;
     color:#5fc7be;
 }
 
 .upsche-date .month{
-    font-size:16px;
+    font-size:14px;
     font-weight:700;
     line-height:1;
     color:#7b8a8a;
@@ -71,7 +71,7 @@
 }
 
 .upsche-title{
-    font-size:17px;
+    font-size:13px;
     font-weight:700;
     line-height:1.35;
     color:#294746;
@@ -83,9 +83,9 @@
 
 .upsche-count{
     position:absolute;
-    right:18px;
-    bottom:18px;
-    font-size:14px;
+    right:12px;
+    bottom:12px;
+    font-size:12px;
     font-weight:700;
     color:#b7b7b7;
 }
