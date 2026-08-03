@@ -1,12 +1,15 @@
 .upsche-card{
     display:block;
+    position:relative;
     background:#fff;
     border-radius:22px;
-    padding:20px;
+    padding:18px;
+    min-height:150px;
     text-decoration:none;
     color:inherit;
     box-shadow:0 8px 25px rgba(0,0,0,.07);
     transition:.25s;
+    overflow:hidden;
 }
 
 .upsche-card:active{
@@ -16,12 +19,12 @@
 .upsche-date{
     display:flex;
     align-items:center;
-    gap:8px;
-    margin-bottom:8px;
+    gap:6px;
+    margin-bottom:4px;
 }
 
 .upsche-date .day{
-    font-size:22px;
+    font-size:18px;
     font-weight:700;
     line-height:1;
     color:#5fc7be;
@@ -35,22 +38,68 @@
 }
 
 .upsche-time{
-    font-size:14px;
+    font-size:13px;
+    font-weight:500;
     color:#8a8a8a;
-    margin-bottom:6px;
+    margin-bottom:10px;
 }
 
 .upsche-title{
-    font-size:20px;
+    font-size:17px;
     font-weight:700;
-    line-height:1.3;
+    line-height:1.35;
     color:#294746;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
 }
 
 .upsche-count{
-    margin-top:16px;
-    text-align:right;
+    position:absolute;
+    right:18px;
+    bottom:18px;
     font-size:14px;
     font-weight:700;
     color:#b7b7b7;
+}
+.upsche-loading{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.upsche-skeleton{
+    height:14px;
+    border-radius:8px;
+    background:linear-gradient(
+        90deg,
+        #f1f1f1 25%,
+        #e7e7e7 50%,
+        #f1f1f1 75%
+    );
+    background-size:200% 100%;
+    animation:skeleton 1.2s linear infinite;
+}
+
+.upsche-skeleton.short{
+    width:90px;
+}
+
+.upsche-skeleton.medium{
+    width:140px;
+}
+
+.upsche-skeleton.long{
+    width:75%;
+    height:20px;
+}
+
+@keyframes skeleton{
+    from{
+        background-position:200% 0;
+    }
+    to{
+        background-position:-200% 0;
+    }
 }
