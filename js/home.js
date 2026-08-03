@@ -28,6 +28,11 @@ function renderUpcoming() {
 
   if (!window.allSchedule.length) return;
 
+const loading = document.querySelector(".upsche-loading");
+if (loading) {
+    loading.remove(); // atau loading.style.display = "none";
+}
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
