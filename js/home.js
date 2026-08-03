@@ -60,6 +60,6 @@ if (loading) {
   document.querySelector(".upsche-title").textContent =
     `${item.cat} ${item.title}`;
 
-  document.getElementById("upsche-current").textContent = 1;
-  document.getElementById("upsche-total").textContent = upcoming.length;
+  document.getElementById("upsche-count").textContent =
+    `1 / ${upcoming.length}`;
 }
