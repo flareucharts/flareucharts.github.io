@@ -32,15 +32,57 @@ artistPills.forEach(pill => {
 
 });
 
-const sortBtn = document.querySelector(".sort-btn");
-const sortOverlay = document.querySelector(".sort-overlay");
+// =========================
+// SORT DROPDOWN
+// =========================
 
-sortBtn.addEventListener("click", () => {
-    sortOverlay.classList.add("show");
+const sortBtn = document.querySelector(".sort-btn");
+const sortDropdown = document.querySelector(".sort-dropdown");
+const sortOptions = document.querySelectorAll(".sort-option");
+
+// Open / Close
+sortBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    sortDropdown.classList.toggle("show");
+    sortBtn.classList.toggle("open");
 });
 
-sortOverlay.addEventListener("click", (e) => {
-    if (e.target === sortOverlay) {
-        sortOverlay.classList.remove("show");
-    }
+// Close ketika klik di luar
+document.addEventListener("click", () => {
+    sortDropdown.classList.remove("show");
+    sortBtn.classList.remove("open");
+});
+
+// Jangan tutup saat klik di dalam dropdown
+sortDropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+
+// Active option
+sortOptions.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        sortOptions.forEach(item =>
+            item.classList.remove("active")
+        );
+
+        option.classList.add("active");
+
+        // Ganti teks tombol
+        sortBtn.innerHTML = `
+            ${option.textContent}
+            <span>⌄</span>
+        `;
+
+        // Tutup dropdown
+        sortDropdown.classList.remove("show");
+        sortBtn.classList.remove("open");
+
+        // Nanti di sini isi fungsi sorting
+        // sortVote(option.textContent);
+
+    });
+
 });
