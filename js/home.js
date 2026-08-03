@@ -56,17 +56,17 @@ track.innerHTML = upcoming.map(item => {
     <div class="upsche-slider">
 
         <div class="upsche-date">
-            <span class="day">${date.getDate()}</span>
+            <span class="upsche-day">${date.getDate()}</span>
 
-            <span class="month">
+            <span class="upsche-month">
             ${date.toLocaleString("en-US",{
                 month:"short"
             }).toUpperCase()}
             </span>
 
-            <span class="dot">•</span>
+            <span class="upsche-dot">•</span>
 
-            <span class="time">
+            <span class="upsche-time">
             ${item.time}${item.tz ? ` ${item.tz}` : ""}
             </span>
         </div>
