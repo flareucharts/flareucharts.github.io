@@ -17,3 +17,44 @@ top3.forEach(album => {
     </a>
   `;
 });
+
+// =========================
+// UPCOMING SCHEDULE
+// =========================
+
+document.addEventListener("scheduleLoaded", renderUpcoming);
+
+function renderUpcoming() {
+
+  if (!window.allSchedule.length) return;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const upcoming = window.allSchedule
+    .filter(item => {
+      const d = new Date(item.date);
+      d.setHours(0, 0, 0, 0);
+      return d >= today;
+    })
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  if (!upcoming.length) return;
+
+  const item = upcoming[0];
+  const date = new Date(item.date);
+
+  document.querySelector(".upsche-date").innerHTML = `
+    <span class="day">${date.getDate()}</span>
+    <span class="month">${date.toLocaleString("en-US", {
+      month: "short"
+    }).toUpperCase()}</span>
+  `;
+
+  document.querySelector(".upsche-time").textContent = item.time;
+  document.querySelector(".upsche-title").textContent =
+    `${item.cat} ${item.title}`;
+
+  document.getElementById("upsche-current").textContent = 1;
+  document.getElementById("upsche-total").textContent = upcoming.length;
+}
