@@ -41,7 +41,7 @@
 }
 
 .upsche-date .month{
-    font-size:14px;
+    font-size:13px;
     font-weight:700;
     line-height:1;
     color:#7b8a8a;
@@ -83,8 +83,8 @@
 
 .upsche-count{
     position:absolute;
-    right:12px;
-    bottom:12px;
+    right:14px;
+    bottom:14px;
     font-size:12px;
     font-weight:700;
     color:#b7b7b7;
