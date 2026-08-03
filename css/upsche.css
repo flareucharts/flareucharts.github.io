@@ -4,7 +4,7 @@
     background:#fff;
     border-radius:18px;
     padding:14px;
-    min-height:100px;
+    min-height:80px;
     text-decoration:none;
     color:inherit;
     box-shadow:0 8px 25px rgba(0,0,0,.07);
@@ -83,8 +83,8 @@
 
 .upsche-count{
     position:absolute;
-    right:14px;
-    bottom:14px;
+    right:12px;
+    bottom:12px;
     font-size:12px;
     font-weight:700;
     color:#b7b7b7;
