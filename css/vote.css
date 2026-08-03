@@ -70,6 +70,49 @@ color:#fff;
     justify-content:flex-end;
     margin-bottom:12px;
 }
+.sort-btn{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #243634;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.sort-btn:hover{
+    background: #f6f6f6;
+}
+
+.sort-btn:active{
+    transform: scale(.98);
+}
+
+.sort-btn span{
+    font-size: 10px;
+    transition: .2s ease;
+}
+
+.sort-overlay{
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    display: none;
+    z-index: 998;
+}
+
+.sort-overlay.show{
+    display: block;
+}
+
+.sort-dropdown{
+    z-index: 999;
+}
 
 .sort-dropdown{
     position:absolute;
