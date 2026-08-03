@@ -82,3 +82,4 @@ track.innerHTML = upcoming.map((item, index) => {
 
 document.getElementById("upsche-count").textContent =
   `1 / ${upcoming.length}`;
+}
