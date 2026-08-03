@@ -93,13 +93,26 @@ setInterval(()=>{
     currentSlide++;
 
     if(currentSlide >= upcoming.length){
-        currentSlide = 0;
-    }
 
-    track.scrollTo({
-        left: track.clientWidth * currentSlide,
-        behavior:"smooth"
-    });
+        currentSlide = 0;
+
+        // langsung lompat ke awal tanpa animasi
+        track.style.scrollBehavior = "auto";
+        track.scrollLeft = 0;
+
+        // aktifkan smooth lagi
+        setTimeout(()=>{
+            track.style.scrollBehavior = "smooth";
+        },50);
+
+    } else {
+
+        track.scrollTo({
+            left: track.clientWidth * currentSlide,
+            behavior:"smooth"
+        });
+
+    }
 
     document.getElementById("upsche-count").textContent =
     `${currentSlide + 1} / ${upcoming.length}`;
