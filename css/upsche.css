@@ -90,13 +90,14 @@
     color:#b7b7b7;
 }
 .upsche-loading{
+    height:52px;
     display:flex;
     flex-direction:column;
     gap:10px;
 }
 
 .upsche-skeleton{
-    height:14px;
+    height:10px;
     border-radius:8px;
     background:linear-gradient(
         90deg,
@@ -109,7 +110,7 @@
 }
 
 .upsche-skeleton.short{
-    width:90px;
+    width:80px;
 }
 
 .upsche-skeleton.medium{
@@ -118,7 +119,7 @@
 
 .upsche-skeleton.long{
     width:75%;
-    height:20px;
+    height:16px;
 }
 
 @keyframes skeleton{
