@@ -1,6 +1,16 @@
+#vote{
+  margin-top:0 !important;
+  padding-top:0 !important;
+}
+
+#vote .global-content{
+  margin-top:0 !important;
+  padding-top:0 !important;
+  display:block !important;
+}
+
 .vote-title{
 margin-bottom:8px;
-padding:0;
 }
 
 .vote-title h2{
