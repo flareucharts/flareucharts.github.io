@@ -47,6 +47,29 @@
     color:#7b8a8a;
 }
 
+.upsche-window{
+    overflow:hidden;
+    width:100%;
+}
+
+.upsche-track{
+    display:flex;
+    width:100%;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+}
+
+.upsche-track::-webkit-scrollbar{
+    display:none;
+}
+
+.upsche-slider{
+    flex:0 0 100%;
+    width:100%;
+    scroll-snap-align:start;
+}
+
 .upsche-title{
     font-size:17px;
     font-weight:700;
