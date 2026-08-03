@@ -37,25 +37,33 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
 /* TOP */
 .home-subtitle{
-  width:100%;
   display:flex;
+  gap:4px;
+  width:fit-content;
   justify-content:space-between;
   align-items:center;
   margin-bottom:12px;
   padding:0;
+  text-decoration:none;
+  color:#1f3f3a;
 }
 
 .home-subtitle h2{
 font-size:16px;
 font-weight:700;
 color:#1f3f3a;
+margin:0;
 }
 
-.view-all{
-font-size:11px;
-color:#1f3f3a;
-opacity:.75;
-text-decoration:none;
+.arrow-icon{
+  width:16px;
+  height:16px;
+  display:block;
+  transition:transform .2s ease;
+}
+
+.home-subtitle:hover .arrow-icon{
+  transform:translateX(2px);
 }
 
 /* SCROLL */
@@ -234,47 +242,44 @@ font-size:clamp(10px,1.8vw,11px);
 </section>
 
 <section class="home-dsc">
-    <div class="home-subtitle">
+
+    <a href="/schedule/" class="home-subtitle">
         <h2>Upcoming Schedule</h2>
-        <a href="/schedule/" class="view-all">
-            View all→
-        </a>
-    </div>
+        <img src="/imagess/icon/chevron-right.svg" alt="" class="arrow-icon">
+    </a>
+
     <div class="upsche-card">
         <div class="upsche-window">
             <div class="upsche-track">
                 <div class="upsche-slider">
-                    <div class="upsche-date">
-                  
-                    </div>
-                    <div class="upsche-time">
-                        
-                    </div>
-                    <div class="upsche-title">
-                    
-                    </div>
+                    <div class="upsche-date"></div>
+                    <div class="upsche-time"></div>
+                    <div class="upsche-title"></div>
                 </div>
             </div>
         </div>
 
         <!-- Counter -->
         <div class="upsche-count">
-            <span id="upsche-current">1</span>
-            /
+            <span id="upsche-current">1</span> /
             <span id="upsche-total">13</span>
         </div>
     </div>
-</section>
 
+</section>
 
 <!-- PLAYLIST SECTION -->
 <div class="home-dsc">
-<div class="home-subtitle">
-<h2>Discography</h2>
-<a href="./discography/" class="view-all">
-View all→</a>
-</div>
-<div class="home-scroll" id="discographyScroll"></div>
+
+    <a href="./discography/" class="home-subtitle">
+        <h2>Discography</h2>
+        <img src="images/icon/chevron-right.svg"
+             alt=""
+             class="arrow-icon">
+    </a>
+
+    <div class="home-scroll" id="discographyScroll"></div>
+
 </div>
 
 <script src="./js/data.js"></script>
