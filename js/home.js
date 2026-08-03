@@ -50,13 +50,17 @@ if (loading) {
   const date = new Date(item.date);
 
   document.querySelector(".upsche-date").innerHTML = `
-    <span class="day">${date.getDate()}</span>
-    <span class="month">${date.toLocaleString("en-US", {
-      month: "short"
-    }).toUpperCase()}</span>
-  `;
+  <span class="day">${date.getDate()}</span>
+  <span class="month">${date.toLocaleString("en-US", {
+    month: "short"
+  }).toUpperCase()}</span>
 
-  document.querySelector(".upsche-time").textContent = item.time;
+  <span class="dot">•</span>
+
+  <span class="time">
+    ${item.time}${item.tz ? ` ${item.tz}` : ""}
+  </span>
+`;
   document.querySelector(".upsche-title").textContent =
     `${item.cat} ${item.title}`;
 
