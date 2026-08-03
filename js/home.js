@@ -84,6 +84,22 @@ track.innerHTML = upcoming.map(item => {
 document.getElementById("upsche-count").textContent =
 `1 / ${upcoming.length}`;
 
+if(upcoming.length > 1){
+
+    const firstSlide = track.children[0].cloneNode(true);
+    track.appendChild(firstSlide);
+
+    // AUTO SLIDE
+    let currentSlide = 0;
+
+    setInterval(()=>{
+        ...
+    },5000);
+
+}
+
+const firstSlide = track.children[0].cloneNode(true);
+track.appendChild(firstSlide);
 
 // AUTO SLIDE
 let currentSlide = 0;
@@ -92,33 +108,32 @@ setInterval(()=>{
 
     currentSlide++;
 
-    if(currentSlide >= upcoming.length){
+    track.scrollTo({
+        left: track.clientWidth * currentSlide,
+        behavior:"smooth"
+    });
 
-        currentSlide = 0;
 
-        // langsung lompat ke awal tanpa animasi
-        track.style.scrollBehavior = "auto";
-        track.scrollLeft = 0;
+    if(currentSlide === upcoming.length){
 
-        // aktifkan smooth lagi
         setTimeout(()=>{
+
+            track.style.scrollBehavior = "auto";
+            track.scrollLeft = 0;
             track.style.scrollBehavior = "smooth";
-        },50);
 
-    } else {
+            currentSlide = 0;
 
-        track.scrollTo({
-            left: track.clientWidth * currentSlide,
-            behavior:"smooth"
-        });
+        },600);
 
     }
 
+
     document.getElementById("upsche-count").textContent =
-    `${currentSlide + 1} / ${upcoming.length}`;
+    `${currentSlide + 1 > upcoming.length ? 1 : currentSlide + 1} / ${upcoming.length}`;
+
 
 },5000);
-
 
 
 }
