@@ -31,3 +31,16 @@ artistPills.forEach(pill => {
     });
 
 });
+
+const sortBtn = document.querySelector(".sort-btn");
+const sortOverlay = document.querySelector(".sort-overlay");
+
+sortBtn.addEventListener("click", () => {
+    sortOverlay.classList.add("show");
+});
+
+sortOverlay.addEventListener("click", (e) => {
+    if (e.target === sortOverlay) {
+        sortOverlay.classList.remove("show");
+    }
+});
