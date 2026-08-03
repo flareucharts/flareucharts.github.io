@@ -46,24 +46,39 @@ if (loading) {
 
   if (!upcoming.length) return;
 
-  const item = upcoming[0];
+  const track = document.querySelector(".upsche-track");
+
+track.innerHTML = upcoming.map((item, index) => {
+
   const date = new Date(item.date);
 
-  document.querySelector(".upsche-date").innerHTML = `
-  <span class="day">${date.getDate()}</span>
-  <span class="month">${date.toLocaleString("en-US", {
-    month: "short"
-  }).toUpperCase()}</span>
+  return `
+    <div class="upsche-slider">
 
-  <span class="dot">•</span>
+      <div class="upsche-date">
+        <span class="day">${date.getDate()}</span>
 
-  <span class="time">
-    ${item.time}${item.tz ? ` ${item.tz}` : ""}
-  </span>
-`;
-  document.querySelector(".upsche-title").textContent =
-    `${item.cat} ${item.title}`;
+        <span class="month">
+          ${date.toLocaleString("en-US", {
+            month:"short"
+          }).toUpperCase()}
+        </span>
 
-  document.getElementById("upsche-count").textContent =
-    `1 / ${upcoming.length}`;
-}
+        <span class="dot">•</span>
+
+        <span class="time">
+          ${item.time}${item.tz ? ` ${item.tz}` : ""}
+        </span>
+      </div>
+
+      <div class="upsche-title">
+        ${item.cat} ${item.title}
+      </div>
+
+    </div>
+  `;
+
+}).join("");
+
+document.getElementById("upsche-count").textContent =
+  `1 / ${upcoming.length}`;
