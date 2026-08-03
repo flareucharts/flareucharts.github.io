@@ -23,24 +23,24 @@
     margin-bottom:4px;
 }
 
-.upsche-date .dot{
+.upsche-date .upsche-dot{
     color:#9a9a9a;
 }
 
-.upsche-date .time{
+.upsche-date .upsche-time{
     font-size:11px;
     color:#8a8a8a;
     font-weight:500;
 }
 
-.upsche-date .day{
+.upsche-date .upsche-day{
     font-size:14px;
     font-weight:700;
     line-height:1;
     color:#5fc7be;
 }
 
-.upsche-date .month{
+.upsche-date .upsche-month{
     font-size:13px;
     font-weight:700;
     line-height:1;
