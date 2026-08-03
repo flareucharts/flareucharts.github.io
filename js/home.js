@@ -84,56 +84,42 @@ track.innerHTML = upcoming.map(item => {
 document.getElementById("upsche-count").textContent =
 `1 / ${upcoming.length}`;
 
+
 if(upcoming.length > 1){
 
     const firstSlide = track.children[0].cloneNode(true);
     track.appendChild(firstSlide);
 
-    // AUTO SLIDE
     let currentSlide = 0;
 
     setInterval(()=>{
-        ...
+
+        currentSlide++;
+
+        track.scrollTo({
+            left: track.clientWidth * currentSlide,
+            behavior:"smooth"
+        });
+
+
+        if(currentSlide === upcoming.length){
+
+            setTimeout(()=>{
+
+                track.style.scrollBehavior = "auto";
+                track.scrollLeft = 0;
+                track.style.scrollBehavior = "smooth";
+
+                currentSlide = 0;
+
+            },600);
+
+        }
+
+
+        document.getElementById("upsche-count").textContent =
+        `${currentSlide + 1 > upcoming.length ? 1 : currentSlide + 1} / ${upcoming.length}`;
+
     },5000);
-
-}
-
-const firstSlide = track.children[0].cloneNode(true);
-track.appendChild(firstSlide);
-
-// AUTO SLIDE
-let currentSlide = 0;
-
-setInterval(()=>{
-
-    currentSlide++;
-
-    track.scrollTo({
-        left: track.clientWidth * currentSlide,
-        behavior:"smooth"
-    });
-
-
-    if(currentSlide === upcoming.length){
-
-        setTimeout(()=>{
-
-            track.style.scrollBehavior = "auto";
-            track.scrollLeft = 0;
-            track.style.scrollBehavior = "smooth";
-
-            currentSlide = 0;
-
-        },600);
-
-    }
-
-
-    document.getElementById("upsche-count").textContent =
-    `${currentSlide + 1 > upcoming.length ? 1 : currentSlide + 1} / ${upcoming.length}`;
-
-
-},5000);
-
 
 }
