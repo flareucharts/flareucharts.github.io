@@ -89,21 +89,8 @@ document.getElementById("upsche-count").textContent =
 
 if(upcoming.length > 1){
 
-    if (track.children.length > 0) {
-
     const firstSlide = track.children[0].cloneNode(true);
     track.appendChild(firstSlide);
-
-}
-
-    if(upcoming.length > 1){
-
-    if (track.children.length > 0) {
-
-        const firstSlide = track.children[0].cloneNode(true);
-        track.appendChild(firstSlide);
-
-    }
 
     let currentSlide = 0;
 
@@ -116,8 +103,28 @@ if(upcoming.length > 1){
             behavior:"smooth"
         });
 
-        ...
-        
+
+        if(currentSlide === upcoming.length){
+
+            setTimeout(()=>{
+
+                track.style.scrollBehavior = "auto";
+                track.scrollLeft = 0;
+                track.style.scrollBehavior = "smooth";
+
+                currentSlide = 0;
+
+            },600);
+
+        }
+
+
+        document.getElementById("upsche-count").textContent =
+        `${currentSlide + 1 > upcoming.length ? 1 : currentSlide + 1} / ${upcoming.length}`;
+
+
     },5000);
+
+}
 
 }
