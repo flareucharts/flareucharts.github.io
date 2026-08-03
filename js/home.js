@@ -48,38 +48,64 @@ if (loading) {
 
   const track = document.querySelector(".upsche-track");
 
-track.innerHTML = upcoming.map((item, index) => {
+track.innerHTML = upcoming.map(item => {
 
-  const date = new Date(item.date);
+    const date = new Date(item.date);
 
-  return `
+    return `
     <div class="upsche-slider">
 
-      <div class="upsche-date">
-        <span class="day">${date.getDate()}</span>
+        <div class="upsche-date">
+            <span class="day">${date.getDate()}</span>
 
-        <span class="month">
-          ${date.toLocaleString("en-US", {
-            month:"short"
-          }).toUpperCase()}
-        </span>
+            <span class="month">
+            ${date.toLocaleString("en-US",{
+                month:"short"
+            }).toUpperCase()}
+            </span>
 
-        <span class="dot">•</span>
+            <span class="dot">•</span>
 
-        <span class="time">
-          ${item.time}${item.tz ? ` ${item.tz}` : ""}
-        </span>
-      </div>
+            <span class="time">
+            ${item.time}${item.tz ? ` ${item.tz}` : ""}
+            </span>
+        </div>
 
-      <div class="upsche-title">
-        ${item.cat} ${item.title}
-      </div>
+        <div class="upsche-title">
+            ${item.cat} ${item.title}
+        </div>
 
     </div>
-  `;
+    `;
 
 }).join("");
 
+
 document.getElementById("upsche-count").textContent =
-  `1 / ${upcoming.length}`;
+`1 / ${upcoming.length}`;
+
+
+// AUTO SLIDE
+let currentSlide = 0;
+
+setInterval(()=>{
+
+    currentSlide++;
+
+    if(currentSlide >= upcoming.length){
+        currentSlide = 0;
+    }
+
+    track.scrollTo({
+        left: track.clientWidth * currentSlide,
+        behavior:"smooth"
+    });
+
+    document.getElementById("upsche-count").textContent =
+    `${currentSlide + 1} / ${upcoming.length}`;
+
+},5000);
+
+
+
 }
