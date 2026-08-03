@@ -126,5 +126,3 @@ if(upcoming.length > 1){
     },5000);
 
 }
-
-}
