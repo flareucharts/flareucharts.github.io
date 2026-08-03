@@ -79,3 +79,23 @@ window.discography = window.discography.map(a => {
   }
   return a;
 });
+
+
+// =========================
+// SCHEDULE DATA
+// =========================
+
+window.allSchedule = [];
+
+fetch("https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec")
+  .then(res => res.json())
+  .then(data => {
+    window.allSchedule = data.schedule || [];
+
+    console.log("Schedule Loaded:", window.allSchedule);
+
+    document.dispatchEvent(
+      new CustomEvent("scheduleLoaded")
+    );
+  })
+  .catch(err => console.error(err));
