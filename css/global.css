@@ -117,6 +117,10 @@ background .35s ease;
 z-index:1000;
 }
 
+.header.hide-menu .menu-btn{
+    display: none;
+}
+
 .menu-btn{
 position:absolute;
 left:16px;
