@@ -20,6 +20,8 @@ body{
 
 .admin-container{
     display:flex;
+    gap:24px;
+    padding:20px;
     min-height:100vh;
 }
 
@@ -28,13 +30,18 @@ body{
 ========================= */
 
 .sidebar{
-    width:250px;
+    width:260px;
     background:#fff;
-    padding:30px 20px;
+    border-radius:28px;
+    padding:24px;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    border-right:1px solid #ececec;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+.logo{
+    margin-bottom:40px;
 }
 
 .logo h2{
@@ -43,53 +50,110 @@ body{
 }
 
 .logo span{
-    font-size:13px;
-    letter-spacing:4px;
-    color:#00bfa6;
+    color:#7c7c7c;
+    letter-spacing:3px;
+    font-size:12px;
 }
 
 .menu{
     display:flex;
     flex-direction:column;
     gap:8px;
-    margin:40px 0;
 }
 
 .menu a{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
     text-decoration:none;
     color:#555;
-    padding:14px 16px;
-    border-radius:14px;
+
+    padding:14px 18px;
+
+    border-radius:16px;
+
     transition:.25s;
 }
 
+.menu a span{
+    font-size:20px;
+}
+
 .menu a:hover{
-    background:#f2f4f7;
+    background:#f5f6fa;
 }
 
 .menu a.active{
-    background:#dff8f3;
-    color:#00a58e;
+
+    background:#8fe3d8;
+
+    color:#004e46;
+
     font-weight:600;
+
 }
 
 .sidebar-footer{
-    border-top:1px solid #eee;
+
+    margin-top:30px;
+
+    border-top:1px solid #ececec;
+
     padding-top:20px;
+
 }
 
-.sidebar-footer p{
-    margin-bottom:12px;
+.admin-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:18px;
+
 }
 
-.sidebar-footer button{
+.avatar{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:50%;
+
+    background:#8fe3d8;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+}
+
+.logout-btn{
+
     width:100%;
-    padding:12px;
+
     border:none;
-    border-radius:12px;
-    background:#ff4d4d;
-    color:#fff;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    background:#ff5252;
+
+    color:white;
+
     cursor:pointer;
+
+    font-size:15px;
+
 }
 
 /* =========================
@@ -97,8 +161,17 @@ body{
 ========================= */
 
 .main-content{
+
     flex:1;
+
+    background:#fff;
+
+    border-radius:28px;
+
     padding:35px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+
 }
 
 .header{
