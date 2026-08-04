@@ -532,24 +532,46 @@ video.addEventListener("error", () => {
 
 /* NAV */
 function navigate(page, btn){
+
   // hide semua page
   document.querySelectorAll('.page')
-  .forEach(p=>p.classList.remove('active'));
+    .forEach(p => p.classList.remove('active'));
+
   // show target
   document.getElementById(page)
-  .classList.add('active');
+    .classList.add('active');
+
   // active nav
   document.querySelectorAll('.bottom-nav button')
-  .forEach(b=>b.classList.remove('active'));
+    .forEach(b => b.classList.remove('active'));
+
   btn.classList.add('active');
+
+const header = document.querySelector(".header");
+const menuBtn = document.querySelector(".menu-btn");
+
+if (page === "home") {
+
+    header.classList.remove("hide-menu");
+
+} else {
+
+    header.classList.add("hide-menu");
+
+    document.getElementById("sidebar").classList.remove("show");
+    document.getElementById("overlay").classList.remove("show");
+    menuBtn.classList.remove("active");
+
+}
+
   // ubah URL TANPA reload
   history.pushState(
-  {},
-  '',
-  page === 'home'
-    ? '/'
-    : '/' + page + '/'
-);
+    {},
+    '',
+    page === 'home'
+      ? '/'
+      : '/' + page + '/'
+  );
 }
 
 // buka page sesuai URL
@@ -571,7 +593,15 @@ window.addEventListener("load", ()=>{
       .forEach(p=>p.classList.remove('active'));
 
     // show target
-    targetPage.classList.add('active');
+targetPage.classList.add('active');
+
+const header = document.querySelector(".header");
+
+if (path === "home") {
+    header.classList.remove("hide-menu");
+} else {
+    header.classList.add("hide-menu");
+}
 
     // active nav
     document.querySelectorAll('.bottom-nav button')
