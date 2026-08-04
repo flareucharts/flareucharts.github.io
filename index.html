@@ -137,7 +137,7 @@ font-size:clamp(10px,1.8vw,11px);
 <div class="app">
 
 <!-- HEADER -->
-<header class="header">
+<header class="header" id="home-header">
 <div class="menu-btn" onclick="toggleMenu()">
   <span></span>
   <span></span>
@@ -547,20 +547,19 @@ function navigate(page, btn){
 
   btn.classList.add('active');
 
-const header = document.querySelector(".header");
-const menuBtn = document.querySelector(".menu-btn");
+const homeHeader = document.getElementById("home-header");
 
 if (page === "home") {
 
-    header.classList.remove("hide-menu");
+    homeHeader.style.display = "flex";
 
 } else {
 
-    header.classList.add("hide-menu");
+    homeHeader.style.display = "none";
 
     document.getElementById("sidebar").classList.remove("show");
     document.getElementById("overlay").classList.remove("show");
-    menuBtn.classList.remove("active");
+    document.querySelector(".menu-btn").classList.remove("active");
 
 }
 
@@ -595,12 +594,12 @@ window.addEventListener("load", ()=>{
     // show target
 targetPage.classList.add('active');
 
-const header = document.querySelector(".header");
+const homeHeader = document.getElementById("home-header");
 
 if (path === "home") {
-    header.classList.remove("hide-menu");
+    homeHeader.style.display = "flex";
 } else {
-    header.classList.add("hide-menu");
+    homeHeader.style.display = "none";
 }
 
     // active nav
