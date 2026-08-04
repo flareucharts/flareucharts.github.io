@@ -39,4 +39,14 @@
     #ffffff 55vh
   );
 
+
+--bg-gradient: linear-gradient2(
+  180deg,
+  #74b3de 0%,
+  #8cc0e5 15vh,
+  #b2d8f2 30vh,
+  #d8ebf9 45vh,
+  #edf6fc 60vh,
+  #ffffff 100%
+);
 }
