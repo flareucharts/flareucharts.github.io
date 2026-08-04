@@ -597,7 +597,7 @@ width:100%;
 
 .card{
 background:white;
-margin:20px;
+margin:0;
 padding:20px;
 border-radius:16px;
 }
