@@ -513,7 +513,7 @@ min-height:auto;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
-padding:16px;
+  padding: 0 var(--page-padding) var(--page-padding);
 }
   
 #home{
