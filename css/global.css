@@ -28,8 +28,7 @@ body{
   overflow-x:hidden;
   margin:0;
   padding-bottom:env(safe-area-inset-bottom);
-
-  background:var(--bg-gradient);
+  background:var(--bg-gradient1);
 }
   
 img,
