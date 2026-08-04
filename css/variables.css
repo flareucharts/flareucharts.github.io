@@ -20,9 +20,11 @@
   --shadow-card:0 8px 28px rgba(0,0,0,.08);
 
   /* Font */
-  --title:20px;
-  --subtitle:18px;
-  --body:11px;
+  --title:22px;
+  --subtitle:16px;
+  --body:14px;
+  --small:12px;
+  --caption:10px;
 
   /* Spacing */
   --gap:12px;
