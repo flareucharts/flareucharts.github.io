@@ -1,10 +1,11 @@
 :root{
   /* Color */
-  --primary:#91d3ca;
-  --primary-dark:#5DB7AB;
+  --theme1:#91d3ca;
+  --theme2:#74b3de;
+  --theme3:#5db7ab;
   --background:#ffffff;
   --surface:#ffffff;
-  --text:#243634;
+  --subtitle:#243634;
   --text-light:#64807a;
   --ye-jp:#86b2df;
   --yllw:#fdf5c4;
