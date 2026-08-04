@@ -449,6 +449,7 @@ pointer-events:auto;
 /* PAGES */
 .page{
 display:none;
+padding:var(--page-padding);
 }
 
 .page.active{
@@ -513,7 +514,6 @@ min-height:auto;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
-  padding: 0 var(--page-padding) var(--page-padding);
 }
   
 #home{
