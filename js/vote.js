@@ -1,88 +1,71 @@
-// =========================
-// Artist Filter
-// =========================
+const voteData = [
+{
+    status: "ongoing",
+    countdown: "23h : 40m : 59s",
+    app: "LINE MUSIC",
+    title: "LINE MUSIC Daily Vote",
+    period: "2026.08.04 - 2026.08.05",
+    theme: "pink",
+    link: "#"
+}
+];
 
-const artistPills = document.querySelectorAll(".artist-pill");
-const voteCards = document.querySelectorAll(".vote-card");
+renderVote();
 
-artistPills.forEach(pill => {
+function renderVote(){
 
-    pill.addEventListener("click", () => {
+    const container = document.querySelector(".vote-list");
 
-        // Active
-        artistPills.forEach(btn => btn.classList.remove("active"));
-        pill.classList.add("active");
+    container.innerHTML = voteData.map(vote => `
 
-        const selectedArtist = pill.dataset.artist;
+        <div class="vote-card ${vote.theme}">
 
-        voteCards.forEach(card => {
+            <div class="vote-header">
 
-            if (
-                selectedArtist === "all" ||
-                card.dataset.artist === selectedArtist
-            ) {
-                card.style.display = "flex";
-            } else {
-                card.style.display = "none";
-            }
+                <div class="vote-status">
 
-        });
+                    <span class="status ${vote.status}">
+                        ${vote.status === "ongoing" ? "Ongoing" : "Ended"}
+                    </span>
 
-    });
+                    <span class="countdown">
+                        ${vote.countdown}
+                    </span>
 
-});
+                </div>
 
-// =========================
-// SORT DROPDOWN
-// =========================
+            </div>
 
-const sortBtn = document.querySelector(".sort-btn");
-const sortDropdown = document.querySelector(".sort-dropdown");
-const sortOptions = document.querySelectorAll(".sort-option");
+            <div class="vote-body">
 
-// Open / Close
-sortBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
+                <div class="vote-app">
+                    ${vote.app}
+                </div>
 
-    sortDropdown.classList.toggle("show");
-    sortBtn.classList.toggle("open");
-});
+                <h3>
+                    ${vote.title}
+                </h3>
 
-// Close ketika klik di luar
-document.addEventListener("click", () => {
-    sortDropdown.classList.remove("show");
-    sortBtn.classList.remove("open");
-});
+            </div>
 
-// Jangan tutup saat klik di dalam dropdown
-sortDropdown.addEventListener("click", (e) => {
-    e.stopPropagation();
-});
+            <div class="vote-footer">
 
-// Active option
-sortOptions.forEach(option => {
+                <div>
 
-    option.addEventListener("click", () => {
+                    <small>Period</small>
 
-        sortOptions.forEach(item =>
-            item.classList.remove("active")
-        );
+                    <p>${vote.period}</p>
 
-        option.classList.add("active");
+                </div>
 
-        // Ganti teks tombol
-        sortBtn.innerHTML = `
-            ${option.textContent}
-            <span>⌄</span>
-        `;
+                <a href="${vote.link}" class="vote-now">
+                    Vote now
+                </a>
 
-        // Tutup dropdown
-        sortDropdown.classList.remove("show");
-        sortBtn.classList.remove("open");
+            </div>
 
-        // Nanti di sini isi fungsi sorting
-        // sortVote(option.textContent);
+        </div>
 
-    });
+    `).join("");
 
-});
+}
