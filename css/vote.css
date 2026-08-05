@@ -169,23 +169,26 @@
 }
 
 .sort-option{
+    display:flex;
+    align-items:center;
     padding:12px 14px;
-    border-radius:12px;
-    color:#666;
+    margin:2px 0;
+    border-radius:10px;
+    color:#555;
     font-size:14px;
     font-weight:500;
+    cursor:pointer;
     transition:.2s;
-    margin:2px 0;
 }
 
 .sort-option:hover{
-    background:#f5f5f5;
+    background:rgba(0,0,0,.05);
 }
 
 .sort-option.active{
-    background:#F3FAF5;
-    color:#22C55E;
-    font-weight:700;
+    background:rgba(0,0,0,.06);
+    color:#111;
+    font-weight:600;
 }
 
 /* =========================
