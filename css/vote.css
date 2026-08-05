@@ -147,17 +147,21 @@
 }
 
 .sort-dropdown{
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
-    min-width: 190px;
-    display: none;
-    padding: 8px;
-    border-radius: 20px;
-    background: rgba(255,255,255,.95);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 10px 30px rgba(0,0,0,.08);
-    z-index: 9999;
+    position:absolute;
+    top:calc(100% + 8px);
+    right:0;
+    display:none;
+    min-width:190px;
+    padding:8px;
+    border-radius:18px;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(30px);
+    -webkit-backdrop-filter:blur(30px);
+    border:1px solid rgba(255,255,255,.5);
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.12),
+        inset 0 1px rgba(255,255,255,.4);
+    z-index:9999;
 }
 
 .sort-dropdown.active{
