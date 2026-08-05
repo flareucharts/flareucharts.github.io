@@ -102,17 +102,17 @@ function renderVote(){
 }
 
 const sortBtn = document.querySelector(".sort-btn");
-const overlay = document.querySelector(".sort-overlay");
 const dropdown = document.querySelector(".sort-dropdown");
 
-sortBtn.addEventListener("click", () => {
-
-    overlay.classList.add("active");
-
+sortBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("active");
 });
 
-sortOverlay.addEventListener("click", (e) => {
-    if (e.target === sortOverlay) {
-        sortOverlay.classList.remove("active");
-    }
+document.addEventListener("click", () => {
+    dropdown.classList.remove("active");
+});
+
+dropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
 });
