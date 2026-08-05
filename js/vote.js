@@ -1,7 +1,7 @@
 const voteData = [
 {
     status: "ongoing",
-    countdown: "23h : 40m : 59s",
+    countdown: "1d 23:30:20"
     app: "LINE MUSIC",
     logo: "linemusic",
     title: "LINE MUSIC Daily Vote",
@@ -10,6 +10,30 @@ const voteData = [
     link: "#"
 }
 ];
+
+function formatCountdown(diff) {
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    const pad = n => String(n).padStart(2, "0");
+
+    if (days > 0) {
+        return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    if (hours > 0) {
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    if (minutes > 0) {
+        return `${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    return `${pad(seconds)}s`;
+}
 
 renderVote();
 
