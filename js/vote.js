@@ -1,7 +1,7 @@
 const voteData = [
 {
     status: "ongoing",
-    countdown: "1d 23:30:20"
+    countdown: "1d 23:30:20",
     app: "LINE MUSIC",
     logo: "linemusic",
     title: "LINE MUSIC Daily Vote",
