@@ -103,6 +103,8 @@ function renderVote(){
 
 const sortBtn = document.querySelector(".sort-btn");
 const dropdown = document.querySelector(".sort-dropdown");
+const sortOptions = document.querySelectorAll(".sort-option");
+const sortBtnText = sortBtn.childNodes[0];
 
 sortBtn.addEventListener("click", (e) => {
     e.stopPropagation();
@@ -115,4 +117,24 @@ document.addEventListener("click", () => {
 
 dropdown.addEventListener("click", (e) => {
     e.stopPropagation();
+});
+
+sortOptions.forEach(option => {
+
+    option.addEventListener("click", () => {
+
+        sortOptions.forEach(item =>
+            item.classList.remove("active")
+        );
+
+        option.classList.add("active");
+
+        sortBtnText.textContent = option.textContent.trim() + " ";
+
+        dropdown.classList.remove("active");
+
+        // nanti sorting data di sini
+
+    });
+
 });
