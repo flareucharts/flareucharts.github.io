@@ -163,6 +163,7 @@
 
 .sort-dropdown{
     position:absolute;
+    display:none;
     top:138px;      /* sesuaikan dengan posisi tombol */
     right:16px;     /* sama dengan padding page */
     min-width:180px;
@@ -188,6 +189,7 @@
 }
 
 .sort-option.active{
+    display:block;
     background:#F3FAF5;
     color:#22C55E;
     font-weight:700;
