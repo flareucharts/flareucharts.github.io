@@ -121,6 +121,7 @@
 ========================= */
 
 .vote-sort{
+    position:relative;
     display:flex;
     justify-content:flex-end;
     margin-bottom:16px;
@@ -144,34 +145,21 @@
     background:#ededed;
 }
 
-/* =========================
-   SORT OVERLAY
-========================= */
-
-.sort-overlay{
-    position:fixed;
-    inset:0;
-    display:none;
-    background:rgba(0,0,0,.08);
-    backdrop-filter:blur(6px);
-    z-index:999;
-}
-
-.sort-overlay.active{
-    display:block;
-}
-
 .sort-dropdown{
     position:absolute;
     display:none;
-    top:138px;      /* sesuaikan dengan posisi tombol */
-    right:16px;     /* sama dengan padding page */
+    top:calc(100% + 8px);
+    right:0;
     min-width:180px;
     padding:6px;
     border-radius:20px;
     background:rgba(255,255,255,.9);
     backdrop-filter:blur(20px);
     box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.sort-dropdown.active{
+    display:block;
 }
 
 .sort-option{
@@ -189,7 +177,6 @@
 }
 
 .sort-option.active{
-    display:block;
     background:#F3FAF5;
     color:#22C55E;
     font-weight:700;
