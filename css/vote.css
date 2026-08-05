@@ -120,10 +120,6 @@
    SORT
 ========================= */
 
-/* =========================
-   SORT
-========================= */
-
 .vote-sort{
     display:flex;
     justify-content:flex-end;
@@ -134,19 +130,13 @@
     display:flex;
     align-items:center;
     gap:8px;
-
     padding:10px 14px;
-
     border:none;
     border-radius:14px;
-
     background:#f5f5f5;
-
     font-size:14px;
     font-weight:600;
-
     cursor:pointer;
-
     transition:.25s;
 }
 
@@ -155,38 +145,15 @@
 }
 
 /* =========================
-   SORT DROPDOWN
-========================= */
-.sort-dropdown{
-    position:absolute;
-
-    top:70px;
-    right:16px;
-
-    min-width:190px;
-
-    padding:8px;
-
-    border-radius:20px;
-
-    background:rgba(255,255,255,.9);
-    backdrop-filter:blur(20px);
-
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-/* =========================
    SORT OVERLAY
 ========================= */
 
 .sort-overlay{
     position:fixed;
     inset:0;
-
     display:none;
-
     background:rgba(0,0,0,.08);
     backdrop-filter:blur(6px);
-
     z-index:999;
 }
 
@@ -196,31 +163,23 @@
 
 .sort-dropdown{
     position:absolute;
-
-    min-width:190px;
-
+    top:138px;      /* sesuaikan dengan posisi tombol */
+    right:16px;     /* sama dengan padding page */
+    min-width:180px;
     padding:8px;
-
     border-radius:20px;
-
     background:rgba(255,255,255,.9);
     backdrop-filter:blur(20px);
-
     box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
 .sort-option{
     padding:12px 14px;
-
     border-radius:12px;
-
     font-size:14px;
     font-weight:500;
-
     color:#666;
-
     cursor:pointer;
-
     transition:.2s;
 }
 
