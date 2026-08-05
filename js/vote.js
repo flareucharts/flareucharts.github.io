@@ -23,19 +23,25 @@ function renderVote(){
 
             <div class="vote-header">
 
-                <div class="vote-status">
+    <div class="vote-status">
 
-                    <span class="status ${vote.status}">
-                        ${vote.status === "ongoing" ? "Ongoing" : "Ended"}
-                    </span>
+        <span class="status ${vote.status}">
+            ${vote.status === "ongoing" ? "Ongoing" : "Ended"}
+        </span>
 
-                    <span class="countdown">
-                        ${vote.countdown}
-                    </span>
+        <span class="countdown">
+            ${vote.countdown}
+        </span>
 
-                </div>
+    </div>
 
-            </div>
+    <img
+        src="images/apps/${vote.logo}.png"
+        class="vote-logo"
+        alt="${vote.app}"
+    >
+
+</div>
 
             <div class="vote-body">
 
