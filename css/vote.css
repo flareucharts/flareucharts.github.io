@@ -181,8 +181,13 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-
     margin-bottom:28px;
+}
+
+.vote-logo{
+    width:42px;
+    height:42px;
+    object-fit:contain;
 }
 
 .vote-status{
