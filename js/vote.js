@@ -3,6 +3,7 @@ const voteData = [
     status: "ongoing",
     countdown: "23h : 40m : 59s",
     app: "LINE MUSIC",
+    logo: "linemusic",
     title: "LINE MUSIC Daily Vote",
     period: "2026.08.04 - 2026.08.05",
     theme: "pink",
