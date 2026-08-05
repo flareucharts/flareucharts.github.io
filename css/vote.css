@@ -157,7 +157,23 @@
 /* =========================
    SORT DROPDOWN
 ========================= */
+.sort-dropdown{
+    position:absolute;
 
+    top:70px;
+    right:16px;
+
+    min-width:190px;
+
+    padding:8px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(20px);
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
 /* =========================
    SORT OVERLAY
 ========================= */
