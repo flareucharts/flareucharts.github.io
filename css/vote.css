@@ -125,6 +125,7 @@
     display:flex;
     justify-content:flex-end;
     margin-bottom:16px;
+    z-index: 100;
 }
 
 .sort-btn{
@@ -146,16 +147,17 @@
 }
 
 .sort-dropdown{
-    position:absolute;
-    display:none;
-    top:calc(100% + 8px);
-    right:0;
-    min-width:180px;
-    padding:6px;
-    border-radius:20px;
-    background:rgba(255,255,255,.9);
-    backdrop-filter:blur(20px);
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 190px;
+    display: none;
+    padding: 8px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    z-index: 9999;
 }
 
 .sort-dropdown.active{
