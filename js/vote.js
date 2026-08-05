@@ -107,11 +107,12 @@ const dropdown = document.querySelector(".sort-dropdown");
 
 sortBtn.addEventListener("click", () => {
 
-    const rect = sortBtn.getBoundingClientRect();
-
-    dropdown.style.top = `${rect.bottom + 8}px`;
-    dropdown.style.left = `${rect.right - dropdown.offsetWidth}px`;
-
     overlay.classList.add("active");
 
+});
+
+sortOverlay.addEventListener("click", (e) => {
+    if (e.target === sortOverlay) {
+        sortOverlay.classList.remove("active");
+    }
 });
