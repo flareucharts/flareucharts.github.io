@@ -124,6 +124,9 @@ function getDominantColor(imageSrc) {
     });
 }
 
+let allVotes = [];
+let currentStatus = "ongoing";
+
 /* =========================
    RENDER VOTE
 ========================= */
@@ -295,6 +298,38 @@ if (logo) {
         cards.join("");
 }
 
+function filterVotes() {
+
+    const filtered =
+        allVotes.filter(vote =>
+            vote.status.toLowerCase() === currentStatus
+        );
+
+    renderVote(filtered);
+}
+
+const statusFilters =
+    document.querySelectorAll(".status-filter");
+
+statusFilters.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        statusFilters.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        currentStatus =
+            button.dataset.status;
+
+        filterVotes();
+
+    });
+
+});
+
 
 /* =========================
    SORT DROPDOWN
@@ -434,7 +469,9 @@ function loadVotes() {
             return;
         }
 
-        renderVote(data.votes);
+        allVotes = data.votes;
+
+filterVotes();
 
     })
 
