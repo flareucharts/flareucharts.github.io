@@ -24,12 +24,11 @@ function getAppLogo(appName) {
     const key =
         Object.keys(appLogos).find(
             name =>
-                name.trim().toLowerCase() ===
-                cleanName
+                name.trim().toLowerCase() === cleanName
         );
 
     return key
-        ? new URL(appLogos[key], "https://flareucharts.github.io/").href
+        ? "https://flareucharts.github.io" + appLogos[key]
         : null;
 }
 
@@ -160,27 +159,6 @@ console.log(
 
 const logo = getAppLogo(vote.app);
 
-console.log("APP:", vote.app);
-console.log("LOGO:", logo);
-console.log(
-    "URL LOGO:",
-    logo ? new URL(logo, document.baseURI).href : null
-);
-
-console.log("APP =", JSON.stringify(vote.app));
-console.log("LOGO =", logo);
-
-if (logo) {
-    console.log(
-        "FULL PATH =",
-        new URL(logo, document.baseURI).href
-    );
-} else {
-    console.error(
-        "X",
-        JSON.stringify(vote.app)
-    );
-}
                 let color =
                     "rgb(245, 245, 245)";
 
