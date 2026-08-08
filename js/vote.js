@@ -102,16 +102,29 @@ async function renderVote() {
 
     const container = document.querySelector(".vote-list");
 
+    if (!container) {
+        console.error("vote-list tidak ditemukan");
+        return;
+    }
+
     const cards = await Promise.all(
         voteData.map(async vote => {
 
             const logo = appLogos[vote.app];
 
-            // Baca warna dominan dari logo
-            const color = await getDominantColor(logo);
+            let color = "#ffffff";
+
+            try {
+                color = await getDominantColor(logo);
+            } catch (error) {
+                console.error(
+                    "Gagal mengambil warna logo:",
+                    vote.app,
+                    error
+                );
+            }
 
             return `
-
                 <div
                     class="vote-card ${vote.theme}"
                     style="--app-color: ${color};"
@@ -168,7 +181,6 @@ async function renderVote() {
                     </div>
 
                 </div>
-
             `;
         })
     );
