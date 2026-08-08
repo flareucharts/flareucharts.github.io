@@ -158,6 +158,10 @@ console.log(
                 const logo =
     getAppLogo(vote.app);
 
+console.log("APP =", vote.app);
+console.log("LOGO =", logo);
+console.log("FULL PATH =", new URL(logo, document.baseURI).href);
+
                 let color =
                     "rgb(245, 245, 245)";
 
