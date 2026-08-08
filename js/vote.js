@@ -14,6 +14,25 @@ const appLogos = {
     "DuckAd": "images/apps/duckad.png"
 };
 
+function getAppLogo(appName) {
+
+    if (!appName) return null;
+
+    const cleanName =
+        String(appName).trim().toLowerCase();
+
+    const key =
+        Object.keys(appLogos).find(
+            name =>
+                name.trim().toLowerCase() ===
+                cleanName
+        );
+
+    return key
+        ? appLogos[key]
+        : null;
+}
+
 
 /* =========================
    DOMINANT COLOR
@@ -130,8 +149,7 @@ async function renderVote(votes) {
             votes.map(async vote => {
 
                 const logo =
-                    appLogos[vote.app];
-
+    getAppLogo(vote.app);
 
                 let color =
                     "rgb(245, 245, 245)";
