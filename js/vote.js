@@ -150,34 +150,11 @@ async function renderVote(votes) {
 
             votes.map(async vote => {
 
-console.log(
-    "APP:",
-    JSON.stringify(vote.app),
-    "LOGO:",
-    getAppLogo(vote.app)
-);
 
 const logo = getAppLogo(vote.app);
 
                 let color =
                     "rgb(245, 245, 245)";
-
-                if (logo) {
-                    try {
-                        color =
-                            await getDominantColor(
-                                logo
-                            );
-                    } catch (error) {
-                        console.error(
-                            "Gagal mengambil warna logo:",
-                            vote.app,
-                            error
-                        );
-
-                    }
-
-                }
 
 
                 return `
