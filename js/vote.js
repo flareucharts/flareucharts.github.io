@@ -220,14 +220,18 @@ if (logo) {
                                 </span>
 
                                 ${
-                                    vote.countdown
-                                    ? `
-                                    <span class="countdown">
-                                        ${vote.countdown}
-                                    </span>
-                                    `
-                                    : ""
-                                }
+                                    ${
+    vote.status === "ongoing"
+    ? `
+    <span
+        class="countdown"
+        data-end="${vote.endDate}"
+    >
+        ${vote.countdown || "00:00:00"}
+    </span>
+    `
+    : ""
+}
 
                             </div>
 
@@ -300,12 +304,23 @@ if (logo) {
 
 function filterVotes() {
 
-    const filtered =
-        allVotes.filter(vote =>
-            vote.status.toLowerCase() === currentStatus
+    let filtered = [...allVotes];
+
+    if (currentStatus !== "all") {
+
+        filtered = filtered.filter(
+            vote =>
+                vote.status.toLowerCase() ===
+                currentStatus
         );
+    }
 
     renderVote(filtered);
+
+    setTimeout(
+        updateCountdowns,
+        0
+    );
 }
 
 const statusFilters =
@@ -330,6 +345,81 @@ statusFilters.forEach(button => {
 
 });
 
+
+/* =========================
+   LIVE COUNTDOWN
+========================= */
+
+function updateCountdowns() {
+
+    const countdowns =
+        document.querySelectorAll(
+            ".countdown[data-end]"
+        );
+
+    const now =
+        new Date().getTime();
+
+    countdowns.forEach(countdown => {
+
+        const endDate =
+            countdown.dataset.end;
+
+        if (!endDate) return;
+
+        // End Date dari Apps Script = yyyy-mm-dd
+        // Tambahkan sampai akhir hari
+        const end =
+            new Date(
+                endDate + "T23:59:59"
+            ).getTime();
+
+        const diff =
+            end - now;
+
+        if (diff <= 0) {
+
+            countdown.textContent =
+                "00:00:00";
+
+            return;
+        }
+
+        const days =
+            Math.floor(
+                diff / 86400000
+            );
+
+        const hours =
+            Math.floor(
+                (diff % 86400000) / 3600000
+            );
+
+        const minutes =
+            Math.floor(
+                (diff % 3600000) / 60000
+            );
+
+        const seconds =
+            Math.floor(
+                (diff % 60000) / 1000
+            );
+
+        countdown.textContent =
+            `${days}d ` +
+            `${String(hours).padStart(2, "0")}:` +
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
+    });
+}
+
+
+/* UPDATE SETIAP 1 DETIK */
+
+setInterval(
+    updateCountdowns,
+    1000
+);
 
 /* =========================
    SORT DROPDOWN
