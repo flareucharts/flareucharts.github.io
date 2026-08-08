@@ -7,9 +7,9 @@
 }
 
 .vote-title h2{
-    font-size:28px;
+    font-size:var(--title);
     font-weight:700;
-    color:#111;
+    color:#fff;
     margin-bottom:4px;
 }
 
