@@ -146,7 +146,6 @@ async function renderVote(votes) {
         return;
     }
 
-
     const cards =
         await Promise.all(
 
@@ -182,22 +181,16 @@ if (logo) {
         JSON.stringify(vote.app)
     );
 }
-
                 let color =
                     "rgb(245, 245, 245)";
 
-
                 if (logo) {
-
                     try {
-
                         color =
                             await getDominantColor(
                                 logo
                             );
-
                     } catch (error) {
-
                         console.error(
                             "Gagal mengambil warna logo:",
                             vote.app,
@@ -236,14 +229,13 @@ ${
 }
      </div>
 
-
-                            ${
-                                logo
-                                ? `
-                                <img
-                                    src="${logo}"
-                                    class="vote-logo"
-                                    alt="${vote.app}"
+             ${
+               logo
+               ? `
+                <img
+                   src="${logo}"
+                   class="vote-logo"
+                   alt="${vote.app}"
                                 >
                                 `
                                 : ""
