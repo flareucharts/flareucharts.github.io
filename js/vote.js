@@ -3,7 +3,7 @@ const appLogos = {
     "Mnet Plus": "images/apps/mnetplus.webp",
     "Mubeat": "images/apps/mubeat.png",
     "Kooky": "images/apps/kooky.png",
-    "Idol Champ": "images/apps/idol-champ.png",
+    "Idol Champ": "images/apps/idolchamp.png",
     "Coogoong": "images/apps/coogoong.jpg",
     "Higher": "images/apps/higher.png",
     "LiNC": "images/apps/linc.png",
@@ -147,6 +147,13 @@ async function renderVote(votes) {
         await Promise.all(
 
             votes.map(async vote => {
+
+console.log(
+    "APP:",
+    JSON.stringify(vote.app),
+    "LOGO:",
+    getAppLogo(vote.app)
+);
 
                 const logo =
     getAppLogo(vote.app);
