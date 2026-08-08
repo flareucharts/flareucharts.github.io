@@ -1,17 +1,17 @@
 const appLogos = {
-    "Upick": "images/apps/upick.webp",
-    "Mnet Plus": "images/apps/mnetplus.webp",
-    "Mubeat": "images/apps/mubeat.png",
-    "Kooky": "images/apps/kooky.png",
-    "Idol Champ": "images/apps/idolchamp.png",
-    "Coogoong": "images/apps/coogoong.jpg",
-    "Higher": "images/apps/higher.png",
-    "LiNC": "images/apps/linc.png",
-    "Muniverse": "images/apps/muniverse.png",
-    "BigC": "images/apps/bigc.jpg",
-    "Podoal": "images/apps/podoal.png",
-    "Fandora": "images/apps/fandora.png",
-    "DuckAd": "images/apps/duckad.png"
+    "Upick": "/images/apps/upick.webp",
+    "Mnet Plus": "/images/apps/mnetplus.webp",
+    "Mubeat": "/images/apps/mubeat.png",
+    "Kooky": "/images/apps/kooky.png",
+    "Idol Champ": "/images/apps/idolchamp.png",
+    "Coogoong": "/images/apps/coogoong.jpg",
+    "Higher": "/images/apps/higher.png",
+    "LiNC": "/images/apps/linc.png",
+    "Muniverse": "/images/apps/muniverse.png",
+    "BigC": "/images/apps/bigc.jpg",
+    "Podoal": "/images/apps/podoal.png",
+    "Fandora": "/images/apps/fandora.png",
+    "DuckAd": "/images/apps/duckad.png"
 };
 
 function getAppLogo(appName) {
