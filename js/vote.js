@@ -188,6 +188,8 @@ async function renderVote() {
     container.innerHTML = cards.join("");
 }
 
+renderVote();
+
 const sortBtn = document.querySelector(".sort-btn");
 const dropdown = document.querySelector(".sort-dropdown");
 const sortOptions = document.querySelectorAll(".sort-option");
