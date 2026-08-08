@@ -29,7 +29,7 @@ function getAppLogo(appName) {
         );
 
     return key
-        ? appLogos[key]
+        ? new URL(appLogos[key], "https://flareucharts.github.io/").href
         : null;
 }
 
