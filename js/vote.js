@@ -125,7 +125,7 @@ function getDominantColor(imageSrc) {
 }
 
 let allVotes = [];
-let currentStatus = "ongoing";
+let currentStatus = "all";
 
 /* =========================
    RENDER VOTE
@@ -211,29 +211,23 @@ if (logo) {
 
                         <div class="vote-header">
 
-                            <div class="vote-status">
-
-                                <span
-                                    class="status ${vote.status}"
-                                >
-                                    ${vote.status}
-                                </span>
-
-                                ${
-                                    ${
-    vote.status === "ongoing"
+     <div class="vote-status">
+       <span
+          class="status ${vote.status}>
+             ${vote.status}</span>
+${
+    vote.status.toLowerCase() === "ongoing"
     ? `
-    <span
-        class="countdown"
-        data-end="${vote.endDate}"
-    >
-        ${vote.countdown || "00:00:00"}
-    </span>
-    `
+        <span
+            class="countdown"
+            data-end="${vote.endDate}"
+        >
+            00:00:00
+        </span>
+      `
     : ""
 }
-
-                            </div>
+     </div>
 
 
                             ${
