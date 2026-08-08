@@ -642,25 +642,54 @@ transition:.25s ease;
 color:#5DB7AB;
 }
 
-/* ================= DESKTOP FIX ================= */
+/* =========================
+   DESKTOP
+========================= */
 
-@media (min-width: 1024px){
-.app{
-    max-width:768px;
-  }
-  
-.global-content{
-width:100%;
-  max-width:768px;
-  margin:0 auto;
-  padding:40px 40px 140px;
-  display:flex;
-  flex-direction:column;
-}
+@media (min-width:1024px){
 
-  .video-card{
-    max-width:720px;
-    margin:20px auto;
+    .app{
+        width:100%;
+        max-width:1024px;
+        margin:0 auto;
+    }
+
+    /* HEADER SEJAJAR DENGAN CONTENT */
+    .header{
+        width:100%;
+        max-width:768px;
+        margin:0 auto;
+    }
+
+    .menu-btn{
+        left:40px;
+    }
+
+    /* CONTENT */
+    .global-content{
+        width:100%;
+        max-width:768px;
+        margin:0 auto;
+        padding:40px 40px 140px;
+    }
+
+    /* VIDEO */
+    .video-card{
+        max-width:100%;
+        margin:20px auto;
+    }
+
+    /* VOTE */
+    .vote-list{
+        grid-template-columns:repeat(2, 1fr);
+        gap:20px;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav{
+        width:420px;
+        height:60px;
+    }
 }
   
 @media (min-width:768px){
