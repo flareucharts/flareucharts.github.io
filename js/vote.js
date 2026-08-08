@@ -266,10 +266,11 @@ ${
                                 </small>
 
                                 <p>
-                                    ${vote.startDate}
-                                    -
-                                    ${vote.endDate}
-                                </p>
+    ${formatVoteDate(vote.startDate)}
+    ~
+    ${formatVoteDate(vote.endDate)}
+    (KST)
+</p>
 
                             </div>
 
@@ -573,7 +574,7 @@ function loadVotes() {
         if (!data.votes) {
 
             console.error(
-                "Vote data tidak ditemukan!",
+                "no vote data found!",
                 data
             );
 
