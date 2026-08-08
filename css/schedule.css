@@ -1,19 +1,14 @@
 /* ================= SCHEDULE NEW ================= */
 
-#schedule{
-  margin-top:0 !important;
-  padding-top:0 !important;
+.schedule-title{
+    margin-bottom:24px;
 }
 
-#schedule .global-content{
-  margin-top:0 !important;
-  padding-top:0 !important;
-  display:block !important;
-}
-
-#schedule-content{
-  margin-top:0 !important;
-  padding-top:0 !important;
+.schedule-title h2{
+    font-size:22px;
+    font-weight:700;
+    color:#111;
+    margin-bottom:4px;
 }
 
 .schedule-loading{
