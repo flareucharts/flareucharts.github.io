@@ -213,12 +213,8 @@
     border-radius:24px;
     background: linear-gradient(
         135deg,
-        color-mix(
-            in srgb,
-            var(--app-color),
-            white 60%
-        ),
-        #ffffff 100%
+        color-mix(in srgb, var(--app-color), white 35%),
+        color-mix(in srgb, var(--app-color), white 70%)
     );
     overflow:hidden;
     display:flex;
