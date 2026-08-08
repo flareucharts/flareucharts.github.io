@@ -216,7 +216,7 @@
         color-mix(
             in srgb,
             var(--app-color),
-            white 92%
+            white 70%
         ),
         #ffffff 80%
     );
