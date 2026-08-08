@@ -240,10 +240,11 @@
     flex-shrink:0;
 }
 
-.vote-logo{
-    width:36px;
-    height:36px;
-    object-fit:contain;
+.vote-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 10px;
 }
 
 .vote-status{
