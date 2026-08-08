@@ -177,19 +177,28 @@ month:"short"
       `).join("");
 
     html += `
-      <div class="month-section">
-        <div class="calendar-card">
-          <div class="calendar-top">
+      html += `
+  <div class="month-section">
 
-            <div class="calendar-month">
-              ${month}
-            </div>
-          </div>
+    <div class="calendar-card">
 
-          <div class="calendar-grid">
-            ${calendarHTML}
-          </div>
+      <div class="calendar-nav">
+
+        <button onclick="prevMonth()">‹</button>
+
+        <div class="calendar-month">
+          ${month}
         </div>
+
+        <button onclick="nextMonth()">›</button>
+
+      </div>
+
+      <div class="calendar-grid">
+        ${calendarHTML}
+      </div>
+
+    </div>
 
         <div class="event-section">
           <button
