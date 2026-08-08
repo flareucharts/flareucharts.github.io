@@ -186,7 +186,7 @@ month:"short"
 
         <button onclick="prevMonth()">‹</button>
 
-        <div class="calendar-month">
+        <div id="month-title">
           ${month}
         </div>
 
