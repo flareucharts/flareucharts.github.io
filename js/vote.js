@@ -131,7 +131,7 @@ let currentArtist = "all";
    RENDER VOTE
 ========================= */
 
-async function renderVote(votes) {
+function renderVote(votes)
 
     const container =
         document.querySelector(".vote-list");
@@ -146,9 +146,7 @@ async function renderVote(votes) {
     }
 
     const cards =
-        await Promise.all(
-
-            votes.map(async vote => {
+    votes.map(vote => {
 
 
 const logo = getAppLogo(vote.app);
@@ -243,8 +241,7 @@ ${
                     </div>
 
                 `;
-            })
-        );
+            });
 
 
     container.innerHTML =
@@ -277,9 +274,7 @@ function filterVotes() {
 
     }
 
-    renderVote(filtered).then(() => {
-        updateCountdowns();
-    });
+    renderVote(filtered);
 }
 
 const statusFilters =
