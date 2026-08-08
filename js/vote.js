@@ -119,37 +119,43 @@ function renderVote(){
 const sortBtn = document.querySelector(".sort-btn");
 const dropdown = document.querySelector(".sort-dropdown");
 const sortOptions = document.querySelectorAll(".sort-option");
-const sortBtnText = sortBtn.childNodes[0];
 
-sortBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("active");
-});
+if (sortBtn && dropdown) {
 
-document.addEventListener("click", () => {
-    dropdown.classList.remove("active");
-});
+    const sortBtnText = sortBtn.childNodes[0];
 
-dropdown.addEventListener("click", (e) => {
-    e.stopPropagation();
-});
+    sortBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle("active");
+    });
 
-sortOptions.forEach(option => {
-
-    option.addEventListener("click", () => {
-
-        sortOptions.forEach(item =>
-            item.classList.remove("active")
-        );
-
-        option.classList.add("active");
-
-        sortBtnText.textContent = option.textContent.trim() + " ";
-
+    document.addEventListener("click", () => {
         dropdown.classList.remove("active");
+    });
 
-        // nanti sorting data di sini
+    dropdown.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    sortOptions.forEach(option => {
+
+        option.addEventListener("click", () => {
+
+            sortOptions.forEach(item =>
+                item.classList.remove("active")
+            );
+
+            option.classList.add("active");
+
+            sortBtnText.textContent =
+                option.textContent.trim() + " ";
+
+            dropdown.classList.remove("active");
+
+            // nanti sorting data di sini
+
+        });
 
     });
 
-});
+}
