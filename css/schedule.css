@@ -46,18 +46,15 @@
 }
   
 .calendar-nav{
-    position:absolute;
-    top:22%;
-    left:0;
     width:100%;
     display:flex;
+    align-items:center;
     justify-content:space-between;
-    padding:0 12px;
+    padding:0;
+    margin-bottom:18px;
     box-sizing:border-box;
-    z-index:50;
-    margin-top:0 !important;
-    transform:none !important;
-    top:0 !important;
+    position:relative;
+    z-index:2;
 }
 
 .calendar-nav button{
@@ -70,14 +67,16 @@
     font-size:24px;
     font-weight:bold;
     box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    cursor:pointer;
 }
 
 #month-title{
-  font-size:24px;
-  font-weight:800;
-  color:white;
-  letter-spacing:2px;
-  align-items:center;
+    font-size:24px;
+    font-weight:800;
+    color:#2c7b6e;
+    letter-spacing:1px;
+    text-align:center;
+    line-height:1;
 }
 
 /* CALENDAR */
