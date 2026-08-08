@@ -177,7 +177,6 @@ month:"short"
       `).join("");
 
     html += `
-      html += `
   <div class="month-section">
 
     <div class="calendar-card">
