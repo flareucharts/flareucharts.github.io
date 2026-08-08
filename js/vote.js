@@ -213,7 +213,7 @@ if (logo) {
 
      <div class="vote-status">
        <span
-          class="status ${vote.status}>
+          class="status ${vote.status}">
              ${vote.status}</span>
 ${
     vote.status.toLowerCase() === "ongoing"
