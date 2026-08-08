@@ -216,9 +216,9 @@
         color-mix(
             in srgb,
             var(--app-color),
-            white 70%
+            white 60%
         ),
-        #ffffff 80%
+        #ffffff 100%
     );
     overflow:hidden;
     display:flex;
