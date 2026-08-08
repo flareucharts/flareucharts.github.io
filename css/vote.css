@@ -28,7 +28,7 @@
     margin-bottom:18px;
 }
 
-.status-pill{
+.status-filter{
     display:flex;
     align-items:center;
     gap:8px;
@@ -48,7 +48,7 @@
     transition:.25s;
 }
 
-.status-pill span{
+.status-filter span{
     width:22px;
     height:22px;
 
@@ -64,12 +64,12 @@
     font-weight:700;
 }
 
-.status-pill.active{
+.status-filter.active{
     background:#111;
     color:#fff;
 }
 
-.status-pill.active span{
+.status-filter.active span{
     color:#111;
 }
 
