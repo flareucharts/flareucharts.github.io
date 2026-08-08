@@ -1,9 +1,24 @@
+const appLogos = {
+    "Upick": "images/apps/upick.webp",
+    "Mnet Plus": "images/apps/mnetplus.webp",
+    "Mubeat": "images/apps/mubeat.png",
+    "Kooky": "images/apps/kooky.png",
+    "Idol Champ": "images/apps/idol-champ.png",
+    "Coogoong": "images/apps/coogoong.jpg",
+    "Higher": "images/apps/higher.png",
+    "LiNC": "images/apps/linc.png",
+    "Muniverse": "images/apps/muniverse.png",
+    "BigC": "images/apps/bigc.jpg",
+    "Podoal": "images/apps/podoal.png",
+    "Fandora": "images/apps/fandora.png",
+    "DuckAd": "images/apps/duckad.png"
+};
+
 const voteData = [
 {
     status: "ongoing",
     countdown: "1d 23:30:20",
-    app: "LINE MUSIC",
-    logo: "linemusic",
+    app: "Upick",
     title: "LINE MUSIC Daily Vote",
     period: "2026.08.04 - 2026.08.05",
     theme: "pink",
@@ -60,7 +75,7 @@ function renderVote(){
     </div>
 
     <img
-        src="images/apps/${vote.logo}.png"
+        src="${appLogos[vote.app]}"
         class="vote-logo"
         alt="${vote.app}"
     >
