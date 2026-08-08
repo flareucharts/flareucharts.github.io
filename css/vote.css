@@ -207,22 +207,20 @@
 
 .vote-card{
     position:relative;
-
     width:100%;
     aspect-ratio:16 / 9;
-
-    padding:15px;
-
+    padding:16px;
     border-radius:24px;
-
-    background:linear-gradient(
+    background: linear-gradient(
         135deg,
-        #ffd6de,
-        #ffe9c7
+        color-mix(
+            in srgb,
+            var(--app-color),
+            white 92%
+        ),
+        #ffffff 80%
     );
-
     overflow:hidden;
-
     display:flex;
     flex-direction:column;
 }
