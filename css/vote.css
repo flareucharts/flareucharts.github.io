@@ -371,14 +371,19 @@
 }
 
 /* =========================
-   DESKTOP
+   DESKTOP 
 ========================= */
 
 @media (min-width:1024px){
+    .global-content{
+        width:100%;
+        max-width:1024px;
+        margin:0 auto;
+        padding:40px 40px 140px;
+    }
 
     .vote-list{
         grid-template-columns:repeat(2, 1fr);
         gap:20px;
     }
-
 }
