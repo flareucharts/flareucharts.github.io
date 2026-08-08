@@ -90,7 +90,7 @@ const voteData = [
     {
         status: "ongoing",
         countdown: "1d 23:30:20",
-        app: "Upick",
+        app: "Coogoong",
         title: "LINE MUSIC Daily Vote",
         period: "2026.08.04 - 2026.08.05",
         theme: "pink",
