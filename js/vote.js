@@ -50,7 +50,9 @@ function formatCountdown(diff) {
     return `${pad(seconds)}s`;
 }
 
-renderVote();
+document.addEventListener("DOMContentLoaded", () => {
+    renderVote();
+});
 
 function renderVote(){
 
