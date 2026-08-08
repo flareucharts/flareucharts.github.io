@@ -105,48 +105,6 @@ function getDominantColor(imageSrc) {
     });
 }
 
-
-/* =========================
-   LOAD VOTES
-========================= */
-
-function loadVotes() {
-
-    fetch(
-        "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec"
-    )
-
-    .then(res => res.json())
-
-    .then(data => {
-
-        console.log("VOTE DATA:", data);
-
-        if (!data.votes) {
-
-            console.error(
-                "Vote data tidak ditemukan!",
-                data
-            );
-
-            return;
-        }
-
-        renderVote(data.votes);
-
-    })
-
-    .catch(error => {
-
-        console.error(
-            "Gagal mengambil vote:",
-            error
-        );
-
-    });
-}
-
-
 /* =========================
    RENDER VOTE
 ========================= */
@@ -387,6 +345,74 @@ if (sortBtn && dropdown) {
 
 }
 
+
+/* =========================
+   LOAD VOTES
+========================= */
+
+function loadVotes() {
+
+    const container =
+        document.querySelector(".vote-list");
+
+    if (!container) {
+        console.error("vote-list tidak ditemukan");
+        return;
+    }
+
+    // LOADING
+    container.innerHTML = `
+        <div class="vote-loading">
+            <div class="loading-spinner"></div>
+            <span>Loading votes...</span>
+        </div>
+    `;
+
+    fetch(
+        "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec"
+    )
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        console.log("VOTE DATA:", data);
+
+        if (!data.votes) {
+
+            console.error(
+                "Vote data tidak ditemukan!",
+                data
+            );
+
+            container.innerHTML = `
+                <div class="vote-error">
+                    No vote data found.
+                </div>
+            `;
+
+            return;
+        }
+
+        renderVote(data.votes);
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Gagal mengambil vote:",
+            error
+        );
+
+        container.innerHTML = `
+            <div class="vote-error">
+                Failed to load votes.
+            </div>
+        `;
+
+    });
+}
 
 /* =========================
    START
