@@ -249,7 +249,7 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:28px;
+    margin-bottom:15px;
 }
 
 .vote-logo{
@@ -294,7 +294,7 @@
 }
 
 .vote-footer{
-    margin-top:28px;
+    margin-top:15px;
     display:flex;
     justify-content:space-between;
     align-items:end;
