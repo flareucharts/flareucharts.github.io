@@ -14,222 +14,382 @@ const appLogos = {
     "DuckAd": "images/apps/duckad.png"
 };
 
+
+/* =========================
+   DOMINANT COLOR
+========================= */
+
 function getDominantColor(imageSrc) {
 
-  return new Promise((resolve) => {
+    return new Promise((resolve) => {
 
-    const img = new Image();
+        const img = new Image();
 
-    img.onload = function () {
+        img.onload = function () {
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+            const canvas =
+                document.createElement("canvas");
 
-      canvas.width = 50;
-      canvas.height = 50;
+            const ctx =
+                canvas.getContext("2d");
 
-      ctx.drawImage(img, 0, 0, 50, 50);
+            canvas.width = 50;
+            canvas.height = 50;
 
-      const data = ctx.getImageData(
-        0,
-        0,
-        50,
-        50
-      ).data;
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                50,
+                50
+            );
 
-      let r = 0;
-      let g = 0;
-      let b = 0;
-      let count = 0;
+            const data =
+                ctx.getImageData(
+                    0,
+                    0,
+                    50,
+                    50
+                ).data;
 
-      for (let i = 0; i < data.length; i += 4) {
+            let r = 0;
+            let g = 0;
+            let b = 0;
+            let count = 0;
 
-        const red = data[i];
-        const green = data[i + 1];
-        const blue = data[i + 2];
-        const alpha = data[i + 3];
+            for (
+                let i = 0;
+                i < data.length;
+                i += 4
+            ) {
 
-        // Abaikan transparan
-        if (alpha < 100) continue;
+                const red = data[i];
+                const green = data[i + 1];
+                const blue = data[i + 2];
+                const alpha = data[i + 3];
 
-        // Abaikan putih
-        if (
-          red > 235 &&
-          green > 235 &&
-          blue > 235
-        ) continue;
+                if (alpha < 100) continue;
 
-        r += red;
-        g += green;
-        b += blue;
+                if (
+                    red > 235 &&
+                    green > 235 &&
+                    blue > 235
+                ) continue;
 
-        count++;
-      }
+                r += red;
+                g += green;
+                b += blue;
 
-      if (!count) {
-        resolve("#ffffff");
-        return;
-      }
-
-      r = Math.round(r / count);
-      g = Math.round(g / count);
-      b = Math.round(b / count);
-
-      resolve(`rgb(${r}, ${g}, ${b})`);
-    };
-
-    img.onerror = function () {
-      resolve("#ffffff");
-    };
-
-    img.src = imageSrc;
-  });
-}
-
-const voteData = [
-    {
-        status: "ongoing",
-        countdown: "1d 23:30:20",
-        app: "Coogoong",
-        title: "LINE MUSIC Daily Vote",
-        period: "2026.08.04 - 2026.08.05",
-        theme: "pink",
-        link: "#"
-    }
-];
-
-async function renderVote() {
-
-    const container = document.querySelector(".vote-list");
-
-    if (!container) {
-        console.error("vote-list tidak ditemukan");
-        return;
-    }
-
-    const cards = await Promise.all(
-        voteData.map(async vote => {
-
-            const logo = appLogos[vote.app];
-
-            let color = "#ffffff";
-
-            try {
-                color = await getDominantColor(logo);
-            } catch (error) {
-                console.error(
-                    "Gagal mengambil warna logo:",
-                    vote.app,
-                    error
-                );
+                count++;
             }
 
-            return `
-                <div
-                    class="vote-card ${vote.theme}"
-                    style="--app-color: ${color};"
-                >
+            if (!count) {
+                resolve("rgb(245, 245, 245)");
+                return;
+            }
 
-                    <div class="vote-header">
+            r = Math.round(r / count);
+            g = Math.round(g / count);
+            b = Math.round(b / count);
 
-                        <div class="vote-status">
+            resolve(
+                `rgb(${r}, ${g}, ${b})`
+            );
+        };
 
-                            <span class="status ${vote.status}">
-                                Ongoing
-                            </span>
+        img.onerror = function () {
+            resolve("rgb(245, 245, 245)");
+        };
 
-                            <span class="countdown">
-                                ${vote.countdown}
-                            </span>
-
-                        </div>
-
-                        <img
-                            src="${logo}"
-                            class="vote-logo"
-                            alt="${vote.app}"
-                        >
-
-                    </div>
-
-                    <div class="vote-body">
-
-                        <div class="vote-app">
-                            ${vote.app}
-                        </div>
-
-                        <h3>
-                            ${vote.title}
-                        </h3>
-
-                    </div>
-
-                    <div class="vote-footer">
-
-                        <div>
-                            <small>Period</small>
-                            <p>${vote.period}</p>
-                        </div>
-
-                        <a
-                            href="${vote.link}"
-                            class="vote-now"
-                        >
-                            Vote now
-                        </a>
-
-                    </div>
-
-                </div>
-            `;
-        })
-    );
-
-    container.innerHTML = cards.join("");
+        img.src = imageSrc;
+    });
 }
 
-renderVote();
 
-const sortBtn = document.querySelector(".sort-btn");
-const dropdown = document.querySelector(".sort-dropdown");
-const sortOptions = document.querySelectorAll(".sort-option");
+/* =========================
+   LOAD VOTES
+========================= */
+
+function loadVotes() {
+
+    fetch(
+        "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec"
+    )
+
+    .then(res => res.json())
+
+    .then(data => {
+
+        console.log("VOTE DATA:", data);
+
+        if (!data.votes) {
+
+            console.error(
+                "Vote data tidak ditemukan!",
+                data
+            );
+
+            return;
+        }
+
+        renderVote(data.votes);
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Gagal mengambil vote:",
+            error
+        );
+
+    });
+}
+
+
+/* =========================
+   RENDER VOTE
+========================= */
+
+async function renderVote(votes) {
+
+    const container =
+        document.querySelector(".vote-list");
+
+    if (!container) {
+
+        console.error(
+            "vote-list tidak ditemukan"
+        );
+
+        return;
+    }
+
+
+    const cards =
+        await Promise.all(
+
+            votes.map(async vote => {
+
+                const logo =
+                    appLogos[vote.app];
+
+
+                let color =
+                    "rgb(245, 245, 245)";
+
+
+                if (logo) {
+
+                    try {
+
+                        color =
+                            await getDominantColor(
+                                logo
+                            );
+
+                    } catch (error) {
+
+                        console.error(
+                            "Gagal mengambil warna logo:",
+                            vote.app,
+                            error
+                        );
+
+                    }
+
+                }
+
+
+                return `
+
+                    <div
+                        class="vote-card"
+                        style="--app-color: ${color};"
+                    >
+
+                        <div class="vote-header">
+
+                            <div class="vote-status">
+
+                                <span
+                                    class="status ${vote.status}"
+                                >
+                                    ${vote.status}
+                                </span>
+
+                                ${
+                                    vote.countdown
+                                    ? `
+                                    <span class="countdown">
+                                        ${vote.countdown}
+                                    </span>
+                                    `
+                                    : ""
+                                }
+
+                            </div>
+
+
+                            ${
+                                logo
+                                ? `
+                                <img
+                                    src="${logo}"
+                                    class="vote-logo"
+                                    alt="${vote.app}"
+                                >
+                                `
+                                : ""
+                            }
+
+                        </div>
+
+
+                        <div class="vote-body">
+
+                            <div class="vote-app">
+                                ${vote.app}
+                            </div>
+
+                            <h3>
+                                ${vote.title}
+                            </h3>
+
+                        </div>
+
+
+                        <div class="vote-footer">
+
+                            <div>
+
+                                <small>
+                                    Period
+                                </small>
+
+                                <p>
+                                    ${vote.startDate}
+                                    -
+                                    ${vote.endDate}
+                                </p>
+
+                            </div>
+
+
+                            <a
+                                href="${vote.link}"
+                                class="vote-now"
+                                target="_blank"
+                            >
+                                Vote now
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                `;
+            })
+        );
+
+
+    container.innerHTML =
+        cards.join("");
+}
+
+
+/* =========================
+   SORT DROPDOWN
+========================= */
+
+const sortBtn =
+    document.querySelector(".sort-btn");
+
+const dropdown =
+    document.querySelector(".sort-dropdown");
+
+const sortOptions =
+    document.querySelectorAll(".sort-option");
+
 
 if (sortBtn && dropdown) {
 
-    const sortBtnText = sortBtn.childNodes[0];
+    const sortBtnText =
+        sortBtn.childNodes[0];
 
-    sortBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("active");
-    });
 
-    document.addEventListener("click", () => {
-        dropdown.classList.remove("active");
-    });
+    sortBtn.addEventListener(
+        "click",
+        (e) => {
 
-    dropdown.addEventListener("click", (e) => {
-        e.stopPropagation();
-    });
+            e.stopPropagation();
+
+            dropdown.classList.toggle(
+                "active"
+            );
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        () => {
+
+            dropdown.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    dropdown.addEventListener(
+        "click",
+        (e) => {
+
+            e.stopPropagation();
+
+        }
+    );
+
 
     sortOptions.forEach(option => {
 
-        option.addEventListener("click", () => {
+        option.addEventListener(
+            "click",
+            () => {
 
-            sortOptions.forEach(item =>
-                item.classList.remove("active")
-            );
+                sortOptions.forEach(item =>
+                    item.classList.remove(
+                        "active"
+                    )
+                );
 
-            option.classList.add("active");
 
-            sortBtnText.textContent =
-                option.textContent.trim() + " ";
+                option.classList.add(
+                    "active"
+                );
 
-            dropdown.classList.remove("active");
 
-            // nanti sorting data di sini
+                sortBtnText.textContent =
+                    option.textContent.trim() + " ";
 
-        });
+
+                dropdown.classList.remove(
+                    "active"
+                );
+
+            }
+        );
 
     });
 
 }
+
+
+/* =========================
+   START
+========================= */
+
+loadVotes();
