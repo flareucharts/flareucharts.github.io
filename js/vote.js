@@ -159,8 +159,14 @@ console.log(
     getAppLogo(vote.app)
 );
 
-                const logo =
-    getAppLogo(vote.app);
+const logo = getAppLogo(vote.app);
+
+console.log("APP:", vote.app);
+console.log("LOGO:", logo);
+console.log(
+    "URL LOGO:",
+    logo ? new URL(logo, document.baseURI).href : null
+);
 
 console.log("APP =", JSON.stringify(vote.app));
 console.log("LOGO =", logo);
