@@ -332,15 +332,21 @@ font-size:clamp(10px,1.8vw,11px);
 
     <!-- Status -->
     <div class="vote-status-filter">
-      <button class="status-pill active">
-        Ongoing
-        <span>8</span>
-      </button>
+      <button class="status-filter active" data-status="all">
+    All
+</button>
 
-      <button class="status-pill">
-        Ended
-        <span>35</span>
-      </button>
+<button class="status-filter" data-status="ongoing">
+    Ongoing
+</button>
+
+<button class="status-filter" data-status="upcoming">
+    Upcoming
+</button>
+
+<button class="status-filter" data-status="ended">
+    Ended
+</button>
     </div>
 
     <!-- Artist -->
