@@ -650,7 +650,7 @@ color:#5DB7AB;
 
     .app{
         width:100%;
-        max-width:1024px;
+        max-width:768px;
         margin:0 auto;
     }
 
@@ -677,7 +677,14 @@ color:#5DB7AB;
         max-width:100%;
         margin:20px auto;
     }
-
+    
+/* HOME GRID */
+    .desktop-layout{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:20px;
+        align-items:start;
+    }
     /* VOTE */
     .vote-list{
         grid-template-columns:repeat(2, 1fr);
