@@ -53,7 +53,7 @@ function renderVote() {
                 <img
                     src="${appLogos[vote.app]}"
                     class="vote-logo"
-                    alt="Upick"
+                    alt="${vote.app}"
                 >
 
             </div>
