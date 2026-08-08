@@ -126,6 +126,7 @@ function getDominantColor(imageSrc) {
 
 let allVotes = [];
 let currentStatus = "all";
+let currentArtist = "all";
 
 /* =========================
    RENDER VOTE
@@ -300,21 +301,31 @@ function filterVotes() {
 
     let filtered = [...allVotes];
 
+    /* STATUS */
     if (currentStatus !== "all") {
 
-        filtered = filtered.filter(
-            vote =>
-                vote.status.toLowerCase() ===
-                currentStatus
+        filtered = filtered.filter(vote =>
+            String(vote.status || "")
+                .trim()
+                .toLowerCase() === currentStatus
         );
+
     }
 
-    renderVote(filtered);
+    /* ARTIST */
+    if (currentArtist !== "all") {
 
-    setTimeout(
-        updateCountdowns,
-        0
-    );
+        filtered = filtered.filter(vote =>
+            String(vote.artist || "")
+                .trim()
+                .toLowerCase() === currentArtist
+        );
+
+    }
+
+    renderVote(filtered).then(() => {
+        updateCountdowns();
+    });
 }
 
 const statusFilters =
@@ -339,6 +350,30 @@ statusFilters.forEach(button => {
 
 });
 
+
+const artistFilters =
+    document.querySelectorAll(".artist-filter");
+
+artistFilters.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        artistFilters.forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        currentArtist =
+            button.dataset.artist
+                .trim()
+                .toLowerCase();
+
+        filterVotes();
+
+    });
+
+});
 
 /* =========================
    LIVE COUNTDOWN
@@ -562,7 +597,7 @@ filterVotes();
     .catch(error => {
 
         console.error(
-            "Gagal mengambil vote:",
+            "Failed to load votes:",
             error
         );
 
