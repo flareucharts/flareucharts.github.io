@@ -1,60 +1,18 @@
-const appLogos = {
-    "Upick": "images/apps/upick.webp",
-    "Mnet Plus": "images/apps/mnetplus.webp",
-    "Mubeat": "images/apps/mubeat.png",
-    "Kooky": "images/apps/kooky.png",
-    "Idol Champ": "images/apps/idol-champ.png",
-    "Coogoong": "images/apps/coogoong.jpg",
-    "Higher": "images/apps/higher.png",
-    "LiNC": "images/apps/linc.png",
-    "Muniverse": "images/apps/muniverse.png",
-    "BigC": "images/apps/bigc.jpg",
-    "Podoal": "images/apps/podoal.png",
-    "Fandora": "images/apps/fandora.png",
-    "DuckAd": "images/apps/duckad.png"
-};
-
 const voteData = [
-{
-    status: "ongoing",
-    countdown: "1d 23:30:20",
-    app: "Upick",
-    title: "LINE MUSIC Daily Vote",
-    period: "2026.08.04 - 2026.08.05",
-    theme: "pink",
-    link: "#"
-}
+    {
+        status: "ongoing",
+        countdown: "1d 23:30:20",
+        app: "Upick",
+        title: "LINE MUSIC Daily Vote",
+        period: "2026.08.04 - 2026.08.05",
+        theme: "pink",
+        link: "#"
+    }
 ];
 
-function formatCountdown(diff) {
+renderVote();
 
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-
-    const pad = n => String(n).padStart(2, "0");
-
-    if (days > 0) {
-        return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-    }
-
-    if (hours > 0) {
-        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-    }
-
-    if (minutes > 0) {
-        return `${pad(minutes)}:${pad(seconds)}`;
-    }
-
-    return `${pad(seconds)}s`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    renderVote();
-});
-
-function renderVote(){
+function renderVote() {
 
     const container = document.querySelector(".vote-list");
 
@@ -64,25 +22,25 @@ function renderVote(){
 
             <div class="vote-header">
 
-    <div class="vote-status">
+                <div class="vote-status">
 
-        <span class="status ${vote.status}">
-            ${vote.status === "ongoing" ? "Ongoing" : "Ended"}
-        </span>
+                    <span class="status ${vote.status}">
+                        Ongoing
+                    </span>
 
-        <span class="countdown">
-            ${vote.countdown}
-        </span>
+                    <span class="countdown">
+                        ${vote.countdown}
+                    </span>
 
-    </div>
+                </div>
 
-    <img
-        src="${appLogos[vote.app]}"
-        class="vote-logo"
-        alt="${vote.app}"
-    >
+                <img
+                    src="images/apps/upick.webp"
+                    class="vote-logo"
+                    alt="Upick"
+                >
 
-</div>
+            </div>
 
             <div class="vote-body">
 
@@ -99,11 +57,8 @@ function renderVote(){
             <div class="vote-footer">
 
                 <div>
-
                     <small>Period</small>
-
                     <p>${vote.period}</p>
-
                 </div>
 
                 <a href="${vote.link}" class="vote-now">
@@ -115,7 +70,6 @@ function renderVote(){
         </div>
 
     `).join("");
-
 }
 
 const sortBtn = document.querySelector(".sort-btn");
