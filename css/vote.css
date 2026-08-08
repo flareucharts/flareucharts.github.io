@@ -217,8 +217,8 @@
         #ffe9c7
     );
     overflow:hidden;
-    display:flex;
-    flex-direction:column;
+    display:grid;
+    grid-template-rows:auto 1fr auto;
 }
 
 /* =========================
@@ -289,7 +289,7 @@
 }
 
 .vote-body{
-    flex:1;
+    align-self:center;
 }
 
 .vote-body h3{
@@ -301,7 +301,6 @@
 }
 
 .vote-footer{
-    margin-top:auto;
     display:flex;
     justify-content:space-between;
     align-items:end;
