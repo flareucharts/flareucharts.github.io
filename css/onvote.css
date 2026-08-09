@@ -48,17 +48,17 @@
             135deg,
             color-mix(
                 in srgb,
-                var(--app-color) 55%,
+                var(--app-color) 75%,
                 white
             ),
             color-mix(
                 in srgb,
-                var(--app-color) 32%,
+                var(--app-color) 55%,
                 white
             ) 55%,
             color-mix(
                 in srgb,
-                var(--app-color) 18%,
+                var(--app-color) 35%,
                 white
             )
         );
