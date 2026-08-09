@@ -222,11 +222,11 @@ const endDate =
                                     .toLowerCase() === "ongoing"
                                 ? `
                                     <span
-                                        class="countdown"
-                                        data-end="${endDate}"
-                                    >
-                                        00:00:00
-                                    </span>
+    class="countdown"
+    data-end="${vote.endTimestamp}"
+>
+    00:00:00
+</span>
                                 `
                                 : ""
                             }
@@ -455,42 +455,22 @@ function updateCountdowns() {
         );
 
     const now =
-        new Date().getTime();
-
+        Date.now();
 
     countdowns.forEach(countdown => {
 
-        const endDate =
-            countdown.dataset.end;
-
-        if (!endDate) return;
-
-
-        /*
-         * Sheet:
-         * 2026/08/13 23:59:59
-         *
-         * menjadi:
-         * 2026/08/13T23:59:59
-         */
-
         const end =
-            new Date(
-                endDate.replace(
-                    " ",
-                    "T"
-                )
-            ).getTime();
+            Number(
+                countdown.dataset.end
+            );
 
-
-        if (isNaN(end)) {
+        if (!end || isNaN(end)) {
 
             countdown.textContent =
                 "00:00:00";
 
             return;
         }
-
 
         const diff =
             end - now;
@@ -536,9 +516,7 @@ function updateCountdowns() {
             `${String(seconds).padStart(2, "0")}`;
 
     });
-
 }
-
 
 /* UPDATE SETIAP 1 DETIK */
 
