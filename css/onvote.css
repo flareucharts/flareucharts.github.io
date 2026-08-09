@@ -19,6 +19,7 @@
     position:relative;
     width:100%;
     overflow:hidden;
+    border-radius:18px;
 }
 
 .onvote-track{
@@ -93,7 +94,7 @@
     top:14px;
     right:14px;
     z-index:20;
-    font-size:11px;
+    font-size:12px;
     font-weight:700;
     color:rgba(255,255,255,.85);
     pointer-events:none;
