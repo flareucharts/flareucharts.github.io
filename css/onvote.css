@@ -23,6 +23,8 @@
 }
 
 .onvote-track{
+    position:relative;
+    z-index:1;
     display:flex;
     width:100%;
     overflow-x:auto;
@@ -93,10 +95,11 @@
     position:absolute;
     top:14px;
     right:14px;
-    z-index:20;
+    z-index:999;
     font-size:12px;
     font-weight:700;
-    color:rgba(255,255,255,.85);
+    line-height:1;
+    color:rgba(255,255,255,.9);
     pointer-events:none;
 }
 
