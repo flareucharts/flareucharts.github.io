@@ -79,9 +79,15 @@
 }
 
 .onvote-ending{
-    font-size:11px;
+    padding:4px 8px;
+    border-radius:999px;
+    background:#fff;
+    font-size:13px;
     font-weight:700;
-    color:#fff;
+    color:#111;
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
 
 /* =========================
@@ -141,7 +147,7 @@
 }
 
 .onvote-loading{
-    height:80px;
+    height:95px;
     display:flex;
     flex-direction:column;
     gap:10px;
