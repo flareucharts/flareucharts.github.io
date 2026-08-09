@@ -196,16 +196,17 @@ function renderOngoingVote(votes) {
                 getAppLogo(vote.app);
 
             return `
-                <<div
-    class="onvote-slider onvote-card"
-    data-index="${index}"
->
+                <div
+                    class="onvote-slider"
+                    data-index="${index}"
+                    style="--app-color: rgb(245, 245, 245);"
+                >
 
                     <!-- TOP -->
                     <div class="onvote-top">
 
                         <span
-                            class="countdown onvote-ending"
+                            class="onvote-ending"
                             data-end="${vote.endTimestamp}"
                         >
                             Ends in 00:00:00
@@ -255,10 +256,16 @@ function renderOngoingVote(votes) {
 
         }).join("");
 
-updateCountdowns();
 
     /* =========================
-       APP CARD COLOR
+       COUNTDOWN
+    ========================= */
+
+    updateHomeVoteCountdowns();
+
+
+    /* =========================
+       APP COLOR
     ========================= */
 
     ongoingVotes.forEach((vote, index) => {
@@ -280,9 +287,22 @@ updateCountdowns();
         getDominantColor(logo)
             .then(color => {
 
+                /* CSS VARIABLE */
                 card.style.setProperty(
                     "--app-color",
                     color
+                );
+
+                /* LANGSUNG APPLY */
+                card.style.backgroundColor =
+                    color;
+
+            })
+            .catch(error => {
+
+                console.error(
+                    "Failed to get app color:",
+                    error
                 );
 
             });
@@ -321,9 +341,7 @@ updateCountdowns();
             });
 
 
-            /* =========================
-               LOOP BACK
-            ========================= */
+            /* LOOP BACK */
 
             if (
                 currentSlide ===
@@ -354,6 +372,103 @@ updateCountdowns();
 
 
 /* =========================
+   HOME VOTE COUNTDOWN
+========================= */
+
+function updateHomeVoteCountdowns() {
+
+    const countdowns =
+        document.querySelectorAll(
+            ".onvote-ending[data-end]"
+        );
+
+
+    const now =
+        Date.now();
+
+
+    countdowns.forEach(countdown => {
+
+        const end =
+            Number(
+                countdown.dataset.end
+            );
+
+
+        if (!Number.isFinite(end)) {
+
+            countdown.textContent =
+                "Ends in --";
+
+            return;
+
+        }
+
+
+        const diff =
+            end - now;
+
+
+        if (diff <= 0) {
+
+            countdown.textContent =
+                "Ended";
+
+            return;
+
+        }
+
+
+        const days =
+            Math.floor(
+                diff / 86400000
+            );
+
+
+        const hours =
+            Math.floor(
+                (diff % 86400000) /
+                3600000
+            );
+
+
+        const minutes =
+            Math.floor(
+                (diff % 3600000) /
+                60000
+            );
+
+
+        const seconds =
+            Math.floor(
+                (diff % 60000) /
+                1000
+            );
+
+
+        countdown.textContent =
+            "Ends in " +
+            `${days}d ` +
+            `${String(hours).padStart(2, "0")}:` +
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
+
+    });
+
+}
+
+
+/* =========================
+   LIVE COUNTDOWN
+========================= */
+
+setInterval(
+    updateHomeVoteCountdowns,
+    1000
+);
+
+
+/* =========================
    RECEIVE VOTE DATA
 ========================= */
 
@@ -367,3 +482,20 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================
+   FALLBACK
+   Kalau data sudah loaded
+========================= */
+
+if (
+    Array.isArray(window.allVotes) &&
+    window.allVotes.length
+) {
+
+    renderOngoingVote(
+        window.allVotes
+    );
+
+}
