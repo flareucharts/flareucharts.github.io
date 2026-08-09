@@ -147,7 +147,7 @@
 }
 
 .onvote-loading{
-    height:95px;
+    height:100px;
     display:flex;
     flex-direction:column;
     gap:10px;
@@ -164,11 +164,11 @@
     );
     background-size:200% 100%;
     animation:skeleton 1.2s linear infinite;
+    margin:16px;
 }
 
 .onvote-skeleton.short{
     width:80px;
-    margin-top:14px;
 }
 
 .onvote-skeleton.medium{
