@@ -555,14 +555,13 @@ statusFilters.forEach(button => {
 
 });
 
-
 /* =========================
    ARTIST FILTER
 ========================= */
 
 const artistFilters =
     document.querySelectorAll(
-        ".artist-filter"
+        ".artist-pill"
     );
 
 artistFilters.forEach(button => {
@@ -578,7 +577,7 @@ artistFilters.forEach(button => {
             button.classList.add("active");
 
             currentArtist =
-                button.dataset.artist
+                button.textContent
                     .trim()
                     .toLowerCase();
 
