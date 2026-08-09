@@ -84,17 +84,11 @@
     color:#fff;
 }
 
-.onvote-wrapper{
-    position:relative;
-    width:100%;
-}
-
 /* =========================
-   PAGINATION
    OVERLAY DI ATAS CARD
 ========================= */
 
-.onvote-pagination{
+.onvote-indicator{
     position:absolute;
     top:14px;
     right:14px;
