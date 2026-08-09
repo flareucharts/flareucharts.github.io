@@ -80,10 +80,6 @@ function renderOngoingVote(votes) {
                             Ends in 00:00:00
                         </span>
 
-                        <span class="onvote-count">
-                            ${index + 1}/${ongoingVotes.length}
-                        </span>
-
                     </div>
 
 
@@ -235,3 +231,20 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================
+   FALLBACK
+   DATA SUDAH LOADED
+========================= */
+
+if (
+    Array.isArray(window.allVotes) &&
+    window.allVotes.length
+) {
+
+    renderOngoingVote(
+        window.allVotes
+    );
+
+}
