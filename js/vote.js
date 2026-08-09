@@ -32,6 +32,26 @@ function getAppLogo(appName) {
         : null;
 }
 
+function formatVoteDate(dateValue) {
+
+    if (!dateValue) return "";
+
+    const parts =
+        String(dateValue).split(" ");
+
+    if (parts.length < 2) {
+        return String(dateValue);
+    }
+
+    const date =
+        parts[0].split("-");
+
+    const time =
+        parts[1].slice(0, 5);
+
+    return `${date[0]}.${date[1]}.${date[2]} ${time}`;
+}
+
 
 /* =========================
    DOMINANT COLOR
