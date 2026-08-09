@@ -304,11 +304,16 @@ function renderOngoingVote(votes) {
     });
 
 
-    /* =========================
+       /* =========================
        AUTO SLIDE
     ========================= */
 
     if (ongoingVotes.length > 1) {
+
+        const firstSlide =
+            track.children[0].cloneNode(true);
+
+        track.appendChild(firstSlide);
 
         let currentSlide = 0;
 
@@ -316,33 +321,50 @@ function renderOngoingVote(votes) {
 
             currentSlide++;
 
-            if (
-                currentSlide >=
-                ongoingVotes.length
-            ) {
-                currentSlide = 0;
-            }
-
-
             track.scrollTo({
-
                 left:
                     track.clientWidth *
                     currentSlide,
-
                 behavior: "smooth"
-
             });
 
 
             /* =========================
-               UPDATE 1/2
+               UPDATE INDICATOR
             ========================= */
 
             if (indicator) {
 
+                const displaySlide =
+                    currentSlide >= ongoingVotes.length
+                        ? 0
+                        : currentSlide;
+
                 indicator.textContent =
-                    `${currentSlide + 1}/${ongoingVotes.length}`;
+                    `${displaySlide + 1} / ${ongoingVotes.length}`;
+            }
+
+
+            /* =========================
+               LOOP BACK
+            ========================= */
+
+            if (
+                currentSlide ===
+                ongoingVotes.length
+            ) {
+
+                setTimeout(() => {
+
+                    track.style.scrollBehavior = "auto";
+
+                    track.scrollLeft = 0;
+
+                    track.style.scrollBehavior = "smooth";
+
+                    currentSlide = 0;
+
+                }, 600);
 
             }
 
@@ -350,86 +372,7 @@ function renderOngoingVote(votes) {
 
     }
 
-}
-
-
-/* =========================
-   HOME VOTE COUNTDOWN
-========================= */
-
-function updateHomeVoteCountdowns() {
-
-    const countdowns =
-        document.querySelectorAll(
-            ".onvote-ending[data-end]"
-        );
-
-    const now = Date.now();
-
-    countdowns.forEach(countdown => {
-
-        const end =
-            Number(
-                countdown.dataset.end
-            );
-
-        if (!Number.isFinite(end)) {
-
-            countdown.textContent =
-                "Ends in --";
-
-            return;
-
-        }
-
-        const diff =
-            end - now;
-
-
-        if (diff <= 0) {
-
-            countdown.textContent =
-                "Ended";
-
-            return;
-
-        }
-
-
-        const days =
-            Math.floor(
-                diff / 86400000
-            );
-
-        const hours =
-            Math.floor(
-                (diff % 86400000) /
-                3600000
-            );
-
-        const minutes =
-            Math.floor(
-                (diff % 3600000) /
-                60000
-            );
-
-        const seconds =
-            Math.floor(
-                (diff % 60000) /
-                1000
-            );
-
-
-        countdown.textContent =
-            "Ends in " +
-            `${days}d ` +
-            `${String(hours).padStart(2, "0")}:` +
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
-
-    });
-
-}
+} // ← INI PENUTUP renderOngoingVote()
 
 
 /* =========================
