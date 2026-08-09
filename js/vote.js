@@ -32,6 +32,7 @@ function getAppLogo(appName) {
         : null;
 }
 
+
 /* =========================
    DOMINANT COLOR
 ========================= */
@@ -41,6 +42,8 @@ function getDominantColor(imageSrc) {
     return new Promise((resolve) => {
 
         const img = new Image();
+
+        img.crossOrigin = "Anonymous";
 
         img.onload = function () {
 
@@ -122,15 +125,17 @@ function getDominantColor(imageSrc) {
     });
 }
 
+
 let allVotes = [];
 let currentStatus = "all";
 let currentArtist = "all";
+
 
 /* =========================
    RENDER VOTE
 ========================= */
 
-function renderVote(votes){
+function renderVote(votes) {
 
     const container =
         document.querySelector(".vote-list");
@@ -145,183 +150,259 @@ function renderVote(votes){
     }
 
     const cards =
-    votes.map(vote => {
+        votes.map(vote => {
 
+            const logo =
+                getAppLogo(vote.app);
 
-const logo = getAppLogo(vote.app);
+            const startDate =
+                vote.startDate || "";
 
-                let color =
-                    "rgb(245, 245, 245)";
+            const endDate =
+                vote.endDate || "";
 
+            return `
 
-                return `
+                <div
+                    class="vote-card"
+                    style="--app-color: rgb(245, 245, 245);"
+                >
 
-                    <div
-                        class="vote-card"
-                        style="--app-color: ${color};"
-                    >
+                    <div class="vote-header">
 
-                        <div class="vote-header">
+                        <div class="vote-status">
 
-     <div class="vote-status">
-       <span
-          class="status ${vote.status}">
-             ${vote.status}</span>
-${
-    vote.status.toLowerCase() === "ongoing"
-    ? `
-        <span
-            class="countdown"
-            data-end="${vote.endDate}"
-        >
-            00:00:00
-        </span>
-      `
-    : ""
-}
-     </div>
+                            <span
+                                class="status ${vote.status || ""}"
+                            >
+                                ${vote.status || ""}
+                            </span>
 
-             ${
-               logo
-               ? `
-                <img
-                   src="${logo}"
-                   class="vote-logo"
-                   alt="${vote.app}"
-                                >
+                            ${
+                                String(vote.status || "")
+                                    .toLowerCase() === "ongoing"
+                                ? `
+                                    <span
+                                        class="countdown"
+                                        data-end="${endDate}"
+                                    >
+                                        00:00:00
+                                    </span>
                                 `
                                 : ""
                             }
 
                         </div>
 
-
-                        <div class="vote-body">
-
-                            <div class="vote-app">
-                                ${vote.app}
-                            </div>
-
-                            <h3>
-                                ${vote.title}
-                            </h3>
-
-                        </div>
-
-
-                        <div class="vote-footer">
-
-                            <div>
-
-                                <small>
-                                    Period
-                                </small>
-
-                                <p>
-    ${vote.startDate}
-    ~
-    ${vote.endDate}
-    (KST)
-</p>
-
-                            </div>
-
-
-                            <a
-                                href="${vote.link}"
-                                class="vote-now"
-                                target="_blank"
-                            >
-                                Vote now
-                            </a>
-
-                        </div>
+                        ${
+                            logo
+                            ? `
+                                <img
+                                    src="${logo}"
+                                    class="vote-logo"
+                                    alt="${vote.app || ""}"
+                                >
+                            `
+                            : ""
+                        }
 
                     </div>
 
-                `;
-            });
+
+                    <div class="vote-body">
+
+                        <div class="vote-app">
+                            ${vote.app || ""}
+                        </div>
+
+                        <h3>
+                            ${vote.title || ""}
+                        </h3>
+
+                    </div>
+
+
+                    <div class="vote-footer">
+
+                        <div>
+
+                            <small>
+                                Period
+                            </small>
+
+                            <p>
+                                ${startDate}
+                                ~
+                                ${endDate}
+                                (KST)
+                            </p>
+
+                        </div>
+
+
+                        <a
+                            href="${vote.link || "#"}"
+                            class="vote-now"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Vote now
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+        });
 
 
     container.innerHTML =
         cards.join("");
+
+
+    /* =========================
+       APPLY DOMINANT COLOR
+    ========================= */
+
+    votes.forEach((vote, index) => {
+
+        const logo =
+            getAppLogo(vote.app);
+
+        if (!logo) return;
+
+        const card =
+            container.children[index];
+
+        if (!card) return;
+
+        getDominantColor(logo)
+            .then(color => {
+
+                card.style.setProperty(
+                    "--app-color",
+                    color
+                );
+
+            });
+
+    });
+
+
+    updateCountdowns();
 }
+
+
+/* =========================
+   FILTER
+========================= */
 
 function filterVotes() {
 
-    let filtered = [...allVotes];
+    let filtered =
+        [...allVotes];
+
 
     /* STATUS */
+
     if (currentStatus !== "all") {
 
-        filtered = filtered.filter(vote =>
-            String(vote.status || "")
-                .trim()
-                .toLowerCase() === currentStatus
-        );
+        filtered =
+            filtered.filter(vote =>
+                String(vote.status || "")
+                    .trim()
+                    .toLowerCase() ===
+                currentStatus
+            );
 
     }
+
 
     /* ARTIST */
+
     if (currentArtist !== "all") {
 
-        filtered = filtered.filter(vote =>
-            String(vote.artist || "")
-                .trim()
-                .toLowerCase() === currentArtist
-        );
+        filtered =
+            filtered.filter(vote =>
+                String(vote.artist || "")
+                    .trim()
+                    .toLowerCase() ===
+                currentArtist
+            );
 
     }
+
 
     renderVote(filtered);
 }
 
+
+/* =========================
+   STATUS FILTER
+========================= */
+
 const statusFilters =
-    document.querySelectorAll(".status-filter");
+    document.querySelectorAll(
+        ".status-filter"
+    );
 
 statusFilters.forEach(button => {
 
-    button.addEventListener("click", () => {
+    button.addEventListener(
+        "click",
+        () => {
 
-        statusFilters.forEach(btn =>
-            btn.classList.remove("active")
-        );
+            statusFilters.forEach(btn =>
+                btn.classList.remove("active")
+            );
 
-        button.classList.add("active");
+            button.classList.add("active");
 
-        currentStatus =
-            button.dataset.status;
+            currentStatus =
+                button.dataset.status;
 
-        filterVotes();
+            filterVotes();
 
-    });
+        }
+    );
 
 });
 
 
+/* =========================
+   ARTIST FILTER
+========================= */
+
 const artistFilters =
-    document.querySelectorAll(".artist-filter");
+    document.querySelectorAll(
+        ".artist-filter"
+    );
 
 artistFilters.forEach(button => {
 
-    button.addEventListener("click", () => {
+    button.addEventListener(
+        "click",
+        () => {
 
-        artistFilters.forEach(btn =>
-            btn.classList.remove("active")
-        );
+            artistFilters.forEach(btn =>
+                btn.classList.remove("active")
+            );
 
-        button.classList.add("active");
+            button.classList.add("active");
 
-        currentArtist =
-            button.dataset.artist
-                .trim()
-                .toLowerCase();
+            currentArtist =
+                button.dataset.artist
+                    .trim()
+                    .toLowerCase();
 
-        filterVotes();
+            filterVotes();
 
-    });
+        }
+    );
 
 });
+
 
 /* =========================
    LIVE COUNTDOWN
@@ -337,6 +418,7 @@ function updateCountdowns() {
     const now =
         new Date().getTime();
 
+
     countdowns.forEach(countdown => {
 
         const endDate =
@@ -344,15 +426,36 @@ function updateCountdowns() {
 
         if (!endDate) return;
 
-        // End Date dari Apps Script = yyyy-mm-dd
-        // Tambahkan sampai akhir hari
+
+        /*
+         * Sheet:
+         * 2026/08/13 23:59:59
+         *
+         * menjadi:
+         * 2026/08/13T23:59:59
+         */
+
         const end =
-    new Date(
-        endDate.replace(" ", "T")
-    ).getTime();
+            new Date(
+                endDate.replace(
+                    " ",
+                    "T"
+                )
+            ).getTime();
+
+
+        if (isNaN(end)) {
+
+            countdown.textContent =
+                "00:00:00";
+
+            return;
+        }
+
 
         const diff =
             end - now;
+
 
         if (diff <= 0) {
 
@@ -362,6 +465,7 @@ function updateCountdowns() {
             return;
         }
 
+
         const days =
             Math.floor(
                 diff / 86400000
@@ -369,25 +473,31 @@ function updateCountdowns() {
 
         const hours =
             Math.floor(
-                (diff % 86400000) / 3600000
+                (diff % 86400000) /
+                3600000
             );
 
         const minutes =
             Math.floor(
-                (diff % 3600000) / 60000
+                (diff % 3600000) /
+                60000
             );
 
         const seconds =
             Math.floor(
-                (diff % 60000) / 1000
+                (diff % 60000) /
+                1000
             );
+
 
         countdown.textContent =
             `${days}d ` +
             `${String(hours).padStart(2, "0")}:` +
             `${String(minutes).padStart(2, "0")}:` +
             `${String(seconds).padStart(2, "0")}`;
+
     });
+
 }
 
 
@@ -397,6 +507,7 @@ setInterval(
     updateCountdowns,
     1000
 );
+
 
 /* =========================
    SORT DROPDOWN
@@ -473,7 +584,8 @@ if (sortBtn && dropdown) {
 
 
                 sortBtnText.textContent =
-                    option.textContent.trim() + " ";
+                    option.textContent.trim() +
+                    " ";
 
 
                 dropdown.classList.remove(
@@ -495,30 +607,50 @@ if (sortBtn && dropdown) {
 function loadVotes() {
 
     const container =
-        document.querySelector(".vote-list");
+        document.querySelector(
+            ".vote-list"
+        );
 
     if (!container) {
-        console.error("vote-list tidak ditemukan");
+
+        console.error(
+            "vote-list tidak ditemukan"
+        );
+
         return;
     }
 
-    // LOADING
+
+    /* LOADING */
+
     container.innerHTML = `
         <div class="vote-loading">
+
             <div class="loading-spinner"></div>
-            <span>Loading votes...</span>
+
+            <span>
+                Loading votes...
+            </span>
+
         </div>
     `;
+
 
     fetch(
         "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec"
     )
 
-    .then(res => res.json())
+    .then(res =>
+        res.json()
+    )
 
     .then(data => {
 
-        console.log("VOTE DATA:", data);
+        console.log(
+            "VOTE DATA:",
+            data
+        );
+
 
         if (!data.votes) {
 
@@ -531,7 +663,16 @@ function loadVotes() {
             return;
         }
 
-        allVotes = data.votes;
+
+        allVotes =
+            data.votes;
+
+
+        console.log(
+            "FIRST VOTE:",
+            allVotes[0]
+        );
+
 
         filterVotes();
 
@@ -544,6 +685,7 @@ function loadVotes() {
             error
         );
 
+
         container.innerHTML = `
             <div class="vote-error">
                 Failed to load votes.
@@ -551,7 +693,9 @@ function loadVotes() {
         `;
 
     });
+
 }
+
 
 /* =========================
    START
