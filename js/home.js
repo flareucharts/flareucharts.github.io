@@ -132,6 +132,15 @@ if(upcoming.length > 1){
    ONGOING VOTE
 ========================= */
 
+document.addEventListener("votesLoaded", function () {
+
+    renderOngoingVote(
+        window.allVotes || []
+    );
+
+});
+
+
 function renderOngoingVote(votes) {
 
     const track =
@@ -142,6 +151,7 @@ function renderOngoingVote(votes) {
 
     if (!track) return;
 
+
     const ongoingVotes =
         (votes || []).filter(vote =>
             String(vote.status || "")
@@ -149,9 +159,11 @@ function renderOngoingVote(votes) {
                 .toLowerCase() === "ongoing"
         );
 
+
     if (loading) {
-        loading.style.display = "none";
+        loading.remove();
     }
+
 
     if (!ongoingVotes.length) {
 
@@ -165,6 +177,7 @@ function renderOngoingVote(votes) {
 
         return;
     }
+
 
     track.innerHTML =
         ongoingVotes.map((vote, index) => {
@@ -261,15 +274,3 @@ function renderOngoingVote(votes) {
     });
 
 }
-
-/* =========================
-   ONGOING VOTE LOADER
-========================= */
-
-document.addEventListener("votesLoaded", (event) => {
-
-    renderOngoingVote(
-        event.detail
-    );
-
-});
