@@ -79,11 +79,11 @@
 }
 
 .onvote-ending{
-    padding:4px 8px;
+    padding:5px 10px;
     border-radius:999px;
     background:rgba(255,255,255,.75);
     font-size:12px;
-    font-weight:500;
+    font-weight:600;
     color:#111;
     display:flex;
     align-items:center;
@@ -154,7 +154,6 @@
 }
 
 .onvote-skeleton{
-    padding:16px;
     height:10px;
     border-radius:8px;
     background:linear-gradient(
@@ -169,6 +168,7 @@
 
 .onvote-skeleton.short{
     width:80px;
+    margin-top:14px;
 }
 
 .onvote-skeleton.medium{
@@ -178,4 +178,5 @@
 .onvote-skeleton.long{
     width:75%;
     height:16px;
+    margin-bottom:14px;
 }
