@@ -196,7 +196,7 @@ function renderOngoingVote(votes) {
 
     if (indicator) {
         indicator.textContent =
-            `1/${ongoingVotes.length}`;
+            `1 / ${ongoingVotes.length}`;
     }
 
 
