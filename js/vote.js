@@ -129,6 +129,7 @@ function getDominantColor(imageSrc) {
 let allVotes = [];
 let currentStatus = "all";
 let currentArtist = "all";
+let currentSort = "ending";
 
 
 function formatVoteDate(dateValue) {
@@ -670,9 +671,19 @@ if (sortBtn && dropdown) {
                     " ";
 
 
+                currentSort =
+                    option.dataset.sort ||
+                    option.textContent
+                        .trim()
+                        .toLowerCase();
+
+
                 dropdown.classList.remove(
                     "active"
                 );
+
+
+                filterVotes();
 
             }
         );
@@ -680,7 +691,6 @@ if (sortBtn && dropdown) {
     });
 
 }
-
 
 /* =========================
    LOAD VOTES
