@@ -396,6 +396,9 @@ document.addEventListener(
     "votesLoaded",
     function (event) {
 
+        console.log("🔥 HOME votesLoaded RECEIVED");
+        console.log("🔥 HOME vote data:", event.detail);
+
         renderOngoingVote(
             event.detail || []
         );
@@ -408,10 +411,9 @@ document.addEventListener(
    FALLBACK
 ========================= */
 
-if (
-    Array.isArray(window.allVotes) &&
-    window.allVotes.length
-) {
+if (Array.isArray(window.allVotes)) {
+
+    console.log("🔥 HOME allVotes:", window.allVotes);
 
     renderOngoingVote(
         window.allVotes
