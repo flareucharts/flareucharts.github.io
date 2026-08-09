@@ -131,6 +131,45 @@ let currentStatus = "all";
 let currentArtist = "all";
 
 
+function formatVoteDate(dateValue) {
+
+    if (!dateValue) return "";
+
+    const parts =
+        String(dateValue).trim().split(" ");
+
+    if (parts.length < 2) {
+        return String(dateValue);
+    }
+
+    const dateParts =
+        parts[0].split("/");
+
+    if (dateParts.length !== 3) {
+        return String(dateValue);
+    }
+
+    const day =
+        dateParts[0].padStart(2, "0");
+
+    const month =
+        dateParts[1].padStart(2, "0");
+
+    const year =
+        dateParts[2];
+
+    const timeParts =
+        parts[1].split(":");
+
+    const hour =
+        Number(timeParts[0]);
+
+    const minute =
+        timeParts[1] || "00";
+
+    return `${year}.${month}.${day} ${hour}:${minute}`;
+}
+
 /* =========================
    RENDER VOTE
 ========================= */
@@ -156,10 +195,10 @@ function renderVote(votes) {
                 getAppLogo(vote.app);
 
             const startDate =
-                vote.startDate || "";
+    formatVoteDate(vote.startDate);
 
-            const endDate =
-                vote.endDate || "";
+const endDate =
+    formatVoteDate(vote.endDate);
 
             return `
 
