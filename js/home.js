@@ -377,6 +377,65 @@ if (ongoingVotes.length > 1) {
 }
 }
 
+function updateHomeVoteCountdowns() {
+
+    const countdowns =
+        document.querySelectorAll(
+            ".onvote-ending[data-end]"
+        );
+
+    const now = Date.now();
+
+    countdowns.forEach(countdown => {
+
+        const end =
+            Number(countdown.dataset.end);
+
+        if (!Number.isFinite(end)) {
+
+            countdown.textContent = "Ends in --";
+
+            return;
+        }
+
+        const diff = end - now;
+
+        if (diff <= 0) {
+
+            countdown.textContent = "Ended";
+
+            return;
+        }
+
+        const days =
+            Math.floor(diff / 86400000);
+
+        const hours =
+            Math.floor(
+                (diff % 86400000) / 3600000
+            );
+
+        const minutes =
+            Math.floor(
+                (diff % 3600000) / 60000
+            );
+
+        const seconds =
+            Math.floor(
+                (diff % 60000) / 1000
+            );
+
+        countdown.textContent =
+            "Ends in " +
+            `${days}d ` +
+            `${String(hours).padStart(2, "0")}:` +
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
+
+    });
+
+}
+
 
 /* =========================
    LIVE COUNTDOWN
