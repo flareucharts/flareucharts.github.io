@@ -178,3 +178,12 @@
     width:75%;
     height:16px;
 }
+
+@keyframes skeleton{
+    from{
+        background-position:200% 0;
+    }
+    to{
+        background-position:-200% 0;
+    }
+}
