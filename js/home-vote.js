@@ -74,7 +74,7 @@ function renderOngoingVote(votes) {
                     <div class="onvote-top">
 
                         <span
-                            class="onvote-ending"
+                            class="countdown onvote-ending"
                             data-end="${vote.endTimestamp}"
                         >
                             Ends in 00:00:00
@@ -123,13 +123,6 @@ function renderOngoingVote(votes) {
             `;
 
         }).join("");
-
-
-    /* =========================
-       INITIAL COUNTDOWN
-    ========================= */
-
-    updateHomeVoteCountdowns();
 
 
     /* =========================
@@ -226,115 +219,6 @@ function renderOngoingVote(votes) {
     }
 
 }
-
-
-/* =========================
-   HOME VOTE COUNTDOWN
-========================= */
-
-function updateHomeVoteCountdowns() {
-
-    const countdowns =
-        document.querySelectorAll(
-            ".onvote-ending[data-end]"
-        );
-
-
-    const now =
-        Date.now();
-
-
-    countdowns.forEach(countdown => {
-
-        const end =
-            Number(
-                countdown.dataset.end
-            );
-
-
-        if (!Number.isFinite(end)) {
-
-            countdown.textContent =
-                "Ends in --";
-
-            return;
-
-        }
-
-
-        const diff =
-            end - now;
-
-
-        /* =========================
-           ENDED
-        ========================= */
-
-        if (diff <= 0) {
-
-            countdown.textContent =
-                "Ended";
-
-            return;
-
-        }
-
-
-        /* =========================
-           CALCULATE TIME
-        ========================= */
-
-        const days =
-            Math.floor(
-                diff / 86400000
-            );
-
-
-        const hours =
-            Math.floor(
-                (diff % 86400000) /
-                3600000
-            );
-
-
-        const minutes =
-            Math.floor(
-                (diff % 3600000) /
-                60000
-            );
-
-
-        const seconds =
-            Math.floor(
-                (diff % 60000) /
-                1000
-            );
-
-
-        /* =========================
-           DISPLAY
-        ========================= */
-
-        countdown.textContent =
-            "Ends in " +
-            `${days}d ` +
-            `${String(hours).padStart(2, "0")}:` +
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
-
-    });
-
-}
-
-
-/* =========================
-   LIVE COUNTDOWN
-========================= */
-
-setInterval(
-    updateHomeVoteCountdowns,
-    1000
-);
 
 
 /* =========================
