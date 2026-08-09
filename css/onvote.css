@@ -32,10 +32,14 @@
     display:none;
 }
 
-.onvote-slider{
-    flex:0 0 100%;
-    width:100%;
-    scroll-snap-align:start;
+.onvote-slider {
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--app-color) 35%, white),
+            color-mix(in srgb, var(--app-color) 12%, white) 55%,
+            white 100%
+        );
 }
 
 .onvote-top{
