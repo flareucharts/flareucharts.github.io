@@ -217,18 +217,21 @@ const endDate =
         ${vote.status || ""}
     </span>
 
-    ${
-        String(vote.status || "").toLowerCase() === "ongoing"
-        ? `
-            <span
-                class="countdown"
-                data-end="${vote.endTimestamp}"
-            >
-                00:00:00
-            </span>
-          `
-        : ""
-    }
+   ${
+    ["ongoing", "upcoming"].includes(
+        String(vote.status || "").toLowerCase()
+    )
+    ? `
+        <span
+            class="countdown"
+            data-start="${vote.startTimestamp}"
+            data-end="${vote.endTimestamp}"
+        >
+            00:00:00
+        </span>
+      `
+    : ""
+}
 
 </div>
 
@@ -332,6 +335,149 @@ updateCountdowns();
 
     updateCountdowns();
 }
+
+/* =========================
+   LIVE COUNTDOWN
+========================= */
+
+function updateCountdowns() {
+
+    const countdowns =
+        document.querySelectorAll(
+            ".countdown"
+        );
+
+    const now =
+        Date.now();
+
+    countdowns.forEach(countdown => {
+
+        const start =
+            Number(
+                countdown.dataset.start
+            );
+
+        const end =
+            Number(
+                countdown.dataset.end
+            );
+
+        const card =
+            countdown.closest(".vote-card");
+
+        if (!card) return;
+
+        const statusElement =
+            card.querySelector(".status");
+
+        const status =
+            statusElement
+                ? statusElement.textContent
+                    .trim()
+                    .toLowerCase()
+                : "";
+
+
+        let target;
+        let prefix;
+
+
+        /* =========================
+           ONGOING
+        ========================= */
+
+        if (status === "ongoing") {
+
+            target = end;
+            prefix = "Ends in ";
+
+        }
+
+
+        /* =========================
+           UPCOMING
+        ========================= */
+
+        else if (status === "upcoming") {
+
+            target = start;
+            prefix = "Starts in ";
+
+        }
+
+
+        /* =========================
+           ENDED
+        ========================= */
+
+        else {
+
+            countdown.textContent = "";
+            return;
+
+        }
+
+
+        if (!Number.isFinite(target)) {
+
+            countdown.textContent = "";
+            return;
+
+        }
+
+
+        const diff =
+            target - now;
+
+
+        if (diff <= 0) {
+
+            countdown.textContent =
+                "00:00:00";
+
+            return;
+
+        }
+
+
+        const days =
+            Math.floor(
+                diff / 86400000
+            );
+
+        const hours =
+            Math.floor(
+                (diff % 86400000) /
+                3600000
+            );
+
+        const minutes =
+            Math.floor(
+                (diff % 3600000) /
+                60000
+            );
+
+        const seconds =
+            Math.floor(
+                (diff % 60000) /
+                1000
+            );
+
+
+        countdown.textContent =
+            prefix +
+            `${days}d ` +
+            `${String(hours).padStart(2, "0")}:` +
+            `${String(minutes).padStart(2, "0")}:` +
+            `${String(seconds).padStart(2, "0")}`;
+
+    });
+}
+
+setInterval(
+    updateCountdowns,
+    1000
+);
 
 
 /* =========================
@@ -444,75 +590,7 @@ artistFilters.forEach(button => {
 });
 
 
-/* =========================
-   LIVE COUNTDOWN
-========================= */
 
-function updateCountdowns() {
-
-    const countdowns =
-        document.querySelectorAll(
-            ".countdown[data-end]"
-        );
-
-    const now =
-        Date.now();
-
-    countdowns.forEach(countdown => {
-
-        const end =
-            Number(
-                countdown.dataset.end
-            );
-
-        if (!Number.isFinite(end)) {
-            return;
-        }
-
-        const diff =
-            end - now;
-
-        if (diff <= 0) {
-
-            countdown.textContent =
-                "00:00:00";
-
-            return;
-        }
-
-        const days =
-            Math.floor(
-                diff / 86400000
-            );
-
-        const hours =
-            Math.floor(
-                (diff % 86400000) / 3600000
-            );
-
-        const minutes =
-            Math.floor(
-                (diff % 3600000) / 60000
-            );
-
-        const seconds =
-            Math.floor(
-                (diff % 60000) / 1000
-            );
-
-        countdown.textContent =
-            `${days}d ` +
-            `${String(hours).padStart(2, "0")}:` +
-            `${String(minutes).padStart(2, "0")}:` +
-            `${String(seconds).padStart(2, "0")}`;
-
-    });
-}
-
-setInterval(
-    updateCountdowns,
-    1000
-);
 
 /* =========================
    SORT DROPDOWN
