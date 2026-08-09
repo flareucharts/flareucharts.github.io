@@ -128,45 +128,6 @@ if(upcoming.length > 1){
 
 }
 
- /* =========================
-    ONGOING VOTE
- ========================= */
-
- document.addEventListener("votesLoaded", function (event) {
-
-     renderOngoingVote(
-         event.detail || []
-     );
-
- });
-
-
- function renderOngoingVote(votes) {
-
-     const track =
-         document.querySelector(".onvote-track");
-
-     const loading =
-         document.querySelector(".onvote-loading");
-
-     if (!track) return;
-
-
-     const ongoingVotes =
-         (votes || []).filter(vote =>
-             String(vote.status || "")
-                 .trim()
-                 .toLowerCase() === "ongoing"
-         );
-
-
-     if (loading) {
-         loading.remove();
-     }
-
-
-     if (!ongoingVotes.length) {
-
 /* =========================
    ONGOING VOTE
 ========================= */
