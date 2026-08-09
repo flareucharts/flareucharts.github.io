@@ -465,6 +465,9 @@ document.addEventListener(
 function waitForHomeVotes() {
 
     if (Array.isArray(window.allVotes)) {
+
+        console.log(
+            "🔥 HOME allVotes FOUND:",
             window.allVotes
         );
 
