@@ -818,17 +818,9 @@ function loadVotes() {
         }
 
 
-        allVotes =
-    data.votes;
+        allVotes = data.votes;
 
-window.allVotes =
-    data.votes;
-
-console.log(
-    "FIRST VOTE:",
-    allVotes[0]
-);
-
+window.allVotes = data.votes;
 
 /* =========================
    SEND TO HOME
