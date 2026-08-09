@@ -131,7 +131,7 @@ let currentArtist = "all";
    RENDER VOTE
 ========================= */
 
-function renderVote(votes)
+function renderVote(votes){
 
     const container =
         document.querySelector(".vote-list");
