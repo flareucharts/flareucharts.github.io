@@ -305,74 +305,73 @@ function renderOngoingVote(votes) {
 
 
        /* =========================
-       AUTO SLIDE
-    ========================= */
+   AUTO SLIDE
+========================= */
 
-    if (ongoingVotes.length > 1) {
+if (ongoingVotes.length > 1) {
 
-        const firstSlide =
-            track.children[0].cloneNode(true);
+    const firstSlide =
+        track.children[0].cloneNode(true);
 
-        track.appendChild(firstSlide);
+    track.appendChild(firstSlide);
 
-        let currentSlide = 0;
+    let currentSlide = 0;
 
-        setInterval(() => {
+    setInterval(() => {
 
-            currentSlide++;
+        currentSlide++;
 
-            track.scrollTo({
-                left:
-                    track.clientWidth *
-                    currentSlide,
-                behavior: "smooth"
-            });
-
-
-            /* =========================
-               UPDATE INDICATOR
-            ========================= */
-
-            if (indicator) {
-
-                const displaySlide =
-                    currentSlide >= ongoingVotes.length
-                        ? 0
-                        : currentSlide;
-
-                indicator.textContent =
-                    `${displaySlide + 1} / ${ongoingVotes.length}`;
-            }
+        track.scrollTo({
+            left:
+                track.clientWidth *
+                currentSlide,
+            behavior: "smooth"
+        });
 
 
-            /* =========================
-               LOOP BACK
-            ========================= */
+        /* =========================
+           UPDATE INDICATOR
+        ========================= */
 
-            if (
-                currentSlide ===
-                ongoingVotes.length
-            ) {
+        if (indicator) {
 
-                setTimeout(() => {
+            const displaySlide =
+                currentSlide >= ongoingVotes.length
+                    ? 0
+                    : currentSlide;
 
-                    track.style.scrollBehavior = "auto";
+            indicator.textContent =
+                `${displaySlide + 1} / ${ongoingVotes.length}`;
+        }
 
-                    track.scrollLeft = 0;
 
-                    track.style.scrollBehavior = "smooth";
+        /* =========================
+           LOOP BACK
+        ========================= */
 
-                    currentSlide = 0;
+        if (
+            currentSlide ===
+            ongoingVotes.length
+        ) {
 
-                }, 600);
+            setTimeout(() => {
 
-            }
+                track.style.scrollBehavior = "auto";
 
-        }, 5000);
+                track.scrollLeft = 0;
 
-    }
+                track.style.scrollBehavior = "smooth";
 
-} // ← INI PENUTUP renderOngoingVote()
+                currentSlide = 0;
+
+            }, 600);
+
+        }
+
+    }, 5000);
+
+}
+}
 
 
 /* =========================
