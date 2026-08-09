@@ -196,10 +196,10 @@ function renderOngoingVote(votes) {
                 getAppLogo(vote.app);
 
             return `
-                <div
-                    class="onvote-slider"
-                    data-index="${index}"
-                >
+                <<div
+    class="onvote-slider onvote-card"
+    data-index="${index}"
+>
 
                     <!-- TOP -->
                     <div class="onvote-top">
@@ -255,6 +255,7 @@ function renderOngoingVote(votes) {
 
         }).join("");
 
+updateCountdowns();
 
     /* =========================
        APP CARD COLOR
