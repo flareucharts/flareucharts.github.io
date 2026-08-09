@@ -265,7 +265,7 @@ white;
 }
 
 .event-name{
-  font-size:var(--body);
+  font-size:var(--caption);
   font-weight:600;
   color:#222;
   line-height:1.3;
