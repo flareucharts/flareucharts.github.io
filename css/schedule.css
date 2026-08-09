@@ -259,13 +259,13 @@ white;
   font-weight:700;
   background:#b8e5dd;
   padding:4px 8px;
-  border-radius:8px;
+  border-radius:10px;
   white-space:nowrap;
   color:#111;
 }
 
 .event-name{
-  font-size:var(--caption);
+  font-size:var(--small);
   font-weight:600;
   color:#222;
   line-height:1.3;
