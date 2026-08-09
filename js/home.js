@@ -408,15 +408,59 @@ document.addEventListener(
 
 
 /* =========================
-   FALLBACK
+   WAIT FOR GLOBAL VOTE DATA
 ========================= */
 
-if (Array.isArray(window.allVotes)) {
+function waitForHomeVotes() {
 
-    console.log("🔥 HOME allVotes:", window.allVotes);
+    if (Array.isArray(window.allVotes)) {
 
-    renderOngoingVote(
-        window.allVotes
-    );
+        console.log(
+            "🔥 HOME allVotes FOUND:",
+            window.allVotes
+        );
+
+        renderOngoingVote(
+            window.allVotes
+        );
+
+        return true;
+    }
+
+    return false;
+}
+
+
+/* =========================
+   CHECK IMMEDIATELY
+========================= */
+
+if (!waitForHomeVotes()) {
+
+    let attempts = 0;
+
+    const voteWaiter = setInterval(() => {
+
+        attempts++;
+
+        if (waitForHomeVotes()) {
+
+            clearInterval(voteWaiter);
+
+        }
+
+        /* stop after 10 seconds */
+
+        if (attempts >= 100) {
+
+            clearInterval(voteWaiter);
+
+            console.log(
+                "⚠️ HOME: window.allVotes tidak ditemukan"
+            );
+
+        }
+
+    }, 100);
 
 }
