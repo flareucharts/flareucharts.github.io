@@ -544,42 +544,72 @@ border-radius:16px;
 /* ================= BOTTOM NAV ================= */
 
 .bottom-nav{
-position:fixed;
-bottom:16px;
-left:50%;
-transform:translateX(-50%);
-width:93%;
-max-width:420px;
-height:65px;
-display:flex;
-justify-content:space-around;
-align-items:center;
-background:#f3f4fa;
-backdrop-filter:blur(15px);
-border-radius:25px;
-z-index:999;
-transition:
-transform .35s ease,
-opacity .35s ease;
-backdrop-filter:blur(18px);
--webkit-backdrop-filter:blur(18px);
+    position:fixed;
+    bottom:16px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:calc(100% - 32px);
+    max-width:420px;
+    height:60px;
+
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+
+    background:#f3f4fa;
+    border-radius:25px;
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    z-index:999;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
 }
 
 .bottom-nav button{
-border:none;
-background:none;
-font-size:11px;
-background:transparent;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-cursor:pointer;
-transition:.25s ease;
+    border:none;
+    background:none;
+    font-size:11px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+    transition:.25s ease;
 }
 
 .bottom-nav button.active{
-color:#5DB7AB;
+    color:#5DB7AB;
+}
+
+.nav-icon{
+    width:22px;
+    height:22px;
+    display:block;
+    margin:0 auto 4px;
+    opacity:.4;
+    transition:.25s;
+}
+
+.bottom-nav button.active .nav-icon{
+    opacity:1;
+    transform:translateY(-2px);
+}
+
+.bottom-nav button.active span{
+    color:#5DB7AB;
+}
+
+.bottom-nav span{
+    margin-top:5px;
+    font-size:11px;
+    color:#91D3CA;
 }
 
 /* =========================
@@ -633,38 +663,9 @@ color:#5DB7AB;
     }
 }
 
-.bottom-nav{
-  width:420px;
-  height:60px;
-}
-
 .logo{
 height:32px;
 width:auto;
 display:block;
 }
   
-.nav-icon{
-  width:22px;
-  height:22px;
-  display:block;
-  margin:0 auto 4px;
-  opacity:.4;
-  transition:.25s;
-  color:#91D3CA;
-}
-
-.bottom-nav button.active .nav-icon{
-  opacity:1;
-  transform:translateY(-2px);
-}
-
-.bottom-nav button.active span{
-  color:#5DB7AB;
-}
-  
-.bottom-nav span{
-margin-top:5px;
-font-size:11px;
-color:#91D3CA;
-}
