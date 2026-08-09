@@ -819,16 +819,29 @@ function loadVotes() {
 
 
         allVotes =
-            data.votes;
+    data.votes;
+
+window.allVotes =
+    data.votes;
+
+console.log(
+    "FIRST VOTE:",
+    allVotes[0]
+);
 
 
-        console.log(
-            "FIRST VOTE:",
-            allVotes[0]
-        );
+/* =========================
+   SEND TO HOME
+========================= */
+
+document.dispatchEvent(
+    new CustomEvent("votesLoaded", {
+        detail: data.votes
+    })
+);
 
 
-        filterVotes();
+filterVotes();
 
     })
 
