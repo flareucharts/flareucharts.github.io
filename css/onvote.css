@@ -32,28 +32,37 @@
     display:none;
 }
 
-.onvote-slider {
+.onvote-slider{
     flex:0 0 100%;
     width:100%;
     box-sizing:border-box;
+
     padding:14px;
+
     border-radius:18px;
     background:
         linear-gradient(
             135deg,
             color-mix(
                 in srgb,
-                var(--app-color) 35%,
+                var(--app-color) 75%,
                 white
             ),
             color-mix(
                 in srgb,
-                var(--app-color) 12%,
+                var(--app-color) 55%,
                 white
             ) 55%,
-            white 100%
+            color-mix(
+                in srgb,
+                var(--app-color) 35%,
+                white
+            ) 100%
         );
+
     scroll-snap-align:start;
+    transition:
+        background .3s ease;
 }
 
 .onvote-top{
@@ -102,7 +111,7 @@
     align-items:center;
     justify-content:center;
     padding:7px 13px;
-    border-radius:10px;
+    border-radius:12px;
     background:rgba(255,255,255,.75);
     color:#294746;
     font-size:11px;
