@@ -347,9 +347,9 @@ function updateCountdowns() {
         // End Date dari Apps Script = yyyy-mm-dd
         // Tambahkan sampai akhir hari
         const end =
-            new Date(
-                endDate + "T23:59:59"
-            ).getTime();
+    new Date(
+        endDate.replace(" ", "T")
+    ).getTime();
 
         const diff =
             end - now;
