@@ -511,19 +511,63 @@ function filterVotes() {
     if (currentArtist !== "all") {
 
         filtered =
-            filtered.filter(vote =>
-                String(vote.artist || "")
-                    .trim()
-                    .toLowerCase() ===
-                currentArtist
-            );
+            filtered.filter(vote => {
+
+                const artist =
+                    String(vote.artist || "")
+                        .trim()
+                        .toLowerCase();
+
+                return artist === currentArtist;
+
+            });
+
+    }
+
+
+    /* SORT */
+
+    if (currentSort === "ending") {
+
+        filtered.sort((a, b) =>
+            Number(a.endTimestamp || 0) -
+            Number(b.endTimestamp || 0)
+        );
+
+    }
+
+    else if (currentSort === "newest") {
+
+        filtered.sort((a, b) =>
+            Number(b.startTimestamp || 0) -
+            Number(a.startTimestamp || 0)
+        );
+
+    }
+
+    else if (currentSort === "oldest") {
+
+        filtered.sort((a, b) =>
+            Number(a.startTimestamp || 0) -
+            Number(b.startTimestamp || 0)
+        );
+
+    }
+
+    else if (currentSort === "az") {
+
+        filtered.sort((a, b) =>
+            String(a.title || "")
+                .localeCompare(
+                    String(b.title || "")
+                )
+        );
 
     }
 
 
     renderVote(filtered);
 }
-
 
 /* =========================
    STATUS FILTER
@@ -655,27 +699,45 @@ if (sortBtn && dropdown) {
             () => {
 
                 sortOptions.forEach(item =>
-                    item.classList.remove(
-                        "active"
-                    )
+                    item.classList.remove("active")
                 );
 
+                option.classList.add("active");
 
-                option.classList.add(
-                    "active"
-                );
+
+                const text =
+                    option.textContent.trim();
 
 
                 sortBtnText.textContent =
-                    option.textContent.trim() +
-                    " ";
+                    text + " ";
 
 
-                currentSort =
-                    option.dataset.sort ||
-                    option.textContent
-                        .trim()
-                        .toLowerCase();
+                /* TENTUKAN SORT */
+
+                if (text === "Ending Soon") {
+
+                    currentSort = "ending";
+
+                }
+
+                else if (text === "Newest") {
+
+                    currentSort = "newest";
+
+                }
+
+                else if (text === "Oldest") {
+
+                    currentSort = "oldest";
+
+                }
+
+                else if (text === "A–Z") {
+
+                    currentSort = "az";
+
+                }
 
 
                 dropdown.classList.remove(
