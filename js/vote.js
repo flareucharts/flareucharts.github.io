@@ -32,41 +32,6 @@ function getAppLogo(appName) {
         : null;
 }
 
-function formatVoteDate(dateValue) {
-
-    if (!dateValue) return "";
-
-    const value = String(dateValue).trim();
-
-    // Format: yyyy-MM-dd HH:mm:ss
-    const match = value.match(
-        /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/
-    );
-
-    if (match) {
-
-        const year = match[1];
-        const month = match[2];
-        const day = match[3];
-        const hour = match[4];
-        const minute = match[5];
-
-        return `${year}.${month}.${day} ${hour}:${minute}`;
-    }
-
-    // Kalau hanya yyyy-MM-dd
-    const dateOnly = value.match(
-        /^(\d{4})-(\d{2})-(\d{2})$/
-    );
-
-    if (dateOnly) {
-
-        return `${dateOnly[1]}.${dateOnly[2]}.${dateOnly[3]}`;
-    }
-
-    return value;
-}
-
 /* =========================
    DOMINANT COLOR
 ========================= */
@@ -253,9 +218,9 @@ ${
                                 </small>
 
                                 <p>
-    ${formatVoteDate(vote.startDate)}
+    ${vote.startDate}
     ~
-    ${formatVoteDate(vote.endDate)}
+    ${vote.endDate}
     (KST)
 </p>
 
