@@ -154,6 +154,7 @@
 }
 
 .onvote-skeleton{
+    padding:16px;
     height:10px;
     border-radius:8px;
     background:linear-gradient(
