@@ -211,27 +211,26 @@ const endDate =
 
                         <div class="vote-status">
 
-                            <span
-                                class="status ${vote.status || ""}"
-                            >
-                                ${vote.status || ""}
-                            </span>
+    <span
+        class="status ${vote.status || ""}"
+    >
+        ${vote.status || ""}
+    </span>
 
-                            ${
-                                String(vote.status || "")
-                                    .toLowerCase() === "ongoing"
-                                ? `
-                                    <span
-    class="countdown"
-    data-end="${vote.endTimestamp}"
->
-    00:00:00
-</span>
-                                `
-                                : ""
-                            }
+    ${
+        String(vote.status || "").toLowerCase() === "ongoing"
+        ? `
+            <span
+                class="countdown"
+                data-end="${vote.endTimestamp}"
+            >
+                00:00:00
+            </span>
+          `
+        : ""
+    }
 
-                        </div>
+</div>
 
                         ${
                             logo
@@ -270,11 +269,11 @@ const endDate =
                             </small>
 
                             <p>
-                                ${startDate}
-                                ~
-                                ${endDate}
-                                (KST)
-                            </p>
+    ${startDate}
+    ~
+    ${endDate}
+    (KST)
+</p>
 
                         </div>
 
@@ -298,6 +297,8 @@ const endDate =
 
     container.innerHTML =
         cards.join("");
+
+updateCountdowns();
 
 
     /* =========================
@@ -464,17 +465,12 @@ function updateCountdowns() {
                 countdown.dataset.end
             );
 
-        if (!end || isNaN(end)) {
-
-            countdown.textContent =
-                "00:00:00";
-
+        if (!Number.isFinite(end)) {
             return;
         }
 
         const diff =
             end - now;
-
 
         if (diff <= 0) {
 
@@ -484,7 +480,6 @@ function updateCountdowns() {
             return;
         }
 
-
         const days =
             Math.floor(
                 diff / 86400000
@@ -492,22 +487,18 @@ function updateCountdowns() {
 
         const hours =
             Math.floor(
-                (diff % 86400000) /
-                3600000
+                (diff % 86400000) / 3600000
             );
 
         const minutes =
             Math.floor(
-                (diff % 3600000) /
-                60000
+                (diff % 3600000) / 60000
             );
 
         const seconds =
             Math.floor(
-                (diff % 60000) /
-                1000
+                (diff % 60000) / 1000
             );
-
 
         countdown.textContent =
             `${days}d ` +
@@ -518,13 +509,10 @@ function updateCountdowns() {
     });
 }
 
-/* UPDATE SETIAP 1 DETIK */
-
 setInterval(
     updateCountdowns,
     1000
 );
-
 
 /* =========================
    SORT DROPDOWN
