@@ -1,24 +1,12 @@
 .onvote-card{
     display:block;
     position:relative;
-
-    background:
-        linear-gradient(
-            135deg,
-            color-mix(in srgb, var(--app-color, #f5f5f5) 35%, white),
-            color-mix(in srgb, var(--app-color, #f5f5f5) 12%, white) 55%,
-            white 100%
-        );
-
+    background:#fff;
     border-radius:18px;
-    padding:14px;
-    min-height:80px;
-
+    padding:0;
+    min-height:0;
     color:inherit;
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.07);
-
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
     overflow:hidden;
     transition:.25s;
 }
@@ -47,8 +35,25 @@
 .onvote-slider {
     flex:0 0 100%;
     width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    border-radius:18px;
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(
+                in srgb,
+                var(--app-color) 35%,
+                white
+            ),
+            color-mix(
+                in srgb,
+                var(--app-color) 12%,
+                white
+            ) 55%,
+            white 100%
+        );
     scroll-snap-align:start;
-    background:transparent;
 }
 
 .onvote-top{
