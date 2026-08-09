@@ -135,13 +135,16 @@ if(upcoming.length > 1){
 
 function renderOngoingVote(votes) {
 
+    const card =
+        document.querySelector(".onvote-card");
+
     const track =
         document.querySelector(".onvote-track");
 
     const loading =
         document.querySelector(".onvote-loading");
 
-    if (!track) return;
+    if (!card || !track) return;
 
 
     /* =========================
@@ -181,12 +184,17 @@ function renderOngoingVote(votes) {
             </div>
         `;
 
+        card.style.setProperty(
+            "--app-color",
+            "rgb(245, 245, 245)"
+        );
+
         return;
     }
 
 
     /* =========================
-       RENDER CARDS
+       RENDER SLIDES
     ========================= */
 
     track.innerHTML =
@@ -199,10 +207,8 @@ function renderOngoingVote(votes) {
                 <div
                     class="onvote-slider"
                     data-index="${index}"
-                    style="--app-color: rgb(245, 245, 245);"
                 >
 
-                    <!-- TOP -->
                     <div class="onvote-top">
 
                         <span
@@ -219,13 +225,11 @@ function renderOngoingVote(votes) {
                     </div>
 
 
-                    <!-- TITLE -->
                     <div class="onvote-title">
                         ${vote.title || ""}
                     </div>
 
 
-                    <!-- BOTTOM -->
                     <div class="onvote-bottom">
 
                         ${
@@ -265,49 +269,29 @@ function renderOngoingVote(votes) {
 
 
     /* =========================
-       APP COLOR
+       GET APP COLOR
+       → APPLY TO REAL CARD
     ========================= */
 
-    ongoingVotes.forEach((vote, index) => {
+    const firstVote =
+        ongoingVotes[0];
 
-        const logo =
-            getAppLogo(vote.app);
+    const firstLogo =
+        getAppLogo(firstVote.app);
 
-        if (!logo) return;
+    if (firstLogo) {
 
-
-        const card =
-            track.querySelector(
-                `.onvote-slider[data-index="${index}"]`
-            );
-
-        if (!card) return;
-
-
-        getDominantColor(logo)
+        getDominantColor(firstLogo)
             .then(color => {
 
-                /* CSS VARIABLE */
                 card.style.setProperty(
                     "--app-color",
                     color
                 );
 
-                /* LANGSUNG APPLY */
-                card.style.backgroundColor =
-                    color;
-
-            })
-            .catch(error => {
-
-                console.error(
-                    "Failed to get app color:",
-                    error
-                );
-
             });
 
-    });
+    }
 
 
     /* =========================
@@ -340,8 +324,6 @@ function renderOngoingVote(votes) {
 
             });
 
-
-            /* LOOP BACK */
 
             if (
                 currentSlide ===
@@ -424,20 +406,17 @@ function updateHomeVoteCountdowns() {
                 diff / 86400000
             );
 
-
         const hours =
             Math.floor(
                 (diff % 86400000) /
                 3600000
             );
 
-
         const minutes =
             Math.floor(
                 (diff % 3600000) /
                 60000
             );
-
 
         const seconds =
             Math.floor(
@@ -486,7 +465,6 @@ document.addEventListener(
 
 /* =========================
    FALLBACK
-   Kalau data sudah loaded
 ========================= */
 
 if (
