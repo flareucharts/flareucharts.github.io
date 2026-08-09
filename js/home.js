@@ -503,12 +503,8 @@ if (!waitForHomeVotes()) {
         attempts++;
 
         if (waitForHomeVotes()) {
-
             clearInterval(voteWaiter);
-
         }
-
-        /* stop after 10 seconds */
 
         if (attempts >= 100) {
 
@@ -523,3 +519,20 @@ if (!waitForHomeVotes()) {
     }, 100);
 
 }
+
+
+/* =========================
+   DEBUG
+========================= */
+
+console.log("🔥 HOME JS END");
+
+console.log(
+    "🔥 HOME allVotes FINAL:",
+    window.allVotes
+);
+
+console.log(
+    "🔥 HOME render function:",
+    typeof renderOngoingVote
+);
