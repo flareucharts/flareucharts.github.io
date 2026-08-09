@@ -301,7 +301,7 @@
 .vote-app{
     font-size:13px;
     font-weight:700;
-    color:#c0c0c0;
+    color:#1f1f1f;
     margin-bottom:6px;
     text-transform:uppercase;
 }
@@ -329,7 +329,7 @@
 .vote-footer small{
     display:block;
     margin-bottom:4px;
-    color:#c0c0c0;
+    color:#1f1f1f;
     font-size:11px;
 }
 
