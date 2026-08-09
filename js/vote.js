@@ -523,11 +523,6 @@ function loadVotes() {
 
         if (!data.votes) {
 
-            console.error(
-                "no vote data found!",
-                data
-            );
-
             container.innerHTML = `
                 <div class="vote-error">
                     No vote data found.
@@ -539,7 +534,7 @@ function loadVotes() {
 
         allVotes = data.votes;
 
-filterVotes();
+        filterVotes();
 
     })
 
