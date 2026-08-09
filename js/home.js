@@ -261,3 +261,15 @@ function renderOngoingVote(votes) {
     });
 
 }
+
+/* =========================
+   ONGOING VOTE LOADER
+========================= */
+
+document.addEventListener("votesLoaded", (event) => {
+
+    renderOngoingVote(
+        event.detail
+    );
+
+});
