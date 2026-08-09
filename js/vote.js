@@ -761,79 +761,80 @@ if (sortBtn && dropdown) {
 function loadVotes() {
 
     const container =
-        document.querySelector(
-            ".vote-list"
-        );
+        document.querySelector(".vote-list");
 
-    if (!container) {
 
-        console.error(
-            "vote-list tidak ditemukan"
-        );
+    /* =========================
+       LOADING
+    ========================= */
 
-        return;
+    if (container) {
+
+        container.innerHTML = `
+            <div class="vote-loading">
+
+                <div class="loading-spinner"></div>
+
+                <span>
+                    Loading votes...
+                </span>
+
+            </div>
+        `;
+
     }
-
-
-    /* LOADING */
-
-    container.innerHTML = `
-        <div class="vote-loading">
-
-            <div class="loading-spinner"></div>
-
-            <span>
-                Loading votes...
-            </span>
-
-        </div>
-    `;
 
 
     fetch(
         "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec"
     )
 
-    .then(res =>
-        res.json()
-    )
+    .then(res => res.json())
 
     .then(data => {
 
-        console.log(
-            "VOTE DATA:",
-            data
-        );
-
+        console.log("VOTE DATA:", data);
 
         if (!data.votes) {
 
-            container.innerHTML = `
-                <div class="vote-error">
-                    No vote data found.
-                </div>
-            `;
+            if (container) {
+                container.innerHTML = `
+                    <div class="vote-error">
+                        No vote data found.
+                    </div>
+                `;
+            }
 
             return;
         }
 
 
+        /* =========================
+           SAVE DATA
+        ========================= */
+
         allVotes = data.votes;
-
-window.allVotes = data.votes;
-
-/* =========================
-   SEND TO HOME
-========================= */
-
-document.dispatchEvent(
-    new CustomEvent("votesLoaded", {
-        detail: data.votes
-    })
-);
+        window.allVotes = data.votes;
 
 
-filterVotes();
+        /* =========================
+           SEND DATA TO HOME
+        ========================= */
+
+        document.dispatchEvent(
+            new CustomEvent("votesLoaded", {
+                detail: data.votes
+            })
+        );
+
+
+        /* =========================
+           RENDER VOTE PAGE
+        ========================= */
+
+        if (container) {
+            filterVotes();
+        }
 
     })
 
@@ -844,15 +845,17 @@ filterVotes();
             error
         );
 
+        if (container) {
 
-        container.innerHTML = `
-            <div class="vote-error">
-                Failed to load votes.
-            </div>
-        `;
+            container.innerHTML = `
+                <div class="vote-error">
+                    Failed to load votes.
+                </div>
+            `;
+
+        }
 
     });
-
 }
 
 
