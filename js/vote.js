@@ -127,7 +127,7 @@ function getDominantColor(imageSrc) {
 
 
 let allVotes = [];
-let currentStatus = "all";
+let currentStatus = "ongoing";
 let currentArtist = "all";
 let currentSort = "ending";
 
