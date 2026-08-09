@@ -135,6 +135,10 @@ if(upcoming.length > 1){
 
 function renderOngoingVote(votes) {
 
+
+    console.log("🔥 renderOngoingVote DIPANGGIL");
+    console.log("🔥 votes:", votes);
+
     const track =
         document.querySelector(".onvote-track");
 
