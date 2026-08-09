@@ -127,3 +127,137 @@ if(upcoming.length > 1){
 }
 
 }
+
+/* =========================
+   ONGOING VOTE
+========================= */
+
+function renderOngoingVote(votes) {
+
+    const track =
+        document.querySelector(".onvote-track");
+
+    const loading =
+        document.querySelector(".onvote-loading");
+
+    if (!track) return;
+
+    const ongoingVotes =
+        (votes || []).filter(vote =>
+            String(vote.status || "")
+                .trim()
+                .toLowerCase() === "ongoing"
+        );
+
+    if (loading) {
+        loading.style.display = "none";
+    }
+
+    if (!ongoingVotes.length) {
+
+        track.innerHTML = `
+            <div class="onvote-slider">
+                <div class="onvote-title">
+                    No ongoing vote
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+    track.innerHTML =
+        ongoingVotes.map((vote, index) => {
+
+            const logo =
+                getAppLogo(vote.app);
+
+            return `
+                <div
+                    class="onvote-slider"
+                    data-index="${index}"
+                >
+
+                    <div class="onvote-top">
+
+                        <span class="onvote-ending">
+                            Ends in
+                        </span>
+
+                        ${
+                            logo
+                            ? `
+                                <img
+                                    src="${logo}"
+                                    class="onvote-logo"
+                                    alt="${vote.app || ""}"
+                                >
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+
+                    <div class="onvote-bottom">
+
+                        <div class="onvote-title">
+                            ${vote.title || ""}
+                        </div>
+
+                        <div class="onvote-action">
+
+                            <span class="onvote-count">
+                                ${index + 1}/${ongoingVotes.length}
+                            </span>
+
+                            <a
+                                href="${vote.link || "#"}"
+                                class="onvote-now"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Vote now
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    /* =========================
+       CARD COLOR
+    ========================= */
+
+    ongoingVotes.forEach((vote, index) => {
+
+        const logo =
+            getAppLogo(vote.app);
+
+        if (!logo) return;
+
+        const card =
+            track.querySelector(
+                `.onvote-slider[data-index="${index}"]`
+            );
+
+        if (!card) return;
+
+        getDominantColor(logo)
+            .then(color => {
+
+                card.style.setProperty(
+                    "--app-color",
+                    color
+                );
+
+            });
+
+    });
+
+}
