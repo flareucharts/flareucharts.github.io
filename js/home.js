@@ -133,8 +133,6 @@ if(upcoming.length > 1){
    HOME — ONGOING VOTE
 ========================= */
 
-let homeVoteSliderInterval = null;
-
 function renderOngoingVote(votes) {
 
     const track =
@@ -142,6 +140,9 @@ function renderOngoingVote(votes) {
 
     const loading =
         document.querySelector(".onvote-loading");
+
+    const indicator =
+        document.querySelector(".onvote-indicator");
 
     if (!track) return;
 
@@ -168,51 +169,111 @@ function renderOngoingVote(votes) {
 
 
     /* =========================
-       CLEAR OLD SLIDER
-    ========================= */
-
-    if (homeVoteSliderInterval) {
-        clearInterval(homeVoteSliderInterval);
-        homeVoteSliderInterval = null;
-    }
-
-
-    track.innerHTML = "";
-
-
-    /* =========================
        NO ONGOING VOTE
     ========================= */
 
     if (!ongoingVotes.length) {
 
         track.innerHTML = `
-            <div
-                class="onvote-slider"
-                style="
-                    --app-color: rgb(245, 245, 245);
-                    background:
-                        linear-gradient(
-                            135deg,
-                            #f5f5f5,
-                            #ffffff
-                        );
-                "
-            >
-
+            <div class="onvote-slider">
                 <div class="onvote-title">
                     No ongoing vote
                 </div>
-
             </div>
         `;
+
+        if (indicator) {
+            indicator.textContent = "";
+        }
 
         return;
     }
 
 
     /* =========================
-       RENDER SLIDES
+       INITIAL INDICATOR
+    ========================= */
+
+    if (indicator) {
+        indicator.textContent =
+            `1/${ongoingVotes.length}`;
+    }
+
+
+    /* =========================
+       RENDER CARDS
+    ========================= */
+
+    track.innerHTML =
+        ongoingVotes.map((vote, index) => {
+
+            const logo =
+                getAppLogo(vote.app);
+
+            return `
+                <div
+                    class="onvote-slider"
+                    data-index="${index}"
+                    style="--app-color: rgb(245, 245, 245);"
+                >
+
+                    <div class="onvote-top">
+
+                        <span
+                            class="onvote-ending"
+                            data-end="${vote.endTimestamp}"
+                        >
+                            Ends in 00:00:00
+                        </span>
+
+                    </div>
+
+
+                    <div class="onvote-title">
+                        ${vote.title || ""}
+                    </div>
+
+
+                    <div class="onvote-bottom">
+
+                        ${
+                            logo
+                            ? `
+                                <img
+                                    src="${logo}"
+                                    class="onvote-logo"
+                                    alt="${vote.app || ""}"
+                                >
+                            `
+                            : ""
+                        }
+
+                        <a
+                            href="${vote.link || "#"}"
+                            class="onvote-now"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Vote now
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    /* =========================
+       COUNTDOWN
+    ========================= */
+
+    updateHomeVoteCountdowns();
+
+
+    /* =========================
+       APP COLOR
     ========================= */
 
     ongoingVotes.forEach((vote, index) => {
@@ -220,120 +281,27 @@ function renderOngoingVote(votes) {
         const logo =
             getAppLogo(vote.app);
 
+        if (!logo) return;
 
-        const slide =
-            document.createElement("div");
+        const card =
+            track.querySelector(
+                `.onvote-slider[data-index="${index}"]`
+            );
 
-        slide.className =
-            "onvote-slider";
-
-        slide.dataset.index =
-            index;
-
-
-        /*
-         * DEFAULT COLOR
-         */
-        slide.style.setProperty(
-            "--app-color",
-            "rgb(245, 245, 245)"
-        );
+        if (!card) return;
 
 
-        slide.innerHTML = `
+        getDominantColor(logo)
+            .then(color => {
 
-            <!-- TOP -->
-            <div class="onvote-top">
+                card.style.setProperty(
+                    "--app-color",
+                    color
+                );
 
-                <span
-                    class="onvote-ending"
-                    data-end="${vote.endTimestamp}"
-                >
-                    Ends in 00:00:00
-                </span>
-
-                <span class="onvote-count">
-                    ${index + 1}/${ongoingVotes.length}
-                </span>
-
-            </div>
-
-
-            <!-- TITLE -->
-            <div class="onvote-title">
-                ${vote.title || ""}
-            </div>
-
-
-            <!-- BOTTOM -->
-            <div class="onvote-bottom">
-
-                ${
-                    logo
-                    ? `
-                        <img
-                            src="${logo}"
-                            class="onvote-logo"
-                            alt="${vote.app || ""}"
-                        >
-                    `
-                    : ""
-                }
-
-                <a
-                    href="${vote.link || "#"}"
-                    class="onvote-now"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Vote now
-                </a>
-
-            </div>
-
-        `;
-
-
-        track.appendChild(slide);
-
-
-        /* =========================
-           GET APP COLOR
-        ========================= */
-
-        if (logo) {
-
-            getDominantColor(logo)
-                .then(color => {
-
-                    /*
-                     * SIMPAN WARNA UTAMA
-                     */
-                    slide.style.setProperty(
-                        "--app-color",
-                        color
-                    );
-
-                })
-                .catch(error => {
-
-                    console.error(
-                        "Failed to get app color:",
-                        error
-                    );
-
-                });
-
-        }
+            });
 
     });
-
-
-    /* =========================
-       UPDATE COUNTDOWN
-    ========================= */
-
-    updateHomeVoteCountdowns();
 
 
     /* =========================
@@ -342,61 +310,43 @@ function renderOngoingVote(votes) {
 
     if (ongoingVotes.length > 1) {
 
-        /*
-         * Clone slide pertama
-         * untuk infinite loop
-         */
-        const firstSlide =
-            track.children[0].cloneNode(true);
-
-        track.appendChild(firstSlide);
-
-
         let currentSlide = 0;
 
+        setInterval(() => {
 
-        homeVoteSliderInterval =
-            setInterval(() => {
+            currentSlide++;
 
-                currentSlide++;
-
-
-                track.scrollTo({
-
-                    left:
-                        track.clientWidth *
-                        currentSlide,
-
-                    behavior: "smooth"
-
-                });
+            if (
+                currentSlide >=
+                ongoingVotes.length
+            ) {
+                currentSlide = 0;
+            }
 
 
-                /*
-                 * Kembali ke slide pertama
-                 */
-                if (
-                    currentSlide ===
-                    ongoingVotes.length
-                ) {
+            track.scrollTo({
 
-                    setTimeout(() => {
+                left:
+                    track.clientWidth *
+                    currentSlide,
 
-                        track.style.scrollBehavior =
-                            "auto";
+                behavior: "smooth"
 
-                        track.scrollLeft = 0;
+            });
 
-                        track.style.scrollBehavior =
-                            "smooth";
 
-                        currentSlide = 0;
+            /* =========================
+               UPDATE 1/2
+            ========================= */
 
-                    }, 600);
+            if (indicator) {
 
-                }
+                indicator.textContent =
+                    `${currentSlide + 1}/${ongoingVotes.length}`;
 
-            }, 5000);
+            }
+
+        }, 5000);
 
     }
 
@@ -414,10 +364,7 @@ function updateHomeVoteCountdowns() {
             ".onvote-ending[data-end]"
         );
 
-
-    const now =
-        Date.now();
-
+    const now = Date.now();
 
     countdowns.forEach(countdown => {
 
@@ -425,7 +372,6 @@ function updateHomeVoteCountdowns() {
             Number(
                 countdown.dataset.end
             );
-
 
         if (!Number.isFinite(end)) {
 
@@ -435,7 +381,6 @@ function updateHomeVoteCountdowns() {
             return;
 
         }
-
 
         const diff =
             end - now;
@@ -456,20 +401,17 @@ function updateHomeVoteCountdowns() {
                 diff / 86400000
             );
 
-
         const hours =
             Math.floor(
                 (diff % 86400000) /
                 3600000
             );
 
-
         const minutes =
             Math.floor(
                 (diff % 3600000) /
                 60000
             );
-
 
         const seconds =
             Math.floor(
@@ -518,7 +460,6 @@ document.addEventListener(
 
 /* =========================
    FALLBACK
-   Kalau data sudah loaded
 ========================= */
 
 if (
