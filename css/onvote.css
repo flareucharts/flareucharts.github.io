@@ -1,37 +1,19 @@
 /* =========================
-   ONGOING VOTE
+   ONGOING VOTE CARD
 ========================= */
 
 .onvote-card{
     display:block;
     position:relative;
-
-    width:100%;
-    min-height:80px;
-
-    box-sizing:border-box;
-
-    background:
-        linear-gradient(
-            135deg,
-            color-mix(
-                in srgb,
-                var(--app-color, #5fc7be) 15%,
-                #fff
-            ),
-            #fff
-        );
-
+    background:var(--app-color, #fff);
     border-radius:18px;
     padding:14px;
-
+    min-height:80px;
+    height:80px;
     text-decoration:none;
     color:inherit;
-
     box-shadow:0 8px 25px rgba(0,0,0,.07);
-
     transition:.25s;
-
     overflow:hidden;
 }
 
@@ -41,29 +23,93 @@
 
 
 /* =========================
-   HEADER
+   WINDOW
 ========================= */
 
-.onvote-header{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-
+.onvote-window{
+    overflow:hidden;
     width:100%;
+    height:100%;
 }
 
 
 /* =========================
-   APP
+   TRACK
 ========================= */
 
-.onvote-app{
+.onvote-track{
+    display:flex;
+    width:100%;
+    height:100%;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+}
+
+.onvote-track::-webkit-scrollbar{
+    display:none;
+}
+
+
+/* =========================
+   SLIDER
+========================= */
+
+.onvote-slider{
+    position:relative;
+    flex:0 0 100%;
+    width:100%;
+    height:100%;
+    scroll-snap-align:start;
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.onvote-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    width:100%;
+}
+
+.onvote-ending{
     font-size:11px;
     font-weight:600;
-
-    color:#8a8a8a;
-
+    color:rgba(40,40,40,.55);
     line-height:1.2;
+}
+
+
+/* =========================
+   APP LOGO
+========================= */
+
+.onvote-logo{
+    width:28px;
+    height:28px;
+    object-fit:contain;
+    border-radius:8px;
+    flex-shrink:0;
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.onvote-bottom{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:10px;
 }
 
 
@@ -72,17 +118,16 @@
 ========================= */
 
 .onvote-title{
-    margin-top:5px;
+    min-width:0;
 
     font-size:13px;
     font-weight:700;
-
-    line-height:1.35;
+    line-height:1.3;
 
     color:#294746;
 
     display:-webkit-box;
-    -webkit-line-clamp:2;
+    -webkit-line-clamp:1;
     -webkit-box-orient:vertical;
 
     overflow:hidden;
@@ -90,92 +135,56 @@
 
 
 /* =========================
-   COUNTDOWN
+   RIGHT ACTION
 ========================= */
 
-.onvote-countdown{
-    margin-left:auto;
-
+.onvote-action{
     display:flex;
     align-items:center;
-    gap:4px;
+    gap:8px;
+    flex-shrink:0;
+}
 
+
+/* COUNTER */
+
+.onvote-count{
     font-size:11px;
-    font-weight:600;
-
-    color:#8a8a8a;
-
-    text-align:right;
-
+    font-weight:700;
+    color:rgba(40,40,40,.5);
     white-space:nowrap;
 }
 
-.onvote-countdown strong{
-    font-size:12px;
-    font-weight:700;
 
-    color:var(--app-color, #5fc7be);
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.onvote-footer{
-    display:flex;
-
-    align-items:flex-end;
-    justify-content:space-between;
-
-    width:100%;
-
-    margin-top:10px;
-}
-
-
-/* =========================
-   VOTE NOW
-========================= */
+/* VOTE NOW */
 
 .onvote-now{
     display:inline-flex;
-
     align-items:center;
     justify-content:center;
 
-    min-width:72px;
-    height:28px;
+    min-width:62px;
+    height:26px;
 
-    padding:0 13px;
-
-    box-sizing:border-box;
+    padding:0 10px;
 
     border-radius:999px;
 
-    background:
-        var(--app-color, #5fc7be);
+    background:#fff;
+    color:#294746;
 
-    color:#fff;
-
-    font-size:11px;
+    font-size:10px;
     font-weight:700;
 
     text-decoration:none;
 
-    box-shadow:
-        0 4px 10px
-        color-mix(
-            in srgb,
-            var(--app-color, #5fc7be) 30%,
-            transparent
-        );
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
 
     transition:.2s;
 }
 
 .onvote-now:active{
-    transform:scale(.96);
+    transform:scale(.95);
 }
 
 
@@ -188,13 +197,11 @@
 
     display:flex;
     flex-direction:column;
-
     gap:10px;
 }
 
 .onvote-skeleton{
     height:10px;
-
     border-radius:8px;
 
     background:linear-gradient(
@@ -206,7 +213,7 @@
 
     background-size:200% 100%;
 
-    animation:onvote-skeleton 1.2s linear infinite;
+    animation:skeleton 1.2s linear infinite;
 }
 
 .onvote-skeleton.short{
@@ -220,16 +227,4 @@
 .onvote-skeleton.long{
     width:75%;
     height:16px;
-}
-
-@keyframes onvote-skeleton{
-
-    from{
-        background-position:200% 0;
-    }
-
-    to{
-        background-position:-200% 0;
-    }
-
 }
