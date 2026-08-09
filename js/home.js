@@ -133,10 +133,9 @@ if(upcoming.length > 1){
    HOME — ONGOING VOTE
 ========================= */
 
-function renderOngoingVote(votes) {
+let homeVoteSliderInterval = null;
 
-    const card =
-        document.querySelector(".onvote-card");
+function renderOngoingVote(votes) {
 
     const track =
         document.querySelector(".onvote-track");
@@ -144,7 +143,7 @@ function renderOngoingVote(votes) {
     const loading =
         document.querySelector(".onvote-loading");
 
-    if (!card || !track) return;
+    if (!track) return;
 
 
     /* =========================
@@ -169,13 +168,37 @@ function renderOngoingVote(votes) {
 
 
     /* =========================
+       CLEAR OLD SLIDER
+    ========================= */
+
+    if (homeVoteSliderInterval) {
+        clearInterval(homeVoteSliderInterval);
+        homeVoteSliderInterval = null;
+    }
+
+
+    track.innerHTML = "";
+
+
+    /* =========================
        NO ONGOING VOTE
     ========================= */
 
     if (!ongoingVotes.length) {
 
         track.innerHTML = `
-            <div class="onvote-slider">
+            <div
+                class="onvote-slider"
+                style="
+                    --app-color: rgb(245, 245, 245);
+                    background:
+                        linear-gradient(
+                            135deg,
+                            #f5f5f5,
+                            #ffffff
+                        );
+                "
+            >
 
                 <div class="onvote-title">
                     No ongoing vote
@@ -183,11 +206,6 @@ function renderOngoingVote(votes) {
 
             </div>
         `;
-
-        card.style.setProperty(
-            "--app-color",
-            "rgb(245, 245, 245)"
-        );
 
         return;
     }
@@ -197,101 +215,125 @@ function renderOngoingVote(votes) {
        RENDER SLIDES
     ========================= */
 
-    track.innerHTML =
-        ongoingVotes.map((vote, index) => {
+    ongoingVotes.forEach((vote, index) => {
 
-            const logo =
-                getAppLogo(vote.app);
+        const logo =
+            getAppLogo(vote.app);
 
-            return `
-                <div
-                    class="onvote-slider"
-                    data-index="${index}"
+
+        const slide =
+            document.createElement("div");
+
+        slide.className =
+            "onvote-slider";
+
+        slide.dataset.index =
+            index;
+
+
+        /*
+         * DEFAULT COLOR
+         */
+        slide.style.setProperty(
+            "--app-color",
+            "rgb(245, 245, 245)"
+        );
+
+
+        slide.innerHTML = `
+
+            <!-- TOP -->
+            <div class="onvote-top">
+
+                <span
+                    class="onvote-ending"
+                    data-end="${vote.endTimestamp}"
                 >
+                    Ends in 00:00:00
+                </span>
 
-                    <div class="onvote-top">
+                <span class="onvote-count">
+                    ${index + 1}/${ongoingVotes.length}
+                </span>
 
-                        <span
-                            class="onvote-ending"
-                            data-end="${vote.endTimestamp}"
+            </div>
+
+
+            <!-- TITLE -->
+            <div class="onvote-title">
+                ${vote.title || ""}
+            </div>
+
+
+            <!-- BOTTOM -->
+            <div class="onvote-bottom">
+
+                ${
+                    logo
+                    ? `
+                        <img
+                            src="${logo}"
+                            class="onvote-logo"
+                            alt="${vote.app || ""}"
                         >
-                            Ends in 00:00:00
-                        </span>
+                    `
+                    : ""
+                }
 
-                        <span class="onvote-count">
-                            ${index + 1}/${ongoingVotes.length}
-                        </span>
+                <a
+                    href="${vote.link || "#"}"
+                    class="onvote-now"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Vote now
+                </a>
 
-                    </div>
+            </div>
+
+        `;
 
 
-                    <div class="onvote-title">
-                        ${vote.title || ""}
-                    </div>
+        track.appendChild(slide);
 
 
-                    <div class="onvote-bottom">
+        /* =========================
+           GET APP COLOR
+        ========================= */
 
-                        ${
-                            logo
-                            ? `
-                                <img
-                                    src="${logo}"
-                                    class="onvote-logo"
-                                    alt="${vote.app || ""}"
-                                >
-                            `
-                            : ""
-                        }
+        if (logo) {
 
-                        <a
-                            href="${vote.link || "#"}"
-                            class="onvote-now"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Vote now
-                        </a>
+            getDominantColor(logo)
+                .then(color => {
 
-                    </div>
+                    /*
+                     * SIMPAN WARNA UTAMA
+                     */
+                    slide.style.setProperty(
+                        "--app-color",
+                        color
+                    );
 
-                </div>
-            `;
+                })
+                .catch(error => {
 
-        }).join("");
+                    console.error(
+                        "Failed to get app color:",
+                        error
+                    );
+
+                });
+
+        }
+
+    });
 
 
     /* =========================
-       COUNTDOWN
+       UPDATE COUNTDOWN
     ========================= */
 
     updateHomeVoteCountdowns();
-
-
-    /* =========================
-       GET APP COLOR
-       → APPLY TO REAL CARD
-    ========================= */
-
-    const firstVote =
-        ongoingVotes[0];
-
-    const firstLogo =
-        getAppLogo(firstVote.app);
-
-    if (firstLogo) {
-
-        getDominantColor(firstLogo)
-            .then(color => {
-
-                card.style.setProperty(
-                    "--app-color",
-                    color
-                );
-
-            });
-
-    }
 
 
     /* =========================
@@ -300,6 +342,10 @@ function renderOngoingVote(votes) {
 
     if (ongoingVotes.length > 1) {
 
+        /*
+         * Clone slide pertama
+         * untuk infinite loop
+         */
         const firstSlide =
             track.children[0].cloneNode(true);
 
@@ -309,44 +355,48 @@ function renderOngoingVote(votes) {
         let currentSlide = 0;
 
 
-        setInterval(() => {
+        homeVoteSliderInterval =
+            setInterval(() => {
 
-            currentSlide++;
-
-
-            track.scrollTo({
-
-                left:
-                    track.clientWidth *
-                    currentSlide,
-
-                behavior: "smooth"
-
-            });
+                currentSlide++;
 
 
-            if (
-                currentSlide ===
-                ongoingVotes.length
-            ) {
+                track.scrollTo({
 
-                setTimeout(() => {
+                    left:
+                        track.clientWidth *
+                        currentSlide,
 
-                    track.style.scrollBehavior =
-                        "auto";
+                    behavior: "smooth"
 
-                    track.scrollLeft = 0;
+                });
 
-                    track.style.scrollBehavior =
-                        "smooth";
 
-                    currentSlide = 0;
+                /*
+                 * Kembali ke slide pertama
+                 */
+                if (
+                    currentSlide ===
+                    ongoingVotes.length
+                ) {
 
-                }, 600);
+                    setTimeout(() => {
 
-            }
+                        track.style.scrollBehavior =
+                            "auto";
 
-        }, 5000);
+                        track.scrollLeft = 0;
+
+                        track.style.scrollBehavior =
+                            "smooth";
+
+                        currentSlide = 0;
+
+                    }, 600);
+
+                }
+
+            }, 5000);
 
     }
 
@@ -406,17 +456,20 @@ function updateHomeVoteCountdowns() {
                 diff / 86400000
             );
 
+
         const hours =
             Math.floor(
                 (diff % 86400000) /
                 3600000
             );
 
+
         const minutes =
             Math.floor(
                 (diff % 3600000) /
                 60000
             );
+
 
         const seconds =
             Math.floor(
@@ -465,6 +518,7 @@ document.addEventListener(
 
 /* =========================
    FALLBACK
+   Kalau data sudah loaded
 ========================= */
 
 if (
