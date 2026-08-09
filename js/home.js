@@ -167,116 +167,164 @@ if(upcoming.length > 1){
 
      if (!ongoingVotes.length) {
 
-         track.innerHTML = `
-             <div class="onvote-slider">
+/* =========================
+   ONGOING VOTE
+========================= */
 
-                 <div class="onvote-title">
-                     No ongoing vote
-                 </div>
+document.addEventListener("votesLoaded", function (event) {
 
-             </div>
-         `;
+    renderOngoingVote(
+        event.detail || []
+    );
 
-         return;
-     }
-
-
-     track.innerHTML =
-         ongoingVotes.map((vote, index) => {
-
-             const logo =
-                 getAppLogo(vote.app);
-
-             return `
-                 <div
-                     class="onvote-slider"
-                     data-index="${index}"
-                 >
-
-                     <div class="onvote-top">
-
-                         <span class="onvote-ending">
-                             Ends in
-                         </span>
-
-                         ${
-                             logo
-                             ? `
-                                 <img
-                                     src="${logo}"
-                                     class="onvote-logo"
-                                     alt="${vote.app || ""}"
-                                 >
-                             `
-                             : ""
-                         }
-
-                     </div>
+});
 
 
-                     <div class="onvote-bottom">
+function renderOngoingVote(votes) {
 
-                         <div class="onvote-title">
-                             ${vote.title || ""}
-                         </div>
+    const track =
+        document.querySelector(".onvote-track");
 
+    const loading =
+        document.querySelector(".onvote-loading");
 
-                         <div class="onvote-action">
-
-                             <span class="onvote-count">
-                                 ${index + 1}/${ongoingVotes.length}
-                             </span>
+    if (!track) return;
 
 
-                             <a
-                                 href="${vote.link || "#"}"
-                                 class="onvote-now"
-                                 target="_blank"
-                                 rel="noopener noreferrer"
-                             >
-                                 Vote now
-                             </a>
-
-                         </div>
-
-                     </div>
-
-                 </div>
-             `;
-
-         }).join("");
+    const ongoingVotes =
+        (votes || []).filter(vote =>
+            String(vote.status || "")
+                .trim()
+                .toLowerCase() === "ongoing"
+        );
 
 
-     /* =========================
-        CARD COLOR
-     ========================= */
-
-     ongoingVotes.forEach((vote, index) => {
-
-         const logo =
-             getAppLogo(vote.app);
-
-         if (!logo) return;
+    if (loading) {
+        loading.remove();
+    }
 
 
-         const card =
-             track.querySelector(
-                 `.onvote-slider[data-index="${index}"]`
-             );
+    if (!ongoingVotes.length) {
 
-         if (!card) return;
+        track.innerHTML = `
+            <div class="onvote-slider">
+
+                <div class="onvote-title">
+                    No ongoing vote
+                </div>
+
+            </div>
+        `;
+
+        return;
+    }
 
 
-         getDominantColor(logo)
-             .then(color => {
+    /* =========================
+       RENDER CARDS
+    ========================= */
 
-                 card.style.setProperty(
-                     "--app-color",
-                     color
-                 );
+    track.innerHTML =
+        ongoingVotes.map((vote, index) => {
 
-             });
+            const logo =
+                getAppLogo(vote.app);
 
-     });
+            return `
+                <div
+                    class="onvote-slider"
+                    data-index="${index}"
+                >
 
- }
+                    <div class="onvote-top">
+
+                        <span
+                            class="countdown onvote-ending"
+                            data-end="${vote.endTimestamp}"
+                        >
+                            Ends in 00:00:00
+                        </span>
+
+                        <span class="onvote-count">
+                            ${index + 1}/${ongoingVotes.length}
+                        </span>
+
+                    </div>
+
+
+                    <div class="onvote-title">
+                        ${vote.title || ""}
+                    </div>
+
+
+                    <div class="onvote-bottom">
+
+                        ${
+                            logo
+                            ? `
+                                <img
+                                    src="${logo}"
+                                    class="onvote-logo"
+                                    alt="${vote.app || ""}"
+                                >
+                            `
+                            : ""
+                        }
+
+                        <a
+                            href="${vote.link || "#"}"
+                            class="onvote-now"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Vote now
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    /* =========================
+       COUNTDOWN
+    ========================= */
+
+    updateCountdowns();
+
+
+    /* =========================
+       CARD COLOR
+    ========================= */
+
+    ongoingVotes.forEach((vote, index) => {
+
+        const logo =
+            getAppLogo(vote.app);
+
+        if (!logo) return;
+
+
+        const card =
+            track.querySelector(
+                `.onvote-slider[data-index="${index}"]`
+            );
+
+        if (!card) return;
+
+
+        getDominantColor(logo)
+            .then(color => {
+
+                card.style.setProperty(
+                    "--app-color",
+                    color
+                );
+
+            });
+
+    });
+
+}
