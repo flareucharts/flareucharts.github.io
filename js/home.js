@@ -135,10 +135,6 @@ if(upcoming.length > 1){
 
 function renderOngoingVote(votes) {
 
-
-    console.log("🔥 renderOngoingVote DIPANGGIL");
-    console.log("🔥 votes:", votes);
-
     const track =
         document.querySelector(".onvote-track");
 
@@ -454,10 +450,6 @@ setInterval(
 document.addEventListener(
     "votesLoaded",
     function (event) {
-
-        console.log("🔥 HOME votesLoaded RECEIVED");
-        console.log("🔥 HOME vote data:", event.detail);
-
         renderOngoingVote(
             event.detail || []
         );
@@ -473,9 +465,6 @@ document.addEventListener(
 function waitForHomeVotes() {
 
     if (Array.isArray(window.allVotes)) {
-
-        console.log(
-            "🔥 HOME allVotes FOUND:",
             window.allVotes
         );
 
@@ -519,20 +508,3 @@ if (!waitForHomeVotes()) {
     }, 100);
 
 }
-
-
-/* =========================
-   DEBUG
-========================= */
-
-console.log("🔥 HOME JS END");
-
-console.log(
-    "🔥 HOME allVotes FINAL:",
-    window.allVotes
-);
-
-console.log(
-    "🔥 HOME render function:",
-    typeof renderOngoingVote
-);
