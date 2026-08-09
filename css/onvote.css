@@ -16,8 +16,9 @@
 }
 
 .onvote-window{
-    overflow:hidden;
+    position:relative;
     width:100%;
+    overflow:hidden;
 }
 
 .onvote-track{
@@ -35,34 +36,39 @@
 .onvote-slider{
     flex:0 0 100%;
     width:100%;
-    box-sizing:border-box;
+    min-width:100%;
+
+    position:relative;
 
     padding:14px;
-
     border-radius:18px;
+
     background:
         linear-gradient(
             135deg,
             color-mix(
                 in srgb,
-                var(--app-color) 75%,
+                var(--app-color) 55%,
                 white
             ),
             color-mix(
                 in srgb,
-                var(--app-color) 55%,
+                var(--app-color) 32%,
                 white
             ) 55%,
             color-mix(
                 in srgb,
-                var(--app-color) 35%,
+                var(--app-color) 18%,
                 white
-            ) 100%
+            )
         );
 
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
+    overflow:hidden;
     scroll-snap-align:start;
     transition:
-        background .3s ease;
+        background .35s ease,
+        transform .2s ease;
 }
 
 .onvote-top{
@@ -79,7 +85,7 @@
 }
 
 .onvote-count{
-    font-size:11px;
+    font-size:12px;
     font-weight:700;
     color:#fff;
 }
