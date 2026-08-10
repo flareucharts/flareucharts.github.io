@@ -26,9 +26,19 @@
    STATUS STICKY
 ========================= */
 
-.vote-sticky{
-position:sticky;
-display:flex;
+#vote .vote-sticky{
+    position:sticky;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    width:100%;
+    min-height:50px;
+    padding:0 0 0 16px;
+    background:var(--bg-gradient1);
+    border-bottom:1px solid rgba(0,0,0,.08);
 }
 
 /* =========================
