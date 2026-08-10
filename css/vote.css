@@ -5,7 +5,7 @@
     overflow:visible !important;
 }
 
-#vote .page{
+.page-vote{
 position:sticky;
 min-height:auto;
 flex-direction:column;
@@ -25,6 +25,7 @@ display:flex;
 align-items:center;
 background:var(--bg-gradient1);
 backdrop-filter:none;
+
 }
 
 #vote .vote-title{
@@ -45,7 +46,6 @@ backdrop-filter:none;
 ========================= */
 
 .vote-sticky{
-margin-top:0;
 position:sticky;
 display:flex;
 }
@@ -62,7 +62,7 @@ display:flex;
     top:0;
     align-items:center;
     z-index:500;
-    padding:12px 6px 13px;
+    padding:0 0 0 16px;
     font-family:inherit;
     font-size:14px;
     font-weight:600;
