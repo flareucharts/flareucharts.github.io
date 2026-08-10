@@ -11,8 +11,6 @@
 
 ##vote .vote-title{
     margin:0;
-    height:64px;
-
     display:flex;
     align-items:center;
 }
@@ -31,7 +29,6 @@
 #vote .vote-status-filter{
     display:flex;
     align-items:center;
-    height:64px;
     width:100%;
     background:var(--bg-gradient1);
     border-bottom:1px solid rgba(0,0,0,.08);
