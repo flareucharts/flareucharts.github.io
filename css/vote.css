@@ -21,7 +21,7 @@ margin:0 auto;
 height:50px;
 display:flex;
 align-items:center;
-background:var(--theme1);
+background:var(--bg-gradient1);
 backdrop-filter:none;
 }
 
@@ -43,6 +43,8 @@ backdrop-filter:none;
 ========================= */
 
 .vote-sticky{
+margin-top:0;
+position:sticky;
 display:none;
 }
 
