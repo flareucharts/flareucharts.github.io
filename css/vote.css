@@ -7,6 +7,8 @@
 
 #vote .global-content{
     overflow:visible !important;
+    margin-top:0;
+    padding-top:0;
 }
 
 #vote .vote-title{
@@ -26,7 +28,7 @@
    STATUS STICKY
 ========================= */
 
-#vote .vote-status-filter{
+#vote .vote-sticky{
     position:sticky;
     top:0;
     z-index:500;
@@ -46,7 +48,7 @@
     position:relative;
     flex:1;
     border:none;
-    background:transparent;
+    background:var(--bg-gradient1);
     top:0;
     z-index:500;
     padding:12px 6px 13px;
