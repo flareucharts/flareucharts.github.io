@@ -1,34 +1,87 @@
-#vote .global-content {
-    position: relative;
-    z-index: 5;
-    overflow: visible;
-}
-
-/* =========================
-   VOTE STICKY HEADER
-========================= */
-
-#vote .vote-sticky {
-    position: sticky;
-    top: 0; /* mengikuti tinggi header */
-    z-index: 500;
-    background: var(--bg-gradient1);
-}
-
-
 /* =========================
    VOTE TITLE
 ========================= */
 
-#vote .vote-title {
-    margin-bottom: 16px;
+#vote .vote-title{
+    margin:0;
+    padding:16px 0 18px;
 }
 
-#vote .vote-title h2 {
-    font-size: var(--title);
-    font-weight: 700;
-    color: #fff;
-    margin: 0;
+#vote .vote-title h2{
+    margin:0;
+
+    font-size:var(--title);
+    font-weight:700;
+
+    color:#fff;
+}
+
+
+/* =========================
+   STATUS STICKY
+========================= */
+
+#vote .vote-status-filter{
+    position:sticky;
+    position:-webkit-sticky;
+
+    top:0;
+
+    z-index:500;
+
+    display:flex;
+    width:100%;
+
+    padding:0;
+
+    background:var(--bg-gradient1);
+
+    border-bottom:1px solid rgba(0,0,0,.08);
+}
+
+
+/* =========================
+   STATUS BUTTON
+========================= */
+
+#vote .status-filter{
+    position:relative;
+
+    flex:1;
+
+    border:none;
+    background:transparent;
+
+    padding:12px 6px 13px;
+
+    font-family:inherit;
+    font-size:14px;
+    font-weight:600;
+
+    color:rgba(255,255,255,.65);
+
+    cursor:pointer;
+}
+
+#vote .status-filter.active{
+    color:#fff;
+}
+
+#vote .status-filter.active::after{
+    content:"";
+
+    position:absolute;
+
+    left:18%;
+    right:18%;
+
+    bottom:-1px;
+
+    height:3px;
+
+    background:#fff;
+
+    border-radius:3px 3px 0 0;
 }
 
 /* =========================
@@ -84,27 +137,23 @@
 .artist-btn {
     display: flex;
     align-items: center;
-
     border: none;
-    background: transparent;
-
-    padding: 4px 0;
-
+    padding: 2px 0;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
-
     color: #222;
-
     cursor: pointer;
+    gap:8px;
+    border-radius:12px;
+    background:#f5f5f5;
+    transition:.25s;
 }
 
 .sort-btn span,
 .artist-btn span {
-    margin-left: 5px;
-
+    margin-left: 3px;
     font-size: 9px;
-
     transition: transform 0.2s ease;
 }
 
@@ -116,7 +165,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 24px;
+    gap: 18px;
     margin-top:10px;
     margin-bottom: 16px;
 }
@@ -131,28 +180,6 @@
     display:flex;
     justify-content:flex-start;
     z-index:100;
-}
-
-.sort-btn,
-.artist-btn{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:10px 14px;
-
-    border:none;
-    border-radius:14px;
-
-    background:#f5f5f5;
-
-    font-family:inherit;
-    font-size:14px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s;
 }
 
 .sort-btn:hover,
