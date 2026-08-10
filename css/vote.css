@@ -45,7 +45,7 @@ backdrop-filter:none;
 .vote-sticky{
 margin-top:0;
 position:sticky;
-display:none;
+display:flex;
 }
 
 /* =========================
