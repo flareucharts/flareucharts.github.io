@@ -354,30 +354,23 @@ font-size:clamp(10px,1.8vw,11px);
 <div class="page" id="vote">
   <div class="global-content">
 
-<!-- STICKY HEADER -->
-<div class="vote-sticky">
+<div class="vote-title">
+  <h2>VOTE</h2>
+</div>
 
-  <!-- Title -->
-  <div class="vote-title">
-    <h2>VOTE</h2>
-  </div>
+<div class="vote-status-filter">
 
-  <!-- Status -->
-  <div class="vote-status-filter">
+  <button class="status-filter active" data-status="ongoing">
+    Ongoing
+  </button>
 
-    <button class="status-filter active" data-status="ongoing">
-      Ongoing
-    </button>
+  <button class="status-filter" data-status="upcoming">
+    Upcoming
+  </button>
 
-    <button class="status-filter" data-status="upcoming">
-      Upcoming
-    </button>
-
-    <button class="status-filter" data-status="ended">
-      Ended
-    </button>
-
-  </div>
+  <button class="status-filter" data-status="ended">
+    Ended
+  </button>
 
 </div>
 
