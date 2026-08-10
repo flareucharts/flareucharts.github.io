@@ -354,34 +354,39 @@ font-size:clamp(10px,1.8vw,11px);
 <div class="page" id="vote">
   <div class="global-content">
 
-    <!-- Title -->
-    <div class="vote-title">
-      <h2>VOTE</h2>
-    </div>
+<!-- STICKY HEADER -->
+<div class="vote-sticky">
 
-    <!-- Status -->
-<div class="vote-status-filter">
+  <!-- Title -->
+  <div class="vote-title">
+    <h2>VOTE</h2>
+  </div>
 
-  <button class="status-filter active" data-status="ongoing">
-    Ongoing
-  </button>
+  <!-- Status -->
+  <div class="vote-status-filter">
 
-  <button class="status-filter" data-status="upcoming">
-    Upcoming
-  </button>
+    <button class="status-filter active" data-status="ongoing">
+      Ongoing
+    </button>
 
-  <button class="status-filter" data-status="ended">
-    Ended
-  </button>
+    <button class="status-filter" data-status="upcoming">
+      Upcoming
+    </button>
+
+    <button class="status-filter" data-status="ended">
+      Ended
+    </button>
+
+  </div>
 
 </div>
 
 
+<!-- Sort + Artist -->
 <div class="vote-filter-row">
 
   <!-- SORT -->
   <div class="vote-sort">
-
     <button class="sort-btn">
       Sort by <span>▼</span>
     </button>
@@ -403,9 +408,7 @@ font-size:clamp(10px,1.8vw,11px);
         A–Z
       </div>
     </div>
-
   </div>
-
 
   <!-- ARTIST -->
   <div class="artist-filter">
@@ -415,7 +418,6 @@ font-size:clamp(10px,1.8vw,11px);
     </button>
 
     <div class="artist-dropdown">
-
       <div class="artist-option active" data-artist="all">
         All
       </div>
@@ -431,7 +433,6 @@ font-size:clamp(10px,1.8vw,11px);
       <div class="artist-option" data-artist="KANG WOOJIN">
         KANG WOOJIN
       </div>
-
     </div>
 
   </div>
