@@ -90,10 +90,11 @@ max-width:100%;
 
 /* HEADER */
 .header{
-position:sticky;
-top:0;
-left:0;
-right:0;
+    position:fixed !important;
+    top:0 !important;
+    left:0 !important;
+    right:0 !important;
+    z-index:99999 !important;
 width:100%;
 max-width:768px;
 margin:0 auto;
@@ -108,7 +109,6 @@ transition:
 transform .35s ease,
 opacity .35s ease,
 background .35s ease;
-z-index:1000;
 }
 
 .header.hide-menu .menu-btn{
