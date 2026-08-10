@@ -81,25 +81,6 @@
 
 
 /* =========================================================
-   SORT + ARTIST ROW
-========================================================= */
-
-.vote-filter-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    gap: 24px;
-
-    position: relative;
-
-    padding: 13px 0 14px;
-
-    background: var(--bg-gradient);
-}
-
-
-/* =========================================================
    SORT / ARTIST BUTTON
 ========================================================= */
 
@@ -137,19 +118,16 @@
 }
 
 /* =========================
-   SORT
+   SORT + ARTIST ROW
 ========================= */
 
-/* =========================
-   SORT + ARTIST
-========================= */
+.vote-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
 
-.vote-filter-row{
-    display:flex;
-    align-items:center;
-    justify-content:flex-start;
-    gap:24px;
-    margin-bottom:16px;
+    margin-bottom: 16px;
 }
 
 
