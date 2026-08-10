@@ -37,7 +37,7 @@
     width:100%;
     min-height:50px;
     padding:0 0 0 16px;
-    background:var(--bg-gradient1);
+    background:#111;
     border-bottom:1px solid rgba(0,0,0,.08);
 }
 
