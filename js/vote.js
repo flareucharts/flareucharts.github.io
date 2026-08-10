@@ -604,35 +604,100 @@ statusFilters.forEach(button => {
    ARTIST FILTER
 ========================= */
 
-const artistFilters =
-    document.querySelectorAll(
-        ".artist-pill"
-    );
+/* =========================
+   ARTIST DROPDOWN
+========================= */
 
-artistFilters.forEach(button => {
+const artistBtn =
+    document.querySelector(".artist-btn");
 
-    button.addEventListener(
+const artistDropdown =
+    document.querySelector(".artist-dropdown");
+
+const artistOptions =
+    document.querySelectorAll(".artist-option");
+
+
+if (artistBtn && artistDropdown) {
+
+    artistBtn.addEventListener(
         "click",
-        () => {
+        (e) => {
 
-            artistFilters.forEach(btn =>
-                btn.classList.remove("active")
-            );
+            e.stopPropagation();
 
-            button.classList.add("active");
+            /* tutup sort */
+            if (dropdown) {
+                dropdown.classList.remove("active");
+            }
 
-            currentArtist =
-                button.textContent
-                    .trim()
-                    .toLowerCase();
-
-            filterVotes();
+            /* buka/tutup artist */
+            artistDropdown.classList.toggle("active");
 
         }
     );
 
-});
 
+    /* klik pilihan artist */
+
+    artistOptions.forEach(option => {
+
+        option.addEventListener(
+            "click",
+            () => {
+
+                artistOptions.forEach(item =>
+                    item.classList.remove("active")
+                );
+
+                option.classList.add("active");
+
+
+                /* ambil data artist */
+
+                currentArtist =
+                    option.dataset.artist
+                        .trim()
+                        .toLowerCase();
+
+
+                /* ubah tulisan button */
+
+                artistBtn.childNodes[0].textContent =
+                    option.textContent.trim() + " ";
+
+
+                /* tutup dropdown */
+
+                artistDropdown.classList.remove(
+                    "active"
+                );
+
+
+                /* render ulang */
+
+                filterVotes();
+
+            }
+        );
+
+    });
+
+
+    /* klik luar dropdown */
+
+    document.addEventListener(
+        "click",
+        () => {
+
+            artistDropdown.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+}
 
 
 
@@ -657,17 +722,21 @@ if (sortBtn && dropdown) {
 
 
     sortBtn.addEventListener(
-        "click",
-        (e) => {
+    "click",
+    (e) => {
 
-            e.stopPropagation();
+        e.stopPropagation();
 
-            dropdown.classList.toggle(
-                "active"
-            );
-
+        /* tutup artist */
+        if (artistDropdown) {
+            artistDropdown.classList.remove("active");
         }
-    );
+
+        /* buka/tutup sort */
+        dropdown.classList.toggle("active");
+
+    }
+);
 
 
     document.addEventListener(
