@@ -2,6 +2,13 @@
    VOTE PAGE
 ========================= */
 
+.vote-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-gradient);
+}
+
 .vote-title{
     margin-bottom:24px;
 }
@@ -13,108 +20,138 @@
     margin-bottom:4px;
 }
 
-.vote-title p{
-    font-size:14px;
-    color:#8b8b8b;
+/* =========================
+   STATUS TABS
+========================= */
+
+.vote-status-filter {
+    display: flex;
+    width: 100%;
+
+    background: var(--bg-gradient);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.status-filter {
+    position: relative;
+
+    flex: 1;
+
+    border: none;
+    background: transparent;
+
+    padding: 12px 6px 13px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #888;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+.status-filter.active {
+    color: #111;
+}
+
+
+/* active underline */
+
+.status-filter.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+    bottom: -1px;
+
+    height: 3px;
+
+    background: #111;
+
+    border-radius: 3px 3px 0 0;
+}
+
+
+/* =========================================================
+   SORT + ARTIST ROW
+========================================================= */
+
+.vote-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 24px;
+
+    position: relative;
+
+    padding: 13px 0 14px;
+
+    background: var(--bg-gradient);
+}
+
+
+/* =========================================================
+   SORT / ARTIST BUTTON
+========================================================= */
+
+.vote-sort,
+.artist-filter {
+    position: relative;
+}
+
+.sort-btn,
+.artist-btn {
+    display: flex;
+    align-items: center;
+
+    border: none;
+    background: transparent;
+
+    padding: 4px 0;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #222;
+
+    cursor: pointer;
+}
+
+.sort-btn span,
+.artist-btn span {
+    margin-left: 5px;
+
+    font-size: 9px;
+
+    transition: transform 0.2s ease;
 }
 
 /* =========================
-   STATUS FILTER
+   SORT
 ========================= */
-
-.vote-status-filter{
-    display:flex;
-    gap:10px;
-    margin-bottom:18px;
-}
-
-.status-filter{
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:10px 16px;
-
-    border:none;
-    border-radius:999px;
-
-    background:#f4f4f4;
-
-    font-size:14px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.25s;
-}
-
-.status-filter span{
-    width:22px;
-    height:22px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    font-size:12px;
-    font-weight:700;
-}
-
-.status-filter.active{
-    background:#111;
-    color:#fff;
-}
-
-.status-filter.active span{
-    color:#111;
-}
 
 /* =========================
-   ARTIST FILTER
+   SORT + ARTIST
 ========================= */
 
-.artist-filter{
+.vote-filter-row{
     display:flex;
-    gap:10px;
-
-    overflow-x:auto;
-    scrollbar-width:none;
-
-    margin-bottom:18px;
+    align-items:center;
+    justify-content:flex-start;
+    gap:24px;
+    margin-bottom:16px;
 }
 
-.artist-filter::-webkit-scrollbar{
-    display:none;
-}
-
-.artist-pill{
-    flex-shrink:0;
-
-    padding:9px 16px;
-
-    border:none;
-    border-radius:999px;
-
-    background:#f4f4f4;
-
-    font-size:13px;
-    font-weight:600;
-
-    white-space:nowrap;
-
-    cursor:pointer;
-
-    transition:.25s;
-}
-
-.artist-pill.active{
-    background:#111;
-    color:#fff;
-}
 
 /* =========================
    SORT
@@ -123,72 +160,122 @@
 .vote-sort{
     position:relative;
     display:flex;
-    justify-content:flex-end;
-    margin-bottom:16px;
-    z-index: 100;
+    justify-content:flex-start;
+    z-index:100;
 }
 
-.sort-btn{
+.sort-btn,
+.artist-btn{
     display:flex;
     align-items:center;
     gap:8px;
+
     padding:10px 14px;
+
     border:none;
     border-radius:14px;
+
     background:#f5f5f5;
+
+    font-family:inherit;
     font-size:14px;
     font-weight:600;
+
     cursor:pointer;
+
     transition:.25s;
 }
 
-.sort-btn:hover{
+.sort-btn:hover,
+.artist-btn:hover{
     background:#ededed;
 }
 
-.sort-dropdown{
+
+/* =========================
+   SORT DROPDOWN
+========================= */
+
+.sort-dropdown,
+.artist-dropdown{
     position:absolute;
+
     top:calc(100% + 8px);
-    right:0;
+    left:0;
+
     display:none;
+
     min-width:190px;
+
     padding:8px;
+
     border-radius:18px;
+
     background:rgba(255,255,255,.85);
+
     backdrop-filter:blur(30px);
     -webkit-backdrop-filter:blur(30px);
+
     border:1px solid rgba(255,255,255,.5);
+
     box-shadow:
         0 12px 30px rgba(0,0,0,.12),
         inset 0 1px rgba(255,255,255,.4);
+
     z-index:9999;
 }
 
-.sort-dropdown.active{
+
+/* OPEN */
+
+.sort-dropdown.active,
+.artist-dropdown.active{
     display:block;
 }
 
-.sort-option{
+
+/* =========================
+   OPTIONS
+========================= */
+
+.sort-option,
+.artist-option{
     display:flex;
     align-items:center;
+
     padding:12px 14px;
+
     margin:2px 0;
+
     border-radius:10px;
+
     color:#555;
+
     font-size:14px;
     font-weight:500;
+
     cursor:pointer;
+
     transition:.2s;
 }
 
-.sort-option:hover{
+.sort-option:hover,
+.artist-option:hover{
     background:rgba(0,0,0,.05);
 }
 
-.sort-option.active{
+.sort-option.active,
+.artist-option.active{
     background:rgba(0,0,0,.06);
+
     color:#111;
+
     font-weight:600;
+}
+
+.artist-filter{
+    position:relative;
+    z-index:100;
 }
 
 /* =========================
