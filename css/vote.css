@@ -5,27 +5,8 @@
     overflow:visible !important;
 }
 
-.page-vote{
-position:sticky;
-min-height:auto;
-flex-direction:column;
-justify-content:flex-start;
-padding-top:14px;
-padding-left:16px;
-padding-right:16px;
-top:0 !important;
-left:0 !important;
-right:0 !important;
-z-index:1000!important;
-width:100%;
-max-width:768px;
-margin:0 auto;
-height:50px;
-display:flex;
-align-items:center;
-background:var(--bg-gradient1);
-backdrop-filter:none;
-
+#vote .global-content{
+    overflow:visible;
 }
 
 #vote .vote-title{
