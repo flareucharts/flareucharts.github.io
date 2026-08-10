@@ -5,10 +5,14 @@
     overflow:visible !important;
 }
 
-#vote .global-content{
-    overflow:visible !important;
-    margin-top:0;
-    padding-top:0;
+#vote .page{
+position:relative;
+z-index:5;
+min-height:auto;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+padding:var(--padding);
 }
 
 #vote .vote-title{
