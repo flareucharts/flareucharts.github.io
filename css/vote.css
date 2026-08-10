@@ -1,82 +1,72 @@
+#vote .global-content {
+    position: relative;
+    z-index: 5;
+    overflow: visible;
+}
+
 /* =========================
-   VOTE PAGE
+   VOTE STICKY HEADER
 ========================= */
 
-#vote {
-    overflow: visible;
+#vote .vote-sticky {
+    position: sticky;
+    top: 60px;
+    z-index: 500;
+    background: var(--bg-gradient);
 }
 
-#vote .global-content {
-    overflow: visible;
+
+/* =========================
+   VOTE TITLE
+========================= */
+
+#vote .vote-title {
+    margin-bottom: 16px;
 }
 
-.vote-title{
-    margin-bottom:24px;
-}
-
-.vote-title h2{
-    font-size:var(--title);
-    font-weight:700;
-    color:#fff;
-    margin-bottom:4px;
+#vote .vote-title h2 {
+    font-size: var(--title);
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
 }
 
 /* =========================
    STATUS TABS
 ========================= */
 
-.vote-status-filter {
+#vote .vote-status-filter {
     display: flex;
     width: 100%;
-
     background: var(--bg-gradient);
-
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.status-filter {
+#vote .status-filter {
     position: relative;
-
     flex: 1;
-
     border: none;
     background: transparent;
-
     padding: 12px 6px 13px;
-
     font-family: inherit;
     font-size: 14px;
     font-weight: 600;
-
-    color: #888;
-
+    color: rgba(255,255,255,.65);
     cursor: pointer;
-
-    transition:
-        color 0.2s ease,
-        background 0.2s ease;
 }
 
-.status-filter.active {
-    color: #111;
+#vote .status-filter.active {
+    color: #fff;
 }
 
-
-/* active underline */
-
-.status-filter.active::after {
+#vote .status-filter.active::after {
     content: "";
-
     position: absolute;
-
     left: 18%;
     right: 18%;
     bottom: -1px;
-
     height: 3px;
-
-    background: #111;
-
+    background: #fff;
     border-radius: 3px 3px 0 0;
 }
 
