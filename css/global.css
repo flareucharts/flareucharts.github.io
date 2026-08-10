@@ -80,7 +80,7 @@ width:100%;
 max-width:768px;
 min-height:100dvh;
 margin-inline:auto;
-overflow-x:hidden;
+overflow-x:clip;
 overflow-y:visible;
 }
 
