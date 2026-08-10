@@ -9,10 +9,10 @@
 ========================= */
 
 #vote .vote-sticky {
-    position: sticky;
-    top: 60px;
+    pposition: sticky;
+    top: 0; /* mengikuti tinggi header */
     z-index: 500;
-    background: var(--bg-gradient);
+    background: var(--bg-gradient1);
 }
 
 
