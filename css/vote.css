@@ -78,13 +78,6 @@
    STATUS TABS
 ========================= */
 
-#vote .vote-status-filter {
-    display: flex;
-    width: 100%;
-    background: var(--bg-gradient);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
 #vote .status-filter {
     position: relative;
     flex: 1;
