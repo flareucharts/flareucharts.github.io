@@ -9,8 +9,12 @@
     overflow:visible !important;
 }
 
-#vote .vote-title{
+##vote .vote-title{
     margin:0;
+    height:64px;
+
+    display:flex;
+    align-items:center;
 }
 
 #vote .vote-title h2{
@@ -25,10 +29,9 @@
 ========================= */
 
 #vote .vote-status-filter{
-    position:sticky;
-    top:0;
-    z-index:500;
     display:flex;
+    align-items:center;
+    height:64px;
     width:100%;
     background:var(--bg-gradient1);
     border-bottom:1px solid rgba(0,0,0,.08);
@@ -43,7 +46,7 @@
     position:relative;
     flex:1;
     border:none;
-    background:var(--bg-gradient1);
+    background:transparent;
     top:0;
     z-index:500;
     padding:12px 6px 13px;
