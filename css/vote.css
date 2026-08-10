@@ -63,18 +63,12 @@
 
 #vote .status-filter.active::after{
     content:"";
-
     position:absolute;
-
     left:18%;
     right:18%;
-
     bottom:-1px;
-
     height:3px;
-
     background:#fff;
-
     border-radius:3px 3px 0 0;
 }
 
@@ -159,7 +153,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 18px;
+    gap: 10px;
     margin-top:10px;
     margin-bottom: 16px;
 }
