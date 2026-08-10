@@ -9,10 +9,10 @@
 position:relative;
 z-index:5;
 min-height:auto;
-display:flex;
+display:block;
 flex-direction:column;
 justify-content:flex-start;
-padding:var(--padding);
+padding:var(--page-padding);
 }
 
 #vote .vote-title{
@@ -44,6 +44,8 @@ padding:var(--padding);
     border-bottom:1px solid rgba(0,0,0,.08);
     margin-left:-16px;
     margin-right:-16px;
+    margin-left:16px;
+    margin-right:16px;
 }
 
 
