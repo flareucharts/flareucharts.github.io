@@ -1,10 +1,16 @@
 /* =========================
    VOTE TITLE
 ========================= */
+#vote{
+    overflow:visible !important;
+}
+
+#vote .global-content{
+    overflow:visible !important;
+}
 
 #vote .vote-title{
     margin:0;
-    padding:16px 0 18px;
 }
 
 #vote .vote-title h2{
@@ -37,21 +43,18 @@
 ========================= */
 
 #vote .status-filter{
-    position:relative;
-
+    position:sticky;
+    position:-webkit-sticky;
     flex:1;
-
     border:none;
     background:transparent;
-
+    top:0;
+    z-index:500;
     padding:12px 6px 13px;
-
     font-family:inherit;
     font-size:14px;
     font-weight:600;
-
     color:rgba(255,255,255,.65);
-
     cursor:pointer;
 }
 
@@ -130,7 +133,7 @@
     display: flex;
     align-items: center;
     border: none;
-    padding: 2px 0;
+    padding: 8px 12px;
     font-family: inherit;
     font-size: 12px;
     font-weight: 600;
