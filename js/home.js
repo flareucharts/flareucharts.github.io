@@ -89,41 +89,56 @@ document.getElementById("upsche-count").textContent =
 
 if(upcoming.length > 1){
 
-    const firstSlide = track.children[0].cloneNode(true);
+    const firstSlide =
+        track.children[0].cloneNode(true);
+
     track.appendChild(firstSlide);
 
     let currentSlide = 0;
 
-    setInterval(()=>{
+    setInterval(() => {
 
         currentSlide++;
 
         track.scrollTo({
             left: track.clientWidth * currentSlide,
-            behavior:"smooth"
+            behavior: "smooth"
         });
 
+        /* =========================
+           UPDATE INDICATOR
+        ========================= */
 
-        if(currentSlide === upcoming.length){
+        const displaySlide =
+            currentSlide >= upcoming.length
+                ? 0
+                : currentSlide;
 
-            setTimeout(()=>{
+        document.getElementById("upsche-count").textContent =
+            `${displaySlide + 1} / ${upcoming.length}`;
+
+
+        /* =========================
+           RESET LOOP
+        ========================= */
+
+        if(currentSlide >= upcoming.length){
+
+            setTimeout(() => {
 
                 track.style.scrollBehavior = "auto";
+
                 track.scrollLeft = 0;
-                track.style.scrollBehavior = "smooth";
 
                 currentSlide = 0;
 
-            },600);
+                track.style.scrollBehavior = "smooth";
+
+            }, 600);
 
         }
 
-
-        document.getElementById("upsche-count").textContent =
-        `${currentSlide + 1 > upcoming.length ? 1 : currentSlide + 1} / ${upcoming.length}`;
-
-
-    },5000);
+    }, 5000);
 }
 
 }
