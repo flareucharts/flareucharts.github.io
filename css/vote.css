@@ -435,3 +435,15 @@
         grid:none;
     }
 }
+
+.vote-empty{
+    width:100%;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:14px;
+    font-weight:500;
+    color:#999;
+}
