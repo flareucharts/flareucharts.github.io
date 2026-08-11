@@ -1,24 +1,119 @@
-function loadPage() {
- 
-document.getElementById("schedule-content").innerHTML = `
-    <div class="schedule-loading">
-            <div class="loading-spinner"></div>
-            <span>Loading schedule...</span>
-        </div>
-`;
- fetch("https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec")
-    .then(res => res.json())
-    .then(data => {
-      console.log("DATA:", data);
-      if (!data.schedule) {
-        console.error("No schedule data!", data);
-        return;
-      }
-      renderSchedule(data.schedule);
-    })
-    .catch(err => {
-      console.error("Fetch error:", err);
-    });
+import {
+    ref,
+    get
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+import { db } from "./firebase.js";
+
+
+async function loadPage() {
+
+    const container =
+        document.getElementById("schedule-content");
+
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    if (container) {
+
+        container.innerHTML = `
+            <div class="schedule-loading">
+                <div class="loading-spinner"></div>
+                <span>Loading schedule...</span>
+            </div>
+        `;
+
+    }
+
+
+    try {
+
+        /* =========================
+           FIREBASE
+        ========================= */
+
+        const scheduleRef =
+            ref(db, "schedule");
+
+        const snapshot =
+            await get(scheduleRef);
+
+
+        /* =========================
+           NO DATA
+        ========================= */
+
+        if (!snapshot.exists()) {
+
+            console.warn(
+                "No schedule data found in Firebase."
+            );
+
+            if (container) {
+
+                container.innerHTML = `
+                    <div class="schedule-empty">
+                        No schedule available
+                    </div>
+                `;
+
+            }
+
+            return;
+        }
+
+
+        /* =========================
+           FIREBASE DATA
+        ========================= */
+
+        const firebaseData =
+            snapshot.val();
+
+
+        /* =========================
+           CONVERT OBJECT → ARRAY
+        ========================= */
+
+        const schedule =
+            Object.values(firebaseData);
+
+
+        console.log(
+            "FIREBASE SCHEDULE DATA:",
+            schedule
+        );
+
+
+        /* =========================
+           RENDER
+        ========================= */
+
+        renderSchedule(schedule);
+
+
+    } catch (error) {
+
+        console.error(
+            "Failed to load schedule from Firebase:",
+            error
+        );
+
+
+        if (container) {
+
+            container.innerHTML = `
+                <div class="schedule-error">
+                    Failed to load schedule.
+                </div>
+            `;
+
+        }
+
+    }
+
 }
 
 window.allSchedule = [];
