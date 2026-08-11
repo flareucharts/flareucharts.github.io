@@ -12,71 +12,84 @@
     position:sticky;
     top:0;
     z-index:1000;
+
     width:100%;
+
+    background:var(--bg-gradient1);
+}
+
+
+/* VOTE */
+
+.page.vote-page .vote-title{
     height:50px;
+
+    display:flex;
+    align-items:center;
+
+    padding:0 16px;
+}
+
+.page.vote-page .vote-title h2{
+    margin:0;
+
+    font-size:var(--title);
+    font-weight:700;
+
+    color:#fff;
+}
+
+
+/* STATUS TABS */
+
+.page.vote-page .vote-status-tabs{
+    height:50px;
+
+    display:flex;
+    align-items:stretch;
+}
+
+.page.vote-page .status-filter{
+    position:relative;
+
+    flex:1;
+    height:50px;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    background:var(--bg-gradieny1);
-    transition:
-    transform .35s ease,
-    opacity .35s ease,
-    background .35s ease;
-}
 
-#vote{
-    overflow:visible !important;
-}
+    padding:0;
 
-#vote .global-content{
-    overflow:visible;
-}
-
-#vote .vote-title{
-    margin:0;
-    display:flex;
-    align-items:center;
-}
-
-#vote .vote-title h2{
-    margin:0;
-    font-size:var(--title);
-    font-weight:700;
-    color:#fff;
-}
-
-/* =========================
-   STATUS BUTTON
-========================= */
-
-#vote .status-filter{
-    position:relative;
-    flex:1;
     border:none;
-    background:var(--bg-gradient1);
-    height:50px;
-    top:0;
-    align-items:center;
-    z-index:500;
-    padding:0 0 0 16px;
+    background:transparent;
+
     font-family:inherit;
     font-size:14px;
     font-weight:600;
+
     color:rgba(255,255,255,.65);
+
     cursor:pointer;
 }
 
-#vote .status-filter.active{
+.page.vote-page .status-filter.active{
     color:#fff;
 }
 
-#vote .status-filter.active::after{
+.page.vote-page .status-filter.active::after{
     content:"";
+
     position:absolute;
+
     left:18%;
     right:18%;
+    bottom:0;
+
     height:3px;
+
     background:#fff;
+
     border-radius:3px 3px 0 0;
 }
 
