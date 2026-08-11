@@ -209,6 +209,37 @@ function renderVote(votes) {
         return;
     }
 
+
+    /* =========================
+       NO VOTE
+    ========================= */
+
+    if (!votes || !votes.length) {
+
+        let message = "No vote";
+
+        if (currentStatus === "ongoing") {
+            message = "No ongoing vote";
+        }
+
+        else if (currentStatus === "upcoming") {
+            message = "No upcoming vote";
+        }
+
+        else if (currentStatus === "ended") {
+            message = "No ended vote";
+        }
+
+
+        container.innerHTML = `
+            <div class="vote-empty">
+                ${message}
+            </div>
+        `;
+
+        return;
+    }
+
     const cards =
         votes.map(vote => {
 
