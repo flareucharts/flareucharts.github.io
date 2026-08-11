@@ -6,6 +6,11 @@
   padding:0;
 }
 
+#vote .global-content{
+  margin-top:0 !important;
+  padding:0 16ox;
+}
+
 .page.vote-page{
     width:100%;
     max-width:768px;
@@ -27,7 +32,7 @@
 .page.vote-page .vote-title{
     display:flex;
     align-items:center;
-    padding:0;
+    padding:0 16px;
 }
 
 .page.vote-page .vote-title h2{
