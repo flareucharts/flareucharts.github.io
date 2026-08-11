@@ -12,10 +12,9 @@
     position:sticky;
     top:0;
     z-index:1000;
-
-    width:100%;
-
     background:var(--bg-gradient1);
+    width:calc(100% + 32px);
+    margin-left:-16px;
 }
 
 
@@ -43,6 +42,7 @@
     height:50px;
     display:flex;
     align-items:stretch;
+    margin-top:8px;
 }
 
 .page.vote-page .status-filter{
@@ -58,9 +58,7 @@
     font-family:inherit;
     font-size:14px;
     font-weight:600;
-
     color:rgba(255,255,255,.65);
-
     cursor:pointer;
 }
 
@@ -70,17 +68,12 @@
 
 .page.vote-page .status-filter.active::after{
     content:"";
-
     position:absolute;
-
     left:18%;
     right:18%;
     bottom:0;
-
     height:3px;
-
     background:#fff;
-
     border-radius:3px 3px 0 0;
 }
 
