@@ -133,6 +133,7 @@ function getDominantColor(imageSrc) {
     });
 }
 
+window.getDominantColor = getDominantColor;
 
 let allVotes = [];
 let currentStatus = "ongoing";
