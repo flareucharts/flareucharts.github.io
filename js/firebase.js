@@ -1,6 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
+import {
+    ref,
+    onValue
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBwrV0E8MWsHMlG31Xe2az6M9rb5dCjilM",
     authDomain: "flareuglobal-31f46.firebaseapp.com",
@@ -17,3 +22,9 @@ const app = initializeApp(firebaseConfig);
 export const db = getDatabase(app);
 
 console.log("🔥 Firebase berhasil terhubung!");
+
+const testRef = ref(db, "test");
+
+onValue(testRef, (snapshot) => {
+    console.log("🔥 Data Firebase:", snapshot.val());
+});
