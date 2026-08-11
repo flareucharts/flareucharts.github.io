@@ -1,3 +1,10 @@
+import {
+    ref,
+    get
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+import { db } from "./firebase.js";
+
 const appLogos = {
     "Upick": "/images/apps/upick.webp",
     "Mnet Plus": "/images/apps/mnetplus.webp",
@@ -136,37 +143,48 @@ function formatVoteDate(dateValue) {
 
     if (!dateValue) return "";
 
+
+    const date =
+        new Date(dateValue);
+
+
+    if (isNaN(date.getTime())) {
+        return String(dateValue);
+    }
+
+
+    /* =========================
+       KST (UTC+9)
+    ========================= */
+
     const parts =
-        String(dateValue).trim().split(" ");
+        new Intl.DateTimeFormat(
+            "en-GB",
+            {
+                timeZone: "Asia/Seoul",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            }
+        ).formatToParts(date);
 
-    if (parts.length < 2) {
-        return String(dateValue);
-    }
 
-    const dateParts =
-        parts[0].split("/");
+    const get =
+        type =>
+            parts.find(
+                p => p.type === type
+            )?.value || "";
 
-    if (dateParts.length !== 3) {
-        return String(dateValue);
-    }
 
-    const day =
-        dateParts[0].padStart(2, "0");
+    const year = get("year");
+    const month = get("month");
+    const day = get("day");
+    const hour = Number(get("hour"));
+    const minute = get("minute");
 
-    const month =
-        dateParts[1].padStart(2, "0");
-
-    const year =
-        dateParts[2];
-
-    const timeParts =
-        parts[1].split(":");
-
-    const hour =
-        Number(timeParts[0]);
-
-    const minute =
-        timeParts[1] || "00";
 
     return `${year}.${month}.${day} ${hour}:${minute}`;
 }
@@ -824,10 +842,10 @@ if (sortBtn && dropdown) {
 }
 
 /* =========================
-   LOAD VOTES
+   LOAD VOTES FROM FIREBASE
 ========================= */
 
-function loadVotes() {
+async function loadVotes() {
 
     const container =
         document.querySelector(".vote-list");
@@ -854,36 +872,130 @@ function loadVotes() {
     }
 
 
-    fetch(
-        "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec"
-    )
+    try {
 
-    .then(res => res.json())
+        const votesRef =
+            ref(db, "votes");
 
-    .then(data => {
+        const snapshot =
+            await get(votesRef);
 
-        console.log("VOTE DATA:", data);
 
-        if (!data.votes) {
+        if (!snapshot.exists()) {
+
+            console.warn(
+                "No vote data found in Firebase."
+            );
 
             if (container) {
+
                 container.innerHTML = `
                     <div class="vote-error">
                         No vote data found.
                     </div>
                 `;
+
             }
 
             return;
         }
 
 
+        const firebaseData =
+            snapshot.val();
+
+
+        /* =========================
+           CONVERT FIREBASE DATA
+        ========================= */
+
+        const votes =
+            Object.entries(firebaseData)
+                .map(([id, vote]) => {
+
+                    const startTimestamp =
+                        new Date(
+                            vote.startDate
+                        ).getTime();
+
+                    const endTimestamp =
+                        new Date(
+                            vote.endDate
+                        ).getTime();
+
+
+                    const now =
+                        Date.now();
+
+
+                    let status;
+
+
+                    if (now < startTimestamp) {
+
+                        status = "upcoming";
+
+                    }
+
+                    else if (now <= endTimestamp) {
+
+                        status = "ongoing";
+
+                    }
+
+                    else {
+
+                        status = "ended";
+
+                    }
+
+
+                    return {
+
+                        id,
+
+                        artist:
+                            vote.artist || "",
+
+                        app:
+                            vote.app || "",
+
+                        title:
+                            vote.voteTitle || "",
+
+                        startDate:
+                            vote.startDate || "",
+
+                        endDate:
+                            vote.endDate || "",
+
+                        startTimestamp,
+
+                        endTimestamp,
+
+                        link:
+                            vote.link || "",
+
+                        status
+
+                    };
+
+                });
+
+
+        console.log(
+            "FIREBASE VOTE DATA:",
+            votes
+        );
+
+
         /* =========================
            SAVE DATA
         ========================= */
 
-        allVotes = data.votes;
-        window.allVotes = data.votes;
+        allVotes = votes;
+
+        window.allVotes = votes;
 
 
         /* =========================
@@ -891,9 +1003,12 @@ function loadVotes() {
         ========================= */
 
         document.dispatchEvent(
-            new CustomEvent("votesLoaded", {
-                detail: data.votes
-            })
+            new CustomEvent(
+                "votesLoaded",
+                {
+                    detail: votes
+                }
+            )
         );
 
 
@@ -902,17 +1017,19 @@ function loadVotes() {
         ========================= */
 
         if (container) {
+
             filterVotes();
+
         }
 
-    })
 
-    .catch(error => {
+    } catch (error) {
 
         console.error(
-            "Failed to load votes:",
+            "Failed to load votes from Firebase:",
             error
         );
+
 
         if (container) {
 
@@ -924,7 +1041,8 @@ function loadVotes() {
 
         }
 
-    });
+    }
+
 }
 
 
