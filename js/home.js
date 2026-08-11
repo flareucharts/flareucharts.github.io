@@ -193,57 +193,82 @@ function renderUpcoming() {
 
 
     /* =========================
-       SLIDE
-    ========================= */
+   SLIDE
+========================= */
 
-    if (upcoming.length <= 1) {
-        return;
-    }
+/* =========================
+   SLIDE
+========================= */
 
+if (upcoming.length > 1) {
+
+    const firstSlide =
+        track.children[0].cloneNode(true);
+
+    track.appendChild(firstSlide);
+
+    let currentSlide = 0;
 
     upcomingScheduleTimer =
         setInterval(() => {
 
             currentSlide++;
 
-            if (
-                currentSlide >=
-                upcoming.length
-            ) {
+            track.scrollTo({
+                left:
+                    track.clientWidth *
+                    currentSlide,
+                behavior: "smooth"
+            });
 
-                currentSlide = 0;
+
+            /* =========================
+               UPDATE INDICATOR
+            ========================= */
+
+            if (counter) {
+
+                const displaySlide =
+                    currentSlide >= upcoming.length
+                        ? 0
+                        : currentSlide;
+
+                counter.textContent =
+                    `${displaySlide + 1} / ${upcoming.length}`;
 
             }
 
 
-            const slide =
-                track.children[
-                    currentSlide
-                ];
+            /* =========================
+               LOOP BACK
+            ========================= */
 
-            if (!slide) return;
+            if (
+                currentSlide ===
+                upcoming.length
+            ) {
 
+                setTimeout(() => {
 
-            track.scrollTo({
+                    track.style.scrollBehavior =
+                        "auto";
 
-                left:
-                    slide.offsetLeft,
+                    track.scrollLeft = 0;
 
-                behavior: "smooth"
+                    track.style.scrollBehavior =
+                        "smooth";
 
-            });
+                    currentSlide = 0;
 
-
-            if (counter) {
-
-                counter.textContent =
-                    `${currentSlide + 1} / ${upcoming.length}`;
+                }, 600);
 
             }
 
         }, 5000);
 
 }
+}
+
 
 /* =========================
    HOME — ONGOING VOTE
