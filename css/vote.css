@@ -13,15 +13,13 @@
     top:0;
     z-index:1000;
     background:var(--bg-gradient1);
-    width:calc(100% + 32px);
-    margin-left:-16px;
+    width:100%;
 }
 
 
 /* VOTE */
 
 .page.vote-page .vote-title{
-    height:50px;
     display:flex;
     align-items:center;
     padding:0;
