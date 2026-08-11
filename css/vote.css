@@ -23,20 +23,17 @@
 
 .page.vote-page .vote-title{
     height:50px;
-
     display:flex;
     align-items:center;
-
-    padding:0 16px;
+    padding:0;
 }
 
 .page.vote-page .vote-title h2{
     margin:0;
-
     font-size:var(--title);
     font-weight:700;
-
     color:#fff;
+    padding:0;
 }
 
 
@@ -44,26 +41,20 @@
 
 .page.vote-page .vote-status-tabs{
     height:50px;
-
     display:flex;
     align-items:stretch;
 }
 
 .page.vote-page .status-filter{
     position:relative;
-
     flex:1;
     height:50px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     padding:0;
-
     border:none;
     background:transparent;
-
     font-family:inherit;
     font-size:14px;
     font-weight:600;
