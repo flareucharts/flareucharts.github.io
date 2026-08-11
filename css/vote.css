@@ -410,6 +410,9 @@
         gap:18px;
     }
 
+    .vote-loading{
+        grid:none;
+    }
 }
 
 /* =========================
@@ -426,5 +429,9 @@
     .vote-list{
         grid-template-columns:repeat(2, 1fr);
         gap:20px;
+    }
+    
+    .vote-loading{
+        grid:none;
     }
 }
