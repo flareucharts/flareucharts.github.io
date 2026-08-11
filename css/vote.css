@@ -248,7 +248,6 @@
     gap:14px;
     color:#6b7280;
     font-weight:600;
-    grid:none;
 }
 
 .loading-spinner{
@@ -258,7 +257,6 @@
     border-top-color:#91d3ca;
     border-radius:50%;
     animation:spin .8s linear infinite;
-    grid:none;
 }
 
 @keyframes spin{
@@ -411,10 +409,6 @@
         grid-template-columns:repeat(2, 1fr);
         gap:18px;
     }
-
-    .vote-loading{
-        grid:none;
-    }
 }
 
 /* =========================
@@ -445,5 +439,10 @@
     font-size:14px;
     font-weight:500;
     color:#999;
-    grid:none;
+}
+
+.vote-loading,
+.loading-spinner,
+.vote-empty{
+    grid-column:1 / -1;
 }
