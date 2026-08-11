@@ -22,127 +22,228 @@ top3.forEach(album => {
 // UPCOMING SCHEDULE
 // =========================
 
-document.addEventListener("scheduleLoaded", renderUpcoming);
+document.addEventListener(
+    "scheduleLoaded",
+    renderUpcoming
+);
+
+let upcomingScheduleTimer = null;
 
 function renderUpcoming() {
 
-  if (!window.allSchedule.length) return;
+    if (!Array.isArray(window.allSchedule)) return;
 
-const loading = document.querySelector(".upsche-loading");
-if (loading) {
-    loading.remove(); // atau loading.style.display = "none";
-}
+    const loading =
+        document.querySelector(".upsche-loading");
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+    const track =
+        document.querySelector(".upsche-track");
 
-  const upcoming = window.allSchedule
-    .filter(item => {
-      const d = new Date(item.date);
-      d.setHours(0, 0, 0, 0);
-      return d >= today;
-    })
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+    const counter =
+        document.getElementById("upsche-count");
 
-  if (!upcoming.length) return;
-
-const track = document.querySelector(".upsche-track");
-
-if (!track) return;
-
-track.innerHTML = upcoming.map(item => {
-
-    const date = new Date(item.date);
-
-    return `
-    <div class="upsche-slider">
-
-        <div class="upsche-date">
-            <span class="upsche-day">${date.getDate()}</span>
-
-            <span class="upsche-month">
-            ${date.toLocaleString("en-US",{
-                month:"short"
-            }).toUpperCase()}
-            </span>
-
-            <span class="upsche-dot">•</span>
-
-            <span class="upsche-time">
-            ${item.time}${item.tz ? ` ${item.tz}` : ""}
-            </span>
-        </div>
-
-        <div class="upsche-title">
-            ${item.cat} ${item.title}
-        </div>
-
-    </div>
-    `;
-
-}).join("");
+    if (!track) return;
 
 
-document.getElementById("upsche-count").textContent =
-`1 / ${upcoming.length}`;
+    /* =========================
+       CLEAR OLD TIMER
+    ========================= */
+
+    if (upcomingScheduleTimer) {
+
+        clearInterval(
+            upcomingScheduleTimer
+        );
+
+        upcomingScheduleTimer = null;
+
+    }
 
 
-if(upcoming.length > 1){
+    /* =========================
+       REMOVE LOADING
+    ========================= */
 
-    const firstSlide =
-        track.children[0].cloneNode(true);
+    if (loading) {
+        loading.remove();
+    }
 
-    track.appendChild(firstSlide);
+
+    /* =========================
+       GET UPCOMING
+    ========================= */
+
+    const today = new Date();
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    const upcoming =
+        window.allSchedule
+            .filter(item => {
+
+                const d =
+                    new Date(item.date);
+
+                d.setHours(
+                    0,
+                    0,
+                    0,
+                    0
+                );
+
+                return d >= today;
+
+            })
+            .sort(
+                (a, b) =>
+                    new Date(a.date) -
+                    new Date(b.date)
+            );
+
+
+    /* =========================
+       NO UPCOMING
+    ========================= */
+
+    if (!upcoming.length) {
+
+        track.innerHTML = "";
+
+        if (counter) {
+            counter.textContent = "";
+        }
+
+        return;
+
+    }
+
+
+    /* =========================
+       RENDER
+    ========================= */
+
+    track.innerHTML =
+        upcoming.map(item => {
+
+            const date =
+                new Date(item.date);
+
+            return `
+                <div class="upsche-slider">
+
+                    <div class="upsche-date">
+
+                        <span class="upsche-day">
+                            ${date.getDate()}
+                        </span>
+
+                        <span class="upsche-month">
+                            ${date
+                                .toLocaleString(
+                                    "en-US",
+                                    {
+                                        month: "short"
+                                    }
+                                )
+                                .toUpperCase()}
+                        </span>
+
+                        <span class="upsche-dot">
+                            •
+                        </span>
+
+                        <span class="upsche-time">
+                            ${item.time || ""}
+                            ${item.tz
+                                ? ` ${item.tz}`
+                                : ""}
+                        </span>
+
+                    </div>
+
+                    <div class="upsche-title">
+                        ${item.cat || ""}
+                        ${item.title || ""}
+                    </div>
+
+                </div>
+            `;
+
+        }).join("");
+
+
+    /* =========================
+       INITIAL COUNTER
+    ========================= */
 
     let currentSlide = 0;
 
-    setInterval(() => {
+    if (counter) {
 
-        currentSlide++;
+        counter.textContent =
+            `1 / ${upcoming.length}`;
 
-        track.scrollTo({
-            left: track.clientWidth * currentSlide,
-            behavior: "smooth"
-        });
-
-        /* =========================
-           UPDATE INDICATOR
-        ========================= */
-
-        const displaySlide =
-            currentSlide >= upcoming.length
-                ? 0
-                : currentSlide;
-
-        document.getElementById("upsche-count").textContent =
-            `${displaySlide + 1} / ${upcoming.length}`;
+    }
 
 
-        /* =========================
-           RESET LOOP
-        ========================= */
+    /* =========================
+       SLIDE
+    ========================= */
 
-        if(currentSlide >= upcoming.length){
+    if (upcoming.length <= 1) {
+        return;
+    }
 
-            setTimeout(() => {
 
-                track.style.scrollBehavior = "auto";
+    upcomingScheduleTimer =
+        setInterval(() => {
 
-                track.scrollLeft = 0;
+            currentSlide++;
+
+            if (
+                currentSlide >=
+                upcoming.length
+            ) {
 
                 currentSlide = 0;
 
-                track.style.scrollBehavior = "smooth";
+            }
 
-            }, 600);
 
-        }
+            const slide =
+                track.children[
+                    currentSlide
+                ];
 
-    }, 5000);
+            if (!slide) return;
+
+
+            track.scrollTo({
+
+                left:
+                    slide.offsetLeft,
+
+                behavior: "smooth"
+
+            });
+
+
+            if (counter) {
+
+                counter.textContent =
+                    `${currentSlide + 1} / ${upcoming.length}`;
+
+            }
+
+        }, 5000);
+
 }
-
-}
-
 
 /* =========================
    HOME — ONGOING VOTE
