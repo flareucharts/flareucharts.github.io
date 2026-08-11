@@ -39,6 +39,7 @@ function getAppLogo(appName) {
         : null;
 }
 
+window.getAppLogo = getAppLogo;
 
 /* =========================
    DOMINANT COLOR
