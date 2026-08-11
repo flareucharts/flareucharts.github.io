@@ -1,9 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-import { getDatabase } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
 import {
-    ref,
-    onValue
+    getDatabase
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
 const firebaseConfig = {
@@ -20,11 +18,3 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getDatabase(app);
-
-console.log("🔥 Firebase berhasil terhubung!");
-
-const testRef = ref(db, "test");
-
-onValue(testRef, (snapshot) => {
-    console.log("🔥 Data Firebase:", snapshot.val());
-});
