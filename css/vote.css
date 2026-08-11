@@ -40,7 +40,7 @@
     height:50px;
     display:flex;
     align-items:stretch;
-    margin-top:8px;
+    margin-top:0;
 }
 
 .page.vote-page .status-filter{
