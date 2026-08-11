@@ -352,21 +352,84 @@ font-size:clamp(10px,1.8vw,11px);
   
 <!-- ================= VOTE PAGE ================= -->
 <div class="page vote-page" id="vote">
- <section class="vote-sticky">
-    <div class="vote-title"> <!--2-->
-     <h2>VOTE</h2>
+  <section class="vote-sticky">
+    <div class="vote-title">
+      <h2>VOTE</h2>
     </div>
-  <button class="status-filter active" data-status="ongoing">
-    Ongoing
-  </button>
 
-  <button class="status-filter" data-status="upcoming">
-    Upcoming
-  </button>
+    <div class="vote-status-tabs">
+      <button class="status-filter active" data-status="ongoing">
+        Ongoing
+      </button>
 
-  <button class="status-filter" data-status="ended">
-    Ended
-  </button>
+      <button class="status-filter" data-status="upcoming">
+        Upcoming
+      </button>
+
+      <button class="status-filter" data-status="ended">
+        Ended
+      </button>
+
+    </div>
+  </section>
+
+  <div class="global-content">
+
+    <!-- Sort + Artist -->
+    <div class="vote-filter-row">
+
+      <div class="vote-sort">
+        <button class="sort-btn">
+          Sort by <span>▼</span>
+        </button>
+
+        <div class="sort-dropdown">
+          <div class="sort-option active" data-sort="ending">
+            Ending Soon
+          </div>
+          <div class="sort-option" data-sort="newest">
+            Newest
+          </div>
+          <div class="sort-option" data-sort="oldest">
+            Oldest
+          </div>
+          <div class="sort-option" data-sort="az">
+            A–Z
+          </div>
+        </div>
+      </div>
+
+      <div class="artist-filter">
+        <button class="artist-btn">
+          All <span>▼</span>
+        </button>
+
+        <div class="artist-dropdown">
+          <div class="artist-option active" data-artist="all">
+            All
+          </div>
+          <div class="artist-option" data-artist="FLARE U">
+            FLARE U
+          </div>
+          <div class="artist-option" data-artist="CHUEI LI YU">
+            CHUEI LI YU
+          </div>
+          <div class="artist-option" data-artist="KANG WOOJIN">
+            KANG WOOJIN
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <section class="vote-list">
+    </section>
+
+  </div>
+
+</div>
+
+<script src="./js/vote.js"></script>
 
  </section>
 
