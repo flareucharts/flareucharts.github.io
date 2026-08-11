@@ -5,6 +5,7 @@
     width:100%;
     max-width:768px;
     margin:0 auto;
+    padding-bottom:0;
 }
 
 .page.vote-page .vote-sticky{
@@ -16,13 +17,11 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    background:transparent;
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+    background:var(--bg-gradieny1);
     transition:
-        transform .35s ease,
-        opacity .35s ease,
-        background .35s ease;
+    transform .35s ease,
+    opacity .35s ease,
+    background .35s ease;
 }
 
 #vote{
@@ -75,42 +74,9 @@
     position:absolute;
     left:18%;
     right:18%;
-    bottom:-1px;
     height:3px;
     background:#fff;
     border-radius:3px 3px 0 0;
-}
-
-/* =========================
-   STATUS TABS
-========================= */
-
-#vote .status-filter {
-    position: relative;
-    flex: 1;
-    border: none;
-    background: transparent;
-    padding: 12px 6px 13px;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    color: rgba(255,255,255,.65);
-    cursor: pointer;
-}
-
-#vote .status-filter.active {
-    color: #fff;
-}
-
-#vote .status-filter.active::after {
-    content: "";
-    position: absolute;
-    left: 18%;
-    right: 18%;
-    bottom: -1px;
-    height: 3px;
-    background: #fff;
-    border-radius: 3px 3px 0 0;
 }
 
 /* =========================================================
