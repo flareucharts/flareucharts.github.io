@@ -1,6 +1,11 @@
 /* =========================
    VOTE TITLE
 ========================= */
+#vote{
+  margin-top:0 !important;
+  padding-top:0 16px;
+}
+
 .page.vote-page{
     width:100%;
     max-width:768px;
