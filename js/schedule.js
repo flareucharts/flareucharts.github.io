@@ -124,6 +124,12 @@ let groupedMonths = [];
 function renderSchedule(schedule){
   window.allSchedule = schedule;
 
+document.dispatchEvent(
+  new CustomEvent("scheduleLoaded", {
+    detail: schedule
+  })
+);
+
   const container =
     document.getElementById("schedule-content");
 
