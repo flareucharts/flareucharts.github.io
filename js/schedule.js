@@ -78,14 +78,21 @@ async function loadPage() {
         ========================= */
 
         const schedule =
-            Object.values(firebaseData);
+           const schedule =
+    Object.values(firebaseData);
 
+console.log(
+    "FIREBASE SCHEDULE DATA:",
+    schedule
+);
 
-        console.log(
-            "FIREBASE SCHEDULE DATA:",
-            schedule
-        );
+window.allSchedule = schedule;
 
+document.dispatchEvent(
+    new CustomEvent("scheduleLoaded", {
+        detail: schedule
+    })
+);
 
         /* =========================
            RENDER
