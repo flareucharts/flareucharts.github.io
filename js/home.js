@@ -279,7 +279,7 @@ function renderOngoingVote(votes) {
     ongoingVotes.forEach((vote, index) => {
 
         const logo =
-            getAppLogo(vote.app);
+    window.getAppLogo(vote.app);
 
         if (!logo) return;
 
@@ -291,7 +291,7 @@ function renderOngoingVote(votes) {
         if (!card) return;
 
 
-        getDominantColor(logo)
+        window.getDominantColor(logo)
             .then(color => {
 
                 card.style.setProperty(
