@@ -493,4 +493,12 @@ window.addEventListener("scroll", function(){
 });
 
 
+
+window.prevMonth = prevMonth;
+window.nextMonth = nextMonth;
+window.showEvent = showEvent;
+window.toggleEvents = toggleEvents;
+window.showDownloadHint = showDownloadHint;
+window.hideDownloadHint = hideDownloadHint;
+
 loadPage();
