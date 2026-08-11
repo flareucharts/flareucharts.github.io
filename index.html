@@ -351,11 +351,11 @@ font-size:clamp(10px,1.8vw,11px);
 </div>
   
 <!-- ================= VOTE PAGE ================= -->
-<div class="page vote-page" id="vote"> <!--1-->
-<section class="vote-sticky">
-<div class="vote-title"> <!--2-->
-  <h2>VOTE</h2>
-
+<div class="page vote-page" id="vote">
+ <section class="vote-sticky">
+    <div class="vote-title"> <!--2-->
+     <h2>VOTE</h2>
+    </div>
   <button class="status-filter active" data-status="ongoing">
     Ongoing
   </button>
@@ -367,37 +367,36 @@ font-size:clamp(10px,1.8vw,11px);
   <button class="status-filter" data-status="ended">
     Ended
   </button>
-</section>
-</div>
 
-<div class="global-content"> <!--3-->
+ </section>
+
+<div class="global-content">
 
 <!-- Sort + Artist -->
-<div class="vote-filter-row">
+ <div class="vote-filter-row">
 
   <!-- SORT -->
   <div class="vote-sort">
-    <button class="sort-btn">
-      Sort by <span>▼</span>
+    <button class="sort-btn"> Sort by <span>▼</span>
     </button>
 
     <div class="sort-dropdown">
+
       <div class="sort-option active" data-sort="ending">
         Ending Soon
       </div>
-
       <div class="sort-option" data-sort="newest">
         Newest
       </div>
-
       <div class="sort-option" data-sort="oldest">
         Oldest
       </div>
-
       <div class="sort-option" data-sort="az">
         A–Z
       </div>
+
     </div>
+
   </div>
 
   <!-- ARTIST -->
@@ -408,35 +407,32 @@ font-size:clamp(10px,1.8vw,11px);
     </button>
 
     <div class="artist-dropdown">
-      <div class="artist-option active" data-artist="all">
-        All
-      </div>
+     <div class="artist-option active" data-artist="all">
+      All
+     </div>
 
-      <div class="artist-option" data-artist="FLARE U">
-        FLARE U
-      </div>
+     <div class="artist-option" data-artist="FLARE U">
+      FLARE U
+     </div>
 
-      <div class="artist-option" data-artist="CHUEI LI YU">
-        CHUEI LI YU
-      </div>
+     <div class="artist-option" data-artist="CHUEI LI YU">
+      CHUEI LI YU
+     </div>
 
-      <div class="artist-option" data-artist="KANG WOOJIN">
-        KANG WOOJIN
-      </div>
+     <div class="artist-option" data-artist="KANG WOOJIN">
+      KANG WOOJIN
+     </div>
     </div>
 
   </div>
 
-</div>
+<!-- Vote List -->
+  <section class="vote-list">
+  </section>
 
-
-    <!-- Vote List -->
-    <section class="vote-list">
-
-    </section>
 <script src="./js/vote.js"></script>
   </div>
-</div>
+</div
 
   
 <div class="page" id="schedule">
