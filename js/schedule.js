@@ -78,7 +78,6 @@ async function loadPage() {
         ========================= */
 
         const schedule =
-           const schedule =
     Object.values(firebaseData);
 
 console.log(
