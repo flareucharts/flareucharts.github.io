@@ -4,8 +4,8 @@
 }
 
 #guide .global-content{
-  margin-top:0 !important;
-  padding-top:0 !important;
+  margin:0 !important;
+  padding:0 16px!important;
 }
 
 .page.guide-page{
