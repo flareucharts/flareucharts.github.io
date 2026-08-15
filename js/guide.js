@@ -504,4 +504,134 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${images.map((src, index) => `
 
                             <img
-                                class="guide
+                                class="guide-image"
+                                src="${src}"
+                                alt="${escapeHTML(
+                                    selected
+                                )} Guide ${index + 1}"
+                                loading="${
+                                    index === 0
+                                        ? "eager"
+                                        : "lazy"
+                                }"
+                                onerror="
+                                    this.outerHTML =
+                                    '<div class=&quot;guide-image-fallback&quot;>Image ${index + 1}<br>not found</div>'
+                                "
+                            >
+
+                        `).join("")}
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        `;
+
+
+        /* =================================================
+           IMAGE COUNTER
+        ================================================= */
+
+        const track =
+            feed.querySelector(
+                ".guide-image-track"
+            );
+
+        const counter =
+            feed.querySelector(
+                ".guide-image-counter"
+            );
+
+
+        if (track && counter){
+
+            track.addEventListener(
+                "scroll",
+                () => {
+
+                    const width =
+                        track.clientWidth;
+
+                    if (!width) return;
+
+
+                    const index =
+                        Math.round(
+                            track.scrollLeft / width
+                        );
+
+
+                    counter.textContent =
+                        `${Math.min(
+                            index + 1,
+                            images.length
+                        )}/${images.length}`;
+
+                },
+                { passive:true }
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SELECT CATEGORY
+    ===================================================== */
+
+    function selectCategory(category){
+
+        if (!GUIDE_DATA[category]){
+            return;
+        }
+
+
+        currentCategory =
+            category;
+
+        currentPill =
+            0;
+
+
+        closeDropdown();
+
+        updateMainTabs();
+
+        renderPills();
+
+        renderFeed();
+
+    }
+
+
+    /* =====================================================
+       MAIN TAB CLICK
+    ===================================================== */
+
+    mainTabs.forEach(tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                selectCategory(
+                    tab.dataset.category
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       INITIAL
+    ===================================================== */
+
+    selectCategory("music-show");
+
+});
