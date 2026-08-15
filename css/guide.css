@@ -31,7 +31,7 @@
 .page.guide-page .guide-title{
     display:flex;
     align-items:center;
-    padding:16px 16px 0 16px;
+    padding:14px 16px 0 16px;
 }
 
 .page.guide-page h2{
@@ -64,16 +64,11 @@
 #guide .guide-main-tabs{
     display:flex;
     align-items:center;
-
     width:100%;
-
     overflow-x:auto;
     scrollbar-width:none;
-
     gap:8px;
-
-    padding:0 16px;
-
+    padding:10px 16px;
     border-top:1px solid #e5e5e5;
     border-bottom:1px solid #e5e5e5;
 }
@@ -81,7 +76,6 @@
 #guide .guide-main-tabs::-webkit-scrollbar{
     display:none;
 }
-
 
 #guide .guide-main-tab{
     position:relative;
@@ -92,7 +86,7 @@
     border-radius:0;
     font-family:inherit;
     font-size:11px;
-    font-weight:600;
+    font-weight:700;
     color:#777;
     cursor:pointer;
     white-space:nowrap;
@@ -151,11 +145,8 @@
     overflow-x:auto;
     overflow-y:hidden;
     scrollbar-width:none;
-
     gap:8px;
-
     padding:10px 58px 2px 16px;
-
     box-sizing:border-box;
 
     transition:
@@ -204,7 +195,7 @@
     font-size:11px;
     font-weight:500;
 
-    color:#777;
+    color:#111;
 
     cursor:pointer;
     white-space:nowrap;
