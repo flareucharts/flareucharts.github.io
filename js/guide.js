@@ -18,13 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
         [...guide.querySelectorAll(".guide-main-tab")];
 
     const pills =
-        document.getElementById("guide-pills");
+        guide.querySelector("#guide-pills");
 
     const dropdown =
-        document.getElementById("guide-pills-dropdown");
+        guide.querySelector("#guide-pills-dropdown");
 
     const feed =
-        document.getElementById("guide-feed");
+        guide.querySelector("#guide-feed");
+
+    const pillsWrap =
+        guide.querySelector(".guide-pills-wrap");
 
 
     /* =====================================================
@@ -168,6 +171,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       DROPDOWN
+    ===================================================== */
+
+    function closeDropdown(){
+
+        dropdownOpen = false;
+
+        if (pillsWrap){
+
+            pillsWrap.classList.remove("open");
+
+        }
+
+    }
+
+
+    function toggleDropdown(){
+
+        if (!pillsWrap) return;
+
+        dropdownOpen =
+            !dropdownOpen;
+
+        pillsWrap.classList.toggle(
+            "open",
+            dropdownOpen
+        );
+
+    }
+
+
+    if (dropdown){
+
+        dropdown.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                toggleDropdown();
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
        MAIN TABS
     ===================================================== */
 
@@ -186,57 +237,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-   DROPDOWN
-===================================================== */
-
-const pillsWrap =
-    guide.querySelector(".guide-pills-wrap");
-
-const dropdown =
-    document.getElementById("guide-pills-dropdown");
-
-
-let dropdownOpen = false;
-
-
-function closeDropdown(){
-
-    dropdownOpen = false;
-
-    pillsWrap.classList.remove("open");
-
-}
-
-
-function toggleDropdown(){
-
-    dropdownOpen =
-        !dropdownOpen;
-
-    pillsWrap.classList.toggle(
-        "open",
-        dropdownOpen
-    );
-
-}
-
-
-if (dropdown){
-
-    dropdown.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            toggleDropdown();
-
-        }
-    );
-
-}
-
-    /* =====================================================
        RENDER PILLS
     ===================================================== */
 
@@ -248,49 +248,57 @@ if (dropdown){
         pills.innerHTML = "";
 
         if (!data || !data.pills.length){
+
             return;
+
         }
 
 
-        data.pills.forEach((name, index) => {
+        data.pills.forEach(
+            (name, index) => {
 
-            const button =
-                document.createElement("button");
-
-            button.type =
-                "button";
-
-            button.className =
-                "guide-pill";
-
-            button.textContent =
-                name;
+                const button =
+                    document.createElement("button");
 
 
-            button.classList.toggle(
-                "active",
-                index === currentPill
-            );
+                button.type =
+                    "button";
 
 
-            button.addEventListener(
-                "click",
-                () => {
-
-                    currentPill =
-                        index;
-
-                    updatePills();
-
-                    renderFeed();
-
-                }
-            );
+                button.className =
+                    "guide-pill";
 
 
-            pills.appendChild(button);
+                button.textContent =
+                    name;
 
-        });
+
+                button.classList.toggle(
+                    "active",
+                    index === currentPill
+                );
+
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        currentPill =
+                            index;
+
+
+                        updatePills();
+
+                        renderFeed();
+
+                    }
+                );
+
+
+                pills.appendChild(button);
+
+            }
+        );
 
     }
 
@@ -302,14 +310,16 @@ if (dropdown){
     function updatePills(){
 
         [...pills.children]
-            .forEach((pill, index) => {
+            .forEach(
+                (pill, index) => {
 
-                pill.classList.toggle(
-                    "active",
-                    index === currentPill
-                );
+                    pill.classList.toggle(
+                        "active",
+                        index === currentPill
+                    );
 
-            });
+                }
+            );
 
     }
 
@@ -322,6 +332,7 @@ if (dropdown){
 
         const data =
             GUIDE_DATA[currentCategory];
+
 
         if (!data){
 
@@ -354,7 +365,8 @@ if (dropdown){
 
                         <h2>
                             ${escapeHTML(
-                                selected || currentCategory
+                                selected ||
+                                currentCategory
                             )}
                         </h2>
 
@@ -364,9 +376,11 @@ if (dropdown){
                     <div class="guide-empty">
 
                         Guide for
+
                         <strong>
                             ${escapeHTML(
-                                selected || currentCategory
+                                selected ||
+                                currentCategory
                             )}
                         </strong>
 
@@ -409,14 +423,17 @@ if (dropdown){
 
                     <div class="guide-image-track">
 
-                        ${images.map((src, index) => `
+                        ${images.map(
+                            (src, index) => `
 
                             <img
                                 class="guide-image"
                                 src="${src}"
                                 alt="${escapeHTML(
                                     selected
-                                )} Guide ${index + 1}"
+                                )} Guide ${
+                                    index + 1
+                                }"
                                 loading="${
                                     index === 0
                                         ? "eager"
@@ -424,7 +441,9 @@ if (dropdown){
                                 }"
                                 onerror="
                                     this.outerHTML =
-                                    '<div class=&quot;guide-image-fallback&quot;>Image ${index + 1}<br>not found</div>'
+                                    '<div class=&quot;guide-image-fallback&quot;>Image ${
+                                        index + 1
+                                    }<br>not found</div>'
                                 "
                             >
 
@@ -440,13 +459,14 @@ if (dropdown){
 
 
         /* =================================================
-           IMAGE COUNTER
+           IMAGE SWIPE + COUNTER
         ================================================= */
 
         const track =
             feed.querySelector(
                 ".guide-image-track"
             );
+
 
         const counter =
             feed.querySelector(
@@ -463,12 +483,14 @@ if (dropdown){
                     const width =
                         track.clientWidth;
 
+
                     if (!width) return;
 
 
                     const index =
                         Math.round(
-                            track.scrollLeft / width
+                            track.scrollLeft /
+                            width
                         );
 
 
@@ -479,7 +501,9 @@ if (dropdown){
                         )}/${images.length}`;
 
                 },
-                { passive:true }
+                {
+                    passive:true
+                }
             );
 
         }
@@ -494,12 +518,15 @@ if (dropdown){
     function selectCategory(category){
 
         if (!GUIDE_DATA[category]){
+
             return;
+
         }
 
 
         currentCategory =
             category;
+
 
         currentPill =
             0;
@@ -520,26 +547,30 @@ if (dropdown){
        MAIN TAB CLICK
     ===================================================== */
 
-    mainTabs.forEach(tab => {
+    mainTabs.forEach(
+        tab => {
 
-        tab.addEventListener(
-            "click",
-            () => {
+            tab.addEventListener(
+                "click",
+                () => {
 
-                selectCategory(
-                    tab.dataset.category
-                );
+                    selectCategory(
+                        tab.dataset.category
+                    );
 
-            }
-        );
+                }
+            );
 
-    });
+        }
+    );
 
 
     /* =====================================================
        INITIAL
     ===================================================== */
 
-    selectCategory("music-show");
+    selectCategory(
+        "music-show"
+    );
 
 });
