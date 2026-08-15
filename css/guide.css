@@ -63,12 +63,12 @@
 
 #guide .guide-main-tabs{
     display:flex;
-    align-items:center;
+    align-items:stretch;
     width:100%;
     overflow-x:auto;
     scrollbar-width:none;
     gap:8px;
-    padding:10px 16px;
+    padding:0 16px;
     border-top:1px solid #e5e5e5;
     border-bottom:1px solid #e5e5e5;
 }
@@ -82,7 +82,7 @@
     flex:0 0 auto;
     border:0;
     background:transparent;
-    padding:8px 14px 10px;
+    padding:10px 14px 10px;
     border-radius:0;
     font-family:inherit;
     font-size:11px;
