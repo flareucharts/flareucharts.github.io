@@ -234,7 +234,7 @@ if (upcoming.length > 1) {
                         : currentSlide;
 
                 counter.textContent =
-                    `${displaySlide + 1} / ${upcoming.length}`;
+                    `${displaySlide + 1}/${upcoming.length}`;
 
             }
 
@@ -337,7 +337,7 @@ function renderOngoingVote(votes) {
 
     if (indicator) {
         indicator.textContent =
-            `1 / ${ongoingVotes.length}`;
+            `1/${ongoingVotes.length}`;
     }
 
 
