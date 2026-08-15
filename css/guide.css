@@ -165,14 +165,10 @@
 ========================================================= */
 
 #guide .guide-pills-wrap.open .guide-pills{
-
     flex-wrap:wrap;
-
     overflow-x:hidden;
     overflow-y:visible;
-
     padding-right:16px;
-
     max-height:500px;
 }
 
