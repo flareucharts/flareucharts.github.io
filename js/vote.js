@@ -15,7 +15,7 @@ const appLogos = {
     "Higher": "/images/apps/higher.png",
     "LiNC": "/images/apps/linc.png",
     "Muniverse": "/images/apps/muniverse.png",
-    "BigC": "/images/apps/bigc.jpg",
+    "BigC": "/images/apps/bigc.png",
     "Podoal": "/images/apps/podoal.png",
     "Fandora": "/images/apps/fandora.png",
     "DuckAd": "/images/apps/duckad.png"
