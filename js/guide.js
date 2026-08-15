@@ -1,6 +1,7 @@
 /* =========================================================
    FLARE U GUIDE
 ========================================================= */
+console.log("GUIDE JS LOADED");
 
 document.addEventListener("DOMContentLoaded", () => {
 
