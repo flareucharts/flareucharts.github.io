@@ -41,637 +41,300 @@
     padding:0;
 }
 
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.guide-hero{
-    position:relative;
-    width:100%;
-    padding:38px 0 18px;
-    overflow:hidden;
-}
-
-.guide-carousel-wrap{
-    position:relative;
-    width:100%;
-    overflow:hidden;
-}
-
-.guide-carousel{
-    display:flex;
-    align-items:center;
-    gap:14px;
-
-    width:100%;
-
-    overflow:visible;
-
-    padding:18px 0 28px;
-
-    touch-action:pan-y;
-    user-select:none;
-    -webkit-user-select:none;
-}
-
-
-/* =========================================================
-   CATEGORY CARD
-========================================================= */
-
-.guide-category-card{
-    position:relative;
-
-    flex:0 0 72%;
-    height:340px;
-
-    border-radius:36px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    overflow:hidden;
-
-    cursor:pointer;
-
-    opacity:.42;
-    transform:scale(.78);
-
-    transition:
-        transform .35s ease,
-        opacity .35s ease,
-        box-shadow .35s ease;
-
-    scroll-snap-align:center;
-}
-
-.guide-category-card.is-active{
-    opacity:1;
-    transform:scale(1);
-
-    box-shadow:
-        0 22px 45px rgba(0,0,0,.12);
-
-    z-index:3;
-}
-
-.guide-category-card.is-side{
-    opacity:.38;
-}
-
-
-/* COLORS */
-
-.guide-category-card[data-category="music-show"]{
-    background:#91d3ca;
-    color:#fff;
-}
-
-.guide-category-card[data-category="vote"]{
-    background:#72b5d8;
-    color:#fff;
-}
-
-.guide-category-card[data-category="stream"]{
-    background:#fff0b0;
-    color:#67a9c9;
-}
-
-.guide-category-card[data-category="other"]{
-    background:#d8c7e9;
-    color:#fff;
-}
-
-
-/* subtle inner glow */
-
-.guide-category-card::after{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-        radial-gradient(
-            circle at 50% 25%,
-            rgba(255,255,255,.28),
-            transparent 48%
-        );
-
-    pointer-events:none;
-}
-
-.guide-category-content{
-    position:relative;
-    z-index:2;
-
-    text-align:center;
-    padding:20px;
-}
-
-.guide-category-content h2{
-    margin:8px 0 0;
-
-    font-size:30px;
-    line-height:1.05;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-.guide-category-kicker{
-    font-size:12px;
-    font-weight:600;
-    opacity:.82;
-}
-
-
-/* =========================================================
-   ARROWS
-========================================================= */
-
-.guide-arrow{
-    position:absolute;
-
-    top:50%;
-    transform:translateY(-50%);
-
-    z-index:10;
-
-    width:52px;
-    height:52px;
-
-    border:0;
-    border-radius:50%;
-
-    background:rgba(255,255,255,.86);
-
-    color:#222;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:42px;
-    line-height:1;
-
-    padding:0 0 5px;
-
-    box-shadow:
-        0 8px 22px rgba(0,0,0,.08);
-
-    cursor:pointer;
-
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-}
-
-.guide-arrow-prev{
-    left:10px;
-}
-
-.guide-arrow-next{
-    right:10px;
-}
-
-.guide-arrow:active{
-    transform:translateY(-50%) scale(.94);
-}
-
-
-/* =========================================================
-   DOTS
-========================================================= */
-
-.guide-dots{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-}
-
-.guide-dots button{
-    width:8px;
-    height:8px;
-
-    padding:0;
-    border:0;
-    border-radius:999px;
-
-    background:#ddd;
-
-    cursor:pointer;
-
-    transition:
-        width .25s ease,
-        background .25s ease;
-}
-
-.guide-dots button.active{
-    width:36px;
-    background:#65b9ae;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.guide-content{
-    position:relative;
-
-    margin:18px 12px 50px;
-
-    background:#fff;
-
-    border-radius:28px 28px 0 0;
-
-    box-shadow:
-        0 -5px 25px rgba(0,0,0,.035);
-}
-
-
 /* =========================================================
    STICKY BAR
 ========================================================= */
 
-.guide-sticky-bar{
+#guide .guide-sticky-bar{
     position:sticky;
     top:0;
-
-    z-index:100;
-
-    padding:10px 10px 12px;
-
-    background:rgba(255,255,255,.94);
-
-    border-bottom:1px solid #eee;
-
-    border-radius:28px 28px 0 0;
-
+    z-index:50;
+    width:100%;
+    padding:12px 0 10px;
+    background:rgba(255,255,255,.92);
     backdrop-filter:blur(16px);
     -webkit-backdrop-filter:blur(16px);
-
-    opacity:0;
-    transform:translateY(-14px);
-
-    pointer-events:none;
-
-    transition:
-        opacity .25s ease,
-        transform .25s ease;
-}
-
-.guide-sticky-bar.show{
-    opacity:1;
-    transform:translateY(0);
-    pointer-events:auto;
 }
 
 
 /* =========================================================
-   MAIN CATEGORY PILLS
+   MAIN TABS
 ========================================================= */
 
-.guide-main-tabs{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:7px;
-}
-
-.guide-main-tab{
-    min-width:0;
-
-    border:0;
-    border-radius:999px;
-
-    padding:10px 5px;
-
-    background:#f3f3f3;
-    color:#777;
-
-    font-size:10px;
-    font-weight:800;
-
-    cursor:pointer;
-
-    white-space:nowrap;
-
-    transition:.25s ease;
-}
-
-.guide-main-tab.active{
-    background:#65b9ae;
-    color:#fff;
-
-    box-shadow:
-        0 6px 16px rgba(101,185,174,.24);
-}
-
-
-/* =========================================================
-   SUB PILLS
-========================================================= */
-
-.guide-pills{
+#guide .guide-main-tabs{
     display:flex;
+    align-items:center;
+    width:100%;
+    overflow-x:auto;
+    scrollbar-width:none;
 
     gap:8px;
 
-    margin-top:9px;
-
-    overflow-x:auto;
-
-    padding:1px 2px 3px;
-
-    scrollbar-width:none;
+    padding:0 16px;
 }
 
-.guide-pills::-webkit-scrollbar{
+#guide .guide-main-tabs::-webkit-scrollbar{
     display:none;
 }
 
-.guide-pill{
+
+#guide .guide-main-tab{
     flex:0 0 auto;
 
-    border:1px solid #ddd;
-
-    border-radius:999px;
+    border:0;
+    background:transparent;
 
     padding:8px 14px;
 
-    background:#fff;
+    border-radius:999px;
 
-    color:#666;
-
-    font-size:10px;
+    font-family:inherit;
+    font-size:12px;
     font-weight:700;
 
-    white-space:nowrap;
+    color:#777;
 
     cursor:pointer;
 
-    transition:.2s ease;
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
 }
 
-.guide-pill.active{
-    border-color:#a8ddd6;
-    background:#e9f7f5;
-    color:#55a99d;
+
+#guide .guide-main-tab.active{
+    background:#111;
+    color:#fff;
 }
 
 
 /* =========================================================
-   FEED
+   GUIDE PILLS
 ========================================================= */
 
-.guide-feed{
-    padding:25px 8px 40px;
-}
-
-.guide-section{
-    margin-bottom:36px;
-}
-
-.guide-section-title{
+#guide .guide-pills{
     display:flex;
     align-items:center;
-    gap:10px;
 
-    margin:0 8px 12px;
+    width:100%;
+
+    overflow-x:auto;
+    scrollbar-width:none;
+
+    gap:8px;
+
+    padding:10px 16px 2px;
 }
 
-.guide-section-title::before{
-    content:"";
+#guide .guide-pills::-webkit-scrollbar{
+    display:none;
+}
 
-    width:7px;
-    min-width:7px;
-    height:32px;
+
+#guide .guide-pill{
+    flex:0 0 auto;
+
+    border:1px solid rgba(0,0,0,.10);
+    background:#fff;
+
+    padding:7px 13px;
 
     border-radius:999px;
 
-    background:#65b9ae;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:600;
+
+    color:#666;
+
+    cursor:pointer;
+
+    white-space:nowrap;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease;
 }
 
-.guide-section-title h2{
-    margin:0;
 
-    font-size:21px;
-    line-height:1.1;
-
-    font-weight:800;
-    color:#292929;
+#guide .guide-pill.active{
+    background:#91d3ca;
+    border-color:#91d3ca;
+    color:#fff;
 }
 
 
 /* =========================================================
-   IMAGE CAROUSEL / INSTAGRAM STYLE
+   GUIDE FEED
 ========================================================= */
 
-.guide-image-carousel{
-    position:relative;
+#guide .guide-feed{
+    width:100%;
 
-    overflow:hidden;
-
-    border-radius:24px;
-
-    background:#f1f1f1;
-
-    box-shadow:
-        0 8px 24px rgba(0,0,0,.06);
+    padding:20px 0 40px;
 }
 
-.guide-image-track{
+
+/* =========================================================
+   GUIDE SECTION
+========================================================= */
+
+#guide .guide-section{
+    width:100%;
+}
+
+
+#guide .guide-section-title{
+    padding:0 16px 12px;
+}
+
+
+#guide .guide-section-title h2{
+    margin:0;
+
+    font-size:18px;
+    line-height:1.2;
+    font-weight:800;
+}
+
+
+/* =========================================================
+   IMAGE CAROUSEL — IG STYLE
+========================================================= */
+
+#guide .guide-image-carousel{
+    position:relative;
+
+    width:100%;
+
+    overflow:hidden;
+}
+
+
+/* =========================================================
+   IMAGE TRACK
+========================================================= */
+
+#guide .guide-image-track{
     display:flex;
 
     width:100%;
 
     overflow-x:auto;
+    overflow-y:hidden;
 
     scroll-snap-type:x mandatory;
     scroll-behavior:smooth;
 
     scrollbar-width:none;
 
-    touch-action:pan-x;
+    -webkit-overflow-scrolling:touch;
 }
 
-.guide-image-track::-webkit-scrollbar{
+#guide .guide-image-track::-webkit-scrollbar{
     display:none;
 }
 
-.guide-image{
+
+/* =========================================================
+   GUIDE IMAGE
+========================================================= */
+
+#guide .guide-image{
     flex:0 0 100%;
 
     width:100%;
-
-    scroll-snap-align:start;
-
-    aspect-ratio:4 / 5;
-
-    object-fit:cover;
+    height:auto;
 
     display:block;
 
-    background:#f1f1f1;
-}
-
-
-/* image fallback */
-
-.guide-image-fallback{
-    flex:0 0 100%;
-
-    aspect-ratio:4 / 5;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-
-    padding:30px;
-
-    color:#aaa;
-    background:#f3f3f3;
-
-    font-size:14px;
-    font-weight:700;
+    object-fit:cover;
 
     scroll-snap-align:start;
+    scroll-snap-stop:always;
+
+    user-select:none;
+    -webkit-user-drag:none;
 }
 
 
-/* image counter */
+/* =========================================================
+   COUNTER
+========================================================= */
 
-.guide-image-counter{
+#guide .guide-image-counter{
     position:absolute;
 
     top:12px;
     right:12px;
 
-    z-index:3;
+    z-index:5;
 
-    padding:6px 10px;
+    padding:5px 9px;
 
     border-radius:999px;
 
-    background:rgba(0,0,0,.65);
+    background:rgba(0,0,0,.55);
     color:#fff;
 
     font-size:11px;
-    font-weight:700;
+    font-weight:600;
+
+    line-height:1;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   FALLBACK
 ========================================================= */
 
-@media (min-width:431px){
+#guide .guide-image-fallback{
+    flex:0 0 100%;
 
-    .guide-category-card{
-        flex-basis:300px;
-        height:360px;
-    }
+    min-height:220px;
 
-    .guide-arrow-prev{
-        left:18px;
-    }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    .guide-arrow-next{
-        right:18px;
-    }
+    flex-direction:column;
 
-    .guide-feed{
-        padding-left:18px;
-        padding-right:18px;
-    }
+    text-align:center;
+
+    padding:30px;
+
+    background:#f4f4f4;
+
+    color:#888;
+
+    font-size:13px;
+
+    scroll-snap-align:start;
 }
 
 
-@media (min-width:768px){
-
-    .guide-page{
-        max-width:768px;
-    }
-
-    .guide-header{
-        padding-top:28px;
-    }
-
-    .guide-category-card{
-        flex-basis:330px;
-        height:390px;
-    }
-
-    .guide-category-content h2{
-        font-size:34px;
-    }
-
-    .guide-feed{
-        padding-left:24px;
-        padding-right:24px;
-    }
-
-    .guide-arrow{
-        width:58px;
-        height:58px;
-    }
+#guide .guide-image-fallback strong{
+    color:#333;
 }
 
 
 /* =========================================================
-   COMPACT STATE
-   JS adds .is-compacting to hero
+   EMPTY GUIDE
 ========================================================= */
 
-.guide-hero.is-compacting{
-    padding-top:8px;
-    padding-bottom:8px;
-}
-
-.guide-hero.is-compacting .guide-carousel{
-    padding-top:6px;
-    padding-bottom:6px;
-}
-
-.guide-hero.is-compacting .guide-category-card{
-    height:74px;
+#guide .guide-empty{
+    margin:0 16px;
+    padding:40px 20px;
     border-radius:18px;
-}
-
-.guide-hero.is-compacting .guide-category-content h2{
-    font-size:15px;
-}
-
-.guide-hero.is-compacting .guide-category-kicker{
-    display:none;
-}
-
-.guide-hero.is-compacting .guide-arrow{
-    display:none;
-}
-
-.guide-hero.is-compacting .guide-category-card{
-    transform:scale(.82);
-}
-
-.guide-hero.is-compacting .guide-category-card.is-active{
-    transform:scale(1);
+    background:#f5f5f5;
+    text-align:center;
+    color:#888;
+    font-size:13px;
 }
 
 
-/* =========================================================
-   REDUCE MOTION
-========================================================= */
-
-@media (prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-        scroll-behavior:auto !important;
-        transition:none !important;
-    }
+#guide .guide-empty strong{
+    color:#333;
 }
