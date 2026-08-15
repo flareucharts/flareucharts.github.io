@@ -19,7 +19,7 @@
   position:sticky;
   top:0;
   z-index:1000;
-  background:var(--bg-gradient1);
+  background:#fff;
   width:100%;
 }
 
@@ -35,7 +35,7 @@
 
 .page.guide-page h2{
     margin:0;
-    color:#fff;
+    color:#111;
     font-size:var(--title);
     font-weight:700;
     padding:0;
@@ -51,7 +51,7 @@
     z-index:50;
     width:100%;
     padding:12px 0 10px;
-    background:var(--bg-gradient1);
+    background:#fff;
 }
 
 
@@ -83,7 +83,7 @@
     font-family:inherit;
     font-size:12px;
     font-weight:700;
-    color:#111;
+    color:#777;
     cursor:pointer;
     transition:
         background .2s ease,
@@ -93,8 +93,9 @@
 
 
 #guide .guide-main-tab.active{
-    background:#fff;
-    color:var(--bg-gradient1);
+    background:transparent;
+    border-color:#91d3ca;
+    color:#111;
 }
 
 
@@ -126,7 +127,7 @@
     font-family:inherit;
     font-size:11px;
     font-weight:600;
-    color:#111;
+    color:#777;
     cursor:pointer;
     white-space:nowrap;
     transition:
