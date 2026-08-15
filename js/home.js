@@ -482,7 +482,7 @@ if (ongoingVotes.length > 1) {
                     : currentSlide;
 
             indicator.textContent =
-                `${displaySlide + 1} / ${ongoingVotes.length}`;
+                `${displaySlide + 1}/${ongoingVotes.length}`;
         }
 
 
