@@ -5,16 +5,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     const guide = document.getElementById("guide");
-
     if (!guide) return;
-
-
     /* =====================================================
        DATA
     ===================================================== */
 
     const GUIDE_DATA = {
-
         "music-show": {
             title: "MUSIC SHOW",
             pills: [
@@ -26,35 +22,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Inkigayo"
             ],
             sections: {
-                "The Show": [
-                    "./assets/guide/the-show-general.jpg",
-                    "./assets/guide/the-show-create.jpg",
-                    "./assets/guide/the-show-vote.jpg"
+             "The Show": [
+               "./assets/guide/the-show-general.jpg",
+               "./assets/guide/the-show-create.jpg",
+               "./assets/guide/the-show-vote.jpg"
                 ],
-                "Show Champion": [
-                    "./assets/guide/show-champion-general.jpg",
-                    "./assets/guide/show-champion-create.jpg",
-                    "./assets/guide/show-champion-vote.jpg"
+             "Show Champion": [
+               "./assets/guide/show-champion-general.jpg",
+               "./assets/guide/show-champion-create.jpg",
+               "./assets/guide/show-champion-vote.jpg"
                 ],
-                "M Countdown": [
-                    "./assets/guide/mcountdown-general.jpg",
-                    "./assets/guide/mcountdown-create.jpg",
-                    "./assets/guide/mcountdown-vote.jpg"
+             "M Countdown": [
+               "./assets/guide/mcountdown-general.jpg",
+               "./assets/guide/mcountdown-create.jpg",
+               "./assets/guide/mcountdown-vote.jpg"
                 ],
-                "Music Bank": [
-                    "./assets/guide/music-bank-general.jpg",
-                    "./assets/guide/music-bank-create.jpg",
-                    "./assets/guide/music-bank-vote.jpg"
+             "Music Bank": [
+               "./assets/guide/music-bank-general.jpg",
+               "./assets/guide/music-bank-create.jpg",
+               "./assets/guide/music-bank-vote.jpg"
                 ],
-                "Music Core": [
-                    "./assets/guide/music-core-general.jpg",
-                    "./assets/guide/music-core-create.jpg",
-                    "./assets/guide/music-core-vote.jpg"
+             "Music Core": [
+               "./assets/guide/music-core-general.jpg",
+               "./assets/guide/music-core-create.jpg",
+               "./assets/guide/music-core-vote.jpg"
                 ],
-                "Inkigayo": [
-                    "./assets/guide/inkigayo-general.jpg",
-                    "./assets/guide/inkigayo-create.jpg",
-                    "./assets/guide/inkigayo-vote.jpg"
+             "Inkigayo": [
+               "./assets/guide/inkigayo-general.jpg",
+               "./assets/guide/inkigayo-create.jpg",
+               "./assets/guide/inkigayo-vote.jpg"
                 ]
             }
         },
