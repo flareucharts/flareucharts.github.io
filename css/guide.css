@@ -79,13 +79,13 @@
 #guide .guide-main-tab{
     flex:0 0 auto;
     border:0;
-    background:transparent;
+    background:var(--bg-gradient1);
     padding:8px 14px;
     border-radius:999px;
     font-family:inherit;
     font-size:12px;
     font-weight:700;
-    color:#777;
+    color:#111;
     cursor:pointer;
     transition:
         background .2s ease,
@@ -107,14 +107,10 @@
 #guide .guide-pills{
     display:flex;
     align-items:center;
-
     width:100%;
-
     overflow-x:auto;
     scrollbar-width:none;
-
     gap:8px;
-
     padding:10px 16px 2px;
 }
 
@@ -132,7 +128,7 @@
     font-family:inherit;
     font-size:11px;
     font-weight:600;
-    color:#666;
+    color:#111;
     cursor:pointer;
     white-space:nowrap;
     transition:
@@ -169,7 +165,7 @@ GUIDE SECTION
 
 
 #guide .guide-section-title{
-    padding:16px 0 16px 0;
+    padding:0;
 }
 
 
@@ -178,6 +174,7 @@ GUIDE SECTION
     font-size:18px;
     line-height:1.2;
     font-weight:800;
+    color:#111;
 }
 
 
