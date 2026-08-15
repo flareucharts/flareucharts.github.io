@@ -334,38 +334,75 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
       <h2>GUIDE</h2>
     </div>   
 
+    <!-- =========================
+         GUIDE STICKY BAR
+    ========================== -->
+
     <div class="guide-sticky-bar" id="guide-sticky-bar">
-       <div class="guide-main-tabs" id="guide-main-tabs">
 
-           <button class="guide-main-tab"
-                   data-category="music-show">
-               MUSIC SHOW
-           </button>
+        <!-- MAIN TABS -->
+        <div class="guide-main-tabs" id="guide-main-tabs">
 
-           <button class="guide-main-tab"
-                   data-category="vote">
-               VOTE
-           </button>
+            <button
+                class="guide-main-tab active"
+                data-category="music-show">
+                MUSIC SHOW
+            </button>
 
-           <button class="guide-main-tab"
-                   data-category="stream">
-               STREAM
-           </button>
+            <button
+                class="guide-main-tab"
+                data-category="vote">
+                VOTE
+            </button>
 
-           <button class="guide-main-tab"
-                   data-category="other">
-               OTHER
-           </button>
-       </div>
-       <div class="guide-pills" id="guide-pills"></div>
-    </div>
-</section>
+            <button
+                class="guide-main-tab"
+                data-category="stream">
+                STREAM
+            </button>
 
-<!-- ================ GUIDE FEED ================ -->
+            <button
+                class="guide-main-tab"
+                data-category="other">
+                OTHER
+            </button>
 
-<div class="global-content">
-    <div class="guide-feed" id="guide-feed"></div>
+        </div>
+
+
+        <!-- SUB PILLS + DROPDOWN -->
+        <div class="guide-pills-wrap">
+
+            <div
+                class="guide-pills"
+                id="guide-pills">
+            </div>
+
+            <button
+                class="guide-pills-dropdown"
+                id="guide-pills-dropdown"
+                type="button"
+                aria-label="Show all guide categories">
+
+                <span>⌄</span>
+
+            </button>
+
+        </div>
 </div>
+
+ <div class="global-content">
+
+    <!-- =========================
+         GUIDE FEED
+    ========================== -->
+
+    <div
+        class="guide-feed" id="guide-feed">
+    </div>
+
+</div>
+
 <script src="/js/guide.js"></script>
 
 </div>
