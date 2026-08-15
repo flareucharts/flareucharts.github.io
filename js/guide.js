@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const pills =
         document.getElementById("guide-pills");
 
+    const dropdown =
+        document.getElementById("guide-pills-dropdown");
+
     const feed =
         document.getElementById("guide-feed");
 
@@ -144,6 +147,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentPill =
         0;
 
+    let dropdownOpen =
+        false;
+
 
     /* =====================================================
        ESCAPE HTML
@@ -180,6 +186,149 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
+       DROPDOWN
+    ===================================================== */
+
+    function closeDropdown(){
+
+        dropdownOpen = false;
+
+        const menu =
+            guide.querySelector(".guide-dropdown-menu");
+
+        if (menu){
+            menu.remove();
+        }
+
+    }
+
+
+    function openDropdown(){
+
+        closeDropdown();
+
+        const data =
+            GUIDE_DATA[currentCategory];
+
+        if (!data || !data.pills.length){
+            return;
+        }
+
+
+        const menu =
+            document.createElement("div");
+
+        menu.className =
+            "guide-dropdown-menu";
+
+
+        data.pills.forEach((name, index) => {
+
+            const item =
+                document.createElement("button");
+
+            item.type =
+                "button";
+
+            item.className =
+                "guide-dropdown-item";
+
+            item.textContent =
+                name;
+
+
+            item.classList.toggle(
+                "active",
+                index === currentPill
+            );
+
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    currentPill =
+                        index;
+
+                    updatePills();
+
+                    renderFeed();
+
+                    closeDropdown();
+
+                }
+            );
+
+
+            menu.appendChild(item);
+
+        });
+
+
+        const wrapper =
+            guide.querySelector(".guide-pills-wrap");
+
+        if (!wrapper) return;
+
+
+        wrapper.appendChild(menu);
+
+        dropdownOpen = true;
+
+    }
+
+
+    if (dropdown){
+
+        dropdown.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+                if (dropdownOpen){
+
+                    closeDropdown();
+
+                }else{
+
+                    openDropdown();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CLOSE DROPDOWN — OUTSIDE CLICK
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        event => {
+
+            if (!dropdownOpen) return;
+
+            const wrapper =
+                guide.querySelector(".guide-pills-wrap");
+
+            if (
+                wrapper &&
+                !wrapper.contains(event.target)
+            ){
+
+                closeDropdown();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
        RENDER PILLS
     ===================================================== */
 
@@ -200,11 +349,15 @@ document.addEventListener("DOMContentLoaded", () => {
             const button =
                 document.createElement("button");
 
+            button.type =
+                "button";
+
             button.className =
                 "guide-pill";
 
             button.textContent =
                 name;
+
 
             button.classList.toggle(
                 "active",
@@ -323,7 +476,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* =================================================
-           GUIDE CONTENT
+           GUIDE IMAGE CAROUSEL
         ================================================= */
 
         feed.innerHTML = `
@@ -339,88 +492,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
 
-                <div class="guide-images">
+                <div class="guide-image-carousel">
 
-                    ${images.map((src, index) => `
-
-                        <img
-                            class="guide-image"
-                            src="${src}"
-                            alt="${escapeHTML(
-                                selected
-                            )} Guide ${index + 1}"
-                            loading="${index === 0
-                                ? "eager"
-                                : "lazy"
-                            }"
-                            onerror="
-                                this.outerHTML =
-                                '<div class=&quot;guide-image-fallback&quot;>Image ${index + 1}<br>not found</div>'
-                            "
-                        >
-
-                    `).join("")}
-
-                </div>
-
-            </section>
-
-        `;
-
-    }
+                    <span class="guide-image-counter">
+                        1/${images.length}
+                    </span>
 
 
-    /* =====================================================
-       SELECT CATEGORY
-    ===================================================== */
+                    <div class="guide-image-track">
 
-    function selectCategory(category){
+                        ${images.map((src, index) => `
 
-        if (!GUIDE_DATA[category]){
-            return;
-        }
-
-
-        currentCategory =
-            category;
-
-        currentPill =
-            0;
-
-
-        updateMainTabs();
-
-        renderPills();
-
-        renderFeed();
-
-    }
-
-
-    /* =====================================================
-       MAIN TAB CLICK
-    ===================================================== */
-
-    mainTabs.forEach(tab => {
-
-        tab.addEventListener(
-            "click",
-            () => {
-
-                selectCategory(
-                    tab.dataset.category
-                );
-
-            }
-        );
-
-    });
-
-
-    /* =====================================================
-       INITIAL
-    ===================================================== */
-
-    selectCategory("music-show");
-
-});
+                            <img
+                                class="guide
