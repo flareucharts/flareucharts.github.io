@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "music-show": {
 
             pills: [
+                "Overview",
                 "The Show",
                 "Show Champion",
                 "M Countdown",
@@ -409,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="guide-section-title">
 
                     <h2>
-                        GENERAL GUIDE
+                       
                     </h2>
 
                 </div>
