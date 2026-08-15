@@ -30,7 +30,7 @@
 .page.guide-page .guide-title{
     display:flex;
     align-items:center;
-    padding:16px 0 16px 0:
+    padding:16px 16px 0 16px;
 }
 
 .page.guide-page h2{
@@ -67,9 +67,7 @@
     width:100%;
     overflow-x:auto;
     scrollbar-width:none;
-
     gap:8px;
-
     padding:0 16px;
 }
 
@@ -80,22 +78,15 @@
 
 #guide .guide-main-tab{
     flex:0 0 auto;
-
     border:0;
     background:transparent;
-
     padding:8px 14px;
-
     border-radius:999px;
-
     font-family:inherit;
     font-size:12px;
     font-weight:700;
-
     color:#777;
-
     cursor:pointer;
-
     transition:
         background .2s ease,
         color .2s ease,
@@ -104,8 +95,8 @@
 
 
 #guide .guide-main-tab.active{
-    background:#111;
-    color:#fff;
+    background:#fff;
+    color:var(--bg-gradient1);
 }
 
 
@@ -134,24 +125,16 @@
 
 #guide .guide-pill{
     flex:0 0 auto;
-
     border:1px solid rgba(0,0,0,.10);
     background:#fff;
-
     padding:7px 13px;
-
     border-radius:999px;
-
     font-family:inherit;
     font-size:11px;
     font-weight:600;
-
     color:#666;
-
     cursor:pointer;
-
     white-space:nowrap;
-
     transition:
         background .2s ease,
         color .2s ease,
@@ -172,13 +155,12 @@
 
 #guide .guide-feed{
     width:100%;
-
     padding:20px 0 40px;
 }
 
 
 /* =========================================================
-   GUIDE SECTION
+GUIDE SECTION
 ========================================================= */
 
 #guide .guide-section{
@@ -187,13 +169,12 @@
 
 
 #guide .guide-section-title{
-    padding:0 16px 12px;
+    padding:16px 0 16px 0;
 }
 
 
 #guide .guide-section-title h2{
     margin:0;
-
     font-size:18px;
     line-height:1.2;
     font-weight:800;
@@ -206,9 +187,7 @@
 
 #guide .guide-image-carousel{
     position:relative;
-
     width:100%;
-
     overflow:hidden;
 }
 
@@ -219,17 +198,12 @@
 
 #guide .guide-image-track{
     display:flex;
-
     width:100%;
-
     overflow-x:auto;
     overflow-y:hidden;
-
     scroll-snap-type:x mandatory;
     scroll-behavior:smooth;
-
     scrollbar-width:none;
-
     -webkit-overflow-scrolling:touch;
 }
 
@@ -244,21 +218,15 @@
 
 #guide .guide-image{
     flex:0 0 100%;
-
     width:100%;
     height:auto;
-
     display:block;
-
     object-fit:cover;
-
     scroll-snap-align:start;
     scroll-snap-stop:always;
-
     user-select:none;
     -webkit-user-drag:none;
 }
-
 
 /* =========================================================
    COUNTER
@@ -266,25 +234,17 @@
 
 #guide .guide-image-counter{
     position:absolute;
-
     top:12px;
     right:12px;
-
     z-index:5;
-
     padding:5px 9px;
-
     border-radius:999px;
-
     background:rgba(0,0,0,.55);
     color:#fff;
-
     font-size:11px;
     font-weight:600;
-
     line-height:1;
 }
-
 
 /* =========================================================
    FALLBACK
@@ -292,25 +252,16 @@
 
 #guide .guide-image-fallback{
     flex:0 0 100%;
-
     min-height:220px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     flex-direction:column;
-
     text-align:center;
-
     padding:30px;
-
     background:#f4f4f4;
-
     color:#888;
-
     font-size:13px;
-
     scroll-snap-align:start;
 }
 
