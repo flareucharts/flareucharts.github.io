@@ -186,147 +186,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       DROPDOWN
-    ===================================================== */
+   DROPDOWN
+===================================================== */
 
-    function closeDropdown(){
+const pillsWrap =
+    guide.querySelector(".guide-pills-wrap");
 
-        dropdownOpen = false;
-
-        const menu =
-            guide.querySelector(".guide-dropdown-menu");
-
-        if (menu){
-            menu.remove();
-        }
-
-    }
+const dropdown =
+    document.getElementById("guide-pills-dropdown");
 
 
-    function openDropdown(){
-
-        closeDropdown();
-
-        const data =
-            GUIDE_DATA[currentCategory];
-
-        if (!data || !data.pills.length){
-            return;
-        }
+let dropdownOpen = false;
 
 
-        const menu =
-            document.createElement("div");
+function closeDropdown(){
 
-        menu.className =
-            "guide-dropdown-menu";
+    dropdownOpen = false;
 
+    pillsWrap.classList.remove("open");
 
-        data.pills.forEach((name, index) => {
-
-            const item =
-                document.createElement("button");
-
-            item.type =
-                "button";
-
-            item.className =
-                "guide-dropdown-item";
-
-            item.textContent =
-                name;
+}
 
 
-            item.classList.toggle(
-                "active",
-                index === currentPill
-            );
+function toggleDropdown(){
+
+    dropdownOpen =
+        !dropdownOpen;
+
+    pillsWrap.classList.toggle(
+        "open",
+        dropdownOpen
+    );
+
+}
 
 
-            item.addEventListener(
-                "click",
-                () => {
+if (dropdown){
 
-                    currentPill =
-                        index;
-
-                    updatePills();
-
-                    renderFeed();
-
-                    closeDropdown();
-
-                }
-            );
-
-
-            menu.appendChild(item);
-
-        });
-
-
-        const wrapper =
-            guide.querySelector(".guide-pills-wrap");
-
-        if (!wrapper) return;
-
-
-        wrapper.appendChild(menu);
-
-        dropdownOpen = true;
-
-    }
-
-
-    if (dropdown){
-
-        dropdown.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-
-                if (dropdownOpen){
-
-                    closeDropdown();
-
-                }else{
-
-                    openDropdown();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       CLOSE DROPDOWN — OUTSIDE CLICK
-    ===================================================== */
-
-    document.addEventListener(
+    dropdown.addEventListener(
         "click",
         event => {
 
-            if (!dropdownOpen) return;
+            event.stopPropagation();
 
-            const wrapper =
-                guide.querySelector(".guide-pills-wrap");
-
-            if (
-                wrapper &&
-                !wrapper.contains(event.target)
-            ){
-
-                closeDropdown();
-
-            }
+            toggleDropdown();
 
         }
     );
 
+}
 
     /* =====================================================
        RENDER PILLS
