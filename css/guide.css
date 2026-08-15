@@ -30,7 +30,7 @@
 .page.guide-page .guide-title{
     display:flex;
     align-items:center;
-    padding:16px 16px 0 16px;
+    padding:8px 16px 8px 16px;
 }
 
 .page.guide-page h2{
