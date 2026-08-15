@@ -19,10 +19,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <link rel="stylesheet" href="css/onvote.css">
 <link rel="stylesheet" href="css/upsche.css">
 <link rel="stylesheet" href="css/chat.css">
-<link rel="stylesheet" href="css/guide.css">
 <link rel="stylesheet" href="css/vote.css">
 <link rel="stylesheet" href="css/schedule.css">
 <link rel="stylesheet" href="css/download.css">
+<link rel="stylesheet" href="css/guide.css">
 <link rel="stylesheet" href="css/footer.css">
 
 <style>
@@ -322,34 +322,6 @@ font-size:clamp(10px,1.8vw,11px);
 <div class="card">Chart Page</div>
 </div>
 
-<div class="page" id="guide">
-<div class="global-content">
-<h2 class="guide-section">Guide</h2>
-  <div class="guide-grid">
-    <a href="musicshow.html" class="guide-card">
-      <span class="guide-subtitle">Watch & Support</span>
-      <h3>Music Show Guide</h3>
-      <div class="guide-icon">🎤</div>
-    </a>
-    <a href="streaming.html" class="guide-card">
-    <span class="guide-subtitle">Streaming Tutorial</span>
-      <h3>Streaming Guide</h3>
-      <div class="guide-icon">🎧</div>
-    </a>
-    <a href="download.html" class="guide-card">
-    <span class="guide-subtitle">Easily to download</span>
-      <h3>Download Guide</h3>
-      <div class="guide-icon">📲</div>
-    </a>
-    <a href="voting.html" class="guide-card">
-      <span class="guide-subtitle">Vote For FLARE U</span>
-      <h3>Voting Guide</h3>
-      <div class="guide-icon">🏆</div>
-    </a>
-  </div>
-</div>
-</div>
-  
 <!-- ================= VOTE PAGE ================= -->
 <div class="page vote-page" id="vote">
   <section class="vote-sticky">
@@ -454,6 +426,35 @@ font-size:clamp(10px,1.8vw,11px);
 <script type="module" src="./js/schedule.js"></script>
 <script src="./js/schedule-download.js"></script>
 
+<!-- ================= GUIDE PAGE ================= -->
+<div class="page guide-page" id="guide">
+  <section class="guide-sticky">
+    <div class="guide-title">
+      <h2>GUIDE</h2>
+    </div>
+
+    <div class="vote-status-tabs">
+      <button class="status-filter active" data-status="ongoing">
+        Ongoing
+      </button>
+
+      <button class="status-filter" data-status="upcoming">
+        Upcoming
+      </button>
+
+      <button class="status-filter" data-status="ended">
+        Ended
+      </button>
+
+    </div>
+</section>
+
+<div class="global-content">
+
+
+</div>
+  
+
 <!-- BOTTOM NAV -->
 <div class="bottom-nav">
 <button class="active" onclick="navigate('home', this)">
@@ -468,12 +469,6 @@ font-size:clamp(10px,1.8vw,11px);
   <span>Chart</span>
 </button>
 
-<button onclick="navigate('guide', this)">
-  <div class="nav-icon">
-  <img src="./images/icons/guide.svg" alt="Guide"></div>
-  <span>Guide</span>
-</button>
-
 <button onclick="navigate('vote', this)">
   <div class="nav-icon">
   <img src="./images/icons/vote.svg" alt="Vote"></div>
@@ -484,6 +479,12 @@ font-size:clamp(10px,1.8vw,11px);
   <div class="nav-icon">
   <img src="./images/icons/schedule.svg" alt="Schedule"></div>
   <span>Schedule</span>
+</button>
+
+<button onclick="navigate('guide', this)">
+  <div class="nav-icon">
+  <img src="./images/icons/guide.svg" alt="Guide"></div>
+  <span>Guide</span>
 </button>
   
 
