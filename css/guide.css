@@ -77,12 +77,12 @@
 #guide .guide-main-tab{
     flex:0 0 auto;
     border:0;
-    background:var(--bg-gradient1);
+    background:transparent;
     padding:8px 14px;
     border-radius:999px;
     font-family:inherit;
-    font-size:12px;
-    font-weight:700;
+    font-size:11px;
+    font-weight:500;
     color:#777;
     cursor:pointer;
     transition:
@@ -93,7 +93,7 @@
 
 
 #guide .guide-main-tab.active{
-    background:transparent;
+    background:#91d3ca;
     border-color:#91d3ca;
     color:#111;
 }
@@ -126,7 +126,7 @@
     border-radius:999px;
     font-family:inherit;
     font-size:11px;
-    font-weight:600;
+    font-weight:500;
     color:#777;
     cursor:pointer;
     white-space:nowrap;
@@ -170,9 +170,9 @@ GUIDE SECTION
 
 #guide .guide-section-title h2{
     margin:0;
-    font-size:18px;
+    font-size:12px;
     line-height:1.2;
-    font-weight:800;
+    font-weight:600;
     color:#111;
 }
 
