@@ -34,7 +34,7 @@
     height:25px;
     object-fit:contain;
     flex:0 0 auto;
-    border-radius:10px;
+    border-radius:5px;
 }
 
 .page.guide-page .guide-title{
@@ -367,12 +367,9 @@
 
 #guide .guide-image-counter{
     position:absolute;
-
     top:12px;
     right:12px;
-
     z-index:5;
-
     padding:5px 9px;
 
     border-radius:999px;
