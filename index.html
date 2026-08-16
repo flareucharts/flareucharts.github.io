@@ -227,37 +227,97 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 </div>
   
 <!-- OTHER PAGES -->
+<!-- ================= CHART PAGE ================= -->
+
 <div class="page chart-page" id="chart">
 
   <section class="chart-sticky">
 
+    <!-- =========================
+         CHART TITLE
+    ========================== -->
+
     <div class="chart-title">
-      <img src="./images/fglogo.jpg"
+      <img
+        src="./images/fglogo.jpg"
         alt="FLARE U"
-        class="chart-title-logo">
+        class="chart-title-logo"
+      >
+
       <h2>Chart</h2>
     </div>
 
-    <div class="chart-sticky-bar">
+
+    <!-- =========================
+         CHART STICKY BAR
+    ========================== -->
+
+    <div class="chart-sticky-bar" id="chart-sticky-bar">
 
       <!-- MAIN TABS -->
-      <div class="chart-main-tabs">
 
-        <button>Current</button>
-        <button>KChart</button>
-        <button>Global Chart</button>
-        <button>Album Sales</button>
-        <button>MV</button>
+      <div
+        class="chart-main-tabs"
+        id="chart-main-tabs"
+      >
+
+        <button
+          class="chart-main-tab active"
+          data-category="current"
+          type="button">
+          Current
+        </button>
+
+        <button
+          class="chart-main-tab"
+          data-category="kchart"
+          type="button">
+          KChart
+        </button>
+
+        <button
+          class="chart-main-tab"
+          data-category="global"
+          type="button">
+          Global Chart
+        </button>
+
+        <button
+          class="chart-main-tab"
+          data-category="album"
+          type="button">
+          Album Sales
+        </button>
+
+        <button
+          class="chart-main-tab"
+          data-category="mv"
+          type="button">
+          MV
+        </button>
 
       </div>
 
-      <!-- SUB PILLS -->
-      <div class="chart-pills-wrap">
 
-        <div class="chart-pills"></div>
+      <!-- =========================
+           SUB PILLS
+      ========================== -->
 
-        <button class="chart-pills-dropdown">
-          ⌄
+      <div class="chart-pills-wrap" id="chart-pills-wrap">
+
+        <div
+          class="chart-pills"
+          id="chart-pills">
+        </div>
+
+        <button
+          class="chart-pills-dropdown"
+          id="chart-pills-dropdown"
+          type="button"
+          aria-label="Show all chart sources">
+
+          <span>⌄</span>
+
         </button>
 
       </div>
@@ -266,8 +326,18 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
   </section>
 
+
+  <!-- =========================
+       CHART CONTENT
+  ========================== -->
+
   <div class="global-content">
-    <div id="chart-feed"></div>
+
+    <div
+      class="chart-feed"
+      id="chart-feed">
+    </div>
+
   </div>
 
 </div>
