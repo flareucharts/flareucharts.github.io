@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     "./images/guide/duckad1.png",
                     "./images/guide/duckad2.png",
                     "./images/guide/duckad3.png",
-                    "./images/guide/duckad4.png",
+                    "./images/guide/duckad4.png"
                 ],
          
           }
