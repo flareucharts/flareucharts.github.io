@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from pathlib import Path
 
 
 # =========================================================
@@ -276,9 +277,30 @@ def main():
     )
 
     data = get_guysome_melon_realtime()
-    
-    with open("melon_realtime.json", "w", encoding="utf-8") as f:
-    json.dump(data, f, ensure_ascii=False, indent=2)
+
+    json_path = (
+        Path(__file__).parent.parent
+        / "data"
+        / "melon_realtime.json"
+    )
+
+    json_path.parent.mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    with open(
+        json_path,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            data,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
 
     for item in data:
 
