@@ -648,13 +648,16 @@ if (!waitForHomeVotes()) {
 
 }
 
+console.log("🔥 GUIDE SECTION REACHED");
+
 const guideScroll =
     document.getElementById("guideScroll");
+
+console.log("🔥 guideScroll:", guideScroll);
 
 if (guideScroll){
 
     guideScroll.innerHTML = `
-
         <a href="./guide/?category=music-show"
            class="home-guide-card music-show">
             MUSIC SHOW
@@ -674,7 +677,6 @@ if (guideScroll){
            class="home-guide-card other">
             OTHERS
         </a>
-
     `;
 
 }
