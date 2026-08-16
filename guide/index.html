@@ -1,20 +1,659 @@
-<section class="guide-content">
-    <h1 class="gd-title">Music Show Guide</h1>
-    <p class="gd-subtitle">
-        Select a platform to view the guide.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLARE U GLOBAL FANBASE</title>
+
+<link rel="preload"
+href="../fonts/InterVariable.woff2"
+as="font"
+type="font/woff2"
+crossorigin>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<link rel="stylesheet" href="../css/variables.css">
+<link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="../css/onvote.css">
+<link rel="stylesheet" href="../css/upsche.css">
+<link rel="stylesheet" href="../css/chat.css">
+<link rel="stylesheet" href="../css/vote.css">
+<link rel="stylesheet" href="../css/schedule.css">
+<link rel="stylesheet" href="../css/download.css">
+<link rel="stylesheet" href="../css/guide.css">
+<link rel="stylesheet" href="../css/footer.css">
+
+</head>
+
+<body>
+<!-- Splash Screen -->
+<div id="splash">
+  <img src="../images/logo.png" alt="FLARE U GLOBAL" class="splash-logo">
+</div>
+
+<div class="app">
+
+<!-- HEADER -->
+<header class="header" id="home-header">
+<div class="menu-btn" onclick="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+  <div class="title-wrap">
+<img src="../images/logo.png" class="logo">
+</div>
+</header>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+<div class="menu-group">
+<a href="#">Profile</a>
+<a href="#">Discography</a>
+<a href="#">Content List</a>
+<a href="#">Chart Archive</a>
+<a href="#">Achievement</a>
+<a href="#">Activity</a>
+</div>
+
+<div class="menu-divider"></div>
+<div class="menu-group">
+<a href="#">Funding</a>
+<div class="sidebar-section fanbase-section">
+  <div class="sidebar-title">
+    Fanbases
+  </div>
+  <div class="sidebar-submenu fanbase-list">
+    <a href="https://www.x.com/flareuglobal">
+      FLARE U GLOBAL
+    </a>
+    <a href="#">
+      FLARE U VOTING (GL)
+    </a>
+    <a href="#">
+      FLARE U STATION (GL)
+    </a>
+    <a href="#">
+      FLARE U STREAM (KR)
+    </a>
+  </div>
+</div>
+  <div class="menu-divider"></div>
+<div class="sidebar-section">
+  <div class="sidebar-title">
+    FLARE U official SNS:
+  </div>
+  <div class="sns-grid">
+    <a href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/5969/5969020.png">
+    </a>
+    <a href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+    </a>
+    <a href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
+    </a>
+    <a href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+    </a>
+    <a href="#">
+      <img src="https://cdn-icons-png.flaticon.com/512/3536/3536445.png">
+    </a>
+  </div>
+</div>
+</div>
+</div>
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<!-- HOME -->
+<div class="page active" id="home">
+
+<!-- HOME CONTENT -->
+<div class="global-content">
+<div class="desktop-layout">
+
+<section class="home-banner" id="latestBanner">
+  <video id="bannerVideo" class="banner-video" autoplay muted loop playsinline>
+    <source src="../images/vidban.mp4" type="video/mp4">
+  </video>
+  <img id="bannerImage" class="banner-image" src="images/fallback.png" alt="Latest Release">
+  <div class="banner-overlay"></div>
+  <div class="banner-content">
+    <span class="banner-badge">
+  <span class="live-dot"></span>
+  LATEST RELEASE
+</span>
+    <h2 id="bannerTitle">YOUTH ERROR</h2>
+    <p id="bannerSubtitle">
+      Official MV Out Now!
+    </p>
+    <div class="banner-buttons">
+      <button class="banner-btn primary" id="listenBtn">
+        Listen Now
+      </button>
+      <button class="banner-btn secondary" id="watchBtn">
+        Watch MV
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<section class="home-dsc">
+    <a href="../vote/" class="home-subtitle">
+        <h2>Ongoing Vote</h2>
+        <img
+            src="../images/icons/chevron-right.svg"
+            alt=""
+            class="arrow-icon"
+        >
+    </a>
+    <div class="onvote-window">
+
+<!-- INDICATOR -->
+        <div class="onvote-indicator"></div>
+
+    <div class="onvote-loading">
+        <div class="onvote-skeleton short"></div>
+        <div class="onvote-skeleton medium"></div>
+        <div class="onvote-skeleton long"></div>
+    </div>
+
+    <div class="onvote-track"></div>
+
+</div>
+</section>
+
+<section class="home-dsc">
+
+    <a href="../schedule/" class="home-subtitle">
+        <h2>Upcoming Schedule</h2>
+        <img src="../images/icons/chevron-right.svg" alt="" class="arrow-icon">
+    </a>
+
+    <div class="upsche-card">
+      <div class="upsche-loading">
+        <div class="upsche-skeleton short"></div>
+        <div class="upsche-skeleton medium"></div>
+        <div class="upsche-skeleton long"></div>
+      </div>
+        <div class="upsche-window">
+            <div class="upsche-track">
+            </div>
+        </div>
+
+        <!-- Counter -->
+        <div class="upsche-count" id="upsche-count"></div>
+    </div>
+
+</section>
+
+<!-- PLAYLIST SECTION -->
+<div class="home-dsc">
+
+    <a href="../discography/" class="home-subtitle">
+        <h2>Discography</h2>
+        <img src="../images/icons/chevron-right.svg"
+             alt=""
+             class="arrow-icon">
+    </a>
+
+    <div class="home-scroll" id="discographyScroll"></div>
+
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/home.js"></script>
+<script src="../js/chat.js"></script>
+
+<div class="home-dsc">
+    <a href="../guide/" class="home-subtitle">
+        <h2>Guide</h2>
+        <img src="../images/icons/chevron-right.svg"
+             alt=""
+             class="arrow-icon">
+    </a>
+
+    <div class="home-scroll" id="guideScroll"></div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- OTHER PAGES -->
+<div class="page" id="chart">
+<div class="card">Chart Page</div>
+</div>
+
+<!-- ================= VOTE PAGE ================= -->
+
+<div class="page vote-page" id="vote">
+  <section class="vote-sticky">
+    <div class="vote-title">
+      <h2>VOTE</h2>
+    </div>
+
+    <div class="vote-status-tabs">
+      <button class="status-filter active" data-status="ongoing">
+        Ongoing
+      </button>
+
+      <button class="status-filter" data-status="upcoming">
+        Upcoming
+      </button>
+
+      <button class="status-filter" data-status="ended">
+        Ended
+      </button>
+
+    </div>
+  </section>
+
+<div class="global-content">
+
+<!-- Sort + Artist -->
+<div class="vote-filter-row">
+
+  <!-- SORT -->
+  <div class="vote-sort">
+    <button class="sort-btn"> Sort by <span>▼</span>
+    </button>
+    <div class="sort-dropdown">
+      <div class="sort-option active" data-sort="ending">
+        Ending Soon</div>
+      <div class="sort-option" data-sort="newest">
+        Newest</div>
+      <div class="sort-option" data-sort="oldest">
+        Oldest</div>
+      <div class="sort-option" data-sort="az">
+        A–Z</div>
+    </div>
+  </div>
+
+  <!-- ARTIST -->
+  <div class="artist-filter">
+    <button class="artist-btn">
+      All <span>▼</span></button>
+    <div class="artist-dropdown">
+     <div class="artist-option active" data-artist="all">
+      All</div>
+     <div class="artist-option" data-artist="FLARE U">
+      FLARE U</div>
+     <div class="artist-option" data-artist="CHUEI LI YU">
+      CHUEI LI YU</div>
+     <div class="artist-option" data-artist="KANG WOOJIN">
+      KANG WOOJIN</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Vote List -->
+<section class="vote-list"></section>
+
+<script type="module" src="../js/vote.js"></script>
+
+</div>
+</div>
+
+<!-- ================ SCHEDULE PAGE ================ -->
+
+<div class="page" id="schedule">
+<div class="global-content">
+<div class="schedule-title">
+      <h2>FLARE U Schedule</h2>
+    </div>
+
+<div id="schedule-content"></div>
+
+    <div id="event-popup" class="event-popup"></div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
+<script type="module" src="../js/schedule.js"></script>
+<script src="../js/schedule-download.js"></script>
+
+
+<!-- ================= GUIDE PAGE ================= -->
+
+<div class="page guide-page" id="guide">
+  <section class="guide-sticky">
+    <div class="guide-title">
+      <img
+        src="../images/fglogo.jpg"
+        alt="FLARE U"
+        class="guide-title-logo"
+      >
+      <h2>Guide</h2>
+    </div>   
+
+    <!-- =========================
+         GUIDE STICKY BAR
+    ========================== -->
+
+    <div class="guide-sticky-bar" id="guide-sticky-bar">
+        <!-- MAIN TABS -->
+        <div class="guide-main-tabs" id="guide-main-tabs">
+            <button
+                class="guide-main-tab active"
+                data-category="music-show">
+                Music Show
+            </button>
+            <button
+                class="guide-main-tab"
+                data-category="vote">
+                Vote
+            </button>
+            <button
+                class="guide-main-tab"
+                data-category="stream">
+                Stream
+            </button>
+            <button
+                class="guide-main-tab"
+                data-category="other">
+                Others
+            </button>
+        </div>
+
+        <!-- SUB PILLS + DROPDOWN -->
+        <div class="guide-pills-wrap">
+         <div class="guide-pills" id="guide-pills"></div>
+          <button
+           class="guide-pills-dropdown"
+           id="guide-pills-dropdown"
+           type="button"
+           aria-label="Show all guides">
+           <span>⌄</span>
+          </button>
+        </div>
+    </div>
+ </section>
+
+<div class="global-content">
+<!-- =============== GUIDE FEED =============== -->
+
+  <div class="guide-feed" id="guide-feed"></div>
+
+</div>
+
+<script src="../js/guide.js"></script>
+
+</div>
+
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+<button onclick="navigate('home', this)">
+  <div class="nav-icon">
+  <img src="../images/icons/home.svg" alt="Home"></div>
+  <span>Home</span>
+</button>
+
+<button onclick="navigate('chart', this)">
+  <div class="nav-icon">
+  <img src="../images/icons/chart.svg" alt="Chart"></div>
+  <span>Chart</span>
+</button>
+
+<button onclick="navigate('vote', this)">
+  <div class="nav-icon">
+  <img src="../images/icons/vote.svg" alt="Vote"></div>
+  <span>Vote</span>
+</button>
+
+<button onclick="navigate('schedule', this)">
+  <div class="nav-icon">
+  <img src="../images/icons/schedule.svg" alt="Schedule"></div>
+  <span>Schedule</span>
+</button>
+
+<button class="active" onclick="navigate('guide', this)">
+  <div class="nav-icon">
+  <img src="../images/icons/guide.svg" alt="Guide"></div>
+  <span>Guide</span>
+</button>
+
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+
+    <!-- Logo -->
+    <div class="footer-logo">
+        <h2>FLARE U GLOBAL</h2>
+    </div>
+
+    <!-- Description -->
+    <p class="footer-desc">
+        Supporting FLARE U through schedules, charts, discography, projects, and updates.
     </p>
 
-    <div class="guide-tabs">
-        <button class="guide-pill active" data-guide="mushow">Music Show</button>
-        <button class="guide-pill" data-guide="the-show">The Show</button>
-        <button class="guide-pill" data-guide="show-champ">Show Champion</button>
-        <button class="guide-pill" data-guide="emka">Mcountdown</button>
-        <button class="guide-pill" data-guide="mubank">Music Bank</button>
-        <button class="guide-pill" data-guide="mucore">Show! Music Core</button>
-        <button class="guide-pill" data-guide="inki">Inkigayo</button>
+<p class="footer-contact">
+        Contact: flareuglobal@gmail.com
+    </p>
+
+<!-- Disclaimer -->
+    <p class="footer-disclaimer">
+FLARE U GLOBAL is a 1st Global fanbase website and is not affiliated with FLARE U, their agency, or management.
+    </p>
+
+    <!-- Navigation -->
+    <nav class="footer-links">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+    </nav>
+
+    <!-- Social Media -->
+    <div class="footer-social">
+        <a href="https://x.com/flareuglobal" target="_blank" rel="noopener" aria-label="X">
+            <i class="fa-brands fa-x-twitter"></i>
+        </a>
     </div>
 
-    <div class="guide-viewer" id="guideViewer">
-        Loading...
-    </div>
-</section>
+<!-- Copyright -->
+    <p class="footer-copy">
+        © 2026 FLARE U GLOBAL. All Rights Reserved.
+    </p>
+
+</footer>
+
+<script>
+const video = document.getElementById("bannerVideo");
+const image = document.getElementById("bannerImage");
+
+// default: image disembunyikan kalau video jalan
+video.addEventListener("canplay", () => {
+  image.style.display = "none";
+});
+
+// kalau video error → pakai image
+video.addEventListener("error", () => {
+  video.style.display = "none";
+  image.style.display = "block";
+});
+
+
+/* NAV */
+function navigate(page, btn){
+
+  // hide semua page
+  document.querySelectorAll('.page')
+    .forEach(p => p.classList.remove('active'));
+
+  // show target
+  document.getElementById(page)
+    .classList.add('active');
+
+  // active nav
+  document.querySelectorAll('.bottom-nav button')
+    .forEach(b => b.classList.remove('active'));
+
+  btn.classList.add('active');
+
+const homeHeader = document.getElementById("home-header");
+
+if (page === "home") {
+
+    homeHeader.style.display = "flex";
+
+} else {
+
+    homeHeader.style.display = "none";
+
+    document.getElementById("sidebar").classList.remove("show");
+    document.getElementById("overlay").classList.remove("show");
+    document.querySelector(".menu-btn").classList.remove("active");
+
+}
+
+  // ubah URL TANPA reload
+  history.pushState(
+    {},
+    '',
+    page === 'home'
+      ? '/'
+      : '/' + page + '/'
+  );
+}
+
+// buka page sesuai URL
+window.addEventListener("load", ()=>{
+  let path =
+    window.location.pathname.replace("/","");
+
+  // default home
+  if(path === ""){
+    path = "home";
+  }
+
+  const targetPage =
+    document.getElementById(path);
+  if(targetPage){
+
+    // hide semua
+    document.querySelectorAll('.page')
+      .forEach(p=>p.classList.remove('active'));
+
+    // show target
+targetPage.classList.add('active');
+
+const homeHeader = document.getElementById("home-header");
+
+if (path === "home") {
+    homeHeader.style.display = "flex";
+} else {
+    homeHeader.style.display = "none";
+}
+
+    // active nav
+    document.querySelectorAll('.bottom-nav button')
+      .forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.bottom-nav button')
+      .forEach(btn=>{
+        if(
+          btn.getAttribute("onclick")
+          ?.includes(`'${path}'`)
+        ){
+          btn.classList.add("active");
+        }
+      });
+  }
+});
+
+/* MENU */
+function toggleMenu(){
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const menuBtn = document.querySelector(".menu-btn");
+  sidebar.classList.toggle("show");
+  overlay.classList.toggle("show");
+  menuBtn.classList.toggle("active");
+}
+
+/* HEADER HIDE */
+let lastScrollTop = 0;
+
+window.addEventListener("scroll", function () {
+
+const header = document.querySelector(".header");
+const nav = document.querySelector(".bottom-nav");
+const fab = document.querySelector(".download-fab");
+const hint = document.querySelector(".download-hint");
+
+let scrollTop =
+window.pageYOffset ||
+document.documentElement.scrollTop;
+
+/* SCROLL DOWN */
+if (scrollTop > lastScrollTop && scrollTop > 50) {
+
+  header.style.transform = "translateY(-120px)";
+  header.style.opacity = "0";
+
+  nav.style.transform =
+  "translateX(-50%) translateY(120px)";
+  nav.style.opacity = "0";
+
+  if(fab) fab.style.bottom = "20px";
+  if(hint) hint.style.bottom = "90px";
+
+}
+
+/* SCROLL UP */
+else {
+
+  header.style.transform = "translateY(0)";
+  header.style.opacity = "1";
+
+  nav.style.transform =
+  "translateX(-50%) translateY(0)";
+  nav.style.opacity = "1";
+
+  if(fab) fab.style.bottom = "90px";
+  if(hint) hint.style.bottom = "160px";
+
+}
+
+lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+}, false);
+
+loadPage();
+
+window.addEventListener("load", () => {
+  document.getElementById("splash").remove();
+  document.getElementById("app").style.display = "block";
+});
+
+</script>
+
+<script>
+window.addEventListener("load", function () {
+
+    const splash = document.getElementById("splash");
+
+    setTimeout(() => {
+
+        splash.style.opacity = "0";
+
+        setTimeout(() => {
+            splash.style.display = "none";
+        }, 500);
+
+    }, 500);
+
+});
+</script>
+
+<script type="module" src="../js/firebase.js"></script>
+
+</body>
+</html>
