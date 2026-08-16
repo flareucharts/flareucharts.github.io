@@ -1,0 +1,46 @@
+{
+  "version": 1,
+
+  "description": "FLARE U Chart Data Schema",
+
+  "timezone": "Asia/Seoul",
+
+  "snapshot": {
+    "platform": "",
+    "chart": "",
+    "snapshot_time": "",
+
+    "rank": null,
+    "artist": "",
+    "title": "",
+    "cover": "",
+    "likes": null
+  },
+
+  "chart_status": {
+    "previous_rank": null,
+    "rank_change": null,
+
+    "first_entry": false,
+    "first_entry_rank": null,
+    "first_entry_time": "",
+
+    "last_charted_rank": null,
+    "last_charted_time": "",
+
+    "reentry": false,
+    "reentry_rank": null,
+    "reentry_time": "",
+
+    "highest_rank": null,
+    "highest_rank_time": "",
+
+    "new_peak": false
+  },
+
+  "display": {
+    "status": "",
+    "status_label": "",
+    "movement": ""
+  }
+}
