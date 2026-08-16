@@ -228,6 +228,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+document.addEventListener("click", event => {
+
+    if (!dropdownOpen) return;
+
+    if (
+        pillsWrap &&
+        !pillsWrap.contains(event.target)
+    ){
+
+        closeDropdown();
+
+    }
+
+});
+
 
     /* =====================================================
        MAIN TABS
@@ -296,7 +311,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         currentPill =
                             index;
-
+          
+                        closeDropdown();
 
                         updatePills();
 
