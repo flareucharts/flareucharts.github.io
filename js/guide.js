@@ -486,6 +486,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
         `;
 
+const shareButton =
+    feed.querySelector(".guide-share");
+
+if (shareButton){
+
+    shareButton.addEventListener("click", async () => {
+
+        const url = window.location.href;
+
+        if (navigator.share){
+
+            await navigator.share({
+                title: "FLARE U GUIDE",
+                url: url
+            });
+
+        }else{
+
+            await navigator.clipboard.writeText(url);
+
+            alert("Guide link copied!");
+
+        }
+
+    });
+
+}
 
         /* =================================================
            IMAGE SWIPE + COUNTER
