@@ -345,17 +345,12 @@
 
 #guide .guide-image{
     flex:0 0 100%;
-
     width:100%;
     height:auto;
-
     display:block;
-
-    object-fit:cover;
-
+    object-fit:contain;
     scroll-snap-align:start;
     scroll-snap-stop:always;
-
     user-select:none;
     -webkit-user-drag:none;
 }
