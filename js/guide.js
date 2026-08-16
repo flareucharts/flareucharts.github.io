@@ -102,11 +102,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Mubeat",
                 "LiNC",
                 "Higher",
+                "DuckAd",
                 "Upick",
                 "BigC"
             ],
 
-            sections: {}
+            sections: {
+
+                "DuckAd": [
+                    "./images/guide/duckad1.png",
+                    "./images/guide/duckad2.png",
+                    "./images/guide/duckad3.png",
+                    "./images/guide/duckad4.png",
+                ],
+         
+          }
 
         },
 
