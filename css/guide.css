@@ -30,8 +30,8 @@
 ========================================================= */
 
 .page.guide-page .guide-title-logo{
-    width:36px;
-    height:36px;
+    width:25px;
+    height:25px;
     object-fit:contain;
     flex:0 0 auto;
     border-radius:10px;
@@ -41,7 +41,7 @@
     display:flex;
     align-items:center;
     gap:10px;
-    padding:14px 16px 0 16px;
+    padding:12px 16px 0 16px;
 }
 
 .page.guide-page h2{
