@@ -289,6 +289,25 @@
     color:#111;
 }
 
+#guide .guide-share{
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:#111;
+    cursor:pointer;
+}
+
+#guide .guide-share svg{
+    width:18px;
+    height:18px;
+    fill:currentColor;
+}
+
 
 /* =========================================================
    IMAGE CAROUSEL — IG STYLE
