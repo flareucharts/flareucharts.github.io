@@ -420,9 +420,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="guide-section-title">
 
                     <h2>
-                       
+                       ${escapeHTML(
+                                selected ||
+                                currentCategory
+                            )}
                     </h2>
+                  <button
+            class="guide-share"
+            type="button"
+            aria-label="Share guide">
 
+            <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true">
+
+                <path
+                    d="M18 8a3 3 0 1 0-2.83-4A3 3 0 0 0 15 5.76l-6.91 3.8a3 3 0 1 0 0 4.88L15 18.24A3 3 0 1 0 16 16a3 3 0 0 0-.17.98l-6.91-3.8a3 3 0 0 0 0-2.36l6.91-3.8A3 3 0 0 0 18 8Z">
+                </path>
+
+            </svg>
+
+        </button>
                 </div>
 
 
