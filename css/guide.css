@@ -30,10 +30,11 @@
 ========================================================= */
 
 .page.guide-page .guide-title-logo{
-    width:32px;
-    height:32px;
+    width:36px;
+    height:36px;
     object-fit:contain;
     flex:0 0 auto;
+    border-radius:10px;
 }
 
 .page.guide-page .guide-title{
