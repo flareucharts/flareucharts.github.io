@@ -1,1 +1,543 @@
-yup
+/* =========================================================
+   CHART PAGE
+========================================================= */
+
+#chart{
+  margin-top:0 !important;
+  padding:0 !important;
+}
+
+#chart .global-content{
+  margin:0 !important;
+  padding:0 16px !important;
+  background:#fff;
+}
+
+.page.chart-page{
+  width:100%;
+  max-width:768px;
+  margin:0 auto;
+  padding-top:0;
+}
+
+.page.chart-page .chart-sticky{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:#fff;
+  width:100%;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page.chart-page .chart-title-logo{
+  width:25px;
+  height:25px;
+  object-fit:contain;
+  flex:0 0 auto;
+  border-radius:5px;
+}
+
+.page.chart-page .chart-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 16px 0 16px;
+}
+
+.page.chart-page h2{
+  margin:0;
+  color:#111;
+  font-size:var(--title);
+  font-weight:700;
+  padding:0;
+}
+
+
+/* =========================================================
+   STICKY BAR
+========================================================= */
+
+#chart .chart-sticky-bar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  width:100%;
+  padding:12px 0 10px;
+  background:#fff;
+}
+
+
+/* =========================================================
+   MAIN TABS
+========================================================= */
+
+#chart .chart-main-tabs{
+  display:flex;
+  align-items:stretch;
+  width:100%;
+  overflow-x:auto;
+  scrollbar-width:none;
+  gap:8px;
+  padding:0 16px;
+  border-top:1px solid #e5e5e5;
+  border-bottom:1px solid #e5e5e5;
+}
+
+#chart .chart-main-tabs::-webkit-scrollbar{
+  display:none;
+}
+
+#chart .chart-main-tab{
+  position:relative;
+  flex:0 0 auto;
+  border:0;
+  background:transparent;
+  padding:14px;
+  border-radius:0;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:700;
+  color:#777;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+#chart .chart-main-tab.active{
+  background:transparent;
+  color:#111;
+}
+
+
+/* =========================================================
+   ACTIVE INDICATOR
+========================================================= */
+
+#chart .chart-main-tab.active::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:5px;
+  background:#111;
+  border-radius:2px 2px 0 0;
+  z-index:2;
+}
+
+
+/* =========================================================
+   PILLS WRAPPER
+========================================================= */
+
+#chart .chart-pills-wrap{
+  position:relative;
+  width:100%;
+}
+
+
+/* =========================================================
+   CHART PILLS
+========================================================= */
+
+#chart .chart-pills{
+  display:flex;
+  align-items:center;
+  width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+  gap:8px;
+  padding:10px 58px 2px 16px;
+  box-sizing:border-box;
+
+  transition:
+    max-height .25s ease,
+    padding .25s ease;
+}
+
+#chart .chart-pills::-webkit-scrollbar{
+  display:none;
+}
+
+
+/* =========================================================
+   OPEN STATE
+========================================================= */
+
+#chart .chart-pills-wrap.open .chart-pills{
+  flex-wrap:wrap;
+  overflow-x:hidden;
+  overflow-y:visible;
+  padding-right:16px;
+  max-height:500px;
+}
+
+
+/* =========================================================
+   CHART PILL
+========================================================= */
+
+#chart .chart-pill{
+  flex:0 0 auto;
+  border:1px solid rgba(0,0,0,.10);
+  background:#fff;
+  padding:7px 13px;
+  border-radius:999px;
+  font-family:inherit;
+  font-size:11px;
+  font-weight:500;
+  color:#111;
+  cursor:pointer;
+  white-space:nowrap;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease;
+}
+
+#chart .chart-pill.active{
+  background:#74b3de;
+  border-color:#74b3de;
+  color:#fff;
+}
+
+
+/* =========================================================
+   DROPDOWN BUTTON
+========================================================= */
+
+#chart .chart-pills-dropdown{
+  position:absolute;
+  right:16px;
+  top:50%;
+  width:30px;
+  height:30px;
+  transform:translateY(-50%);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:0;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:50%;
+  background:#fff;
+
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+
+  cursor:pointer;
+  z-index:10;
+}
+
+#chart .chart-pills-dropdown span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:19px;
+  line-height:1;
+  color:#111;
+
+  transform:translateY(-2px);
+
+  transition:
+    transform .2s ease;
+}
+
+
+/* =========================================================
+   ARROW — OPEN
+========================================================= */
+
+#chart .chart-pills-wrap.open
+.chart-pills-dropdown span{
+  transform:
+    translateY(2px)
+    rotate(180deg);
+}
+
+
+/* =========================================================
+   NO SUB PILLS
+   Current + MV
+========================================================= */
+
+#chart .chart-pills-wrap.hidden{
+  display:none;
+}
+
+
+/* =========================================================
+   CHART CONTENT
+========================================================= */
+
+#chart .chart-feed{
+  width:100%;
+  padding:20px 0 40px;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+#chart .chart-section{
+  width:100%;
+}
+
+#chart .chart-section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:0 0 14px;
+}
+
+#chart .chart-section-title h3{
+  margin:0;
+  font-size:18px;
+  line-height:1.2;
+  font-weight:700;
+  color:#111;
+}
+
+#chart .chart-time{
+  flex:0 0 auto;
+  font-size:10px;
+  line-height:1.3;
+  color:#777;
+  text-align:right;
+}
+
+
+/* =========================================================
+   CHART LIST
+========================================================= */
+
+#chart .chart-list{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+}
+
+
+/* =========================================================
+   CHART ITEM
+========================================================= */
+
+#chart .chart-item{
+  display:grid;
+  grid-template-columns:34px 58px minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+
+  width:100%;
+  padding:12px 0;
+
+  border-bottom:1px solid #ededed;
+}
+
+
+/* =========================================================
+   RANK
+========================================================= */
+
+#chart .chart-rank{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+}
+
+#chart .chart-rank-number{
+  font-size:17px;
+  line-height:1;
+  font-weight:700;
+  color:#111;
+}
+
+#chart .chart-rank-change{
+  font-size:10px;
+  line-height:1;
+  font-weight:700;
+}
+
+#chart .chart-rank-change.up{
+  color:#4b9b65;
+}
+
+#chart .chart-rank-change.down{
+  color:#d45c5c;
+}
+
+#chart .chart-rank-change.same{
+  color:#999;
+}
+
+
+/* =========================================================
+   COVER
+========================================================= */
+
+#chart .chart-cover{
+  width:58px;
+  height:58px;
+  object-fit:cover;
+  border-radius:8px;
+  background:#f1f1f1;
+}
+
+
+/* =========================================================
+   SONG INFO
+========================================================= */
+
+#chart .chart-song-info{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+
+#chart .chart-song-title{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+
+  font-size:13px;
+  line-height:1.3;
+  font-weight:700;
+  color:#111;
+}
+
+#chart .chart-artist{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+
+  font-size:11px;
+  line-height:1.3;
+  color:#555;
+}
+
+#chart .chart-likes{
+  font-size:10px;
+  line-height:1.3;
+  color:#888;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+#chart .chart-empty{
+  padding:30px 10px;
+  text-align:center;
+  font-size:12px;
+  color:#888;
+}
+
+
+/* =========================================================
+   CURRENT
+========================================================= */
+
+#chart .current-grid{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+#chart .current-source{
+  padding:14px;
+  border:1px solid #ededed;
+  border-radius:16px;
+  background:#fff;
+}
+
+#chart .current-source-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+#chart .current-source-title h3{
+  margin:0;
+  font-size:13px;
+  font-weight:700;
+}
+
+#chart .current-source-time{
+  font-size:9px;
+  color:#888;
+}
+
+
+/* =========================================================
+   MV
+========================================================= */
+
+#chart .mv-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+#chart .mv-card{
+  display:flex;
+  gap:12px;
+  padding:12px;
+
+  border:1px solid #ededed;
+  border-radius:16px;
+  background:#fff;
+}
+
+#chart .mv-cover{
+  width:88px;
+  height:88px;
+  flex:0 0 auto;
+  object-fit:cover;
+  border-radius:10px;
+  background:#f1f1f1;
+}
+
+#chart .mv-info{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+}
+
+#chart .mv-title{
+  font-size:13px;
+  font-weight:700;
+  color:#111;
+}
+
+#chart .mv-artist{
+  font-size:11px;
+  color:#666;
+}
+
+#chart .mv-stat{
+  font-size:10px;
+  color:#888;
+}
+
+#chart .mv-achievement{
+  margin-top:4px;
+  font-size:10px;
+  line-height:1.4;
+  color:#555;
+}
