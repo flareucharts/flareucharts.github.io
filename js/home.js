@@ -187,14 +187,9 @@ function renderUpcoming() {
     if (counter) {
 
         counter.textContent =
-            `1 / ${upcoming.length}`;
+            `1/${upcoming.length}`;
 
     }
-
-
-    /* =========================
-   SLIDE
-========================= */
 
 /* =========================
    SLIDE
