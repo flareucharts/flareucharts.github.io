@@ -52,7 +52,6 @@
     padding:0;
 }
 
-
 /* =========================================================
    STICKY BAR
 ========================================================= */
@@ -67,9 +66,7 @@
 }
 
 
-/* =========================================================
-   MAIN TABS
-========================================================= */
+/* ================ MAIN TABS ====================== */
 
 #guide .guide-main-tabs{
     display:flex;
@@ -188,24 +185,16 @@
 
 #guide .guide-pill{
     flex:0 0 auto;
-
     border:1px solid rgba(0,0,0,.10);
-
     background:#fff;
-
     padding:7px 13px;
-
     border-radius:999px;
-
     font-family:inherit;
     font-size:11px;
     font-weight:500;
-
     color:#111;
-
     cursor:pointer;
     white-space:nowrap;
-
     transition:
         background .2s ease,
         color .2s ease,
@@ -274,7 +263,7 @@
 
 #guide .guide-feed{
     width:100%;
-    padding:10px;
+    padding:0;
 }
 
 
@@ -307,9 +296,7 @@
 
 #guide .guide-image-carousel{
     position:relative;
-
     width:100%;
-
     overflow:hidden;
 }
 
@@ -320,17 +307,12 @@
 
 #guide .guide-image-track{
     display:flex;
-
     width:100%;
-
     overflow-x:auto;
     overflow-y:hidden;
-
     scroll-snap-type:x mandatory;
     scroll-behavior:smooth;
-
     scrollbar-width:none;
-
     -webkit-overflow-scrolling:touch;
 }
 
