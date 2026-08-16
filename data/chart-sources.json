@@ -1,36 +1,72 @@
 {
   "kchart": {
-    "Melon": [
-      "TOP100",
-      "HOT100 (100days)",
-      "HOT100 (30days)",
-      "Real-time",
-      "Daily",
-      "Weekly",
-      "Monthly"
-    ],
+    "Melon": {
+      "TOP100": {
+        "source": "Melon"
+      },
+      "HOT100 (100days)": {
+        "source": "Melon"
+      },
+      "HOT100 (30days)": {
+        "source": "Melon"
+      },
+      "Real-time": {
+        "source": "Guysome"
+      },
+      "Daily": {
+        "source": "Melon"
+      },
+      "Weekly": {
+        "source": "Melon"
+      },
+      "Monthly": {
+        "source": "Melon"
+      }
+    },
 
-    "Bugs": [
-      "Real-time",
-      "Daily",
-      "Weekly"
-    ],
+    "Bugs": {
+      "Real-time": {
+        "source": "Guysome"
+      },
+      "Daily": {
+        "source": "Guysome"
+      },
+      "Weekly": {
+        "source": "Bugs"
+      }
+    },
 
-    "Genie": [
-      "TOP200",
-      "Daily",
-      "Weekly",
-      "Monthly"
-    ],
+    "Genie": {
+      "TOP200": {
+        "source": "Genie"
+      },
+      "Daily": {
+        "source": "Genie"
+      },
+      "Weekly": {
+        "source": "Genie"
+      },
+      "Monthly": {
+        "source": "Genie"
+      }
+    },
 
-    "FLO": [
-      "Real-time"
-    ],
+    "FLO": {
+      "Real-time": {
+        "source": "FLO"
+      }
+    },
 
-    "VIBE": [
-      "TOP100",
-      "Domestic",
-      "Overseas"
-    ]
+    "VIBE": {
+      "TOP100": {
+        "source": "Guysome"
+      },
+      "Domestic": {
+        "source": "VIBE"
+      },
+      "Overseas": {
+        "source": "VIBE"
+      }
+    }
   }
 }
