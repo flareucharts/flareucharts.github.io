@@ -29,9 +29,17 @@
    HEADER
 ========================================================= */
 
+.page.guide-page .guide-title-logo{
+    width:32px;
+    height:32px;
+    object-fit:contain;
+    flex:0 0 auto;
+}
+
 .page.guide-page .guide-title{
     display:flex;
     align-items:center;
+    gap:10px;
     padding:14px 16px 0 16px;
 }
 
