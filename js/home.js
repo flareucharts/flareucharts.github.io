@@ -647,3 +647,34 @@ if (!waitForHomeVotes()) {
     }, 100);
 
 }
+
+const guideScroll =
+    document.getElementById("guideScroll");
+
+if (guideScroll){
+
+    guideScroll.innerHTML = `
+
+        <a href="./guide/?category=music-show"
+           class="home-guide-card music-show">
+            MUSIC SHOW
+        </a>
+
+        <a href="./guide/?category=vote"
+           class="home-guide-card vote">
+            VOTE
+        </a>
+
+        <a href="./guide/?category=stream"
+           class="home-guide-card stream">
+            STREAM
+        </a>
+
+        <a href="./guide/?category=other"
+           class="home-guide-card other">
+            OTHERS
+        </a>
+
+    `;
+
+}
