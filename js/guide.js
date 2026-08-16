@@ -493,7 +493,8 @@ if (shareButton){
 
     shareButton.addEventListener("click", async () => {
 
-        const url = window.location.href;
+        const url =
+    `${window.location.origin}/guide?category=${encodeURIComponent(currentCategory)}&guide=${encodeURIComponent(selected)}`;
 
         if (navigator.share){
 
@@ -625,8 +626,40 @@ if (shareButton){
        INITIAL
     ===================================================== */
 
-    selectCategory(
-        "music-show"
-    );
+    const params = new URLSearchParams(
+    window.location.search
+);
+
+const category =
+    params.get("category");
+
+const guideName =
+    params.get("guide");
+
+
+if (
+    category &&
+    GUIDE_DATA[category]
+){
+
+    currentCategory = category;
+
+    const index =
+        GUIDE_DATA[category].pills.indexOf(
+            guideName
+        );
+
+    currentPill =
+        index >= 0 ? index : 0;
+
+    updateMainTabs();
+    renderPills();
+    renderFeed();
+
+}else{
+
+    selectCategory("music-show");
+
+}
 
 });
