@@ -283,6 +283,8 @@ def main():
         / "data"
         / "melon_realtime.json"
     )
+    
+    print(f"JSON path: {json_path.resolve()}")
 
     json_path.parent.mkdir(
         parents=True,
