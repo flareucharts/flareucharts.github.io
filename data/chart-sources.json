@@ -1,0 +1,36 @@
+{
+  "kchart": {
+    "Melon": [
+      "TOP100",
+      "HOT100 (100days)",
+      "HOT100 (30days)",
+      "Real-time",
+      "Daily",
+      "Weekly",
+      "Monthly"
+    ],
+
+    "Bugs": [
+      "Real-time",
+      "Daily",
+      "Weekly"
+    ],
+
+    "Genie": [
+      "TOP200",
+      "Daily",
+      "Weekly",
+      "Monthly"
+    ],
+
+    "FLO": [
+      "Real-time"
+    ],
+
+    "VIBE": [
+      "TOP100",
+      "Domestic",
+      "Overseas"
+    ]
+  }
+}
