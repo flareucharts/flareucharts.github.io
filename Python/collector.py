@@ -311,7 +311,65 @@ def main():
                 encoding="utf-8"
             ) as f:
 
-                history = json.load(f)
+                existing_data = json.load(f)
+
+            # ---------------------------------------------
+            # MIGRATE OLD FORMAT → HISTORY FORMAT
+            # ---------------------------------------------
+
+            if isinstance(existing_data, list):
+
+                if existing_data:
+
+                    old_snapshot_time = existing_data[0].get(
+                        "snapshot_time",
+                        get_snapshot_time()
+                    )
+
+                    old_songs = []
+
+                    for item in existing_data:
+
+                        old_songs.append({
+
+                            "rank": item.get("rank"),
+
+                            "previous_rank": item.get(
+                                "previous_rank"
+                            ),
+
+                            "rank_change": item.get(
+                                "rank_change",
+                                0
+                            ),
+
+                            "title": item.get(
+                                "title",
+                                ""
+                            ),
+
+                            "cover": item.get(
+                                "cover",
+                                ""
+                            ),
+
+                            "likes": item.get(
+                                "likes"
+                            )
+
+                        })
+
+                    history["snapshots"].append({
+
+                        "snapshot_time": old_snapshot_time,
+
+                        "songs": old_songs
+
+                    })
+
+            elif isinstance(existing_data, dict):
+
+                history = existing_data
 
         except (json.JSONDecodeError, OSError):
 
