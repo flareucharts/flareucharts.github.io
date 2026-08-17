@@ -1,0 +1,54 @@
+[
+  {
+    "platform": "Melon",
+    "chart": "Real-time",
+    "source": "Guysome",
+    "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
+    "rank": 1,
+    "previous_rank": null,
+    "artist": "RESCENE (리센느)",
+    "title": "LOVE ATTACK",
+    "cover": "https://cdn.guyso.me/image/album/melon/11575849.jpg?v=1724753051034&size=80",
+    "likes": 136367,
+    "rank_change": 0
+  },
+  {
+    "platform": "Melon",
+    "chart": "Real-time",
+    "source": "Guysome",
+    "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
+    "rank": 3,
+    "previous_rank": 5,
+    "artist": "RESCENE (리센느)",
+    "title": "Pretty Girl",
+    "cover": "https://cdnimg.melon.co.kr/cm2/album/images/137/88/545/13788545_20260707111659_500.jpg/melon/resize/144/optimize/90?size=80",
+    "likes": 52729,
+    "rank_change": 2
+  },
+  {
+    "platform": "Melon",
+    "chart": "Real-time",
+    "source": "Guysome",
+    "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
+    "rank": 5,
+    "previous_rank": 6,
+    "artist": "RESCENE (리센느)",
+    "title": "Deja Vu",
+    "cover": "https://cdn.guyso.me/image/album/melon/11875116.jpg?v=1753652582608&size=80",
+    "likes": 43875,
+    "rank_change": 1
+  },
+  {
+    "platform": "Melon",
+    "chart": "Real-time",
+    "source": "Guysome",
+    "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
+    "rank": 56,
+    "previous_rank": 59,
+    "artist": "RESCENE (리센느)",
+    "title": "Runaway",
+    "cover": "https://cdn.guyso.me/image/album/melon/13312413.jpg?v=1775642677521&size=80",
+    "likes": 29226,
+    "rank_change": -3
+  }
+]
