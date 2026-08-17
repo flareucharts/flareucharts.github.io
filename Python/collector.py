@@ -1205,6 +1205,22 @@ def collect_bugs():
         "html.parser"
     )
 
+    print(
+        "BUGS IMAGE COUNT:",
+        len(soup.select("img"))
+    )
+
+    for img in soup.select("img")[:15]:
+
+        print(
+            "BUGS IMG:",
+            img.get("src"),
+            img.get("data-original"),
+            img.get("data-lazy"),
+            img.get("alt"),
+            img.get("class")
+        )
+
     songs = []
 
     rows = soup.select(
@@ -1374,6 +1390,22 @@ def parse_genie_page(
         html,
         "html.parser"
     )
+
+    print(
+        "GENIE IMAGE COUNT:",
+        len(soup.select("img"))
+    )
+
+    for img in soup.select("img")[:15]:
+
+        print(
+            "GENIE IMG:",
+            img.get("src"),
+            img.get("data-original"),
+            img.get("data-lazy"),
+            img.get("alt"),
+            img.get("class")
+        )
 
     songs = []
 
