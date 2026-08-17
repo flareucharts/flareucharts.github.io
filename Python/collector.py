@@ -1326,11 +1326,25 @@ def collect_bugs():
         if rank is None:
             continue
 
+        cover_el = row.select_one(
+            ".album img"
+        )
+
+        cover = ""
+
+        if cover_el:
+            cover = (
+                cover_el.get("src")
+                or cover_el.get("data-original")
+                or ""
+            ).strip()
+
         songs.append(
             normalize_song(
                 rank=rank,
                 title=title,
-                artist=artist
+                artist=artist,
+                cover=cover
             )
         )
 
@@ -1398,6 +1412,19 @@ def parse_genie_page(
             " ",
             strip=True
         )
+
+cover_el = row.select_one(
+    ".album img"
+)
+
+cover = ""
+
+if cover_el:
+    cover = (
+        cover_el.get("src")
+        or cover_el.get("data-original")
+        or ""
+    ).strip()
 
         title = title.lstrip(
             " "
