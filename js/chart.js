@@ -3,33 +3,27 @@
    DATA SOURCE:
    GitHub Repository /data/*.json
 
-   MATCHES:
-   - HTML: chart-page
-   - Main tabs:
-       KChart
-       Global Chart
-       Japan Chart
-       Cumulative
+   MAIN TABS:
+   - KChart
+   - Global Chart
+   - Japan Chart
+   - Cumulative
 
-   JSON FORMAT:
-   {
-       "platform": "...",
-       "chart": "...",
-       "source": "...",
-       "artist": "RESCENE (리센느)",
-       "updated_at": "...",
-       "snapshots": [
-           {
-               "snapshot_time": "...",
-               "date": "...",
-               "hour": 16,
-               "platform": "...",
-               "chart": "...",
-               "source": "...",
-               "songs": [...]
-           }
-       ]
-   }
+   KCHART SUB PILLS:
+   - Current
+   - Daily
+   - Weekly
+   - Monthly
+
+   CURRENT:
+   - Melon TOP100
+   - Melon HOT100 30 Days
+   - Melon HOT100 100 Days
+   - Melon Real-time
+   - Bugs Real-time
+   - Genie TOP200
+   - FLO Real-time
+   - VIBE
 ========================================================= */
 
 console.log("CHART JS LOADED");
@@ -68,76 +62,175 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (!pills || !pillsWrap || !feed) {
+
         console.error(
             "Chart elements tidak lengkap."
         );
+
         return;
+
     }
 
 
     /* =====================================================
-       CONFIG
+       ICON
     ===================================================== */
 
-    const JSON_FILES = [
+    const CHART_LOGOS = {
+
+        melon:
+            "images/icons/melon.png",
+
+        bugs:
+            "images/icons/bugs.png",
+
+        genie:
+            "images/icons/genie.png",
+
+        flo:
+            "images/icons/flo.png",
+
+        vibe:
+            "images/icons/vibe.png"
+
+    };
+
+
+    /* =====================================================
+       CURRENT SOURCES
+    ===================================================== */
+
+    const CURRENT_SOURCES = [
 
         {
             id: "melon_top100",
             name: "Melon TOP100",
-            category: "kchart",
+            platform: "melon",
             file: "melon_top100.json"
         },
 
         {
             id: "melon_hot100_30",
-            name: "Melon HOT100 30D",
-            category: "kchart",
+            name: "Melon HOT100 (30 Days)",
+            platform: "melon",
             file: "melon_hot100_30days.json"
         },
 
         {
             id: "melon_hot100_100",
-            name: "Melon HOT100 100D",
-            category: "kchart",
+            name: "Melon HOT100 (100 Days)",
+            platform: "melon",
             file: "melon_hot100_100days.json"
         },
 
         {
             id: "melon_realtime",
             name: "Melon Real-time",
-            category: "kchart",
+            platform: "melon",
             file: "melon_realtime.json"
         },
 
         {
             id: "bugs_realtime",
             name: "Bugs Real-time",
-            category: "kchart",
+            platform: "bugs",
             file: "bugs_realtime.json"
         },
 
         {
             id: "genie_top200",
             name: "Genie TOP200",
-            category: "kchart",
+            platform: "genie",
             file: "genie_top200.json"
         },
 
         {
             id: "flo_realtime",
             name: "FLO Real-time",
-            category: "kchart",
+            platform: "flo",
             file: "flo_realtime.json"
         },
 
         {
-            id: "vibe_domestic",
-            name: "VIBE Domestic",
-            category: "kchart",
-            file: "vibe_domestic.json"
+            id: "vibe",
+            name: "VIBE",
+            platform: "vibe",
+            file: "vibe_domestic.json",
+            required: true
         }
 
     ];
+
+
+    /* =====================================================
+       KCHART PERIODS
+    ===================================================== */
+
+    const KCHART_PILLS = [
+
+        {
+            id: "current",
+            name: "Current"
+        },
+
+        {
+            id: "daily",
+            name: "Daily"
+        },
+
+        {
+            id: "weekly",
+            name: "Weekly"
+        },
+
+        {
+            id: "monthly",
+            name: "Monthly"
+        }
+
+    ];
+
+
+    /* =====================================================
+       PERIOD JSON
+    ===================================================== */
+
+    const PERIOD_SOURCES = {
+
+        daily: [
+
+            {
+                id: "melon_daily",
+                name: "Melon Daily",
+                platform: "melon",
+                file: "melon_daily.json"
+            }
+
+        ],
+
+        weekly: [
+
+            {
+                id: "melon_weekly",
+                name: "Melon Weekly",
+                platform: "melon",
+                file: "melon_weekly.json"
+            }
+
+        ],
+
+        monthly: [
+
+            {
+                id: "melon_monthly",
+                name: "Melon Monthly",
+                platform: "melon",
+                file: "melon_monthly.json"
+            }
+
+        ]
+
+    };
 
 
     /* =====================================================
@@ -146,7 +239,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let chartData = {
 
-        kchart: [],
+        current: [],
+
+        daily: [],
+
+        weekly: [],
+
+        monthly: [],
 
         global: [],
 
@@ -201,8 +300,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
         const number =
             Number(value);
+
 
         if (
             Number.isNaN(number)
@@ -211,6 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return escapeHTML(value);
 
         }
+
 
         return number.toLocaleString(
             "id-ID"
@@ -225,9 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function formatSnapshotTime(value) {
 
-        if (!value) {
-            return "";
-        }
+        if (!value) return "";
 
 
         const date =
@@ -280,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOAD ONE JSON
+       LOAD JSON
     ===================================================== */
 
     async function loadJSON(config) {
@@ -303,11 +403,22 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
 
                 console.warn(
-                    `${config.name}: ` +
-                    `HTTP ${response.status}`
+                    `${config.name}: HTTP ${response.status}`
                 );
 
-                return null;
+                return {
+
+                    id: config.id,
+
+                    name: config.name,
+
+                    platform: config.platform,
+
+                    snapshot: null,
+
+                    songs: []
+
+                };
 
             }
 
@@ -320,36 +431,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 !data ||
                 !Array.isArray(
                     data.snapshots
-                )
-            ) {
-
-                console.warn(
-                    `${config.name}: ` +
-                    `format JSON tidak valid`
-                );
-
-                return null;
-
-            }
-
-
-            if (
+                ) ||
                 !data.snapshots.length
             ) {
 
-                console.warn(
-                    `${config.name}: ` +
-                    `tidak memiliki snapshot`
-                );
+                return {
 
-                return null;
+                    id: config.id,
+
+                    name: config.name,
+
+                    platform: config.platform,
+
+                    snapshot: null,
+
+                    songs: []
+
+                };
 
             }
 
-
-            /*
-             * Snapshot terakhir.
-             */
 
             const latest =
                 data.snapshots[
@@ -364,32 +465,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             ) {
 
-                console.warn(
-                    `${config.name}: ` +
-                    `snapshot tidak valid`
-                );
+                return {
 
-                return null;
+                    id: config.id,
 
-            }
+                    name: config.name,
 
+                    platform: config.platform,
 
-            /*
-             * Jangan tampilkan sumber
-             * jika RESCENE memang tidak
-             * mempunyai lagu di chart tersebut.
-             */
+                    snapshot: null,
 
-            if (
-                latest.songs.length === 0
-            ) {
+                    songs: []
 
-                console.log(
-                    `${config.name}: ` +
-                    `RESCENE tidak ditemukan`
-                );
-
-                return null;
+                };
 
             }
 
@@ -402,10 +490,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 name:
                     config.name,
 
-                category:
-                    config.category,
-
                 platform:
+                    config.platform ||
                     data.platform ||
                     latest.platform ||
                     "",
@@ -440,7 +526,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 error
             );
 
-            return null;
+
+            return {
+
+                id: config.id,
+
+                name: config.name,
+
+                platform: config.platform,
+
+                snapshot: null,
+
+                songs: []
+
+            };
 
         }
 
@@ -448,7 +547,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOAD ALL DATA
+       LOAD CURRENT
+    ===================================================== */
+
+    async function loadCurrent() {
+
+        const results =
+            await Promise.all(
+                CURRENT_SOURCES.map(
+                    config =>
+                        loadJSON(config)
+                )
+            );
+
+
+        chartData.current =
+            results;
+
+    }
+
+
+    /* =====================================================
+       LOAD PERIOD
+    ===================================================== */
+
+    async function loadPeriod(
+        period
+    ) {
+
+        const configs =
+            PERIOD_SOURCES[period] || [];
+
+
+        if (!configs.length) {
+
+            chartData[period] = [];
+
+            return;
+
+        }
+
+
+        const results =
+            await Promise.all(
+                configs.map(
+                    config =>
+                        loadJSON(config)
+                )
+            );
+
+
+        chartData[period] =
+            results;
+
+    }
+
+
+    /* =====================================================
+       LOAD ALL
     ===================================================== */
 
     async function loadAllCharts() {
@@ -458,31 +614,17 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        const results =
-            await Promise.all(
-                JSON_FILES.map(
-                    config =>
-                        loadJSON(config)
-                )
-            );
+        await Promise.all([
 
+            loadCurrent(),
 
-        chartData = {
+            loadPeriod("daily"),
 
-            kchart:
-                results.filter(
-                    item =>
-                        item &&
-                        item.category === "kchart"
-                ),
+            loadPeriod("weekly"),
 
-            global: [],
+            loadPeriod("monthly")
 
-            japan: [],
-
-            cum: []
-
-        };
+        ]);
 
 
         console.log(
@@ -502,7 +644,6 @@ document.addEventListener("DOMContentLoaded", () => {
         dropdownOpen =
             false;
 
-
         pillsWrap.classList.remove(
             "open"
         );
@@ -514,7 +655,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         dropdownOpen =
             !dropdownOpen;
-
 
         pillsWrap.classList.toggle(
             "open",
@@ -544,9 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         event => {
 
-            if (!dropdownOpen) {
-                return;
-            }
+            if (!dropdownOpen) return;
 
 
             if (
@@ -564,7 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       UPDATE MAIN TABS
+       MAIN TABS
     ===================================================== */
 
     function updateMainTabs() {
@@ -590,95 +728,87 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPills() {
 
-        const sources =
-            chartData[
-                currentCategory
-            ] || [];
-
-
         pills.innerHTML =
             "";
 
 
-        currentPill =
-            Math.min(
-                currentPill,
-                Math.max(
-                    sources.length - 1,
-                    0
-                )
-            );
-
-
         /*
-         * Tidak ada sumber.
+         * KChart punya 4 sub-pill.
          */
 
-        if (!sources.length) {
+        if (
+            currentCategory ===
+            "kchart"
+        ) {
 
-            pillsWrap.classList.add(
+            pillsWrap.classList.remove(
                 "hidden"
             );
+
+
+            KCHART_PILLS.forEach(
+                (pill, index) => {
+
+                    const button =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    button.type =
+                        "button";
+
+
+                    button.className =
+                        "chart-pill";
+
+
+                    button.textContent =
+                        pill.name;
+
+
+                    button.classList.toggle(
+                        "active",
+                        index === currentPill
+                    );
+
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            currentPill =
+                                index;
+
+                            closeDropdown();
+
+                            updatePills();
+
+                            renderFeed();
+
+                        }
+                    );
+
+
+                    pills.appendChild(
+                        button
+                    );
+
+                }
+            );
+
 
             return;
 
         }
 
 
-        pillsWrap.classList.remove(
+        /*
+         * Category lain.
+         */
+
+        pillsWrap.classList.add(
             "hidden"
-        );
-
-
-        sources.forEach(
-            (source, index) => {
-
-                const button =
-                    document.createElement(
-                        "button"
-                    );
-
-
-                button.type =
-                    "button";
-
-
-                button.className =
-                    "chart-pill";
-
-
-                button.textContent =
-                    source.name;
-
-
-                button.classList.toggle(
-                    "active",
-                    index === currentPill
-                );
-
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        currentPill =
-                            index;
-
-                        closeDropdown();
-
-                        updatePills();
-
-                        renderFeed();
-
-                    }
-                );
-
-
-                pills.appendChild(
-                    button
-                );
-
-            }
         );
 
     }
@@ -707,7 +837,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER RANK CHANGE
+       RENDER CHANGE
     ===================================================== */
 
     function renderChange(change) {
@@ -818,22 +948,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const coverHTML =
             cover
-                ?
-                `
-                    <img
-                        class="chart-cover"
-                        src="${escapeHTML(cover)}"
-                        alt=""
-                        loading="lazy"
-                        onerror="
-                            this.style.visibility='hidden';
-                        "
-                    >
-                `
-                :
-                `
-                    <div class="chart-cover"></div>
-                `;
+            ?
+            `
+                <img
+                    class="chart-cover"
+                    src="${escapeHTML(cover)}"
+                    alt=""
+                    loading="lazy"
+                    onerror="
+                        this.style.visibility='hidden';
+                    "
+                >
+            `
+            :
+            `
+                <div class="chart-cover"></div>
+            `;
 
 
         return `
@@ -945,14 +1075,83 @@ document.addEventListener("DOMContentLoaded", () => {
     ===================================================== */
 
     function renderEmpty(
-        message = "No chart data available."
+        message =
+            "No chart data available."
     ) {
 
         feed.innerHTML = `
 
             <div class="chart-empty">
-
                 ${escapeHTML(message)}
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       RENDER SOURCE HEADER
+    ===================================================== */
+
+    function renderSourceHeader(
+        source
+    ) {
+
+        const logo =
+            CHART_LOGOS[
+                source.platform
+            ] || "";
+
+
+        const time =
+            formatSnapshotTime(
+                source.snapshot?.snapshot_time
+            );
+
+
+        const logoHTML =
+            logo
+            ?
+            `
+                <img
+                    class="chart-source-logo"
+                    src="${escapeHTML(logo)}"
+                    alt=""
+                >
+            `
+            :
+            "";
+
+
+        return `
+
+            <div class="chart-section-title">
+
+                <div class="chart-source-name">
+
+                    ${logoHTML}
+
+                    <h3>
+                        ${escapeHTML(
+                            source.name
+                        )}
+                    </h3>
+
+                </div>
+
+
+                ${
+                    time
+                    ?
+                    `
+                        <span class="chart-time">
+                            ${escapeHTML(time)}
+                        </span>
+                    `
+                    :
+                    ""
+                }
 
             </div>
 
@@ -962,61 +1161,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER SELECTED SOURCE
+       RENDER CURRENT
     ===================================================== */
 
-    function renderSelectedSource() {
+    function renderCurrent() {
 
         const sources =
-            chartData[
-                currentCategory
-            ] || [];
+            chartData.current || [];
 
 
         if (!sources.length) {
 
             renderEmpty(
-                currentCategory === "kchart"
-                    ?
-                    "No KChart data available."
-                    :
-                    "No chart data available."
+                "No current chart data available."
             );
 
             return;
 
         }
-
-
-        const source =
-            sources[currentPill];
-
-
-        if (!source) {
-
-            renderEmpty();
-
-            return;
-
-        }
-
-
-        const snapshot =
-            source.snapshot;
-
-
-        const title =
-            source.name;
-
-
-        const time =
-            formatSnapshotTime(
-                snapshot?.snapshot_time
-            );
-
-
-        const songs =
-            source.songs || [];
 
 
         feed.innerHTML = `
@@ -1026,26 +1188,117 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="chart-section-title">
 
                     <h3>
-                        ${escapeHTML(title)}
+                        Current
                     </h3>
-
-
-                    ${
-                        time
-                        ?
-                        `
-                            <span class="chart-time">
-                                ${escapeHTML(time)}
-                            </span>
-                        `
-                        :
-                        ""
-                    }
 
                 </div>
 
 
-                ${renderSongList(songs)}
+                <div class="current-grid">
+
+                    ${sources
+                        .map(
+                            source => {
+
+                                return `
+
+                                    <div class="current-source">
+
+                                        ${renderSourceHeader(
+                                            source
+                                        )}
+
+                                        ${renderSongList(
+                                            source.songs
+                                        )}
+
+                                    </div>
+
+                                `;
+
+                            }
+                        )
+                        .join("")
+                    }
+
+                </div>
+
+            </section>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       RENDER PERIOD
+    ===================================================== */
+
+    function renderPeriod(
+        period
+    ) {
+
+        const sources =
+            chartData[period] || [];
+
+
+        if (!sources.length) {
+
+            renderEmpty();
+
+            return;
+
+        }
+
+
+        /*
+         * Untuk Daily / Weekly / Monthly,
+         * semua source yang tersedia
+         * ditampilkan.
+         */
+
+        feed.innerHTML = `
+
+            <section class="chart-section">
+
+                <div class="chart-section-title">
+
+                    <h3>
+                        ${
+                            period
+                                .charAt(0)
+                                .toUpperCase() +
+                            period.slice(1)
+                        }
+                    </h3>
+
+                </div>
+
+
+                <div class="current-grid">
+
+                    ${sources
+                        .map(
+                            source => `
+
+                                <div class="current-source">
+
+                                    ${renderSourceHeader(
+                                        source
+                                    )}
+
+                                    ${renderSongList(
+                                        source.songs
+                                    )}
+
+                                </div>
+
+                            `
+                        )
+                        .join("")
+                    }
+
+                </div>
 
             </section>
 
@@ -1060,18 +1313,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderKChart() {
 
-        renderSelectedSource();
+        const selected =
+            KCHART_PILLS[
+                currentPill
+            ];
+
+
+        if (!selected) {
+
+            renderCurrent();
+
+            return;
+
+        }
+
+
+        if (
+            selected.id ===
+            "current"
+        ) {
+
+            renderCurrent();
+
+            return;
+
+        }
+
+
+        renderPeriod(
+            selected.id
+        );
 
     }
 
 
     /* =====================================================
-       RENDER OTHER CATEGORIES
+       RENDER OTHER CATEGORY
     ===================================================== */
 
     function renderOtherCategory() {
 
-        const labels = {
+        const messages = {
 
             global:
                 "No Global Chart data available.",
@@ -1086,7 +1368,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         renderEmpty(
-            labels[
+            messages[
                 currentCategory
             ] ||
             "No chart data available."
@@ -1127,7 +1409,8 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
 
         if (
-            !chartData.hasOwnProperty(
+            !Object.prototype.hasOwnProperty.call(
+                chartData,
                 category
             )
         ) {
@@ -1184,10 +1467,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function init() {
 
-        /*
-         * Tampilkan loading sementara.
-         */
-
         feed.innerHTML = `
 
             <div class="chart-empty">
@@ -1199,13 +1478,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         await loadAllCharts();
 
-
-        /*
-         * URL parameter.
-         *
-         * Contoh:
-         * ?category=kchart
-         */
 
         const params =
             new URLSearchParams(
@@ -1219,20 +1491,14 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        const source =
-            params.get(
-                "source"
-            );
-
-
         /*
-         * Pilih category dari URL
-         * jika valid.
+         * Main category.
          */
 
         if (
             category &&
-            chartData.hasOwnProperty(
+            Object.prototype.hasOwnProperty.call(
+                chartData,
                 category
             )
         ) {
@@ -1249,33 +1515,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /*
-         * Kalau URL mempunyai source,
-         * cari berdasarkan nama source.
+         * Source parameter lama
+         * tetap didukung untuk
+         * compatibility.
          */
+
+        const source =
+            params.get(
+                "source"
+            );
+
 
         if (
             source &&
-            chartData[
-                currentCategory
-            ]?.length
+            currentCategory ===
+            "kchart"
         ) {
 
-            const index =
-                chartData[
-                    currentCategory
-                ].findIndex(
-                    item =>
-                        item.id === source ||
-                        item.name === source
-                );
+            /*
+             * Source tidak lagi menentukan
+             * pill platform.
+             *
+             * Current tetap menjadi
+             * default.
+             */
 
-
-            if (index >= 0) {
-
-                currentPill =
-                    index;
-
-            }
+            currentPill =
+                0;
 
         }
 
