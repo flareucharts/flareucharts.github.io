@@ -1,5 +1,6 @@
 /* =========================================================
    FLARE U CHART
+   DATA SOURCE: GitHub Repository JSON
 ========================================================= */
 
 console.log("CHART JS LOADED");
@@ -14,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("chart");
 
     if (!chart) return;
-
 
     const mainTabs =
         [...chart.querySelectorAll(".chart-main-tab")];
@@ -34,390 +34,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        DATA
-       DUMMY DATA — NANTI DIGANTI FIREBASE
     ===================================================== */
 
-    const CHART_DATA = {
-
-        /* =================================================
-           CURRENT
-        ================================================= */
+    let chartData = {
 
         current: {
-
             pills: [],
-
-            sources: [
-
-                {
-                    name: "Melon TOP100",
-                    time: "2026.08.17 11:00 (KST)",
-
-                    songs: [
-
-                        {
-                            rank: 9,
-                            change: 1,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg",
-                            likes: 12543
-                        },
-
-                        {
-                            rank: 24,
-                            change: -2,
-                            artist: "Artist B",
-                            title: "Another Song",
-                            cover: "./images/cover-placeholder.jpg",
-                            likes: 8321
-                        }
-
-                    ]
-                },
-
-
-                {
-                    name: "Spotify Global",
-                    time: "2026.08.17",
-
-                    songs: [
-
-                        {
-                            rank: 18,
-                            change: 3,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg"
-                        }
-
-                    ]
-                }
-
-            ]
-
+            sources: []
         },
-
-
-        /* =================================================
-           KCHART
-        ================================================= */
 
         kchart: {
-
-            pills: [
-                "Melon",
-                "Genie",
-                "Bugs",
-                "FLO",
-                "VIBE"
-            ],
-
-            sections: {
-
-                "Melon": {
-
-                    title: "Melon TOP100",
-                    time: "2026.08.17 11:00 (KST)",
-
-                    songs: [
-
-                        {
-                            rank: 9,
-                            change: 1,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg",
-                            likes: 12543
-                        },
-
-                        {
-                            rank: 27,
-                            change: -3,
-                            artist: "FLARE U",
-                            title: "Another Song",
-                            cover: "./images/cover-placeholder.jpg",
-                            likes: 8231
-                        }
-
-                    ]
-
-                },
-
-
-                "Genie": {
-
-                    title: "Genie TOP200",
-                    time: "2026.08.17 11:00 (KST)",
-
-                    songs: [
-
-                        {
-                            rank: 14,
-                            change: 2,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg"
-                        }
-
-                    ]
-
-                },
-
-
-                "Bugs": {
-
-                    title: "Bugs",
-                    time: "2026.08.17 11:00 (KST)",
-
-                    songs: [
-
-                        {
-                            rank: 7,
-                            change: 1,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg"
-                        }
-
-                    ]
-
-                },
-
-
-                "FLO": {
-
-                    title: "FLO",
-                    time: "2026.08.17 11:00 (KST)",
-
-                    songs: [
-
-                        {
-                            rank: 12,
-                            change: -1,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg"
-                        }
-
-                    ]
-
-                },
-
-
-                "VIBE": {
-
-                    title: "VIBE",
-                    time: "2026.08.17 11:00 (KST)",
-
-                    songs: [
-
-                        {
-                            rank: 21,
-                            change: 0,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg"
-                        }
-
-                    ]
-
-                }
-
-            }
-
+            pills: [],
+            sections: {}
         },
-
-
-        /* =================================================
-           GLOBAL CHART
-        ================================================= */
 
         global: {
-
-            pills: [
-                "Spotify",
-                "Apple Music",
-                "YouTube Music",
-                "TME",
-                "Oricon",
-                "LINE MUSIC"
-            ],
-
-            sections: {
-
-                "Spotify": {
-
-                    title: "Spotify Global",
-                    time: "2026.08.17",
-
-                    songs: [
-
-                        {
-                            rank: 18,
-                            change: 3,
-                            artist: "FLARE U",
-                            title: "Song Title",
-                            cover: "./images/cover-placeholder.jpg"
-                        }
-
-                    ]
-
-                },
-
-
-                "Apple Music": {
-
-                    title: "Apple Music",
-                    time: "2026.08.17",
-
-                    songs: []
-
-                },
-
-
-                "YouTube Music": {
-
-                    title: "YouTube Music",
-                    time: "2026.08.17",
-
-                    songs: []
-
-                },
-
-
-                "TME": {
-
-                    title: "TME",
-                    time: "2026.08.17",
-
-                    songs: []
-
-                },
-
-
-                "Oricon": {
-
-                    title: "Oricon",
-                    time: "2026.08.17",
-
-                    songs: []
-
-                },
-
-
-                "LINE MUSIC": {
-
-                    title: "LINE MUSIC",
-                    time: "2026.08.17",
-
-                    songs: []
-
-                }
-
-            }
-
+            pills: [],
+            sections: {}
         },
-
-
-        /* =================================================
-           ALBUM SALES
-        ================================================= */
 
         album: {
-
-            pills: [
-                "Hanteo",
-                "Circle Chart",
-                "Japan Sales"
-            ],
-
-            sections: {
-
-                "Hanteo": {
-
-                    title: "Hanteo",
-                    time: "2026.08.17",
-
-                    albums: [
-
-                        {
-                            rank: 1,
-                            title: "FLARE U — 1st Album",
-                            cover: "./images/cover-placeholder.jpg",
-                            sales: "125,430"
-                        }
-
-                    ]
-
-                },
-
-
-                "Circle Chart": {
-
-                    title: "Circle Chart",
-                    time: "2026.08.17",
-
-                    albums: []
-
-                },
-
-
-                "Japan Sales": {
-
-                    title: "Japan Sales",
-                    time: "2026.08.17",
-
-                    albums: []
-
-                }
-
-            }
-
+            pills: [],
+            sections: {}
         },
 
-
-        /* =================================================
-           MV
-        ================================================= */
-
         mv: {
-
             pills: [],
-
-            videos: [
-
-                {
-                    artist: "FLARE U",
-                    title: "Song Title",
-                    cover: "./images/cover-placeholder.jpg",
-                    views: "12.4M",
-                    likes: "854K",
-
-                    achievements: [
-                        "1M views — 18h 47m",
-                        "100K likes — 11h 20m",
-                        "Trending in 12 countries"
-                    ]
-                },
-
-
-                {
-                    artist: "FLARE U",
-                    title: "Another Song",
-                    cover: "./images/cover-placeholder.jpg",
-                    views: "5.8M",
-                    likes: "412K",
-
-                    achievements: [
-                        "1M views — 21h 03m",
-                        "100K likes — 15h 40m",
-                        "Trending in 7 countries"
-                    ]
-                }
-
-            ]
-
+            videos: []
         }
 
     };
@@ -427,14 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
        STATE
     ===================================================== */
 
-    let currentCategory =
-        "current";
+    let currentCategory = "current";
 
-    let currentPill =
-        0;
+    let currentPill = 0;
 
-    let dropdownOpen =
-        false;
+    let dropdownOpen = false;
 
 
     /* =====================================================
@@ -471,6 +111,203 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return Number(value)
             .toLocaleString("id-ID");
+
+    }
+
+
+    /* =====================================================
+       FORMAT TIME
+    ===================================================== */
+
+    function formatSnapshotTime(value){
+
+        if (!value) return "";
+
+        const date = new Date(value);
+
+        if (isNaN(date.getTime())) {
+            return value;
+        }
+
+        const parts =
+            new Intl.DateTimeFormat(
+                "en-GB",
+                {
+                    timeZone: "Asia/Seoul",
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false
+                }
+            ).formatToParts(date);
+
+        const get = type =>
+            parts.find(
+                p => p.type === type
+            )?.value || "";
+
+        return `${get("year")}.${get("month")}.${get("day")} ${get("hour")}:${get("minute")} (KST)`;
+
+    }
+
+
+    /* =====================================================
+       LOAD MELON REALTIME
+    ===================================================== */
+
+    async function loadMelonRealtime(){
+
+        try {
+
+            /*
+             * Cache bust supaya GitHub Pages tidak
+             * menggunakan JSON lama.
+             */
+
+            const url =
+                `/data/melon_realtime.json?t=${Date.now()}`;
+
+            const response =
+                await fetch(url, {
+                    cache: "no-store"
+                });
+
+            if (!response.ok){
+
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+
+            }
+
+            const history =
+                await response.json();
+
+
+            /* ---------------------------------------------
+               VALIDATE
+            --------------------------------------------- */
+
+            if (
+                !history ||
+                !Array.isArray(history.snapshots)
+            ){
+
+                throw new Error(
+                    "Invalid melon_realtime.json format"
+                );
+
+            }
+
+
+            /* ---------------------------------------------
+               GET LATEST SNAPSHOT
+            --------------------------------------------- */
+
+            const latest =
+                history.snapshots[
+                    history.snapshots.length - 1
+                ];
+
+
+            if (
+                !latest ||
+                !Array.isArray(latest.songs)
+            ){
+
+                throw new Error(
+                    "No snapshot data found"
+                );
+
+            }
+
+
+            /* ---------------------------------------------
+               CONVERT TO CHART FORMAT
+            --------------------------------------------- */
+
+            const songs =
+                latest.songs.map(song => {
+
+                    return {
+
+                        rank:
+                            song.rank,
+
+                        change:
+                            song.rank_change,
+
+                        artist:
+                            history.artist || "RESCENE (리센느)",
+
+                        title:
+                            song.title,
+
+                        cover:
+                            song.cover,
+
+                        likes:
+                            song.likes
+
+                    };
+
+                });
+
+
+            /* ---------------------------------------------
+               CURRENT → MELON
+            --------------------------------------------- */
+
+            chartData.current = {
+
+                pills: [],
+
+                sources: [
+
+                    {
+
+                        name:
+                            "Melon Real-time",
+
+                        time:
+                            formatSnapshotTime(
+                                latest.snapshot_time
+                            ),
+
+                        songs:
+                            songs
+
+                    }
+
+                ]
+
+            };
+
+
+            console.log(
+                "Melon realtime loaded:",
+                latest
+            );
+
+
+        } catch (error){
+
+            console.error(
+                "Failed to load Melon realtime:",
+                error
+            );
+
+            chartData.current = {
+
+                pills: [],
+
+                sources: []
+
+            };
+
+        }
 
     }
 
@@ -567,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderPills(){
 
         const data =
-            CHART_DATA[currentCategory];
+            chartData[currentCategory];
 
         pills.innerHTML = "";
 
@@ -740,7 +577,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
                     ${
-                        song.likes !== undefined
+                        song.likes !== undefined &&
+                        song.likes !== null
                         ?
                         `
                         <div class="chart-likes">
@@ -804,7 +642,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderCurrent(){
 
         const data =
-            CHART_DATA.current;
+            chartData.current;
+
 
         if (
             !data ||
@@ -814,7 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             feed.innerHTML = `
                 <div class="chart-empty">
-                    No current chart data.
+                    No current chart data available.
                 </div>
             `;
 
@@ -876,7 +715,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderStandardChart(){
 
         const data =
-            CHART_DATA[currentCategory];
+            chartData[currentCategory];
 
         if (!data){
 
@@ -891,7 +730,7 @@ document.addEventListener("DOMContentLoaded", () => {
             data.pills[currentPill];
 
         const section =
-            data.sections[selected];
+            data.sections?.[selected];
 
 
         if (!section){
@@ -939,93 +778,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderAlbum(){
 
-        const data =
-            CHART_DATA.album;
-
-        const selected =
-            data.pills[currentPill];
-
-        const section =
-            data.sections[selected];
-
-
-        if (
-            !section ||
-            !section.albums ||
-            !section.albums.length
-        ){
-
-            feed.innerHTML = `
-                <div class="chart-empty">
-                    No album sales data available.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
         feed.innerHTML = `
-
-            <section class="chart-section">
-
-                <div class="chart-section-title">
-
-                    <h3>
-                        ${escapeHTML(section.title)}
-                    </h3>
-
-                    <span class="chart-time">
-                        ${escapeHTML(section.time)}
-                    </span>
-
-                </div>
-
-
-                <div class="chart-list">
-
-                    ${section.albums.map(album => `
-
-                        <div class="chart-item">
-
-                            <div class="chart-rank">
-
-                                <span class="chart-rank-number">
-                                    ${escapeHTML(album.rank)}
-                                </span>
-
-                            </div>
-
-
-                            <img
-                                class="chart-cover"
-                                src="${escapeHTML(album.cover)}"
-                                alt=""
-                                loading="lazy"
-                            >
-
-
-                            <div class="chart-song-info">
-
-                                <div class="chart-song-title">
-                                    ${escapeHTML(album.title)}
-                                </div>
-
-                                <div class="chart-likes">
-                                    ${escapeHTML(album.sales)} copies
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    `).join("")}
-
-                </div>
-
-            </section>
-
+            <div class="chart-empty">
+                Album sales data will be connected next.
+            </div>
         `;
 
     }
@@ -1037,106 +793,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderMV(){
 
-        const data =
-            CHART_DATA.mv;
-
-        if (
-            !data ||
-            !data.videos ||
-            !data.videos.length
-        ){
-
-            feed.innerHTML = `
-                <div class="chart-empty">
-                    No MV data available.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
         feed.innerHTML = `
-
-            <section class="chart-section">
-
-                <div class="chart-section-title">
-
-                    <h3>
-                        Music Videos
-                    </h3>
-
-                </div>
-
-
-                <div class="mv-list">
-
-                    ${data.videos.map(video => `
-
-                        <div class="mv-card">
-
-                            <img
-                                class="mv-cover"
-                                src="${escapeHTML(video.cover)}"
-                                alt=""
-                                loading="lazy"
-                            >
-
-
-                            <div class="mv-info">
-
-                                <div class="mv-title">
-                                    ${escapeHTML(video.title)}
-                                </div>
-
-                                <div class="mv-artist">
-                                    ${escapeHTML(video.artist)}
-                                </div>
-
-                                <div class="mv-stat">
-                                    ▶ ${escapeHTML(video.views)}
-                                    views
-                                </div>
-
-                                <div class="mv-stat">
-                                    ♡ ${escapeHTML(video.likes)}
-                                    likes
-                                </div>
-
-
-                                ${
-                                    video.achievements &&
-                                    video.achievements.length
-                                    ?
-                                    `
-                                    <div class="mv-achievement">
-
-                                        ${video.achievements
-                                            .map(
-                                                achievement =>
-                                                    escapeHTML(
-                                                        achievement
-                                                    )
-                                            )
-                                            .join("<br>")}
-
-                                    </div>
-                                    `
-                                    :
-                                    ""
-                                }
-
-                            </div>
-
-                        </div>
-
-                    `).join("")}
-
-                </div>
-
-            </section>
-
+            <div class="chart-empty">
+                MV data will be connected next.
+            </div>
         `;
 
     }
@@ -1186,7 +846,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function selectCategory(category){
 
-        if (!CHART_DATA[category]){
+        if (!chartData[category]){
 
             return;
 
@@ -1234,57 +894,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       INITIAL
+       INITIAL LOAD
     ===================================================== */
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+    async function init(){
 
-    const category =
-        params.get("category");
+        /*
+         * Load real data dulu.
+         */
 
-    const source =
-        params.get("source");
+        await loadMelonRealtime();
 
 
-    if (
-        category &&
-        CHART_DATA[category]
-    ){
+        /*
+         * URL parameter
+         */
 
-        currentCategory =
-            category;
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        const category =
+            params.get("category");
+
+        const source =
+            params.get("source");
 
 
         if (
-            source &&
-            CHART_DATA[category].pills
+            category &&
+            chartData[category]
         ){
 
-            const index =
-                CHART_DATA[category]
-                    .pills
-                    .indexOf(source);
+            currentCategory =
+                category;
 
 
-            currentPill =
-                index >= 0
-                    ? index
-                    : 0;
+            if (
+                source &&
+                chartData[category].pills
+            ){
+
+                const index =
+                    chartData[category]
+                        .pills
+                        .indexOf(source);
+
+
+                currentPill =
+                    index >= 0
+                        ? index
+                        : 0;
+
+            }
+
+
+            updateMainTabs();
+            renderPills();
+            renderFeed();
+
+        } else {
+
+            selectCategory("current");
 
         }
 
-
-        updateMainTabs();
-        renderPills();
-        renderFeed();
-
-    }else{
-
-        selectCategory("current");
-
     }
+
+
+    init();
 
 });
