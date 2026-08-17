@@ -3,7 +3,7 @@
   "chart": "TOP100",
   "source": "Melon",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-18T06:00:00+09:00",
+  "updated_at": "2026-08-18T07:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T17:00:00+09:00",
@@ -711,6 +711,60 @@
       "snapshot_time": "2026-08-18T06:00:00+09:00",
       "date": "2026-08-18",
       "hour": 6,
+      "platform": "Melon",
+      "chart": "TOP100",
+      "source": "Melon",
+      "songs": [
+        {
+          "rank": 1,
+          "previous_rank": null,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdnimg.melon.co.kr/cm2/album/images/115/75/849/11575849_20240826152240_500.jpg/melon/resize/120/quality/80/optimize",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 4,
+          "previous_rank": null,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdnimg.melon.co.kr/cm2/album/images/137/88/545/13788545_20260707111659_500.jpg/melon/resize/120/quality/80/optimize",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 7,
+          "previous_rank": null,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdnimg.melon.co.kr/cm2/album/images/118/75/116/11875116_20250701165641_500.jpg/melon/resize/120/quality/80/optimize",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 67,
+          "previous_rank": null,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdnimg.melon.co.kr/cm2/album/images/133/12/413/13312413_20260406143448_500.jpg/melon/resize/120/quality/80/optimize",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-18T07:00:00+09:00",
+      "date": "2026-08-18",
+      "hour": 7,
       "platform": "Melon",
       "chart": "TOP100",
       "source": "Melon",
