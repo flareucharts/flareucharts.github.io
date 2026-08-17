@@ -1,36 +1,59 @@
-name: Melon Collector
+name: K-Chart Collector
 
 on:
   workflow_dispatch:
 
   schedule:
-  - cron: "0 * * * *"
+    - cron: "0 * * * *"
 
 jobs:
   collect:
     runs-on: ubuntu-latest
 
     steps:
+      # =====================================================
+      # CHECKOUT
+      # =====================================================
+
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # =====================================================
+      # PYTHON
+      # =====================================================
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # =====================================================
+      # DEPENDENCIES
+      # =====================================================
+
       - name: Install dependencies
         run: |
           pip install requests beautifulsoup4
 
-      - name: Run collector
+      # =====================================================
+      # RUN COLLECTOR
+      # =====================================================
+
+      - name: Run K-Chart collector
         run: |
           python Python/collector.py
+
+      # =====================================================
+      # SAVE ALL JSON
+      # =====================================================
 
       - name: Save JSON
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/melon_realtime.json
-          git diff --cached --quiet || git commit -m "Update Melon realtime data"
+
+          git add data/*.json
+
+          git diff --cached --quiet || git commit -m "Update K-Chart data"
+
           git push
