@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       # =====================================================
       # CHECKOUT
       # =====================================================
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
 
       # =====================================================
       # PYTHON
@@ -27,6 +29,7 @@ jobs:
         with:
           python-version: "3.11"
 
+
       # =====================================================
       # DEPENDENCIES
       # =====================================================
@@ -34,6 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests beautifulsoup4
+
 
       # =====================================================
       # RUN COLLECTOR
@@ -43,20 +47,21 @@ jobs:
         run: |
           python Python/collector.py
 
+
       # =====================================================
       # SAVE ALL JSON
       # =====================================================
 
       - name: Save JSON
-  run: |
-    git config user.name "github-actions[bot]"
-    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-    git add data/*.json
+          git add data/*.json
 
-    if git diff --cached --quiet; then
-      echo "No JSON changes to commit."
-    else
-      git commit -m "Update K-Chart data"
-      git push
-    fi
+          if git diff --cached --quiet; then
+            echo "No JSON changes to commit."
+          else
+            git commit -m "Update K-Chart data"
+            git push
+          fi
