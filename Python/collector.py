@@ -68,8 +68,14 @@ MELON_TOP100_URL = (
     "https://www.melon.com/chart/index.htm"
 )
 
-MELON_HOT100_URL = (
+MELON_HOT100_30_URL = (
     "https://www.melon.com/chart/hot100/index.htm"
+    "?classCd=30"
+)
+
+MELON_HOT100_100_URL = (
+    "https://www.melon.com/chart/hot100/index.htm"
+    "?classCd=100"
 )
 
 GUYSOME_BASE_URL = (
@@ -708,12 +714,29 @@ def collect_melon_hot100(
     )
     print("=" * 70)
 
+    if days == 30:
+
+        url = MELON_HOT100_30_URL
+
+    elif days == 100:
+
+        url = MELON_HOT100_100_URL
+
+    else:
+
+        print(
+            f"Hot100 {days} Days tidak valid → SKIP"
+        )
+
+        return
+
+    print(
+        "URL:",
+        url
+    )
+
     response = request_url(
-        MELON_HOT100_URL,
-        params={
-            "classCd":
-                str(days)
-        }
+        url
     )
 
     if not response:
@@ -742,19 +765,19 @@ def collect_melon_hot100(
         "tr.lst50"
     )
 
-    if not rows:
-
-        rows = soup.select(
-            "tr"
-        )
+    print(
+        "ROWS:",
+        len(rows)
+    )
 
     for row in rows:
 
         artist_el = row.select_one(
-            ".ellipsis.rank02 a"
+            ".ellipsis.rank02"
         )
 
         if not artist_el:
+
             continue
 
         artist = artist_el.get_text(
@@ -768,17 +791,24 @@ def collect_melon_hot100(
             continue
 
         title_el = row.select_one(
-            ".ellipsis.rank01 a"
+            ".ellipsis.rank01"
         )
 
         if not title_el:
+
             continue
+
+        title = title_el.get_text(
+            " ",
+            strip=True
+        )
 
         rank_el = row.select_one(
             ".rank .rank"
         )
 
         if not rank_el:
+
             continue
 
         try:
@@ -789,14 +819,9 @@ def collect_melon_hot100(
                 )
             )
 
-        except Exception:
+        except ValueError:
 
             continue
-
-        title = title_el.get_text(
-            " ",
-            strip=True
-        )
 
         cover_el = row.select_one(
             ".image_typeAll img"
@@ -807,10 +832,9 @@ def collect_melon_hot100(
         if cover_el:
 
             cover = (
+                cover_el.get("src")
+                or
                 cover_el.get(
-                    "src"
-                )
-                or cover_el.get(
                     "data-original",
                     ""
                 )
@@ -825,6 +849,11 @@ def collect_melon_hot100(
             )
         )
 
+    print(
+        "RESCENE SONGS:",
+        len(songs)
+    )
+
     save_snapshot(
         key=key,
         platform="Melon",
@@ -832,7 +861,6 @@ def collect_melon_hot100(
         source="Melon",
         songs=songs
     )
-
 
 # =========================================================
 # 3. GUYSOME
