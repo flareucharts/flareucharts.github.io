@@ -1,7 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from pathlib import Path
 
@@ -21,6 +21,8 @@ HEADERS = {
         "Chrome/124.0.0.0 Safari/537.36"
     )
 }
+
+HISTORY_DAYS = 90
 
 
 # =========================================================
@@ -54,11 +56,9 @@ def parse_rank_change(change_element):
         return 0
 
     try:
-
         number = int(value)
 
     except ValueError:
-
         return 0
 
     if "up" in span.get("class", []):
@@ -255,216 +255,5 @@ def get_guysome_melon_realtime():
 
 
 # =========================================================
-# MAIN
+# NORMALIZE SONG DATA
 # =========================================================
-
-def main():
-
-    print(
-        "\n=========================================="
-    )
-
-    print(
-        "GUYSOME → MELON REAL-TIME"
-    )
-
-    print(
-        f"TARGET: {TARGET_ARTIST}"
-    )
-
-    print(
-        "==========================================\n"
-    )
-
-    data = get_guysome_melon_realtime()
-
-    json_path = (
-        Path(__file__).parent.parent
-        / "data"
-        / "melon_realtime.json"
-    )
-
-    json_path.parent.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    # -------------------------------------------------
-    # LOAD EXISTING JSON
-    # -------------------------------------------------
-
-    history = {
-        "platform": "Melon",
-        "chart": "Real-time",
-        "source": "Guysome",
-        "artist": TARGET_ARTIST,
-        "snapshots": []
-    }
-
-    if json_path.exists():
-
-        try:
-
-            with open(
-                json_path,
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                existing_data = json.load(f)
-
-            # ---------------------------------------------
-            # MIGRATE OLD FORMAT → HISTORY FORMAT
-            # ---------------------------------------------
-
-            if isinstance(existing_data, list):
-
-                if existing_data:
-
-                    old_snapshot_time = existing_data[0].get(
-                        "snapshot_time",
-                        get_snapshot_time()
-                    )
-
-                    old_songs = []
-
-                    for item in existing_data:
-
-                        old_songs.append({
-
-                            "rank": item.get("rank"),
-
-                            "previous_rank": item.get(
-                                "previous_rank"
-                            ),
-
-                            "rank_change": item.get(
-                                "rank_change",
-                                0
-                            ),
-
-                            "title": item.get(
-                                "title",
-                                ""
-                            ),
-
-                            "cover": item.get(
-                                "cover",
-                                ""
-                            ),
-
-                            "likes": item.get(
-                                "likes"
-                            )
-
-                        })
-
-                    history["snapshots"].append({
-
-                        "snapshot_time": old_snapshot_time,
-
-                        "songs": old_songs
-
-                    })
-
-            elif isinstance(existing_data, dict):
-
-                history = existing_data
-
-        except (json.JSONDecodeError, OSError):
-
-            pass
-
-    # -------------------------------------------------
-    # SNAPSHOT
-    # -------------------------------------------------
-
-    snapshot_time = (
-        data[0]["snapshot_time"]
-        if data
-        else get_snapshot_time()
-    )
-
-    songs = []
-
-    for item in data:
-
-        songs.append({
-
-            "rank": item["rank"],
-
-            "previous_rank": item["previous_rank"],
-
-            "rank_change": item["rank_change"],
-
-            "title": item["title"],
-
-            "cover": item["cover"],
-
-            "likes": item["likes"]
-
-        })
-
-    history["snapshots"].append({
-
-        "snapshot_time": snapshot_time,
-
-        "songs": songs
-
-    })
-
-    # -------------------------------------------------
-    # SAVE HISTORY
-    # -------------------------------------------------
-
-    with open(
-        json_path,
-        "w",
-        encoding="utf-8"
-    ) as f:
-
-        json.dump(
-            history,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
-
-    for item in data:
-
-        if item["rank_change"] > 0:
-            movement = f"↑{item['rank_change']}"
-
-        elif item["rank_change"] < 0:
-            movement = f"↓{abs(item['rank_change'])}"
-
-        else:
-            movement = "—"
-
-        print(
-            f"#{item['rank']:>3} "
-            f"{movement:<4} "
-            f"{item['title']} | "
-            f"{item['artist']} | "
-            f"Likes: {item['likes']}"
-        )
-
-    print(
-        "\n=========================================="
-    )
-
-    print(
-        f"Total: {len(data)} lagu"
-    )
-
-    print(
-        f"Snapshot: {get_snapshot_time()}"
-    )
-
-    print(
-        "=========================================="
-    )
-
-
-if __name__ == "__main__":
-    main()
