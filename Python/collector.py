@@ -283,13 +283,81 @@ def main():
         / "data"
         / "melon_realtime.json"
     )
-    
-    print(f"JSON path: {json_path.resolve()}")
 
     json_path.parent.mkdir(
         parents=True,
         exist_ok=True
     )
+
+    # -------------------------------------------------
+    # LOAD EXISTING JSON
+    # -------------------------------------------------
+
+    history = {
+        "platform": "Melon",
+        "chart": "Real-time",
+        "source": "Guysome",
+        "artist": TARGET_ARTIST,
+        "snapshots": []
+    }
+
+    if json_path.exists():
+
+        try:
+
+            with open(
+                json_path,
+                "r",
+                encoding="utf-8"
+            ) as f:
+
+                history = json.load(f)
+
+        except (json.JSONDecodeError, OSError):
+
+            pass
+
+    # -------------------------------------------------
+    # SNAPSHOT
+    # -------------------------------------------------
+
+    snapshot_time = (
+        data[0]["snapshot_time"]
+        if data
+        else get_snapshot_time()
+    )
+
+    songs = []
+
+    for item in data:
+
+        songs.append({
+
+            "rank": item["rank"],
+
+            "previous_rank": item["previous_rank"],
+
+            "rank_change": item["rank_change"],
+
+            "title": item["title"],
+
+            "cover": item["cover"],
+
+            "likes": item["likes"]
+
+        })
+
+    history["snapshots"].append({
+
+        "snapshot_time": snapshot_time,
+
+        "songs": songs
+
+    })
+
+    # -------------------------------------------------
+    # SAVE HISTORY
+    # -------------------------------------------------
 
     with open(
         json_path,
@@ -298,7 +366,7 @@ def main():
     ) as f:
 
         json.dump(
-            data,
+            history,
             f,
             ensure_ascii=False,
             indent=2
