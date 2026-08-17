@@ -293,8 +293,12 @@
     font-size:15px;
     font-weight:700;
     color:#1f1f1f;
-    margin-bottom;6px;
+    margin-bottom:6px;
     justify-content:space-between;
+}
+
+.chart-platform span{
+    line-height:18px;
 }
 
 .chart-platform-icon{
