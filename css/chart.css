@@ -293,6 +293,7 @@
     font-size:15px;
     font-weight:700;
     color:#1f1f1f;
+    margin-bottom:6px;
 }
 
 .chart-platform-icon{
@@ -300,7 +301,6 @@
     height:18px;
     object-fit:contain;
     border-radius:5px;
-    margin-bottom:6px;
 }
 
 
