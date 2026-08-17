@@ -78,31 +78,31 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "melon_top100",
             name: "Melon TOP100",
             platform: "Melon",
-            icon: "images/icons/melon.png",
+            icon: "/images/icons/melon.png",
             file: "melon_top100.json"
         },
 
         {
-            id: "melon_hot100_30",
-            name: "Melon HOT100 30D",
+            id: "melon_hot100_100",
+            name: "Melon HOT100 (100days)",
             platform: "Melon",
-            icon: "images/icons/melon.png",
-            file: "melon_hot100_30days.json"
+            icon: "/images/icons/melon.png",
+            file: "melon_hot100_100days.json"
         },
 
         {
-            id: "melon_hot100_100",
-            name: "Melon HOT100 100D",
+            id: "melon_hot100_30",
+            name: "Melon HOT100 (30days)",
             platform: "Melon",
-            icon: "images/icons/melon.png",
-            file: "melon_hot100_100days.json"
+            icon: "/images/icons/melon.png",
+            file: "melon_hot100_30days.json"
         },
 
         {
             id: "melon_realtime",
             name: "Melon Real-time",
             platform: "Melon",
-            icon: "images/icons/melon.png",
+            icon: "/images/icons/melon.png",
             file: "melon_realtime.json"
         },
 
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "bugs_realtime",
             name: "Bugs Real-time",
             platform: "Bugs",
-            icon: "images/icons/bugs.png",
+            icon: "/images/icons/bugs.png",
             file: "bugs_realtime.json"
         },
 
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "genie_top200",
             name: "Genie TOP200",
             platform: "Genie",
-            icon: "images/icons/genie.png",
+            icon: "/images/icons/genie.png",
             file: "genie_top200.json"
         },
 
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "flo_realtime",
             name: "FLO Real-time",
             platform: "FLO",
-            icon: "images/icons/flo.png",
+            icon: "/images/icons/flo.png",
             file: "flo_realtime.json"
         },
 
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
             id: "vibe_domestic",
             name: "VIBE Domestic",
             platform: "VIBE",
-            icon: "images/icons/vibe.png",
+            icon: "/images/icons/vibe.png",
             file: "vibe_domestic.json"
         }
 
