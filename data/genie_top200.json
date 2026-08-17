@@ -3,7 +3,7 @@
   "chart": "TOP200",
   "source": "Genie",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-17T15:00:00+09:00",
+  "updated_at": "2026-08-17T16:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -48,6 +48,60 @@
         },
         {
           "rank": 148,
+          "previous_rank": null,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-17T16:00:00+09:00",
+      "date": "2026-08-17",
+      "hour": 16,
+      "platform": "Genie",
+      "chart": "TOP200",
+      "source": "Genie",
+      "songs": [
+        {
+          "rank": 1,
+          "previous_rank": null,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 6,
+          "previous_rank": null,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 23,
+          "previous_rank": null,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 146,
           "previous_rank": null,
           "title": "Runaway",
           "artist": "RESCENE (리센느)",
