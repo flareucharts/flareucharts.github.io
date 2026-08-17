@@ -40,6 +40,10 @@ OUTPUT_FILE = (
 
 CHARTS = {
 
+    # -----------------------------------------------------
+    # HOURLY
+    # -----------------------------------------------------
+
     "top100": {
         "name": "Melon TOP100",
         "url": (
@@ -60,6 +64,32 @@ CHARTS = {
         "url": (
             "https://www.melon.com/chart/"
             "hot100/index.htm?classCd=30"
+        )
+    },
+
+
+    # -----------------------------------------------------
+    # PERIODIC
+    # -----------------------------------------------------
+
+    "daily": {
+        "name": "Melon Daily Chart",
+        "url": (
+            "https://www.melon.com/chart/day/index.htm"
+        )
+    },
+
+    "weekly": {
+        "name": "Melon Weekly Chart",
+        "url": (
+            "https://www.melon.com/chart/week/index.htm"
+        )
+    },
+
+    "monthly": {
+        "name": "Melon Monthly Chart",
+        "url": (
+            "https://www.melon.com/chart/month/index.htm"
         )
     }
 
@@ -105,10 +135,6 @@ def parse_rank_change(row):
 
     rank_change = 0
 
-    # -----------------------------------------------------
-    # Melon biasanya menyimpan perubahan di .rank_wrap
-    # -----------------------------------------------------
-
     change_element = row.select_one(
         ".rank_wrap .rank_updown"
     )
@@ -123,6 +149,7 @@ def parse_rank_change(row):
 
     if not text:
         return 0
+
 
     # -----------------------------------------------------
     # DOWN
@@ -141,6 +168,7 @@ def parse_rank_change(row):
 
         return 0
 
+
     # -----------------------------------------------------
     # UP
     # -----------------------------------------------------
@@ -157,6 +185,7 @@ def parse_rank_change(row):
             return int(number)
 
         return 0
+
 
     return 0
 
@@ -189,6 +218,11 @@ def get_melon_chart(
 
     results = []
 
+
+    # -----------------------------------------------------
+    # REQUEST
+    # -----------------------------------------------------
+
     try:
 
         response = requests.get(
@@ -211,6 +245,10 @@ def get_melon_chart(
 
         return results
 
+
+    # -----------------------------------------------------
+    # PARSE HTML
+    # -----------------------------------------------------
 
     soup = BeautifulSoup(
         response.text,
@@ -433,6 +471,10 @@ def load_existing_data():
 
     if not OUTPUT_FILE.exists():
 
+        print(
+            "JSON belum ada. Membuat struktur baru."
+        )
+
         return {
             "platform": "Melon",
             "artist": TARGET_ARTIST,
@@ -614,6 +656,10 @@ def process_chart(
         return
 
 
+    # -----------------------------------------------------
+    # CREATE CHART STRUCTURE
+    # -----------------------------------------------------
+
     if chart_key not in data["charts"]:
 
         data["charts"][chart_key] = {
@@ -654,7 +700,7 @@ def process_chart(
 
 
     # -----------------------------------------------------
-    # SNAPSHOT
+    # CREATE SNAPSHOT
     # -----------------------------------------------------
 
     snapshot = {
@@ -674,13 +720,17 @@ def process_chart(
     }
 
 
+    # -----------------------------------------------------
+    # APPEND
+    # -----------------------------------------------------
+
     history.append(
         snapshot
     )
 
 
     # -----------------------------------------------------
-    # CLEAN
+    # CLEAN OLD HISTORY
     # -----------------------------------------------------
 
     history = remove_old_history(
@@ -700,6 +750,10 @@ def process_chart(
             )
     )
 
+
+    # -----------------------------------------------------
+    # SAVE CHART
+    # -----------------------------------------------------
 
     data["charts"][
         chart_key
@@ -750,7 +804,8 @@ def main():
     )
 
     print(
-        f"TIME   : {now.strftime('%Y-%m-%d %H:%M:%S')} KST"
+        f"TIME   : "
+        f"{now.strftime('%Y-%m-%d %H:%M:%S')} KST"
     )
 
     print(
@@ -762,6 +817,10 @@ def main():
     )
 
 
+    # -----------------------------------------------------
+    # LOAD
+    # -----------------------------------------------------
+
     data = load_existing_data()
 
 
@@ -770,7 +829,7 @@ def main():
 
 
     # -----------------------------------------------------
-    # PROCESS ALL HOURLY CHARTS
+    # PROCESS ALL CHARTS
     # -----------------------------------------------------
 
     for chart_key, chart_info in CHARTS.items():
@@ -801,6 +860,10 @@ def main():
         data
     )
 
+
+    # -----------------------------------------------------
+    # DONE
+    # -----------------------------------------------------
 
     print()
     print(
