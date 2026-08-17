@@ -313,6 +313,8 @@
     justify-content:space-between;
     gap:10px;
     width:100%;
+    border-bottom: 1px solid #eee;
+    margin-bottom:2px;
 }
 
 
@@ -326,6 +328,7 @@
   line-height:1.2;
   font-weight:700;
   color:#111;
+  margin-top:14px;
 }
 
 #chart .chart-time{
@@ -578,4 +581,5 @@
     width:18px;
     height:18px;
     object-fit:contain;
+    border-radius:3px;
 }
