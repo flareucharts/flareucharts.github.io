@@ -1,0 +1,74 @@
+{
+  "platform": "Bugs",
+  "chart": "Real-time",
+  "source": "Bugs",
+  "artist": "RESCENE (리센느)",
+  "updated_at": "2026-08-17T15:00:00+09:00",
+  "snapshots": [
+    {
+      "snapshot_time": "2026-08-17T15:00:00+09:00",
+      "date": "2026-08-17",
+      "hour": 15,
+      "platform": "Bugs",
+      "chart": "Real-time",
+      "source": "Bugs",
+      "songs": [
+        {
+          "rank": 1,
+          "previous_rank": null,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 8,
+          "previous_rank": null,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 11,
+          "previous_rank": null,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 53,
+          "previous_rank": null,
+          "title": "Pinball",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 64,
+          "previous_rank": null,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    }
+  ]
+}
