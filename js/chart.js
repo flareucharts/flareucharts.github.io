@@ -35,27 +35,23 @@ document.addEventListener("DOMContentLoaded", () => {
        ELEMENTS
     ===================================================== */
 
-    const chart =
-        document.getElementById("chart");
+    const chart = document.getElementById("chart");
 
     if (!chart) return;
 
 
-    const mainTabs =
-        [...chart.querySelectorAll(".chart-main-tab")];
-
+    const mainTabs = [
+        ...chart.querySelectorAll(".chart-main-tab")
+    ];
 
     const pills =
         chart.querySelector("#chart-pills");
 
-
     const dropdown =
         chart.querySelector("#chart-pills-dropdown");
 
-
     const pillsWrap =
         chart.querySelector("#chart-pills-wrap");
-
 
     const feed =
         chart.querySelector("#chart-feed");
@@ -73,164 +69,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       ICON
+       CONFIG
     ===================================================== */
 
-    const CHART_LOGOS = {
-
-        melon:
-            "images/icons/melon.png",
-
-        bugs:
-            "images/icons/bugs.png",
-
-        genie:
-            "images/icons/genie.png",
-
-        flo:
-            "images/icons/flo.png",
-
-        vibe:
-            "images/icons/vibe.png"
-
-    };
-
-
-    /* =====================================================
-       CURRENT SOURCES
-    ===================================================== */
-
-    const CURRENT_SOURCES = [
+    const JSON_FILES = [
 
         {
             id: "melon_top100",
             name: "Melon TOP100",
-            platform: "melon",
+            platform: "Melon",
+            icon: "images/icons/melon.png",
             file: "melon_top100.json"
         },
 
         {
             id: "melon_hot100_30",
-            name: "Melon HOT100 (30 Days)",
-            platform: "melon",
+            name: "Melon HOT100 30D",
+            platform: "Melon",
+            icon: "images/icons/melon.png",
             file: "melon_hot100_30days.json"
         },
 
         {
             id: "melon_hot100_100",
-            name: "Melon HOT100 (100 Days)",
-            platform: "melon",
+            name: "Melon HOT100 100D",
+            platform: "Melon",
+            icon: "images/icons/melon.png",
             file: "melon_hot100_100days.json"
         },
 
         {
             id: "melon_realtime",
             name: "Melon Real-time",
-            platform: "melon",
+            platform: "Melon",
+            icon: "images/icons/melon.png",
             file: "melon_realtime.json"
         },
 
         {
             id: "bugs_realtime",
             name: "Bugs Real-time",
-            platform: "bugs",
+            platform: "Bugs",
+            icon: "images/icons/bugs.png",
             file: "bugs_realtime.json"
         },
 
         {
             id: "genie_top200",
             name: "Genie TOP200",
-            platform: "genie",
+            platform: "Genie",
+            icon: "images/icons/genie.png",
             file: "genie_top200.json"
         },
 
         {
             id: "flo_realtime",
             name: "FLO Real-time",
-            platform: "flo",
+            platform: "FLO",
+            icon: "images/icons/flo.png",
             file: "flo_realtime.json"
         },
 
         {
-            id: "vibe",
-            name: "VIBE",
-            platform: "vibe",
-            file: "vibe_domestic.json",
-            required: true
+            id: "vibe_domestic",
+            name: "VIBE Domestic",
+            platform: "VIBE",
+            icon: "images/icons/vibe.png",
+            file: "vibe_domestic.json"
         }
 
     ];
-
-
-    /* =====================================================
-       KCHART PERIODS
-    ===================================================== */
-
-    const KCHART_PILLS = [
-
-        {
-            id: "current",
-            name: "Current"
-        },
-
-        {
-            id: "daily",
-            name: "Daily"
-        },
-
-        {
-            id: "weekly",
-            name: "Weekly"
-        },
-
-        {
-            id: "monthly",
-            name: "Monthly"
-        }
-
-    ];
-
-
-    /* =====================================================
-       PERIOD JSON
-    ===================================================== */
-
-    const PERIOD_SOURCES = {
-
-        daily: [
-
-            {
-                id: "melon_daily",
-                name: "Melon Daily",
-                platform: "melon",
-                file: "melon_daily.json"
-            }
-
-        ],
-
-        weekly: [
-
-            {
-                id: "melon_weekly",
-                name: "Melon Weekly",
-                platform: "melon",
-                file: "melon_weekly.json"
-            }
-
-        ],
-
-        monthly: [
-
-            {
-                id: "melon_monthly",
-                name: "Melon Monthly",
-                platform: "melon",
-                file: "melon_monthly.json"
-            }
-
-        ]
-
-    };
 
 
     /* =====================================================
@@ -239,33 +147,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let chartData = {
 
-        current: [],
-
-        daily: [],
-
-        weekly: [],
-
-        monthly: [],
-
+        kchart: [],
         global: [],
-
         japan: [],
-
         cum: []
 
     };
 
 
-    let currentCategory =
-        "kchart";
+    let currentCategory = "kchart";
 
+    let currentPill = 0;
 
-    let currentPill =
-        0;
-
-
-    let dropdownOpen =
-        false;
+    let dropdownOpen = false;
 
 
     /* =====================================================
@@ -301,28 +195,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        const number =
-            Number(value);
+        const number = Number(value);
 
 
-        if (
-            Number.isNaN(number)
-        ) {
+        if (Number.isNaN(number)) {
 
             return escapeHTML(value);
 
         }
 
 
-        return number.toLocaleString(
-            "id-ID"
-        );
+        return number.toLocaleString("id-ID");
 
     }
 
 
     /* =====================================================
-       FORMAT SNAPSHOT TIME
+       FORMAT TIME
     ===================================================== */
 
     function formatSnapshotTime(value) {
@@ -330,15 +219,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!value) return "";
 
 
-        const date =
-            new Date(value);
+        const date = new Date(value);
 
 
-        if (
-            Number.isNaN(
-                date.getTime()
-            )
-        ) {
+        if (Number.isNaN(date.getTime())) {
 
             return escapeHTML(value);
 
@@ -360,12 +244,11 @@ document.addEventListener("DOMContentLoaded", () => {
             ).formatToParts(date);
 
 
-        const get =
-            type =>
-                parts.find(
-                    part =>
-                        part.type === type
-                )?.value || "";
+        const get = type =>
+            parts.find(
+                part =>
+                    part.type === type
+            )?.value || "";
 
 
         return (
@@ -402,20 +285,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) {
 
-                console.warn(
-                    `${config.name}: HTTP ${response.status}`
-                );
-
                 return {
 
-                    id: config.id,
+                    ...config,
 
-                    name: config.name,
-
-                    platform: config.platform,
-
+                    available: false,
                     snapshot: null,
-
                     songs: []
 
                 };
@@ -429,22 +304,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (
                 !data ||
-                !Array.isArray(
-                    data.snapshots
-                ) ||
-                !data.snapshots.length
+                !Array.isArray(data.snapshots)
             ) {
 
                 return {
 
-                    id: config.id,
+                    ...config,
 
-                    name: config.name,
-
-                    platform: config.platform,
-
+                    available: false,
                     snapshot: null,
-
                     songs: []
 
                 };
@@ -452,29 +320,31 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
+            /*
+             * Ambil snapshot terbaru.
+             */
+
             const latest =
-                data.snapshots[
-                    data.snapshots.length - 1
-                ];
+                data.snapshots.length
+                    ? data.snapshots[
+                        data.snapshots.length - 1
+                    ]
+                    : null;
 
 
-            if (
-                !latest ||
-                !Array.isArray(
-                    latest.songs
-                )
-            ) {
+            /*
+             * JSON ada tetapi belum
+             * memiliki snapshot.
+             */
+
+            if (!latest) {
 
                 return {
 
-                    id: config.id,
+                    ...config,
 
-                    name: config.name,
-
-                    platform: config.platform,
-
+                    available: false,
                     snapshot: null,
-
                     songs: []
 
                 };
@@ -484,17 +354,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
             return {
 
-                id:
-                    config.id,
+                ...config,
 
-                name:
-                    config.name,
+                available:
+                    Array.isArray(
+                        latest.songs
+                    ) &&
+                    latest.songs.length > 0,
 
                 platform:
-                    config.platform ||
                     data.platform ||
                     latest.platform ||
-                    "",
+                    config.platform,
 
                 chart:
                     data.chart ||
@@ -514,7 +385,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     latest,
 
                 songs:
-                    latest.songs
+                    Array.isArray(
+                        latest.songs
+                    )
+                        ? latest.songs
+                        : []
 
             };
 
@@ -522,21 +397,16 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
 
             console.warn(
-                `${config.name}:`,
-                error
+                `${config.name}: gagal memuat JSON`
             );
 
 
             return {
 
-                id: config.id,
+                ...config,
 
-                name: config.name,
-
-                platform: config.platform,
-
+                available: false,
                 snapshot: null,
-
                 songs: []
 
             };
@@ -547,90 +417,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOAD CURRENT
-    ===================================================== */
-
-    async function loadCurrent() {
-
-        const results =
-            await Promise.all(
-                CURRENT_SOURCES.map(
-                    config =>
-                        loadJSON(config)
-                )
-            );
-
-
-        chartData.current =
-            results;
-
-    }
-
-
-    /* =====================================================
-       LOAD PERIOD
-    ===================================================== */
-
-    async function loadPeriod(
-        period
-    ) {
-
-        const configs =
-            PERIOD_SOURCES[period] || [];
-
-
-        if (!configs.length) {
-
-            chartData[period] = [];
-
-            return;
-
-        }
-
-
-        const results =
-            await Promise.all(
-                configs.map(
-                    config =>
-                        loadJSON(config)
-                )
-            );
-
-
-        chartData[period] =
-            results;
-
-    }
-
-
-    /* =====================================================
        LOAD ALL
     ===================================================== */
 
     async function loadAllCharts() {
 
-        console.log(
-            "Loading chart JSON..."
-        );
+        const results =
+            await Promise.all(
+                JSON_FILES.map(
+                    config =>
+                        loadJSON(config)
+                )
+            );
 
 
-        await Promise.all([
+        /*
+         * Semua collector masuk KChart.
+         */
 
-            loadCurrent(),
+        chartData = {
 
-            loadPeriod("daily"),
+            kchart: results,
 
-            loadPeriod("weekly"),
+            global: [],
+            japan: [],
+            cum: []
 
-            loadPeriod("monthly")
-
-        ]);
-
-
-        console.log(
-            "Chart data loaded:",
-            chartData
-        );
+        };
 
     }
 
@@ -641,8 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeDropdown() {
 
-        dropdownOpen =
-            false;
+        dropdownOpen = false;
 
         pillsWrap.classList.remove(
             "open"
@@ -707,17 +519,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateMainTabs() {
 
-        mainTabs.forEach(
-            tab => {
+        mainTabs.forEach(tab => {
 
-                tab.classList.toggle(
-                    "active",
-                    tab.dataset.category ===
-                    currentCategory
-                );
+            tab.classList.toggle(
+                "active",
+                tab.dataset.category ===
+                currentCategory
+            );
 
-            }
-        );
+        });
 
     }
 
@@ -728,12 +538,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPills() {
 
-        pills.innerHTML =
-            "";
+        pills.innerHTML = "";
 
 
         /*
-         * KChart punya 4 sub-pill.
+         * KChart memiliki 4 sub-pill.
          */
 
         if (
@@ -741,13 +550,16 @@ document.addEventListener("DOMContentLoaded", () => {
             "kchart"
         ) {
 
-            pillsWrap.classList.remove(
-                "hidden"
-            );
+            const labels = [
+                "Current",
+                "Daily",
+                "Weekly",
+                "Monthly"
+            ];
 
 
-            KCHART_PILLS.forEach(
-                (pill, index) => {
+            labels.forEach(
+                (label, index) => {
 
                     const button =
                         document.createElement(
@@ -764,7 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                     button.textContent =
-                        pill.name;
+                        label;
 
 
                     button.classList.toggle(
@@ -798,14 +610,15 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
+            pillsWrap.classList.remove(
+                "hidden"
+            );
+
+
             return;
 
         }
 
-
-        /*
-         * Category lain.
-         */
 
         pillsWrap.classList.add(
             "hidden"
@@ -815,7 +628,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       UPDATE ACTIVE PILL
+       UPDATE PILLS
     ===================================================== */
 
     function updatePills() {
@@ -837,7 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER CHANGE
+       RANK CHANGE
     ===================================================== */
 
     function renderChange(change) {
@@ -857,9 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Number(change);
 
 
-        if (
-            Number.isNaN(number)
-        ) {
+        if (Number.isNaN(number)) {
 
             return "";
 
@@ -948,22 +759,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const coverHTML =
             cover
-            ?
-            `
-                <img
-                    class="chart-cover"
-                    src="${escapeHTML(cover)}"
-                    alt=""
-                    loading="lazy"
-                    onerror="
-                        this.style.visibility='hidden';
-                    "
-                >
-            `
-            :
-            `
-                <div class="chart-cover"></div>
-            `;
+                ?
+                `
+                    <img
+                        class="chart-cover"
+                        src="${escapeHTML(cover)}"
+                        alt=""
+                        loading="lazy"
+                        onerror="
+                            this.style.visibility='hidden';
+                        "
+                    >
+                `
+                :
+                `
+                    <div class="chart-cover"></div>
+                `;
 
 
         return `
@@ -998,28 +809,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     ${
                         hasLikes
-                        ?
-                        `
-                            <div class="chart-likes">
-                                ♡ ${formatNumber(likes)}
-                            </div>
-                        `
-                        :
-                        ""
+                            ?
+                            `
+                                <div class="chart-likes">
+                                    ♡ ${formatNumber(likes)}
+                                </div>
+                            `
+                            :
+                            ""
                     }
 
 
                     ${
                         hasScore
-                        ?
-                        `
-                            <div class="chart-score">
-                                Score:
-                                ${formatNumber(score)}
-                            </div>
-                        `
-                        :
-                        ""
+                            ?
+                            `
+                                <div class="chart-score">
+                                    Score:
+                                    ${formatNumber(score)}
+                                </div>
+                            `
+                            :
+                            ""
                     }
 
                 </div>
@@ -1032,7 +843,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER SONG LIST
+       SONG LIST
     ===================================================== */
 
     function renderSongList(songs) {
@@ -1056,9 +867,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="chart-list">
 
                 ${songs
-                    .map(
-                        song =>
-                            renderSong(song)
+                    .map(song =>
+                        renderSong(song)
                     )
                     .join("")
                 }
@@ -1071,7 +881,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER EMPTY
+       EMPTY
     ===================================================== */
 
     function renderEmpty(
@@ -1091,67 +901,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER SOURCE HEADER
+       PLATFORM HEADER
     ===================================================== */
 
-    function renderSourceHeader(
+    function renderPlatformHeader(
         source
     ) {
 
-        const logo =
-            CHART_LOGOS[
-                source.platform
-            ] || "";
-
-
-        const time =
-            formatSnapshotTime(
-                source.snapshot?.snapshot_time
-            );
-
-
-        const logoHTML =
-            logo
-            ?
-            `
-                <img
-                    class="chart-source-logo"
-                    src="${escapeHTML(logo)}"
-                    alt=""
-                >
-            `
-            :
-            "";
+        const icon =
+            source.icon || "";
 
 
         return `
 
-            <div class="chart-section-title">
-
-                <div class="chart-source-name">
-
-                    ${logoHTML}
-
-                    <h3>
-                        ${escapeHTML(
-                            source.name
-                        )}
-                    </h3>
-
-                </div>
-
+            <div class="chart-platform">
 
                 ${
-                    time
-                    ?
-                    `
-                        <span class="chart-time">
-                            ${escapeHTML(time)}
-                        </span>
-                    `
-                    :
-                    ""
+                    icon
+                        ?
+                        `
+                            <img
+                                class="chart-platform-icon"
+                                src="${escapeHTML(icon)}"
+                                alt=""
+                                loading="lazy"
+                                onerror="
+                                    this.style.display='none';
+                                "
+                            >
+                        `
+                        :
+                        ""
                 }
+
+
+                <span>
+                    ${escapeHTML(source.name)}
+                </span>
 
             </div>
 
@@ -1161,85 +947,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER CURRENT
+       CURRENT
     ===================================================== */
 
     function renderCurrent() {
 
         const sources =
-            chartData.current || [];
-
-
-        if (!sources.length) {
-
-            renderEmpty(
-                "No current chart data available."
-            );
-
-            return;
-
-        }
-
-
-        feed.innerHTML = `
-
-            <section class="chart-section">
-
-                <div class="chart-section-title">
-
-                    <h3>
-                        Current
-                    </h3>
-
-                </div>
-
-
-                <div class="current-grid">
-
-                    ${sources
-                        .map(
-                            source => {
-
-                                return `
-
-                                    <div class="current-source">
-
-                                        ${renderSourceHeader(
-                                            source
-                                        )}
-
-                                        ${renderSongList(
-                                            source.songs
-                                        )}
-
-                                    </div>
-
-                                `;
-
-                            }
-                        )
-                        .join("")
-                    }
-
-                </div>
-
-            </section>
-
-        `;
-
-    }
-
-
-    /* =====================================================
-       RENDER PERIOD
-    ===================================================== */
-
-    function renderPeriod(
-        period
-    ) {
-
-        const sources =
-            chartData[period] || [];
+            chartData.kchart || [];
 
 
         if (!sources.length) {
@@ -1251,104 +965,149 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        /*
-         * Untuk Daily / Weekly / Monthly,
-         * semua source yang tersedia
-         * ditampilkan.
-         */
+        feed.innerHTML =
+            sources
+                .map(source => {
 
-        feed.innerHTML = `
-
-            <section class="chart-section">
-
-                <div class="chart-section-title">
-
-                    <h3>
-                        ${
-                            period
-                                .charAt(0)
-                                .toUpperCase() +
-                            period.slice(1)
-                        }
-                    </h3>
-
-                </div>
+                    const snapshot =
+                        source.snapshot;
 
 
-                <div class="current-grid">
+                    const time =
+                        formatSnapshotTime(
+                            snapshot?.snapshot_time
+                        );
 
-                    ${sources
-                        .map(
-                            source => `
 
-                                <div class="current-source">
+                    const songs =
+                        source.songs || [];
 
-                                    ${renderSourceHeader(
-                                        source
-                                    )}
 
-                                    ${renderSongList(
-                                        source.songs
-                                    )}
+                    return `
 
-                                </div>
+                        <section
+                            class="chart-section"
+                        >
 
-                            `
-                        )
-                        .join("")
-                    }
+                            <div
+                                class="chart-section-title"
+                            >
 
-                </div>
+                                ${renderPlatformHeader(
+                                    source
+                                )}
 
-            </section>
 
-        `;
+                                ${
+                                    time
+                                        ?
+                                        `
+                                            <span
+                                                class="chart-time"
+                                            >
+                                                ${escapeHTML(
+                                                    time
+                                                )}
+                                            </span>
+                                        `
+                                        :
+                                        ""
+                                }
+
+                            </div>
+
+
+                            ${renderSongList(
+                                songs
+                            )}
+
+                        </section>
+
+                    `;
+
+                })
+                .join("");
 
     }
 
 
     /* =====================================================
-       RENDER KCHART
+       DAILY / WEEKLY / MONTHLY
     ===================================================== */
 
-    function renderKChart() {
+    function renderPeriod(
+        period
+    ) {
 
-        const selected =
-            KCHART_PILLS[
-                currentPill
-            ];
+        /*
+         * Collector saat ini baru menyediakan
+         * Current snapshot.
+         *
+         * Jadi Daily / Weekly / Monthly
+         * tetap disiapkan tetapi belum
+         * mengambil data historis.
+         */
 
-
-        if (!selected) {
-
-            renderCurrent();
-
-            return;
-
-        }
-
-
-        if (
-            selected.id ===
-            "current"
-        ) {
-
-            renderCurrent();
-
-            return;
-
-        }
-
-
-        renderPeriod(
-            selected.id
+        renderEmpty(
+            `${period} chart data available soon.`
         );
 
     }
 
 
     /* =====================================================
-       RENDER OTHER CATEGORY
+       KCHART
+    ===================================================== */
+
+    function renderKChart() {
+
+        switch (currentPill) {
+
+            case 0:
+
+                renderCurrent();
+
+                break;
+
+
+            case 1:
+
+                renderPeriod(
+                    "Daily"
+                );
+
+                break;
+
+
+            case 2:
+
+                renderPeriod(
+                    "Weekly"
+                );
+
+                break;
+
+
+            case 3:
+
+                renderPeriod(
+                    "Monthly"
+                );
+
+                break;
+
+
+            default:
+
+                renderCurrent();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       OTHER MAIN TABS
     ===================================================== */
 
     function renderOtherCategory() {
@@ -1378,7 +1137,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER FEED
+       FEED
     ===================================================== */
 
     function renderFeed() {
@@ -1401,7 +1160,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       SELECT CATEGORY
+       SELECT MAIN CATEGORY
     ===================================================== */
 
     function selectCategory(
@@ -1424,8 +1183,7 @@ document.addEventListener("DOMContentLoaded", () => {
             category;
 
 
-        currentPill =
-            0;
+        currentPill = 0;
 
 
         closeDropdown();
@@ -1443,26 +1201,24 @@ document.addEventListener("DOMContentLoaded", () => {
        MAIN TAB CLICK
     ===================================================== */
 
-    mainTabs.forEach(
-        tab => {
+    mainTabs.forEach(tab => {
 
-            tab.addEventListener(
-                "click",
-                () => {
+        tab.addEventListener(
+            "click",
+            () => {
 
-                    selectCategory(
-                        tab.dataset.category
-                    );
+                selectCategory(
+                    tab.dataset.category
+                );
 
-                }
-            );
+            }
+        );
 
-        }
-    );
+    });
 
 
     /* =====================================================
-       INITIAL LOAD
+       INIT
     ===================================================== */
 
     async function init() {
@@ -1486,13 +1242,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const category =
-            params.get(
-                "category"
-            );
+            params.get("category");
 
 
         /*
-         * Main category.
+         * Default:
+         * KChart
          */
 
         if (
@@ -1510,38 +1265,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             currentCategory =
                 "kchart";
-
-        }
-
-
-        /*
-         * Source parameter lama
-         * tetap didukung untuk
-         * compatibility.
-         */
-
-        const source =
-            params.get(
-                "source"
-            );
-
-
-        if (
-            source &&
-            currentCategory ===
-            "kchart"
-        ) {
-
-            /*
-             * Source tidak lagi menentukan
-             * pill platform.
-             *
-             * Current tetap menjadi
-             * default.
-             */
-
-            currentPill =
-                0;
 
         }
 
