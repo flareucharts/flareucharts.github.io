@@ -1338,6 +1338,11 @@ def collect_bugs():
                 or cover_el.get("data-original")
                 or ""
             ).strip()
+         
+        print(
+            "BUGS COVER:",
+            cover
+        )
 
         songs.append(
             normalize_song(
@@ -1434,6 +1439,11 @@ def parse_genie_page(
                 or cover_el.get("data-original")
                 or ""
             ).strip()
+
+        print(
+            "GENIE COVER:",
+            cover
+        )
 
         # -------------------------------------------------
         # RANK
