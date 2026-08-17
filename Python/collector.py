@@ -590,18 +590,12 @@ def collect_melon_top100():
     )
 
     if not response:
-
         return
 
-    print(
-        "STATUS:",
-        response.status_code
-    )
+    print("STATUS:", response.status_code)
 
     if response.status_code != 200:
-
         print("SKIP")
-
         return
 
     soup = BeautifulSoup(
@@ -612,16 +606,30 @@ def collect_melon_top100():
     songs = []
 
     rows = soup.select(
-        "tr.lst50"
+        "tr.lst50, tr.lst100"
     )
+
+    print("ROWS:", len(rows))
 
     for row in rows:
 
-        artist_el = row.select_one(
-            ".ellipsis.rank02 a"
+        rank_el = row.select_one(
+            ".rank"
         )
 
-        if not artist_el:
+        title_el = row.select_one(
+            ".rank01 span a"
+        )
+
+        artist_el = row.select_one(
+            ".rank02 span a"
+        )
+
+        if not (
+            rank_el
+            and title_el
+            and artist_el
+        ):
             continue
 
         artist = artist_el.get_text(
@@ -629,20 +637,11 @@ def collect_melon_top100():
             strip=True
         )
 
-        if TARGET_ARTIST.lower() \
-                not in artist.lower():
-
-            continue
-
-        title_el = row.select_one(
-            ".ellipsis.rank01 a"
-        )
-
-        rank_el = row.select_one(
-            ".rank .rank"
-        )
-
-        if not title_el:
+        # RESCENE / 리센느
+        if not (
+            "RESCENE" in artist.upper()
+            or "리센느" in artist
+        ):
             continue
 
         try:
@@ -653,7 +652,7 @@ def collect_melon_top100():
                 )
             )
 
-        except Exception:
+        except ValueError:
 
             continue
 
@@ -671,10 +670,9 @@ def collect_melon_top100():
         if cover_el:
 
             cover = (
+                cover_el.get("src")
+                or
                 cover_el.get(
-                    "src"
-                )
-                or cover_el.get(
                     "data-original",
                     ""
                 )
@@ -689,6 +687,11 @@ def collect_melon_top100():
             )
         )
 
+    print(
+        "RESCENE SONGS:",
+        len(songs)
+    )
+
     save_snapshot(
         key="melon_top100",
         platform="Melon",
@@ -696,7 +699,6 @@ def collect_melon_top100():
         source="Melon",
         songs=songs
     )
-
 
 # =========================================================
 # 2. MELON HOT100
@@ -740,7 +742,6 @@ def collect_melon_hot100(
     )
 
     if not response:
-
         return
 
     print(
@@ -751,7 +752,6 @@ def collect_melon_hot100(
     if response.status_code != 200:
 
         print("SKIP")
-
         return
 
     soup = BeautifulSoup(
@@ -762,7 +762,7 @@ def collect_melon_hot100(
     songs = []
 
     rows = soup.select(
-        "tr.lst50"
+        "tr.lst50, tr.lst100"
     )
 
     print(
@@ -772,12 +772,23 @@ def collect_melon_hot100(
 
     for row in rows:
 
-        artist_el = row.select_one(
-            ".ellipsis.rank02"
+        rank_el = row.select_one(
+            ".rank"
         )
 
-        if not artist_el:
+        title_el = row.select_one(
+            ".rank01 span a"
+        )
 
+        artist_el = row.select_one(
+            ".rank02 span a"
+        )
+
+        if not (
+            rank_el
+            and title_el
+            and artist_el
+        ):
             continue
 
         artist = artist_el.get_text(
@@ -785,30 +796,11 @@ def collect_melon_hot100(
             strip=True
         )
 
-        if TARGET_ARTIST.lower() \
-                not in artist.lower():
-
-            continue
-
-        title_el = row.select_one(
-            ".ellipsis.rank01"
-        )
-
-        if not title_el:
-
-            continue
-
-        title = title_el.get_text(
-            " ",
-            strip=True
-        )
-
-        rank_el = row.select_one(
-            ".rank .rank"
-        )
-
-        if not rank_el:
-
+        # RESCENE / 리센느
+        if not (
+            "RESCENE" in artist.upper()
+            or "리센느" in artist
+        ):
             continue
 
         try:
@@ -822,6 +814,11 @@ def collect_melon_hot100(
         except ValueError:
 
             continue
+
+        title = title_el.get_text(
+            " ",
+            strip=True
+        )
 
         cover_el = row.select_one(
             ".image_typeAll img"
