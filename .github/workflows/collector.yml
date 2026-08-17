@@ -3,6 +3,9 @@ name: Melon Collector
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: "0 * * * *"
+
 jobs:
   collect:
     runs-on: ubuntu-latest
