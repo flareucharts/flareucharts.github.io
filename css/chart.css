@@ -293,17 +293,17 @@
     font-size:15px;
     font-weight:700;
     color:#1f1f1f;
-    margin-bottom:6px;
+    margin-bottom:5px;
     justify-content:space-between;
 }
 
 .chart-platform span{
-    line-height:18px;
+    line-height:16px;
 }
 
 .chart-platform-icon{
-    width:18px;
-    height:18px;
+    width:16px;
+    height:16px;
     object-fit:contain;
     border-radius:5px;
 }
@@ -343,6 +343,11 @@
   color:#777;
   text-align:right;
 }
+
+#chart .chart-time span{
+    line-height:16px;
+}
+
 
 
 /* =========================================================
