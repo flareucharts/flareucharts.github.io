@@ -1,9 +1,39 @@
 /* =========================================================
    FLARE U CHART
-   DATA SOURCE: GitHub Repository JSON
+   DATA SOURCE:
+   GitHub Repository /data/*.json
+
+   MATCHES:
+   - HTML: chart-page
+   - Main tabs:
+       KChart
+       Global Chart
+       Japan Chart
+       Cumulative
+
+   JSON FORMAT:
+   {
+       "platform": "...",
+       "chart": "...",
+       "source": "...",
+       "artist": "RESCENE (리센느)",
+       "updated_at": "...",
+       "snapshots": [
+           {
+               "snapshot_time": "...",
+               "date": "...",
+               "hour": 16,
+               "platform": "...",
+               "chart": "...",
+               "source": "...",
+               "songs": [...]
+           }
+       ]
+   }
 ========================================================= */
 
 console.log("CHART JS LOADED");
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -16,72 +46,134 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!chart) return;
 
+
     const mainTabs =
         [...chart.querySelectorAll(".chart-main-tab")];
+
 
     const pills =
         chart.querySelector("#chart-pills");
 
+
     const dropdown =
         chart.querySelector("#chart-pills-dropdown");
 
+
     const pillsWrap =
         chart.querySelector("#chart-pills-wrap");
+
 
     const feed =
         chart.querySelector("#chart-feed");
 
 
+    if (!pills || !pillsWrap || !feed) {
+        console.error(
+            "Chart elements tidak lengkap."
+        );
+        return;
+    }
+
+
     /* =====================================================
-       DATA
+       CONFIG
     ===================================================== */
 
-    let chartData = {
+    const JSON_FILES = [
 
-        current: {
-            pills: [],
-            sources: []
+        {
+            id: "melon_top100",
+            name: "Melon TOP100",
+            category: "kchart",
+            file: "melon_top100.json"
         },
 
-        kchart: {
-            pills: [],
-            sections: {}
+        {
+            id: "melon_hot100_30",
+            name: "Melon HOT100 30D",
+            category: "kchart",
+            file: "melon_hot100_30days.json"
         },
 
-        global: {
-            pills: [],
-            sections: {}
+        {
+            id: "melon_hot100_100",
+            name: "Melon HOT100 100D",
+            category: "kchart",
+            file: "melon_hot100_100days.json"
         },
 
-        album: {
-            pills: [],
-            sections: {}
+        {
+            id: "melon_realtime",
+            name: "Melon Real-time",
+            category: "kchart",
+            file: "melon_realtime.json"
         },
 
-        mv: {
-            pills: [],
-            videos: []
+        {
+            id: "bugs_realtime",
+            name: "Bugs Real-time",
+            category: "kchart",
+            file: "bugs_realtime.json"
+        },
+
+        {
+            id: "genie_top200",
+            name: "Genie TOP200",
+            category: "kchart",
+            file: "genie_top200.json"
+        },
+
+        {
+            id: "flo_realtime",
+            name: "FLO Real-time",
+            category: "kchart",
+            file: "flo_realtime.json"
+        },
+
+        {
+            id: "vibe_domestic",
+            name: "VIBE Domestic",
+            category: "kchart",
+            file: "vibe_domestic.json"
         }
 
-    };
+    ];
 
 
     /* =====================================================
        STATE
     ===================================================== */
 
-    let currentCategory = "current";
+    let chartData = {
 
-    let currentPill = 0;
+        kchart: [],
 
-    let dropdownOpen = false;
+        global: [],
+
+        japan: [],
+
+        cum: []
+
+    };
+
+
+    let currentCategory =
+        "kchart";
+
+
+    let currentPill =
+        0;
+
+
+    let dropdownOpen =
+        false;
 
 
     /* =====================================================
        ESCAPE HTML
     ===================================================== */
 
-    function escapeHTML(value){
+    function escapeHTML(value) {
 
         return String(value ?? "")
             .replaceAll("&", "&amp;")
@@ -97,37 +189,61 @@ document.addEventListener("DOMContentLoaded", () => {
        FORMAT NUMBER
     ===================================================== */
 
-    function formatNumber(value){
+    function formatNumber(value) {
 
         if (
             value === null ||
             value === undefined ||
             value === ""
-        ){
+        ) {
 
             return "";
 
         }
 
-        return Number(value)
-            .toLocaleString("id-ID");
+        const number =
+            Number(value);
+
+        if (
+            Number.isNaN(number)
+        ) {
+
+            return escapeHTML(value);
+
+        }
+
+        return number.toLocaleString(
+            "id-ID"
+        );
 
     }
 
 
     /* =====================================================
-       FORMAT TIME
+       FORMAT SNAPSHOT TIME
     ===================================================== */
 
-    function formatSnapshotTime(value){
+    function formatSnapshotTime(value) {
 
-        if (!value) return "";
-
-        const date = new Date(value);
-
-        if (isNaN(date.getTime())) {
-            return value;
+        if (!value) {
+            return "";
         }
+
+
+        const date =
+            new Date(value);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return escapeHTML(value);
+
+        }
+
 
         const parts =
             new Intl.DateTimeFormat(
@@ -143,171 +259,236 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             ).formatToParts(date);
 
-        const get = type =>
-            parts.find(
-                p => p.type === type
-            )?.value || "";
 
-        return `${get("year")}.${get("month")}.${get("day")} ${get("hour")}:${get("minute")} (KST)`;
+        const get =
+            type =>
+                parts.find(
+                    part =>
+                        part.type === type
+                )?.value || "";
+
+
+        return (
+            `${get("year")}.` +
+            `${get("month")}.` +
+            `${get("day")} ` +
+            `${get("hour")}:` +
+            `${get("minute")} (KST)`
+        );
 
     }
 
 
     /* =====================================================
-       LOAD MELON REALTIME
+       LOAD ONE JSON
     ===================================================== */
 
-    async function loadMelonRealtime(){
+    async function loadJSON(config) {
+
+        const url =
+            `/data/${config.file}?t=${Date.now()}`;
+
 
         try {
 
-            /*
-             * Cache bust supaya GitHub Pages tidak
-             * menggunakan JSON lama.
-             */
-
-            const url =
-                `/data/melon_realtime.json?t=${Date.now()}`;
-
             const response =
-                await fetch(url, {
-                    cache: "no-store"
-                });
+                await fetch(
+                    url,
+                    {
+                        cache: "no-store"
+                    }
+                );
 
-            if (!response.ok){
 
-                throw new Error(
+            if (!response.ok) {
+
+                console.warn(
+                    `${config.name}: ` +
                     `HTTP ${response.status}`
                 );
 
+                return null;
+
             }
 
-            const history =
+
+            const data =
                 await response.json();
 
 
-            /* ---------------------------------------------
-               VALIDATE
-            --------------------------------------------- */
-
             if (
-                !history ||
-                !Array.isArray(history.snapshots)
-            ){
+                !data ||
+                !Array.isArray(
+                    data.snapshots
+                )
+            ) {
 
-                throw new Error(
-                    "Invalid melon_realtime.json format"
+                console.warn(
+                    `${config.name}: ` +
+                    `format JSON tidak valid`
                 );
+
+                return null;
 
             }
 
 
-            /* ---------------------------------------------
-               GET LATEST SNAPSHOT
-            --------------------------------------------- */
+            if (
+                !data.snapshots.length
+            ) {
+
+                console.warn(
+                    `${config.name}: ` +
+                    `tidak memiliki snapshot`
+                );
+
+                return null;
+
+            }
+
+
+            /*
+             * Snapshot terakhir.
+             */
 
             const latest =
-                history.snapshots[
-                    history.snapshots.length - 1
+                data.snapshots[
+                    data.snapshots.length - 1
                 ];
 
 
             if (
                 !latest ||
-                !Array.isArray(latest.songs)
-            ){
+                !Array.isArray(
+                    latest.songs
+                )
+            ) {
 
-                throw new Error(
-                    "No snapshot data found"
+                console.warn(
+                    `${config.name}: ` +
+                    `snapshot tidak valid`
                 );
+
+                return null;
 
             }
 
 
-            /* ---------------------------------------------
-               CONVERT TO CHART FORMAT
-            --------------------------------------------- */
+            /*
+             * Jangan tampilkan sumber
+             * jika RESCENE memang tidak
+             * mempunyai lagu di chart tersebut.
+             */
 
-            const songs =
-                latest.songs.map(song => {
+            if (
+                latest.songs.length === 0
+            ) {
 
-                    return {
+                console.log(
+                    `${config.name}: ` +
+                    `RESCENE tidak ditemukan`
+                );
 
-                        rank:
-                            song.rank,
+                return null;
 
-                        change:
-                            song.rank_change,
-
-                        artist:
-                            history.artist || "RESCENE (리센느)",
-
-                        title:
-                            song.title,
-
-                        cover:
-                            song.cover,
-
-                        likes:
-                            song.likes
-
-                    };
-
-                });
+            }
 
 
-            /* ---------------------------------------------
-               CURRENT → MELON
-            --------------------------------------------- */
+            return {
 
-            chartData.current = {
+                id:
+                    config.id,
 
-                pills: [],
+                name:
+                    config.name,
 
-                sources: [
+                category:
+                    config.category,
 
-                    {
+                platform:
+                    data.platform ||
+                    latest.platform ||
+                    "",
 
-                        name:
-                            "Melon Real-time",
+                chart:
+                    data.chart ||
+                    latest.chart ||
+                    "",
 
-                        time:
-                            formatSnapshotTime(
-                                latest.snapshot_time
-                            ),
+                source:
+                    data.source ||
+                    latest.source ||
+                    "",
 
-                        songs:
-                            songs
+                artist:
+                    data.artist ||
+                    "RESCENE (리센느)",
 
-                    }
+                snapshot:
+                    latest,
 
-                ]
+                songs:
+                    latest.songs
 
             };
 
 
-            console.log(
-                "Melon realtime loaded:",
-                latest
-            );
+        } catch (error) {
 
-
-        } catch (error){
-
-            console.error(
-                "Failed to load Melon realtime:",
+            console.warn(
+                `${config.name}:`,
                 error
             );
 
-            chartData.current = {
-
-                pills: [],
-
-                sources: []
-
-            };
+            return null;
 
         }
+
+    }
+
+
+    /* =====================================================
+       LOAD ALL DATA
+    ===================================================== */
+
+    async function loadAllCharts() {
+
+        console.log(
+            "Loading chart JSON..."
+        );
+
+
+        const results =
+            await Promise.all(
+                JSON_FILES.map(
+                    config =>
+                        loadJSON(config)
+                )
+            );
+
+
+        chartData = {
+
+            kchart:
+                results.filter(
+                    item =>
+                        item &&
+                        item.category === "kchart"
+                ),
+
+            global: [],
+
+            japan: [],
+
+            cum: []
+
+        };
+
+
+        console.log(
+            "Chart data loaded:",
+            chartData
+        );
 
     }
 
@@ -316,25 +497,24 @@ document.addEventListener("DOMContentLoaded", () => {
        DROPDOWN
     ===================================================== */
 
-    function closeDropdown(){
+    function closeDropdown() {
 
-        dropdownOpen = false;
+        dropdownOpen =
+            false;
 
-        if (pillsWrap){
 
-            pillsWrap.classList.remove("open");
-
-        }
+        pillsWrap.classList.remove(
+            "open"
+        );
 
     }
 
 
-    function toggleDropdown(){
-
-        if (!pillsWrap) return;
+    function toggleDropdown() {
 
         dropdownOpen =
             !dropdownOpen;
+
 
         pillsWrap.classList.toggle(
             "open",
@@ -344,7 +524,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    if (dropdown){
+    if (dropdown) {
 
         dropdown.addEventListener(
             "click",
@@ -364,12 +544,16 @@ document.addEventListener("DOMContentLoaded", () => {
         "click",
         event => {
 
-            if (!dropdownOpen) return;
+            if (!dropdownOpen) {
+                return;
+            }
+
 
             if (
-                pillsWrap &&
-                !pillsWrap.contains(event.target)
-            ){
+                !pillsWrap.contains(
+                    event.target
+                )
+            ) {
 
                 closeDropdown();
 
@@ -380,19 +564,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MAIN TABS
+       UPDATE MAIN TABS
     ===================================================== */
 
-    function updateMainTabs(){
+    function updateMainTabs() {
 
-        mainTabs.forEach(tab => {
+        mainTabs.forEach(
+            tab => {
 
-            tab.classList.toggle(
-                "active",
-                tab.dataset.category === currentCategory
-            );
+                tab.classList.toggle(
+                    "active",
+                    tab.dataset.category ===
+                    currentCategory
+                );
 
-        });
+            }
+        );
 
     }
 
@@ -401,42 +588,68 @@ document.addEventListener("DOMContentLoaded", () => {
        RENDER PILLS
     ===================================================== */
 
-    function renderPills(){
+    function renderPills() {
 
-        const data =
-            chartData[currentCategory];
+        const sources =
+            chartData[
+                currentCategory
+            ] || [];
 
-        pills.innerHTML = "";
 
-        if (
-            !data ||
-            !data.pills ||
-            !data.pills.length
-        ){
+        pills.innerHTML =
+            "";
 
-            pillsWrap.classList.add("hidden");
+
+        currentPill =
+            Math.min(
+                currentPill,
+                Math.max(
+                    sources.length - 1,
+                    0
+                )
+            );
+
+
+        /*
+         * Tidak ada sumber.
+         */
+
+        if (!sources.length) {
+
+            pillsWrap.classList.add(
+                "hidden"
+            );
 
             return;
 
         }
 
-        pillsWrap.classList.remove("hidden");
+
+        pillsWrap.classList.remove(
+            "hidden"
+        );
 
 
-        data.pills.forEach(
-            (name, index) => {
+        sources.forEach(
+            (source, index) => {
 
                 const button =
-                    document.createElement("button");
+                    document.createElement(
+                        "button"
+                    );
+
 
                 button.type =
                     "button";
 
+
                 button.className =
                     "chart-pill";
 
+
                 button.textContent =
-                    name;
+                    source.name;
+
 
                 button.classList.toggle(
                     "active",
@@ -461,7 +674,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
 
-                pills.appendChild(button);
+                pills.appendChild(
+                    button
+                );
 
             }
         );
@@ -473,57 +688,77 @@ document.addEventListener("DOMContentLoaded", () => {
        UPDATE ACTIVE PILL
     ===================================================== */
 
-    function updatePills(){
+    function updatePills() {
 
-        [...pills.children]
-            .forEach(
-                (pill, index) => {
+        [
+            ...pills.children
+        ].forEach(
+            (pill, index) => {
 
-                    pill.classList.toggle(
-                        "active",
-                        index === currentPill
-                    );
+                pill.classList.toggle(
+                    "active",
+                    index === currentPill
+                );
 
-                }
-            );
+            }
+        );
 
     }
 
 
     /* =====================================================
-       RENDER CHANGE
+       RENDER RANK CHANGE
     ===================================================== */
 
-    function renderChange(change){
+    function renderChange(change) {
 
         if (
             change === null ||
-            change === undefined
-        ){
+            change === undefined ||
+            change === ""
+        ) {
 
             return "";
 
         }
 
-        if (change > 0){
+
+        const number =
+            Number(change);
+
+
+        if (
+            Number.isNaN(number)
+        ) {
+
+            return "";
+
+        }
+
+
+        if (number > 0) {
 
             return `
                 <span class="chart-rank-change up">
-                    ↑ ${formatNumber(change)}
+                    ↑ ${formatNumber(number)}
                 </span>
             `;
 
         }
 
-        if (change < 0){
+
+        if (number < 0) {
 
             return `
                 <span class="chart-rank-change down">
-                    ↓ ${formatNumber(Math.abs(change))}
+                    ↓ ${formatNumber(
+                        Math.abs(number)
+                    )}
                 </span>
             `;
 
         }
+
 
         return `
             <span class="chart-rank-change same">
@@ -538,7 +773,68 @@ document.addEventListener("DOMContentLoaded", () => {
        RENDER SONG
     ===================================================== */
 
-    function renderSong(song){
+    function renderSong(song) {
+
+        const rank =
+            song?.rank ?? "";
+
+
+        const title =
+            song?.title || "";
+
+
+        const artist =
+            song?.artist ||
+            "RESCENE (리센느)";
+
+
+        const cover =
+            song?.cover || "";
+
+
+        const likes =
+            song?.likes;
+
+
+        const score =
+            song?.score;
+
+
+        const rankChange =
+            song?.rank_change;
+
+
+        const hasLikes =
+            likes !== null &&
+            likes !== undefined &&
+            likes !== "";
+
+
+        const hasScore =
+            score !== null &&
+            score !== undefined &&
+            score !== "";
+
+
+        const coverHTML =
+            cover
+                ?
+                `
+                    <img
+                        class="chart-cover"
+                        src="${escapeHTML(cover)}"
+                        alt=""
+                        loading="lazy"
+                        onerror="
+                            this.style.visibility='hidden';
+                        "
+                    >
+                `
+                :
+                `
+                    <div class="chart-cover"></div>
+                `;
+
 
         return `
 
@@ -547,43 +843,50 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="chart-rank">
 
                     <span class="chart-rank-number">
-                        ${escapeHTML(song.rank)}
+                        ${escapeHTML(rank)}
                     </span>
 
-                    ${renderChange(song.change)}
+                    ${renderChange(rankChange)}
 
                 </div>
 
 
-                <img
-                    class="chart-cover"
-                    src="${escapeHTML(song.cover)}"
-                    alt=""
-                    loading="lazy"
-                    onerror="
-                        this.style.visibility='hidden';
-                    "
-                >
+                ${coverHTML}
 
 
                 <div class="chart-song-info">
 
                     <div class="chart-song-title">
-                        ${escapeHTML(song.title)}
+                        ${escapeHTML(title)}
                     </div>
+
 
                     <div class="chart-artist">
-                        ${escapeHTML(song.artist)}
+                        ${escapeHTML(artist)}
                     </div>
 
+
                     ${
-                        song.likes !== undefined &&
-                        song.likes !== null
+                        hasLikes
                         ?
                         `
-                        <div class="chart-likes">
-                            ♡ ${formatNumber(song.likes)}
-                        </div>
+                            <div class="chart-likes">
+                                ♡ ${formatNumber(likes)}
+                            </div>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    ${
+                        hasScore
+                        ?
+                        `
+                            <div class="chart-score">
+                                Score:
+                                ${formatNumber(score)}
+                            </div>
                         `
                         :
                         ""
@@ -602,13 +905,12 @@ document.addEventListener("DOMContentLoaded", () => {
        RENDER SONG LIST
     ===================================================== */
 
-    function renderSongList(section){
+    function renderSongList(songs) {
 
         if (
-            !section ||
-            !section.songs ||
-            !section.songs.length
-        ){
+            !Array.isArray(songs) ||
+            !songs.length
+        ) {
 
             return `
                 <div class="chart-empty">
@@ -623,8 +925,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <div class="chart-list">
 
-                ${section.songs
-                    .map(renderSong)
+                ${songs
+                    .map(
+                        song =>
+                            renderSong(song)
+                    )
                     .join("")
                 }
 
@@ -636,30 +941,82 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER CURRENT
+       RENDER EMPTY
     ===================================================== */
 
-    function renderCurrent(){
+    function renderEmpty(
+        message = "No chart data available."
+    ) {
 
-        const data =
-            chartData.current;
+        feed.innerHTML = `
+
+            <div class="chart-empty">
+
+                ${escapeHTML(message)}
+
+            </div>
+
+        `;
+
+    }
 
 
-        if (
-            !data ||
-            !data.sources ||
-            !data.sources.length
-        ){
+    /* =====================================================
+       RENDER SELECTED SOURCE
+    ===================================================== */
 
-            feed.innerHTML = `
-                <div class="chart-empty">
-                    No current chart data available.
-                </div>
-            `;
+    function renderSelectedSource() {
+
+        const sources =
+            chartData[
+                currentCategory
+            ] || [];
+
+
+        if (!sources.length) {
+
+            renderEmpty(
+                currentCategory === "kchart"
+                    ?
+                    "No KChart data available."
+                    :
+                    "No chart data available."
+            );
 
             return;
 
         }
+
+
+        const source =
+            sources[currentPill];
+
+
+        if (!source) {
+
+            renderEmpty();
+
+            return;
+
+        }
+
+
+        const snapshot =
+            source.snapshot;
+
+
+        const title =
+            source.name;
+
+
+        const time =
+            formatSnapshotTime(
+                snapshot?.snapshot_time
+            );
+
+
+        const songs =
+            source.songs || [];
 
 
         feed.innerHTML = `
@@ -669,37 +1026,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="chart-section-title">
 
                     <h3>
-                        Current
+                        ${escapeHTML(title)}
                     </h3>
 
-                </div>
 
-
-                <div class="current-grid">
-
-                    ${data.sources.map(source => `
-
-                        <div class="current-source">
-
-                            <div class="current-source-title">
-
-                                <h3>
-                                    ${escapeHTML(source.name)}
-                                </h3>
-
-                                <span class="current-source-time">
-                                    ${escapeHTML(source.time)}
-                                </span>
-
-                            </div>
-
-                            ${renderSongList(source)}
-
-                        </div>
-
-                    `).join("")}
+                    ${
+                        time
+                        ?
+                        `
+                            <span class="chart-time">
+                                ${escapeHTML(time)}
+                            </span>
+                        `
+                        :
+                        ""
+                    }
 
                 </div>
+
+
+                ${renderSongList(songs)}
 
             </section>
 
@@ -709,95 +1055,42 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       RENDER STANDARD CHART
+       RENDER KCHART
     ===================================================== */
 
-    function renderStandardChart(){
+    function renderKChart() {
 
-        const data =
-            chartData[currentCategory];
-
-        if (!data){
-
-            feed.innerHTML = "";
-
-            return;
-
-        }
-
-
-        const selected =
-            data.pills[currentPill];
-
-        const section =
-            data.sections?.[selected];
-
-
-        if (!section){
-
-            feed.innerHTML = `
-                <div class="chart-empty">
-                    No data available.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
-        feed.innerHTML = `
-
-            <section class="chart-section">
-
-                <div class="chart-section-title">
-
-                    <h3>
-                        ${escapeHTML(section.title)}
-                    </h3>
-
-                    <span class="chart-time">
-                        ${escapeHTML(section.time)}
-                    </span>
-
-                </div>
-
-
-                ${renderSongList(section)}
-
-            </section>
-
-        `;
+        renderSelectedSource();
 
     }
 
 
     /* =====================================================
-       RENDER ALBUM
+       RENDER OTHER CATEGORIES
     ===================================================== */
 
-    function renderAlbum(){
+    function renderOtherCategory() {
 
-        feed.innerHTML = `
-            <div class="chart-empty">
-                Album sales data will be connected next.
-            </div>
-        `;
+        const labels = {
 
-    }
+            global:
+                "No Global Chart data available.",
+
+            japan:
+                "No Japan Chart data available.",
+
+            cum:
+                "No cumulative chart data available."
+
+        };
 
 
-    /* =====================================================
-       RENDER MV
-    ===================================================== */
-
-    function renderMV(){
-
-        feed.innerHTML = `
-            <div class="chart-empty">
-                MV data will be connected next.
-            </div>
-        `;
+        renderEmpty(
+            labels[
+                currentCategory
+            ] ||
+            "No chart data available."
+        );
 
     }
 
@@ -806,36 +1099,21 @@ document.addEventListener("DOMContentLoaded", () => {
        RENDER FEED
     ===================================================== */
 
-    function renderFeed(){
+    function renderFeed() {
 
-        if (currentCategory === "current"){
+        if (
+            currentCategory ===
+            "kchart"
+        ) {
 
-            renderCurrent();
-
-            return;
-
-        }
-
-
-        if (currentCategory === "mv"){
-
-            renderMV();
+            renderKChart();
 
             return;
 
         }
 
 
-        if (currentCategory === "album"){
-
-            renderAlbum();
-
-            return;
-
-        }
-
-
-        renderStandardChart();
+        renderOtherCategory();
 
     }
 
@@ -844,9 +1122,15 @@ document.addEventListener("DOMContentLoaded", () => {
        SELECT CATEGORY
     ===================================================== */
 
-    function selectCategory(category){
+    function selectCategory(
+        category
+    ) {
 
-        if (!chartData[category]){
+        if (
+            !chartData.hasOwnProperty(
+                category
+            )
+        ) {
 
             return;
 
@@ -855,6 +1139,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         currentCategory =
             category;
+
 
         currentPill =
             0;
@@ -897,17 +1182,29 @@ document.addEventListener("DOMContentLoaded", () => {
        INITIAL LOAD
     ===================================================== */
 
-    async function init(){
+    async function init() {
 
         /*
-         * Load real data dulu.
+         * Tampilkan loading sementara.
          */
 
-        await loadMelonRealtime();
+        feed.innerHTML = `
+
+            <div class="chart-empty">
+                Loading chart...
+            </div>
+
+        `;
+
+
+        await loadAllCharts();
 
 
         /*
-         * URL parameter
+         * URL parameter.
+         *
+         * Contoh:
+         * ?category=kchart
          */
 
         const params =
@@ -915,53 +1212,86 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.search
             );
 
+
         const category =
-            params.get("category");
+            params.get(
+                "category"
+            );
+
 
         const source =
-            params.get("source");
+            params.get(
+                "source"
+            );
 
+
+        /*
+         * Pilih category dari URL
+         * jika valid.
+         */
 
         if (
             category &&
-            chartData[category]
-        ){
+            chartData.hasOwnProperty(
+                category
+            )
+        ) {
 
             currentCategory =
                 category;
 
-
-            if (
-                source &&
-                chartData[category].pills
-            ){
-
-                const index =
-                    chartData[category]
-                        .pills
-                        .indexOf(source);
-
-
-                currentPill =
-                    index >= 0
-                        ? index
-                        : 0;
-
-            }
-
-
-            updateMainTabs();
-            renderPills();
-            renderFeed();
-
         } else {
 
-            selectCategory("current");
+            currentCategory =
+                "kchart";
 
         }
 
+
+        /*
+         * Kalau URL mempunyai source,
+         * cari berdasarkan nama source.
+         */
+
+        if (
+            source &&
+            chartData[
+                currentCategory
+            ]?.length
+        ) {
+
+            const index =
+                chartData[
+                    currentCategory
+                ].findIndex(
+                    item =>
+                        item.id === source ||
+                        item.name === source
+                );
+
+
+            if (index >= 0) {
+
+                currentPill =
+                    index;
+
+            }
+
+        }
+
+
+        updateMainTabs();
+
+        renderPills();
+
+        renderFeed();
+
     }
 
+
+    /* =====================================================
+       START
+    ===================================================== */
 
     init();
 
