@@ -1413,22 +1413,31 @@ def parse_genie_page(
             strip=True
         )
 
-cover_el = row.select_one(
-    ".album img"
-)
-
-cover = ""
-
-if cover_el:
-    cover = (
-        cover_el.get("src")
-        or cover_el.get("data-original")
-        or ""
-    ).strip()
-
         title = title.lstrip(
             " "
         )
+
+        # -------------------------------------------------
+        # COVER
+        # -------------------------------------------------
+
+        cover_el = row.select_one(
+            ".album img"
+        )
+
+        cover = ""
+
+        if cover_el:
+
+            cover = (
+                cover_el.get("src")
+                or cover_el.get("data-original")
+                or ""
+            ).strip()
+
+        # -------------------------------------------------
+        # RANK
+        # -------------------------------------------------
 
         rank_el = row.select_one(
             ".number"
@@ -1455,6 +1464,10 @@ if cover_el:
         if rank is None:
             continue
 
+        # -------------------------------------------------
+        # TRACK ID
+        # -------------------------------------------------
+
         track_id = ""
 
         for link in row.select(
@@ -1476,11 +1489,16 @@ if cover_el:
 
                 break
 
+        # -------------------------------------------------
+        # SAVE SONG
+        # -------------------------------------------------
+
         songs.append(
             normalize_song(
                 rank=rank,
                 title=title,
                 artist=artist,
+                cover=cover,
                 track_id=track_id
             )
         )
