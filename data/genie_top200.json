@@ -3,7 +3,7 @@
   "chart": "TOP200",
   "source": "Genie",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-18T00:00:00+09:00",
+  "updated_at": "2026-08-18T01:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -560,6 +560,60 @@
           "title": "Pinball",
           "artist": "RESCENE (리센느)",
           "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/085/542/577/85542577_1724656614230_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-18T01:00:00+09:00",
+      "date": "2026-08-18",
+      "hour": 1,
+      "platform": "Genie",
+      "chart": "TOP200",
+      "source": "Genie",
+      "songs": [
+        {
+          "rank": 16,
+          "previous_rank": null,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/085/542/577/85542577_1724656614230_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 30,
+          "previous_rank": null,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/087/826/104/87826104_1782713508473_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 34,
+          "previous_rank": null,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/086/460/181/86460181_1751351841053_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 179,
+          "previous_rank": null,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/087/458/490/87458490_1775115096303_1_140x140.JPG/dims/resize/Q_80,0",
           "likes": null,
           "rank_change": 0,
           "score": null,
