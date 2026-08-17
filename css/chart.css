@@ -285,6 +285,37 @@
 /* =========================================================
    SECTION HEADER
 ========================================================= */
+.chart-platform{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    min-width:0;
+    font-size:14px;
+    font-weight:700;
+    color:#1f1f1f;
+}
+
+.chart-platform-icon{
+    width:18px;
+    height:18px;
+    object-fit:contain;
+    flex-shrink:0;
+}
+
+
+/* =========================================================
+   CHART SECTION TITLE
+========================================================= */
+
+.chart-section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    width:100%;
+    margin-bottom:12px;
+}
+
 
 #chart .chart-section{
   width:100%;
