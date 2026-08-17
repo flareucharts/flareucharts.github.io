@@ -314,19 +314,12 @@
     gap:10px;
     width:100%;
     margin-bottom:12px;
+    nargin-top:14px;
 }
 
 
 #chart .chart-section{
   width:100%;
-}
-
-#chart .chart-section-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin:0 0 14px;
 }
 
 #chart .chart-section-title h3{
