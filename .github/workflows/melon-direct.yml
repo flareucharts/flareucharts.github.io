@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Melon Direct Collector
         run: |
-          python Python/melon_collector.py
+          python Python/melon-collector.py
 
       - name: Save JSON
         run: |
