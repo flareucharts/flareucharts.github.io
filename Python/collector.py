@@ -12,7 +12,17 @@ from pathlib import Path
 
 TARGET_ARTIST = "RESCENE (리센느)"
 
-URL = "https://xn--o39an51b2re.com/chart/melon/realtime/20260817/8"
+KST = ZoneInfo("Asia/Seoul")
+
+now = datetime.now(KST)
+
+date_part = now.strftime("%Y%m%d")
+hour_part = now.strftime("%H")
+
+URL = (
+    "https://xn--o39an51b2re.com/"
+    f"chart/melon/realtime/{date_part}/{hour_part}"
+)
 
 HEADERS = {
     "User-Agent": (
