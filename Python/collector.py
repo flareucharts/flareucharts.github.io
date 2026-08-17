@@ -14,14 +14,9 @@ TARGET_ARTIST = "RESCENE (리센느)"
 
 KST = ZoneInfo("Asia/Seoul")
 
-now = datetime.now(KST)
-
-date_part = now.strftime("%Y%m%d")
-hour_part = now.strftime("%H")
-
-URL = (
+BASE_URL = (
     "https://xn--o39an51b2re.com/"
-    f"chart/melon/realtime/{date_part}/{hour_part}"
+    "chart/melon/realtime"
 )
 
 HEADERS = {
@@ -34,6 +29,9 @@ HEADERS = {
 
 HISTORY_DAYS = 90
 
+# Berapa jam ke belakang yang boleh dicoba
+MAX_HOUR_LOOKBACK = 6
+
 OUTPUT_FILE = (
     Path(__file__).resolve().parent.parent
     / "data"
@@ -42,14 +40,12 @@ OUTPUT_FILE = (
 
 
 # =========================================================
-# SNAPSHOT ID
+# CURRENT TIME
 # =========================================================
 
-def get_snapshot_id():
+def get_now_kst():
 
-    return (
-        f"{date_part}_{hour_part}"
-    )
+    return datetime.now(KST)
 
 
 # =========================================================
@@ -58,9 +54,23 @@ def get_snapshot_id():
 
 def get_snapshot_time():
 
-    return datetime.now(
-        KST
-    ).isoformat()
+    return get_now_kst().isoformat()
+
+
+# =========================================================
+# BUILD GUYSOME URL
+# =========================================================
+
+def build_url(dt):
+
+    date_part = dt.strftime("%Y%m%d")
+    hour_part = dt.strftime("%H")
+
+    return (
+        f"{BASE_URL}/"
+        f"{date_part}/"
+        f"{hour_part}"
+    )
 
 
 # =========================================================
@@ -90,47 +100,115 @@ def parse_rank_change(change_element):
 
         return 0
 
-    if "up" in span.get("class", []):
+    classes = span.get("class", [])
 
+    if "up" in classes:
         return number
 
-    if "down" in span.get("class", []):
-
+    if "down" in classes:
         return -number
 
     return 0
 
 
 # =========================================================
-# GET GUYSOME MELON REAL-TIME
+# FETCH GUYSOME PAGE
 # =========================================================
 
-def get_guysome_melon_realtime():
+def fetch_guysome_page(dt):
+
+    url = build_url(dt)
 
     print(
-        "Mengambil Guysome Melon Real-time..."
+        f"Mencoba Guysome: {url}"
     )
 
-    print(
-        f"URL: {URL}"
-    )
+    try:
 
-    response = requests.get(
-        URL,
-        headers=HEADERS,
-        timeout=20
-    )
+        response = requests.get(
+            url,
+            headers=HEADERS,
+            timeout=20
+        )
 
-    response.raise_for_status()
+        if response.status_code != 200:
 
-    soup = BeautifulSoup(
-        response.text,
-        "html.parser"
-    )
+            print(
+                f"HTTP {response.status_code}"
+            )
 
-    snapshot_time = get_snapshot_time()
+            return None, None
 
-    snapshot_id = get_snapshot_id()
+        soup = BeautifulSoup(
+            response.text,
+            "html.parser"
+        )
+
+        rows = soup.select("tr")
+
+        if not rows:
+
+            print(
+                "Tidak ada row chart."
+            )
+
+            return None, None
+
+        return soup, url
+
+    except requests.RequestException as error:
+
+        print(
+            f"Request error: {error}"
+        )
+
+        return None, None
+
+
+# =========================================================
+# FIND LATEST AVAILABLE GUYSOME SNAPSHOT
+# =========================================================
+
+def find_latest_available_page():
+
+    now = get_now_kst()
+
+    for offset in range(
+        0,
+        MAX_HOUR_LOOKBACK + 1
+    ):
+
+        target_time = (
+            now
+            - timedelta(hours=offset)
+        )
+
+        soup, url = fetch_guysome_page(
+            target_time
+        )
+
+        if soup is not None:
+
+            print(
+                "Halaman Guysome ditemukan."
+            )
+
+            return (
+                soup,
+                target_time,
+                url
+            )
+
+    return None, None, None
+
+
+# =========================================================
+# PARSE MELON REALTIME
+# =========================================================
+
+def parse_melon_realtime(
+    soup
+):
 
     results = []
 
@@ -264,19 +342,17 @@ def get_guysome_melon_realtime():
 
         previous_rank = None
 
-        if rank_change != 0:
+        if rank_change > 0:
 
-            if rank_change > 0:
+            previous_rank = (
+                rank + rank_change
+            )
 
-                previous_rank = (
-                    rank + rank_change
-                )
+        elif rank_change < 0:
 
-            else:
-
-                previous_rank = (
-                    rank - rank_change
-                )
+            previous_rank = (
+                rank - rank_change
+            )
 
         # -------------------------------------------------
         # RESULT
@@ -284,26 +360,11 @@ def get_guysome_melon_realtime():
 
         results.append({
 
-            "platform": "Melon",
-
-            "chart": "Real-time",
-
-            "source": "Guysome",
-
-            "snapshot_id":
-                snapshot_id,
-
-            "snapshot_time":
-                snapshot_time,
-
             "rank":
                 rank,
 
             "previous_rank":
                 previous_rank,
-
-            "artist":
-                artist,
 
             "title":
                 title,
@@ -318,11 +379,6 @@ def get_guysome_melon_realtime():
                 rank_change
 
         })
-
-    print(
-        "Jumlah lagu ditemukan:",
-        len(results)
-    )
 
     return results
 
@@ -349,12 +405,6 @@ def normalize_song_data(
             "previous_rank":
                 song.get(
                     "previous_rank"
-                ),
-
-            "artist":
-                song.get(
-                    "artist",
-                    ""
                 ),
 
             "title":
@@ -398,11 +448,25 @@ def load_existing_data():
         )
 
         return {
-            "platform": "Melon",
-            "chart": "Real-time",
-            "source": "Guysome",
-            "artist": TARGET_ARTIST,
-            "history": []
+
+            "platform":
+                "Melon",
+
+            "chart":
+                "Real-time",
+
+            "source":
+                "Guysome",
+
+            "artist":
+                TARGET_ARTIST,
+
+            "updated_at":
+                None,
+
+            "snapshots":
+                []
+
         }
 
     try:
@@ -415,62 +479,139 @@ def load_existing_data():
 
             data = json.load(file)
 
-        if not isinstance(data, dict):
+        if not isinstance(
+            data,
+            dict
+        ):
 
-            return {
-                "platform": "Melon",
-                "chart": "Real-time",
-                "source": "Guysome",
-                "artist": TARGET_ARTIST,
-                "history": []
-            }
+            raise ValueError(
+                "JSON bukan object."
+            )
 
-        if "history" not in data:
+        # -------------------------------------------------
+        # COMPATIBILITY
+        # -------------------------------------------------
+        # Kalau file lama masih memakai "history",
+        # pindahkan ke "snapshots".
 
-            data["history"] = []
+        if (
+            "snapshots" not in data
+            and "history" in data
+        ):
+
+            data["snapshots"] = (
+                data.pop("history")
+            )
+
+        if "snapshots" not in data:
+
+            data["snapshots"] = []
 
         return data
 
     except (
         json.JSONDecodeError,
-        OSError
+        OSError,
+        ValueError
     ):
 
         print(
-            "File JSON tidak valid. "
-            "Membuat history baru."
+            "File JSON tidak valid."
         )
 
         return {
-            "platform": "Melon",
-            "chart": "Real-time",
-            "source": "Guysome",
-            "artist": TARGET_ARTIST,
-            "history": []
+
+            "platform":
+                "Melon",
+
+            "chart":
+                "Real-time",
+
+            "source":
+                "Guysome",
+
+            "artist":
+                TARGET_ARTIST,
+
+            "updated_at":
+                None,
+
+            "snapshots":
+                []
+
         }
 
 
 # =========================================================
-# CHECK DUPLICATE SNAPSHOT
+# GET SONG SIGNATURE
 # =========================================================
 
-def snapshot_exists(
-    history,
-    snapshot_id
+def get_song_signature(
+    songs
 ):
 
-    for snapshot in history:
+    signature = []
 
-        if (
-            snapshot.get(
-                "snapshot_id"
-            )
-            == snapshot_id
-        ):
+    for song in songs:
 
-            return True
+        signature.append({
 
-    return False
+            "rank":
+                song.get(
+                    "rank"
+                ),
+
+            "previous_rank":
+                song.get(
+                    "previous_rank"
+                ),
+
+            "title":
+                song.get(
+                    "title",
+                    ""
+                ),
+
+            "likes":
+                song.get(
+                    "likes"
+                ),
+
+            "rank_change":
+                song.get(
+                    "rank_change",
+                    0
+                )
+
+        })
+
+    return signature
+
+
+# =========================================================
+# CHECK WHETHER DATA CHANGED
+# =========================================================
+
+def is_same_as_latest(
+    history,
+    songs
+):
+
+    if not history:
+        return False
+
+    latest = history[-1]
+
+    latest_songs = latest.get(
+        "songs",
+        []
+    )
+
+    return (
+        get_song_signature(latest_songs)
+        ==
+        get_song_signature(songs)
+    )
 
 
 # =========================================================
@@ -482,7 +623,7 @@ def remove_old_history(
 ):
 
     cutoff = (
-        datetime.now(KST)
+        get_now_kst()
         - timedelta(
             days=HISTORY_DAYS
         )
@@ -508,6 +649,18 @@ def remove_old_history(
                     snapshot_time
                 )
             )
+
+            # Pastikan timezone-aware
+            if (
+                snapshot_datetime.tzinfo
+                is None
+            ):
+
+                snapshot_datetime = (
+                    snapshot_datetime.replace(
+                        tzinfo=KST
+                    )
+                )
 
             if (
                 snapshot_datetime
@@ -571,10 +724,6 @@ def main():
     )
 
     print(
-        f"SNAPSHOT: {date_part} {hour_part}:00 KST"
-    )
-
-    print(
         "=========================================="
     )
 
@@ -585,61 +734,54 @@ def main():
     data = load_existing_data()
 
     history = data.get(
-        "history",
+        "snapshots",
         []
     )
 
-    snapshot_id = (
-        get_snapshot_id()
-    )
-
     # -----------------------------------------------------
-    # DUPLICATE CHECK
+    # FIND LATEST AVAILABLE PAGE
     # -----------------------------------------------------
 
-    if snapshot_exists(
-        history,
-        snapshot_id
-    ):
+    (
+        soup,
+        source_time,
+        source_url
+    ) = find_latest_available_page()
+
+    if soup is None:
 
         print(
-            f"Snapshot {snapshot_id} "
-            "sudah ada."
+            "Tidak menemukan halaman Guysome."
         )
 
         print(
-            "SKIP — tidak menambahkan "
-            "data duplicate."
-        )
-
-        # Tetap bersihkan history lama
-        history = remove_old_history(
-            history
-        )
-
-        data["history"] = history
-
-        save_data(data)
-
-        print(
-            f"Total snapshot: {len(history)}"
+            "History TIDAK diubah."
         )
 
         return
 
+    print(
+        f"Source page: {source_url}"
+    )
+
     # -----------------------------------------------------
-    # FETCH
+    # PARSE
     # -----------------------------------------------------
 
-    songs = (
-        get_guysome_melon_realtime()
+    songs = parse_melon_realtime(
+        soup
+    )
+
+    print(
+        "Jumlah lagu ditemukan:",
+        len(songs)
     )
 
     if not songs:
 
         print(
-            "Tidak ada data artist "
-            "yang ditemukan."
+            "RESCENE tidak ditemukan "
+            "pada halaman tersebut."
         )
 
         print(
@@ -657,22 +799,71 @@ def main():
     )
 
     # -----------------------------------------------------
-    # CREATE SNAPSHOT
+    # CHECK DATA CHANGE
     # -----------------------------------------------------
+
+    if is_same_as_latest(
+        history,
+        songs
+    ):
+
+        print(
+            "DATA TIDAK BERUBAH."
+        )
+
+        print(
+            "SKIP — snapshot baru "
+            "tidak disimpan."
+        )
+
+        # Tetap bersihkan history lama.
+        history = remove_old_history(
+            history
+        )
+
+        data["snapshots"] = history
+
+        data["updated_at"] = (
+            get_snapshot_time()
+        )
+
+        data["platform"] = "Melon"
+        data["chart"] = "Real-time"
+        data["source"] = "Guysome"
+        data["artist"] = TARGET_ARTIST
+
+        save_data(data)
+
+        print(
+            f"Total snapshot: {len(history)}"
+        )
+
+        return
+
+    # -----------------------------------------------------
+    # CREATE NEW SNAPSHOT
+    # -----------------------------------------------------
+
+    snapshot_time = (
+        get_snapshot_time()
+    )
 
     snapshot = {
 
-        "snapshot_id":
-            snapshot_id,
-
         "snapshot_time":
-            get_snapshot_time(),
+            snapshot_time,
 
         "date":
-            date_part,
+            source_time.strftime(
+                "%Y-%m-%d"
+            ),
 
         "hour":
-            int(hour_part),
+            int(
+                source_time.strftime(
+                    "%H"
+                )
+            ),
 
         "platform":
             "Melon",
@@ -682,9 +873,6 @@ def main():
 
         "source":
             "Guysome",
-
-        "artist":
-            TARGET_ARTIST,
 
         "songs":
             songs
@@ -700,7 +888,7 @@ def main():
     )
 
     # -----------------------------------------------------
-    # CLEAN OLD DATA
+    # REMOVE OLD DATA
     # -----------------------------------------------------
 
     history = remove_old_history(
@@ -720,7 +908,7 @@ def main():
     )
 
     # -----------------------------------------------------
-    # UPDATE ROOT DATA
+    # ROOT DATA
     # -----------------------------------------------------
 
     data = {
@@ -738,9 +926,9 @@ def main():
             TARGET_ARTIST,
 
         "updated_at":
-            get_snapshot_time(),
+            snapshot_time,
 
-        "history":
+        "snapshots":
             history
 
     }
@@ -758,11 +946,11 @@ def main():
     )
 
     print(
-        "SNAPSHOT BERHASIL DISIMPAN"
+        "SNAPSHOT BARU DISIMPAN"
     )
 
     print(
-        f"Snapshot ID : {snapshot_id}"
+        f"Source      : {source_url}"
     )
 
     print(
