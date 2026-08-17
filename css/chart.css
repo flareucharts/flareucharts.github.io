@@ -541,3 +541,21 @@
   line-height:1.4;
   color:#555;
 }
+
+.chart-score{
+    margin-top:4px;
+    font-size:11px;
+    color:#888;
+}
+
+.chart-platform{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.chart-platform-icon{
+    width:18px;
+    height:18px;
+    object-fit:contain;
+}
