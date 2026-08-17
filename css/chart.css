@@ -580,8 +580,32 @@
     color:#888;
 }
 
-.chart-platform{
-    display:flex;
-    align-items:center;
-    gap:6px;
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width:768px){
+
+    .chart-feed{
+        grid-template-columns:repeat(2, 1fr);
+        gap:18px;
+    }
+}
+
+/* =========================
+   DESKTOP 
+========================= */
+
+@media (min-width:1024px){
+    .global-content{
+        width:100%;
+        max-width:1024px;
+        margin:0 auto;
+    }
+
+    .chart-feed{
+        grid-template-columns:repeat(2, 1fr);
+        gap:20px;
+    }
+    
 }
