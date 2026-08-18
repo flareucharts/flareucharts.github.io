@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "FLO API",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-18T18:00:00+09:00",
+  "updated_at": "2026-08-18T19:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -1756,6 +1756,71 @@
           "likes": null,
           "rank_change": 0,
           "score": 39110,
+          "track_id": 512384617
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-18T19:00:00+09:00",
+      "date": "2026-08-18",
+      "hour": 19,
+      "platform": "FLO",
+      "chart": "Real-time",
+      "source": "FLO API",
+      "songs": [
+        {
+          "rank": 1,
+          "previous_rank": null,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.music-flo.com/image/v2/album/348/310/28/04/428310348_17ef3214248e8c9b_o.jpg?1724652245498/dims/resize/350/quality/90",
+          "likes": null,
+          "rank_change": 0,
+          "score": 176757,
+          "track_id": 512384615
+        },
+        {
+          "rank": 4,
+          "previous_rank": null,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.music-flo.com/image/v2/album/947/384/58/04/458384947_18bd776dfa13dbe9_s.jpg?1782712345436/dims/resize/350/quality/90",
+          "likes": null,
+          "rank_change": 0,
+          "score": 122416,
+          "track_id": 595700972
+        },
+        {
+          "rank": 7,
+          "previous_rank": null,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.music-flo.com/image/v2/album/825/109/40/04/440109825_184e0b4c02532e05_s.jpg?1751349729630/dims/resize/350/quality/90",
+          "likes": null,
+          "rank_change": 0,
+          "score": 115489,
+          "track_id": 546315173
+        },
+        {
+          "rank": 60,
+          "previous_rank": null,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.music-flo.com/image/v2/album/058/366/53/04/453366058_18a3ab167af6151c_s.jpg?1775450793113/dims/resize/350/quality/90",
+          "likes": null,
+          "rank_change": 0,
+          "score": 51407,
+          "track_id": 582965843
+        },
+        {
+          "rank": 86,
+          "previous_rank": null,
+          "title": "Pinball",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.music-flo.com/image/v2/album/348/310/28/04/428310348_17ef3214248e8c9b_o.jpg?1724652245498/dims/resize/350/quality/90",
+          "likes": null,
+          "rank_change": 0,
+          "score": 41974,
           "track_id": 512384617
         }
       ]
