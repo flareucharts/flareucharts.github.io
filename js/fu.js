@@ -14,7 +14,6 @@ function updateFUDayCounter() {
     })
   );
 
-
   // Starting date
   // 13 May 2026 = Day 1
   const startDate = new Date(2026, 4, 13);
