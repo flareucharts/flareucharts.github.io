@@ -39,7 +39,8 @@
 .page.vote-page .vote-title{
     display:flex;
     align-items:center;
-    padding:8px 16px 0;
+    gap:10px;
+    padding:12px 16px 0 16px;
 }
 
 .page.vote-page .vote-title h2{
@@ -49,7 +50,6 @@
     color:#fff;
     padding:0;
 }
-
 
 /* STATUS TABS */
 
