@@ -268,138 +268,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadJSON(config) {
 
-        const url =
-            `/data/${config.file}?t=${Date.now()}`;
+    const url =
+        `/data/${config.file}?t=${Date.now()}`;
 
 
-        try {
+    try {
 
-            const response =
-                await fetch(
-                    url,
-                    {
-                        cache: "no-store"
-                    }
-                );
-
-
-            if (!response.ok) {
-
-                return {
-
-                    ...config,
-
-                    available: false,
-                    snapshot: null,
-                    songs: []
-
-                };
-
-            }
-
-
-            const data =
-                await response.json();
-
-
-            if (
-                !data ||
-                !Array.isArray(data.snapshots)
-            ) {
-
-                return {
-
-                    ...config,
-
-                    available: false,
-                    snapshot: null,
-                    songs: []
-
-                };
-
-            }
-
-
-            /*
-             * Ambil snapshot terbaru.
-             */
-
-            const latest =
-                data.snapshots.length
-                    ? data.snapshots[
-                        data.snapshots.length - 1
-                    ]
-                    : null;
-
-
-            /*
-             * JSON ada tetapi belum
-             * memiliki snapshot.
-             */
-
-            if (!latest) {
-
-                return {
-
-                    ...config,
-
-                    available: false,
-                    snapshot: null,
-                    songs: []
-
-                };
-
-            }
-
-
-            return {
-
-                ...config,
-
-                available:
-                    Array.isArray(
-                        latest.songs
-                    ) &&
-                    latest.songs.length > 0,
-
-                platform:
-                    data.platform ||
-                    latest.platform ||
-                    config.platform,
-
-                chart:
-                    data.chart ||
-                    latest.chart ||
-                    "",
-
-                source:
-                    data.source ||
-                    latest.source ||
-                    "",
-
-                artist:
-                    data.artist ||
-                    "RESCENE (리센느)",
-
-                snapshot:
-                    latest,
-
-                songs:
-                    Array.isArray(
-                        latest.songs
-                    )
-                        ? latest.songs
-                        : []
-
-            };
-
-
-        } catch (error) {
-
-            console.warn(
-                `${config.name}: gagal memuat JSON`
+        const response =
+            await fetch(
+                url,
+                {
+                    cache: "no-store"
+                }
             );
 
+
+        if (!response.ok) {
 
             return {
 
@@ -407,13 +291,161 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 available: false,
                 snapshot: null,
+                previousSnapshot: null,
                 songs: []
 
             };
 
         }
 
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data ||
+            !Array.isArray(data.snapshots)
+        ) {
+
+            return {
+
+                ...config,
+
+                available: false,
+                snapshot: null,
+                previousSnapshot: null,
+                songs: []
+
+            };
+
+        }
+
+
+        /*
+         * Snapshot terbaru
+         */
+
+        const snapshots =
+            data.snapshots;
+
+
+        const latest =
+            snapshots.length
+                ? snapshots[
+                    snapshots.length - 1
+                ]
+                : null;
+
+
+        /*
+         * Snapshot sebelumnya
+         */
+
+        const previous =
+            snapshots.length >= 2
+                ? snapshots[
+                    snapshots.length - 2
+                ]
+                : null;
+
+
+        /*
+         * JSON ada tetapi belum
+         * memiliki snapshot.
+         */
+
+        if (!latest) {
+
+            return {
+
+                ...config,
+
+                available: false,
+                snapshot: null,
+                previousSnapshot: null,
+                songs: []
+
+            };
+
+        }
+
+
+        return {
+
+            ...config,
+
+            available:
+                Array.isArray(
+                    latest.songs
+                ) &&
+                latest.songs.length > 0,
+
+            platform:
+                data.platform ||
+                latest.platform ||
+                config.platform,
+
+            chart:
+                data.chart ||
+                latest.chart ||
+                "",
+
+            source:
+                data.source ||
+                latest.source ||
+                "",
+
+            artist:
+                data.artist ||
+                "RESCENE (리센느)",
+
+            /*
+             * CURRENT
+             */
+            snapshot:
+                latest,
+
+            /*
+             * PREVIOUS
+             */
+            previousSnapshot:
+                previous,
+
+            /*
+             * CURRENT SONGS
+             */
+            songs:
+                Array.isArray(
+                    latest.songs
+                )
+                    ? latest.songs
+                    : []
+
+        };
+
+
+    } catch (error) {
+
+        console.warn(
+            `${config.name}: gagal memuat JSON`
+        );
+
+
+        return {
+
+            ...config,
+
+            available: false,
+            snapshot: null,
+            previousSnapshot: null,
+            songs: []
+
+        };
+
     }
+
+}
 
 
     /* =====================================================
