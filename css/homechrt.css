@@ -1,48 +1,6 @@
 /* =========================================================
    HOME CURRENT CHART
-========================================================= */
-
-.home-chart{
-    width:100%;
-    max-width:1000px;
-    margin:0 auto;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.home-chart .home-subtitle{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    margin:0 0 28px;
-    padding:0;
-
-    color:#050505;
-    text-decoration:none;
-}
-
-.home-chart .home-subtitle h2{
-    margin:0;
-
-    font-size:clamp(26px,4vw,48px);
-    font-weight:750;
-    line-height:1.05;
-    letter-spacing:-1.8px;
-}
-
-.home-chart .home-subtitle > span{
-    display:block;
-
-    margin-top:-3px;
-
-    font-size:48px;
-    font-weight:300;
-    line-height:.8;
-}
+========================================================= 
 
 
 /* =========================================================
@@ -81,12 +39,8 @@
 
 .home-chart-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(2,minmax(0,1fr));
-
+    grid-template-columns:repeat(2,minmax(0,1fr));
     column-gap:60px;
-
     width:100%;
 }
 
@@ -106,7 +60,6 @@
 
 .home-chart-item{
     min-width:0;
-
     padding:16px 0;
 }
 
@@ -121,12 +74,9 @@
 
 .home-chart-item .chart-info{
     display:flex;
-
     align-items:center;
     justify-content:space-between;
-
     gap:15px;
-
     width:100%;
 }
 
@@ -138,11 +88,8 @@
 .home-chart .chart-platform{
     display:flex;
     align-items:center;
-
     gap:15px;
-
     min-width:0;
-
     margin:0;
 }
 
@@ -153,14 +100,10 @@
 
 .home-chart .chart-icon{
     display:block;
-
     flex:0 0 auto;
-
-    width:58px;
-    height:58px;
-
+    width:55px;
+    height:55px;
     object-fit:contain;
-
     border-radius:50%;
 }
 
@@ -172,33 +115,25 @@
 .home-chart .platform-text{
     display:flex;
     flex-direction:column;
-
     min-width:0;
 }
 
 .home-chart .platform-text strong{
     display:block;
-
     color:#111;
-
-    font-size:25px;
-    font-weight:700;
+    font-size:18px;
+    font-weight:600;
     line-height:1.05;
-
     letter-spacing:-.7px;
 }
 
 .home-chart .platform-text small{
     display:block;
-
     margin-top:5px;
-
     color:#707070;
-
-    font-size:16px;
+    font-size:12px;
     font-weight:400;
     line-height:1.1;
-
     white-space:nowrap;
 }
 
@@ -211,25 +146,20 @@
     display:flex;
     flex-direction:column;
     align-items:flex-end;
-
     flex:0 0 auto;
 }
 
 .home-chart .rank-wrap strong{
     color:#111;
-
-    font-size:27px;
+    font-size:18px;
     font-weight:700;
-
     line-height:1;
 }
 
 .home-chart .rank-wrap small{
     margin-top:7px;
-
-    font-size:17px;
+    font-size:15px;
     font-weight:500;
-
     line-height:1;
 }
 
@@ -259,7 +189,7 @@
    MOBILE
 ========================================================= */
 
-@media (max-width:700px){
+@media (max-width:768px){
 
     .home-chart .home-subtitle{
         margin-bottom:22px;
@@ -328,58 +258,6 @@
     .home-chart .rank-wrap small{
         margin-top:5px;
         font-size:12px;
-    }
-
-}
-
-
-/* =========================================================
-   VERY SMALL SCREEN
-========================================================= */
-
-@media (max-width:420px){
-
-    .home-chart-box{
-        padding-left:14px;
-        padding-right:14px;
-
-        border-radius:20px;
-    }
-
-
-    .home-chart-grid{
-        column-gap:12px;
-    }
-
-
-    .home-chart .chart-platform{
-        gap:7px;
-    }
-
-
-    .home-chart .chart-icon{
-        width:35px;
-        height:35px;
-    }
-
-
-    .home-chart .platform-text strong{
-        font-size:14px;
-    }
-
-
-    .home-chart .platform-text small{
-        font-size:9px;
-    }
-
-
-    .home-chart .rank-wrap strong{
-        font-size:17px;
-    }
-
-
-    .home-chart .rank-wrap small{
-        font-size:10px;
     }
 
 }
