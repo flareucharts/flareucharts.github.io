@@ -16,7 +16,7 @@
 
 .home-chart-date{
     margin-bottom:10px;
-    font-size:10px;
+    font-size:12px;
     line-height:1.2;
     color:#888;
 }
@@ -95,8 +95,7 @@
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
-
-    font-size:12px;
+    font-size:14px;
     font-weight:700;
     line-height:1.15;
     color:#111;
@@ -104,8 +103,7 @@
 
 .home-chart-item .platform-text small{
     margin-top:2px;
-
-    font-size:9px;
+    font-size:11px;
     font-weight:400;
     line-height:1.15;
     color:#888;
@@ -133,7 +131,7 @@
 
 .home-chart-item .rank-wrap small{
     margin-top:3px;
-    font-size:9px;
+    font-size:11px;
     font-weight:600;
     line-height:1;
 }
