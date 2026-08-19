@@ -28,6 +28,13 @@
 
 
 /* VOTE */
+.page.vote-page .vote-title-logo{
+    width:25px;
+    height:25px;
+    object-fit:contain;
+    flex:0 0 auto;
+    border-radius:5px;
+}
 
 .page.vote-page .vote-title{
     display:flex;
