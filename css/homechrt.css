@@ -1,263 +1,151 @@
-/* =========================================================
+/* =========================
    HOME CURRENT CHART
-========================================================= 
-
-
-/* =========================================================
-   MAIN BOX
-========================================================= */
+========================= */
 
 .home-chart-box{
     width:100%;
     box-sizing:border-box;
-
-    padding:28px 34px 34px;
-
+    padding:14px;
     background:#fff;
-    border-radius:28px;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.07);
 }
 
 
-/* =========================================================
-   SNAPSHOT TIME
-========================================================= */
+/* DATE */
 
 .home-chart-date{
-    margin-bottom:24px;
-
-    color:#858585;
-
-    font-size:17px;
-    font-weight:400;
+    margin-bottom:10px;
+    font-size:10px;
     line-height:1.2;
+    color:#888;
 }
 
 
-/* =========================================================
-   GRID
-========================================================= */
+/* GRID */
 
 .home-chart-grid{
     display:grid;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    column-gap:60px;
+    column-gap:14px;
     width:100%;
 }
 
 
-/* =========================================================
-   COLUMN
-========================================================= */
+/* COLUMN */
 
 .home-chart-card{
     min-width:0;
 }
 
 
-/* =========================================================
-   ITEM
-========================================================= */
+/* ITEM */
 
 .home-chart-item{
     min-width:0;
-    padding:16px 0;
+    padding:10px 0;
 }
 
 .home-chart-item + .home-chart-item{
-    border-top:1px solid #dcdcdc;
+    border-top:1px solid #ededed;
 }
 
 
-/* =========================================================
-   ROW
-========================================================= */
+/* ROW */
 
 .home-chart-item .chart-info{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:15px;
+    gap:8px;
     width:100%;
 }
 
 
-/* =========================================================
-   PLATFORM
-========================================================= */
+/* PLATFORM */
 
-.home-chart .chart-platform{
+.home-chart-item .chart-platform{
     display:flex;
     align-items:center;
-    gap:15px;
+    gap:7px;
     min-width:0;
-    margin:0;
 }
 
 
-/* =========================================================
-   PLATFORM ICON
-========================================================= */
+/* ICON */
 
-.home-chart .chart-icon{
-    display:block;
-    flex:0 0 auto;
-    width:55px;
-    height:55px;
+.home-chart-item .chart-icon{
+    width:30px;
+    height:30px;
+    flex:0 0 30px;
     object-fit:contain;
-    border-radius:50%;
+    border-radius:6px;
 }
 
 
-/* =========================================================
-   PLATFORM TEXT
-========================================================= */
+/* PLATFORM TEXT */
 
-.home-chart .platform-text{
+.home-chart-item .platform-text{
+    min-width:0;
     display:flex;
     flex-direction:column;
-    min-width:0;
 }
 
-.home-chart .platform-text strong{
-    display:block;
-    color:#111;
-    font-size:18px;
-    font-weight:600;
-    line-height:1.05;
-    letter-spacing:-.7px;
-}
+.home-chart-item .platform-text strong{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 
-.home-chart .platform-text small{
-    display:block;
-    margin-top:5px;
-    color:#707070;
     font-size:12px;
+    font-weight:700;
+    line-height:1.15;
+    color:#111;
+}
+
+.home-chart-item .platform-text small{
+    margin-top:2px;
+
+    font-size:9px;
     font-weight:400;
-    line-height:1.1;
+    line-height:1.15;
+    color:#888;
+
     white-space:nowrap;
 }
 
 
-/* =========================================================
-   RANK
-========================================================= */
+/* RANK */
 
-.home-chart .rank-wrap{
+.home-chart-item .rank-wrap{
     display:flex;
     flex-direction:column;
     align-items:flex-end;
+    justify-content:center;
     flex:0 0 auto;
 }
 
-.home-chart .rank-wrap strong{
-    color:#111;
-    font-size:18px;
+.home-chart-item .rank-wrap strong{
+    font-size:14px;
     font-weight:700;
     line-height:1;
+    color:#111;
 }
 
-.home-chart .rank-wrap small{
-    margin-top:7px;
-    font-size:15px;
-    font-weight:500;
+.home-chart-item .rank-wrap small{
+    margin-top:3px;
+    font-size:9px;
+    font-weight:600;
     line-height:1;
 }
 
-
-/* =========================================================
-   RANK STATUS
-========================================================= */
-
-.home-chart .rank-wrap .new{
-    color:#e5ae00;
-}
-
-.home-chart .rank-wrap .up{
+.home-chart-item .rank-wrap .up{
     color:#31b86c;
 }
 
-.home-chart .rank-wrap .down{
+.home-chart-item .rank-wrap .down{
     color:#ef7e48;
 }
 
-.home-chart .rank-wrap .same{
+.home-chart-item .rank-wrap .same{
     color:#888;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width:768px){
-
-    .home-chart .home-subtitle{
-        margin-bottom:22px;
-    }
-
-    .home-chart .home-subtitle h2{
-        font-size:28px;
-        letter-spacing:-1px;
-    }
-
-    .home-chart .home-subtitle > span{
-        font-size:32px;
-    }
-
-
-    .home-chart-box{
-        padding:22px 20px 25px;
-        border-radius:24px;
-    }
-
-
-    .home-chart-date{
-        margin-bottom:18px;
-        font-size:14px;
-    }
-
-
-    .home-chart-grid{
-        column-gap:25px;
-    }
-
-
-    .home-chart-item{
-        padding:13px 0;
-    }
-
-
-    .home-chart .chart-platform{
-        gap:9px;
-    }
-
-
-    .home-chart .chart-icon{
-        width:42px;
-        height:42px;
-    }
-
-
-    .home-chart .platform-text strong{
-        font-size:17px;
-        letter-spacing:-.3px;
-    }
-
-
-    .home-chart .platform-text small{
-        margin-top:4px;
-        font-size:11px;
-    }
-
-
-    .home-chart .rank-wrap strong{
-        font-size:19px;
-    }
-
-
-    .home-chart .rank-wrap small{
-        margin-top:5px;
-        font-size:12px;
-    }
-
 }
