@@ -98,7 +98,7 @@ max-width:100%;
 width:100%;
 max-width:768px;
 margin:0 auto;
-height:30px;
+height:50px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -170,7 +170,7 @@ color:white;
   overflow:hidden;
   margin-bottom:28px;
   background:#d9d9d9;
-  mmargin-top:0;
+  mmargin-top:-10px;
 }
 
 .banner-video{
