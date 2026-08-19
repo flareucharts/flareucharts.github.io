@@ -680,114 +680,248 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+/* =====================================================
+   PREVIOUS RANK
+===================================================== */
+
+function getPreviousRank(
+    song,
+    previousSnapshot
+) {
+
+    if (
+        !previousSnapshot ||
+        !Array.isArray(
+            previousSnapshot.songs
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    const previousSong =
+        previousSnapshot.songs.find(
+            previous => {
+
+                /*
+                 * Prioritas:
+                 * track_id
+                 */
+
+                if (
+                    song.track_id &&
+                    previous.track_id
+                ) {
+
+                    return (
+                        String(
+                            song.track_id
+                        ) ===
+                        String(
+                            previous.track_id
+                        )
+                    );
+
+                }
+
+
+                /*
+                 * Fallback:
+                 * title + artist
+                 */
+
+                return (
+                    String(
+                        previous.title || ""
+                    ).trim()
+                    .toLowerCase()
+                    ===
+                    String(
+                        song.title || ""
+                    ).trim()
+                    .toLowerCase()
+                    &&
+                    String(
+                        previous.artist || ""
+                    ).trim()
+                    .toLowerCase()
+                    ===
+                    String(
+                        song.artist || ""
+                    ).trim()
+                    .toLowerCase()
+                );
+
+            }
+        );
+
+
+    if (!previousSong) {
+
+        return null;
+
+    }
+
+
+    const rank =
+        Number(
+            previousSong.rank
+        );
+
+
+    return Number.isFinite(rank)
+        ? rank
+        : null;
+
+}
+
 
     /* =====================================================
        RANK CHANGE
     ===================================================== */
 
-    function renderChange(change) {
+    /* =====================================================
+   RANK STATUS
+===================================================== */
 
-        if (
-            change === null ||
-            change === undefined ||
-            change === ""
-        ) {
+function renderRankStatus(
+    song,
+    previousSnapshot
+) {
 
-            return "";
-
-        }
-
-
-        const number =
-            Number(change);
+    const currentRank =
+        Number(song?.rank);
 
 
-        if (Number.isNaN(number)) {
+    if (!Number.isFinite(currentRank)) {
 
-            return "";
+        return "";
 
-        }
-
-
-        if (number > 0) {
-
-            return `
-                <span class="chart-rank-change up">
-                    ↑ ${formatNumber(number)}
-                </span>
-            `;
-
-        }
+    }
 
 
-        if (number < 0) {
+    const previousRank =
+        getPreviousRank(
+            song,
+            previousSnapshot
+        );
 
-            return `
-                <span class="chart-rank-change down">
-                    ↓ ${formatNumber(
-                        Math.abs(number)
-                    )}
-                </span>
-            `;
 
-        }
+    /*
+     * Tidak ada di snapshot sebelumnya
+     * = NEW
+     */
 
+    if (previousRank === null) {
 
         return `
-            <span class="chart-rank-change same">
-                —
+            <span class="chart-rank-change new">
+                NEW
             </span>
         `;
 
     }
 
 
+    /*
+     * Rank membaik
+     *
+     * Contoh:
+     * 5 → 3 = ↑ 2
+     */
+
+    if (currentRank < previousRank) {
+
+        const change =
+            previousRank - currentRank;
+
+
+        return `
+            <span class="chart-rank-change up">
+                ↑ ${formatNumber(change)}
+            </span>
+        `;
+
+    }
+
+
+    /*
+     * Rank turun
+     *
+     * Contoh:
+     * 3 → 5 = ↓ 2
+     */
+
+    if (currentRank > previousRank) {
+
+        const change =
+            currentRank - previousRank;
+
+
+        return `
+            <span class="chart-rank-change down">
+                ↓ ${formatNumber(change)}
+            </span>
+        `;
+
+    }
+
+
+    /*
+     * Tidak berubah
+     *
+     * Contoh:
+     * 5 → 5 = —
+     */
+
+    return `
+        <span class="chart-rank-change same">
+            —
+        </span>
+    `;
+
+}
+
+
     /* =====================================================
        RENDER SONG
     ===================================================== */
 
-    function renderSong(song) {
+    function renderSong(
+    song,
+    previousSnapshot
+) {
 
         const rank =
             song?.rank ?? "";
 
-
         const title =
             song?.title || "";
-
 
         const artist =
             song?.artist ||
             "RESCENE (리센느)";
 
-
         const cover =
             song?.cover || "";
-
 
         const likes =
             song?.likes;
 
-
         const score =
             song?.score;
-
-
-        const rankChange =
-            song?.rank_change;
-
 
         const hasLikes =
             likes !== null &&
             likes !== undefined &&
             likes !== "";
 
-
         const hasScore =
             score !== null &&
             score !== undefined &&
             score !== "";
-
 
         const coverHTML =
             cover
@@ -819,7 +953,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         ${escapeHTML(rank)}
                     </span>
 
-                    ${renderChange(rankChange)}
+                    ${renderRankStatus(
+    song,
+    previousSnapshot
+)}
 
                 </div>
 
@@ -878,7 +1015,10 @@ document.addEventListener("DOMContentLoaded", () => {
        SONG LIST
     ===================================================== */
 
-    function renderSongList(songs) {
+    function renderSongList(
+    songs,
+    previousSnapshot
+) {
 
         if (
             !Array.isArray(songs) ||
@@ -899,11 +1039,14 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="chart-list">
 
                 ${songs
-                    .map(song =>
-                        renderSong(song)
-                    )
-                    .join("")
-                }
+    .map(song =>
+        renderSong(
+            song,
+            previousSnapshot
+        )
+    )
+    .join("")
+}
 
             </div>
 
@@ -1050,8 +1193,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                             ${renderSongList(
-                                songs
-                            )}
+    songs,
+    source.previousSnapshot
+)}
 
                         </section>
 
