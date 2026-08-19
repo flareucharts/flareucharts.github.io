@@ -1,18 +1,26 @@
-/* =========================================================
-   HOME — PRETTY GIRL CURRENT CHART
-========================================================= */
+console.log("HOME CHART JS LOADED");
+
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const dateEl =
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const dateElement =
         document.getElementById("home-chart-date");
 
     const grid =
         document.getElementById("home-chart-grid");
 
+    if (!dateElement || !grid) {
 
-    if (!dateEl || !grid) {
+        console.warn(
+            "Home chart elements tidak ditemukan."
+        );
+
         return;
+
     }
 
 
@@ -20,70 +28,69 @@ document.addEventListener("DOMContentLoaded", () => {
        CONFIG
     ===================================================== */
 
+    const TARGET_SONG = "Pretty Girl";
+
+
     const CHARTS = [
 
         {
             file: "melon_top100.json",
-            key: "melon_top100"
+            platform: "Melon",
+            chart: "TOP100"
         },
 
         {
             file: "melon_hot100_100days.json",
-            key: "melon_hot100_100"
+            platform: "Melon",
+            chart: "HOT100 (100d)"
         },
 
         {
             file: "melon_hot100_30days.json",
-            key: "melon_hot100_30"
+            platform: "Melon",
+            chart: "HOT100 (30d)"
         },
 
         {
             file: "melon_realtime.json",
-            key: "melon_realtime"
+            platform: "Melon",
+            chart: "Real-time"
         },
 
         {
             file: "bugs_realtime.json",
-            key: "bugs_realtime"
+            platform: "Bugs",
+            chart: "Real-time"
         },
 
         {
             file: "genie_top200.json",
-            key: "genie_top200"
+            platform: "Genie",
+            chart: "TOP200"
         },
 
         {
             file: "flo_realtime.json",
-            key: "flo_realtime"
+            platform: "FLO",
+            chart: "Real-time"
         },
 
         {
             file: "vibe_domestic.json",
-            key: "vibe_domestic"
+            platform: "VIBE",
+            chart: "Domestic"
         }
 
     ];
 
 
     /* =====================================================
-       FIND ROW
+       FORMAT SNAPSHOT TIME
     ===================================================== */
 
-    const items =
-        grid.querySelectorAll(
-            ".home-chart-item"
-        );
+    function formatSnapshotTime(value) {
 
-
-    /* =====================================================
-       FORMAT TIME
-    ===================================================== */
-
-    function formatTime(value) {
-
-        if (!value) {
-            return "—";
-        }
+        if (!value) return "—";
 
 
         const date =
@@ -91,7 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (Number.isNaN(date.getTime())) {
+
             return "—";
+
         }
 
 
@@ -100,25 +109,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 "en-GB",
                 {
                     timeZone: "Asia/Seoul",
-
                     year: "numeric",
                     month: "2-digit",
                     day: "2-digit",
-
                     hour: "2-digit",
                     minute: "2-digit",
-
                     hour12: false
                 }
             ).formatToParts(date);
 
 
-        const get =
-            type =>
-                parts.find(
-                    part =>
-                        part.type === type
-                )?.value || "";
+        const get = type =>
+            parts.find(
+                part =>
+                    part.type === type
+            )?.value || "";
 
 
         return (
@@ -133,63 +138,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FIND PRETTY GIRL
+       RANK CHANGE
     ===================================================== */
 
-    function findPrettyGirl(songs) {
-
-        if (!Array.isArray(songs)) {
-            return null;
-        }
-
-
-        return songs.find(song => {
-
-            const title =
-                String(
-                    song?.title || ""
-                )
-                .trim()
-                .toLowerCase();
-
-
-            return title === "pretty girl";
-
-        }) || null;
-
-    }
-
-
-    /* =====================================================
-       RENDER RANK CHANGE
-    ===================================================== */
-
-    function renderChange(
-        rankWrap,
-        change
-    ) {
-
-        const old =
-            rankWrap.querySelector(
-                ".home-rank-change"
-            );
-
-
-        if (old) {
-            old.remove();
-        }
-
-
-        /*
-         * Tidak ada rank change.
-         */
+    function formatRankChange(change) {
 
         if (
             change === null ||
             change === undefined ||
             change === ""
         ) {
-            return;
+
+            return "";
+
         }
 
 
@@ -198,150 +159,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (Number.isNaN(number)) {
-            return;
+
+            return "";
+
         }
 
-
-        const element =
-            document.createElement("small");
-
-
-        element.classList.add(
-            "home-rank-change"
-        );
-
-
-        /* =========================
-           RANK NAIK
-        ========================= */
 
         if (number > 0) {
 
-            element.classList.add("up");
-
-            element.textContent =
-                `↑ ${number}`;
-
-        }
-
-
-        /* =========================
-           RANK TURUN
-        ========================= */
-
-        else if (number < 0) {
-
-            element.classList.add("down");
-
-            element.textContent =
-                `↓ ${Math.abs(number)}`;
+            return `
+                <small class="up">
+                    ↑ ${number}
+                </small>
+            `;
 
         }
 
 
-        /* =========================
-           TETAP
-        ========================= */
+        if (number < 0) {
 
-        else {
-
-            element.classList.add("same");
-
-            element.textContent = "—";
+            return `
+                <small class="down">
+                    ↓ ${Math.abs(number)}
+                </small>
+            `;
 
         }
 
 
-        rankWrap.appendChild(
-            element
-        );
+        return `
+            <small class="same">
+                —
+            </small>
+        `;
 
     }
 
 
     /* =====================================================
-       RENDER RESULT
+       FIND PRETTY GIRL
     ===================================================== */
 
-    function renderResult(
-        index,
-        song
-    ) {
+    function findSong(songs) {
 
-        const item =
-            items[index];
+        if (!Array.isArray(songs)) {
 
+            return null;
 
-        if (!item) {
-            return;
         }
 
 
-        const rankWrap =
-            item.querySelector(
-                ".rank-wrap"
-            );
+        return songs.find(song => {
+
+            const title =
+                String(song?.title || "")
+                    .trim()
+                    .toLowerCase();
 
 
-        if (!rankWrap) {
-            return;
-        }
+            return title ===
+                TARGET_SONG
+                    .toLowerCase();
 
-
-        const rank =
-            rankWrap.querySelector(
-                "strong"
-            );
-
-
-        if (!rank) {
-            return;
-        }
-
-
-        /*
-         * DEFAULT
-         *
-         * Kalau Pretty Girl tidak
-         * masuk chart → —
-         */
-
-        rank.textContent = "—";
-
-
-        renderChange(
-            rankWrap,
-            null
-        );
-
-
-        /*
-         * Pretty Girl tidak ada.
-         */
-
-        if (!song) {
-            return;
-        }
-
-
-        /*
-         * Pretty Girl ada.
-         */
-
-        rank.textContent =
-            song.rank ?? "—";
-
-
-        renderChange(
-            rankWrap,
-            song.rank_change
-        );
+        }) || null;
 
     }
 
 
     /* =====================================================
-       LOAD ONE JSON
+       LOAD ONE CHART
     ===================================================== */
 
     async function loadChart(config) {
@@ -358,10 +244,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             if (!response.ok) {
+
                 return {
+
+                    ...config,
                     snapshot: null,
                     song: null
+
                 };
+
             }
 
 
@@ -371,64 +262,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (
                 !data ||
-                !Array.isArray(
-                    data.snapshots
-                )
+                !Array.isArray(data.snapshots) ||
+                !data.snapshots.length
             ) {
 
                 return {
+
+                    ...config,
                     snapshot: null,
                     song: null
+
                 };
 
             }
-
-
-            const snapshots =
-                data.snapshots;
 
 
             const snapshot =
-                snapshots.length
-                    ? snapshots[
-                        snapshots.length - 1
-                    ]
-                    : null;
-
-
-            if (!snapshot) {
-
-                return {
-                    snapshot: null,
-                    song: null
-                };
-
-            }
+                data.snapshots[
+                    data.snapshots.length - 1
+                ];
 
 
             const song =
-                findPrettyGirl(
-                    snapshot.songs
+                findSong(
+                    snapshot?.songs
                 );
 
 
             return {
+
+                ...config,
                 snapshot,
                 song
+
             };
 
 
         } catch (error) {
 
             console.warn(
-                `Gagal memuat ${config.file}`,
+                `Home chart gagal memuat ${config.file}`,
                 error
             );
 
 
             return {
+
+                ...config,
                 snapshot: null,
                 song: null
+
             };
 
         }
@@ -437,10 +320,250 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       LOAD ALL
+       UPDATE RANK
+    ===================================================== */
+
+    function updateRank(card, result) {
+
+        if (!card) return;
+
+
+        const rankStrong =
+            card.querySelector(
+                ".rank-wrap strong"
+            );
+
+        const rankWrap =
+            card.querySelector(
+                ".rank-wrap"
+            );
+
+
+        if (!rankStrong || !rankWrap) return;
+
+
+        /* ================================================
+           SONG TIDAK MASUK CHART
+        ================================================ */
+
+        if (!result.song) {
+
+            rankStrong.textContent = "—";
+
+
+            const oldChange =
+                rankWrap.querySelector(
+                    ".home-rank-change"
+                );
+
+
+            if (oldChange) {
+                oldChange.remove();
+            }
+
+
+            return;
+
+        }
+
+
+        /* ================================================
+           RANK
+        ================================================ */
+
+        rankStrong.textContent =
+            result.song.rank ?? "—";
+
+
+        /* ================================================
+           RANK CHANGE
+        ================================================ */
+
+        const oldChange =
+            rankWrap.querySelector(
+                ".home-rank-change"
+            );
+
+
+        if (oldChange) {
+
+            oldChange.remove();
+
+        }
+
+
+        const changeHTML =
+            formatRankChange(
+                result.song.rank_change
+            );
+
+
+        if (changeHTML) {
+
+            const temp =
+                document.createElement("div");
+
+
+            temp.innerHTML = changeHTML;
+
+
+            const change =
+                temp.firstElementChild;
+
+
+            if (change) {
+
+                change.classList.add(
+                    "home-rank-change"
+                );
+
+                rankWrap.appendChild(
+                    change
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       MAP HTML CARD → CHART CONFIG
+    ===================================================== */
+
+    function getCards() {
+
+        return [
+            ...grid.querySelectorAll(
+                ".home-chart-card"
+            )
+        ];
+
+    }
+
+
+    /* =====================================================
+       UPDATE ALL CARDS
+    ===================================================== */
+
+    function updateCards(results) {
+
+        const cards =
+            getCards();
+
+
+        results.forEach(
+            (result, index) => {
+
+                const column =
+                    index < 4
+                        ? cards[0]
+                        : cards[1];
+
+
+                if (!column) return;
+
+
+                const itemIndex =
+                    index < 4
+                        ? index
+                        : index - 4;
+
+
+                const item =
+                    column.querySelectorAll(
+                        ".home-chart-item"
+                    )[itemIndex];
+
+
+                updateRank(
+                    item,
+                    result
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       UPDATE SNAPSHOT DATE
+    ===================================================== */
+
+    function updateDate(results) {
+
+        const validTimes =
+            results
+                .map(
+                    result =>
+                        result.snapshot?.snapshot_time
+                )
+                .filter(Boolean)
+                .map(value => {
+
+                    const date =
+                        new Date(value);
+
+                    return {
+                        raw: value,
+                        time:
+                            date.getTime()
+                    };
+
+                })
+                .filter(
+                    item =>
+                        !Number.isNaN(
+                            item.time
+                        )
+                );
+
+
+        if (!validTimes.length) {
+
+            dateElement.textContent =
+                "—";
+
+            return;
+
+        }
+
+
+        /*
+         * Ambil snapshot paling baru
+         * dari semua platform.
+         */
+
+        validTimes.sort(
+            (a, b) =>
+                b.time - a.time
+        );
+
+
+        dateElement.textContent =
+            formatSnapshotTime(
+                validTimes[0].raw
+            );
+
+    }
+
+
+    /* =====================================================
+       LOAD HOME CHART
     ===================================================== */
 
     async function loadHomeChart() {
+
+        /*
+         * Sementara loading.
+         * Card tetap ada.
+         */
+
+        dateElement.textContent =
+            "Loading...";
+
 
         const results =
             await Promise.all(
@@ -451,47 +574,19 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
-        /* =================================================
-           SNAPSHOT TIME
-        ================================================= */
-
-        const snapshot =
-            results.find(
-                result =>
-                    result.snapshot
-            )?.snapshot;
+        updateCards(
+            results
+        );
 
 
-        if (
-            snapshot?.snapshot_time
-        ) {
-
-            dateEl.textContent =
-                formatTime(
-                    snapshot.snapshot_time
-                );
-
-        }
-        else {
-
-            dateEl.textContent = "—";
-
-        }
+        updateDate(
+            results
+        );
 
 
-        /* =================================================
-           RANKS
-        ================================================= */
-
-        results.forEach(
-            (result, index) => {
-
-                renderResult(
-                    index,
-                    result.song
-                );
-
-            }
+        console.log(
+            "🔥 HOME Pretty Girl chart:",
+            results
         );
 
     }
