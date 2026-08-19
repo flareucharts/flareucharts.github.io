@@ -1,0 +1,363 @@
+/* =========================
+   FLARE U DAY COUNTER
+========================= */
+
+.fu {
+  width: calc(100% - 36px);
+  max-width: 900px;
+
+  margin: 60px auto 12px;
+  padding: 24px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 35px;
+
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #f8fffd
+  );
+
+  border: 2px solid #a8ddd6;
+  border-radius: 24px;
+
+  box-shadow:
+    0 8px 25px rgba(145, 211, 202, 0.15);
+}
+
+
+/* LEFT */
+
+.fu-left {
+  flex: 1;
+  min-width: 230px;
+  text-align: center;
+}
+
+.fu-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  margin-bottom: 2px;
+
+  color: #333;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.fu-title span {
+  color: #f49aaa;
+  font-size: 18px;
+}
+
+
+.fu-number {
+  margin: 8px 0;
+
+  color: #91d3ca;
+
+  font-size: clamp(70px, 10vw, 110px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: 4px;
+}
+
+
+.fu-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  color: #333;
+
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.fu-label span {
+  color: #f49aaa;
+  font-size: 17px;
+}
+
+
+/* DIVIDER */
+
+.fu-divider {
+  width: 2px;
+  height: 125px;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    #a8ddd6 0px,
+    #a8ddd6 5px,
+    transparent 5px,
+    transparent 11px
+  );
+}
+
+
+/* RIGHT */
+
+.fu-right {
+  position: relative;
+
+  flex: 1;
+  min-width: 260px;
+
+  padding: 5px 10px;
+}
+
+
+.fu-badge {
+  display: inline-block;
+
+  margin-bottom: 22px;
+  padding: 8px 22px;
+
+  background: #f49aaa;
+  color: #fff;
+
+  border-radius: 30px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+
+/* DATE */
+
+.fu-date {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  color: #333;
+}
+
+
+.fu-date-text small {
+  display: block;
+
+  margin-bottom: 1px;
+
+  color: #777;
+
+  font-size: 12px;
+}
+
+
+.fu-date-text strong {
+  display: block;
+
+  font-size: 17px;
+  letter-spacing: 1px;
+}
+
+
+/* DATE ICON */
+
+.fu-date-icon {
+  position: relative;
+
+  width: 48px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  border: 2px solid #333;
+  border-radius: 7px;
+
+  color: #f49aaa;
+  font-size: 20px;
+}
+
+
+.fu-date-top {
+  position: absolute;
+
+  top: 8px;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: #333;
+}
+
+
+.fu-date-icon span {
+  margin-top: 8px;
+}
+
+
+/* INFINITY */
+
+.fu-infinity {
+  position: absolute;
+
+  right: 5px;
+  bottom: -5px;
+
+  color: #91d3ca;
+
+  font-size: 40px;
+  font-weight: 300;
+}
+
+
+/* KST NOTE */
+
+.fu-note {
+  margin: 10px auto 45px;
+
+  text-align: center;
+
+  color: #9a9a9a;
+
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+  .fu {
+    width: calc(100% - 28px);
+
+    margin-top: 40px;
+    padding: 20px 15px;
+
+    gap: 16px;
+
+    border-radius: 20px;
+  }
+
+
+  .fu-left {
+    min-width: 0;
+  }
+
+
+  .fu-title {
+    gap: 5px;
+
+    font-size: 10px;
+    letter-spacing: 2px;
+  }
+
+
+  .fu-title span {
+    font-size: 13px;
+  }
+
+
+  .fu-number {
+    font-size: 58px;
+    letter-spacing: 1px;
+  }
+
+
+  .fu-label {
+    gap: 8px;
+
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+
+
+  .fu-label span {
+    font-size: 12px;
+  }
+
+
+  .fu-divider {
+    height: 95px;
+  }
+
+
+  .fu-right {
+    min-width: 0;
+    padding: 0;
+  }
+
+
+  .fu-badge {
+    margin-bottom: 15px;
+    padding: 7px 12px;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+  }
+
+
+  .fu-date {
+    gap: 8px;
+  }
+
+
+  .fu-date-icon {
+    width: 34px;
+    height: 31px;
+
+    font-size: 14px;
+  }
+
+
+  .fu-date-top {
+    top: 6px;
+  }
+
+
+  .fu-date-icon span {
+    margin-top: 6px;
+  }
+
+
+  .fu-date-text small {
+    font-size: 9px;
+  }
+
+
+  .fu-date-text strong {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+
+
+  .fu-infinity {
+    right: 0;
+    bottom: -8px;
+
+    font-size: 25px;
+  }
+
+
+  .fu-note {
+    margin-bottom: 30px;
+
+    font-size: 8px;
+    letter-spacing: 0.3px;
+  }
+
+}
