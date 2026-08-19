@@ -1,5 +1,6 @@
 import json
 import requests
+
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -23,10 +24,17 @@ from pathlib import Path
 # Asia/Seoul
 #
 # SNAPSHOT:
-# selalu HH:00:00+09:00
+# HH:00:00+09:00
 #
 # TARGET ARTIST:
 # RESCENE (리센느)
+#
+# RANK CHANGE:
+# dihitung otomatis dari snapshot sebelumnya.
+# current rank 69
+# previous rank 71
+# = rank_change +2
+#
 # =========================================================
 
 
@@ -246,6 +254,10 @@ def load_json_file(path):
                 "JSON root bukan object."
             )
 
+        # -------------------------------------------------
+        # OLD HISTORY COMPATIBILITY
+        # -------------------------------------------------
+
         if (
             "snapshots" not in data
             and "history" in data
@@ -366,6 +378,251 @@ def remove_old_history(history):
 
 
 # =========================================================
+# SONG IDENTITY
+# =========================================================
+
+def normalize_text(value):
+
+    if value is None:
+        return ""
+
+    return " ".join(
+        str(value)
+        .strip()
+        .casefold()
+        .split()
+    )
+
+
+def song_identity(song):
+
+    # -----------------------------------------------------
+    # BEST MATCH:
+    # TRACK ID
+    # -----------------------------------------------------
+
+    track_id = song.get(
+        "track_id"
+    )
+
+    if track_id is not None:
+
+        track_id = str(
+            track_id
+        ).strip()
+
+        if track_id:
+
+            return (
+                "track_id",
+                track_id
+            )
+
+    # -----------------------------------------------------
+    # FALLBACK:
+    # ARTIST + TITLE
+    # -----------------------------------------------------
+
+    artist = normalize_text(
+        song.get(
+            "artist",
+            ""
+        )
+    )
+
+    title = normalize_text(
+        song.get(
+            "title",
+            ""
+        )
+    )
+
+    return (
+        "artist_title",
+        artist,
+        title
+    )
+
+
+# =========================================================
+# FIND PREVIOUS SONG
+# =========================================================
+
+def find_previous_song(
+    previous_snapshot,
+    current_song
+):
+
+    if not previous_snapshot:
+
+        return None
+
+    previous_songs = (
+        previous_snapshot.get(
+            "songs",
+            []
+        )
+    )
+
+    current_identity = (
+        song_identity(
+            current_song
+        )
+    )
+
+    for previous_song in previous_songs:
+
+        if (
+            song_identity(
+                previous_song
+            )
+            ==
+            current_identity
+        ):
+
+            return previous_song
+
+    return None
+
+
+# =========================================================
+# CALCULATE RANK CHANGE
+# =========================================================
+
+def calculate_rank_change(
+    current_rank,
+    previous_rank
+):
+
+    # -----------------------------------------------------
+    # CURRENT RANK UNKNOWN
+    # -----------------------------------------------------
+
+    if not isinstance(
+        current_rank,
+        int
+    ):
+
+        return 0
+
+    # -----------------------------------------------------
+    # NO PREVIOUS RANK
+    # -----------------------------------------------------
+
+    if not isinstance(
+        previous_rank,
+        int
+    ):
+
+        return 0
+
+    # -----------------------------------------------------
+    # IMPORTANT:
+    #
+    # previous 71
+    # current 69
+    #
+    # 71 - 69 = +2
+    #
+    # previous 69
+    # current 71
+    #
+    # 69 - 71 = -2
+    # -----------------------------------------------------
+
+    return (
+        previous_rank
+        -
+        current_rank
+    )
+
+
+# =========================================================
+# APPLY RANK HISTORY
+# =========================================================
+
+def apply_rank_history(
+    songs,
+    history
+):
+
+    # -----------------------------------------------------
+    # FIND PREVIOUS SNAPSHOT
+    # -----------------------------------------------------
+
+    previous_snapshot = None
+
+    if history:
+
+        sorted_history = sorted(
+            history,
+            key=lambda item:
+            item.get(
+                "snapshot_time",
+                ""
+            )
+        )
+
+        previous_snapshot = (
+            sorted_history[-1]
+        )
+
+    # -----------------------------------------------------
+    # PROCESS CURRENT SONGS
+    # -----------------------------------------------------
+
+    processed = []
+
+    for song in songs:
+
+        current_rank = song.get(
+            "rank"
+        )
+
+        previous_song = (
+            find_previous_song(
+                previous_snapshot,
+                song
+            )
+        )
+
+        previous_rank = None
+
+        if previous_song:
+
+            previous_rank = (
+                previous_song.get(
+                    "rank"
+                )
+            )
+
+        rank_change = (
+            calculate_rank_change(
+                current_rank,
+                previous_rank
+            )
+        )
+
+        # -------------------------------------------------
+        # UNIVERSAL RANK DATA
+        # -------------------------------------------------
+
+        song["previous_rank"] = (
+            previous_rank
+        )
+
+        song["rank_change"] = (
+            rank_change
+        )
+
+        processed.append(
+            song
+        )
+
+    return processed
+
+
+# =========================================================
 # SAVE SNAPSHOT
 # =========================================================
 
@@ -429,7 +686,16 @@ def save_snapshot(
             return False
 
     # -----------------------------------------------------
-    # CREATE
+    # CALCULATE PREVIOUS RANK
+    # -----------------------------------------------------
+
+    songs = apply_rank_history(
+        songs=songs,
+        history=history
+    )
+
+    # -----------------------------------------------------
+    # CREATE SNAPSHOT
     # -----------------------------------------------------
 
     snapshot = {
@@ -463,9 +729,17 @@ def save_snapshot(
         snapshot
     )
 
+    # -----------------------------------------------------
+    # CLEAN OLD HISTORY
+    # -----------------------------------------------------
+
     history = remove_old_history(
         history
     )
+
+    # -----------------------------------------------------
+    # FINAL JSON
+    # -----------------------------------------------------
 
     data = {
 
@@ -500,30 +774,64 @@ def save_snapshot(
         f"({len(songs)} songs)"
     )
 
+    # -----------------------------------------------------
+    # DEBUG RANK CHANGES
+    # -----------------------------------------------------
+
+    for song in songs:
+
+        rank = song.get(
+            "rank"
+        )
+
+        previous = song.get(
+            "previous_rank"
+        )
+
+        change = song.get(
+            "rank_change"
+        )
+
+        title = song.get(
+            "title",
+            ""
+        )
+
+        if (
+            isinstance(rank, int)
+            and isinstance(previous, int)
+        ):
+
+            if change > 0:
+
+                change_text = (
+                    f"↑ {change}"
+                )
+
+            elif change < 0:
+
+                change_text = (
+                    f"↓ {abs(change)}"
+                )
+
+            else:
+
+                change_text = "="
+
+            print(
+                f"   {title} | "
+                f"{previous} → {rank} "
+                f"{change_text}"
+            )
+
+        else:
+
+            print(
+                f"   {title} | "
+                f"{rank} | NEW / NO PREVIOUS"
+            )
+
     return True
-
-
-# =========================================================
-# SONG SIGNATURE
-# =========================================================
-
-def song_signature(song):
-
-    return (
-
-        song.get("rank"),
-
-        song.get("previous_rank"),
-
-        song.get("title", ""),
-
-        song.get("likes"),
-
-        song.get("score"),
-
-        song.get("track_id")
-
-    )
 
 
 # =========================================================
@@ -592,9 +900,13 @@ def collect_melon_top100():
     if not response:
         return
 
-    print("STATUS:", response.status_code)
+    print(
+        "STATUS:",
+        response.status_code
+    )
 
     if response.status_code != 200:
+
         print("SKIP")
         return
 
@@ -609,7 +921,10 @@ def collect_melon_top100():
         "tr.lst50, tr.lst100"
     )
 
-    print("ROWS:", len(rows))
+    print(
+        "ROWS:",
+        len(rows)
+    )
 
     for row in rows:
 
@@ -630,6 +945,7 @@ def collect_melon_top100():
             and title_el
             and artist_el
         ):
+
             continue
 
         artist = artist_el.get_text(
@@ -637,11 +953,11 @@ def collect_melon_top100():
             strip=True
         )
 
-        # RESCENE / 리센느
         if not (
             "RESCENE" in artist.upper()
             or "리센느" in artist
         ):
+
             continue
 
         try:
@@ -699,6 +1015,7 @@ def collect_melon_top100():
         source="Melon",
         songs=songs
     )
+
 
 # =========================================================
 # 2. MELON HOT100
@@ -789,6 +1106,7 @@ def collect_melon_hot100(
             and title_el
             and artist_el
         ):
+
             continue
 
         artist = artist_el.get_text(
@@ -796,11 +1114,11 @@ def collect_melon_hot100(
             strip=True
         )
 
-        # RESCENE / 리센느
         if not (
             "RESCENE" in artist.upper()
             or "리센느" in artist
         ):
+
             continue
 
         try:
@@ -859,6 +1177,7 @@ def collect_melon_hot100(
         songs=songs
     )
 
+
 # =========================================================
 # 3. GUYSOME
 # =========================================================
@@ -878,54 +1197,6 @@ def build_guysome_url(dt):
         f"{date_part}/"
         f"{hour_part}"
     )
-
-
-def parse_rank_change(
-    change_element
-):
-
-    if not change_element:
-
-        return 0
-
-    span = change_element.select_one(
-        "span"
-    )
-
-    if not span:
-
-        return 0
-
-    value = span.get_text(
-        strip=True
-    )
-
-    if value == "-":
-
-        return 0
-
-    try:
-
-        number = int(value)
-
-    except ValueError:
-
-        return 0
-
-    classes = span.get(
-        "class",
-        []
-    )
-
-    if "up" in classes:
-
-        return number
-
-    if "down" in classes:
-
-        return -number
-
-    return 0
 
 
 def fetch_guysome_page(dt):
@@ -1069,30 +1340,6 @@ def collect_guysome():
 
             continue
 
-        change_el = row.select_one(
-            ".ranking .change"
-        )
-
-        rank_change = (
-            parse_rank_change(
-                change_el
-            )
-        )
-
-        previous_rank = None
-
-        if rank_change > 0:
-
-            previous_rank = (
-                rank + rank_change
-            )
-
-        elif rank_change < 0:
-
-            previous_rank = (
-                rank - rank_change
-            )
-
         title_el = row.select_one(
             ".subject p[title]"
         )
@@ -1134,7 +1381,10 @@ def collect_guysome():
                     .get_text(
                         strip=True
                     )
-                    .replace(",", "")
+                    .replace(
+                        ",",
+                        ""
+                    )
                 )
 
             except ValueError:
@@ -1147,8 +1397,6 @@ def collect_guysome():
                 title=title,
                 artist=artist,
                 cover=cover,
-                previous_rank=previous_rank,
-                rank_change=rank_change,
                 likes=likes
             )
         )
@@ -1171,7 +1419,7 @@ def collect_guysome():
 
 
 # =========================================================
-# 5. BUGS REAL-TIME
+# 4. BUGS REAL-TIME
 # =========================================================
 
 def collect_bugs():
@@ -1186,7 +1434,6 @@ def collect_bugs():
     )
 
     if not response:
-
         return
 
     print(
@@ -1197,7 +1444,6 @@ def collect_bugs():
     if response.status_code != 200:
 
         print("SKIP")
-
         return
 
     soup = BeautifulSoup(
@@ -1237,15 +1483,14 @@ def collect_bugs():
             strip=True
         )
 
-        if TARGET_ARTIST.lower() \
-                not in artist.lower() \
-                and "리센느" not in artist:
+        if (
+            TARGET_ARTIST.lower()
+            not in artist.lower()
+            and
+            "리센느" not in artist
+        ):
 
             continue
-
-        # -------------------------------------------------
-        # TITLE
-        # -------------------------------------------------
 
         title_el = row.select_one(
             ".title a"
@@ -1331,10 +1576,6 @@ def collect_bugs():
         if rank is None:
             continue
 
-        # -------------------------------------------------
-        # COVER
-        # -------------------------------------------------
-
         cover_el = row.select_one(
             "img"
         )
@@ -1345,9 +1586,12 @@ def collect_bugs():
 
             cover = (
                 cover_el.get("src")
-                or cover_el.get("data-original")
-                or cover_el.get("data-lazy")
-                or ""
+                or
+                cover_el.get("data-original")
+                or
+                cover_el.get("data-lazy")
+                or
+                ""
             ).strip()
 
         songs.append(
@@ -1369,12 +1613,10 @@ def collect_bugs():
 
 
 # =========================================================
-# 6. GENIE TOP200
+# 5. GENIE TOP200
 # =========================================================
 
-def parse_genie_page(
-    html
-):
+def parse_genie_page(html):
 
     soup = BeautifulSoup(
         html,
@@ -1407,8 +1649,10 @@ def parse_genie_page(
             strip=True
         )
 
-        if TARGET_ARTIST.lower() \
-                not in artist.lower():
+        if (
+            TARGET_ARTIST.lower()
+            not in artist.lower()
+        ):
 
             continue
 
@@ -1428,10 +1672,6 @@ def parse_genie_page(
             " "
         )
 
-        # -------------------------------------------------
-        # COVER
-        # -------------------------------------------------
-
         cover_el = row.select_one(
             "img"
         )
@@ -1442,18 +1682,20 @@ def parse_genie_page(
 
             cover = (
                 cover_el.get("src")
-                or cover_el.get("data-original")
-                or cover_el.get("data-lazy")
-                or ""
+                or
+                cover_el.get("data-original")
+                or
+                cover_el.get("data-lazy")
+                or
+                ""
             ).strip()
 
             if cover.startswith("//"):
 
-                cover = "https:" + cover
-
-        # -------------------------------------------------
-        # RANK
-        # -------------------------------------------------
+                cover = (
+                    "https:"
+                    + cover
+                )
 
         rank_el = row.select_one(
             ".number"
@@ -1480,15 +1722,9 @@ def parse_genie_page(
         if rank is None:
             continue
 
-        # -------------------------------------------------
-        # TRACK ID
-        # -------------------------------------------------
-
         track_id = ""
 
-        for link in row.select(
-            "a"
-        ):
+        for link in row.select("a"):
 
             href = link.get(
                 "href",
@@ -1504,10 +1740,6 @@ def parse_genie_page(
                 )
 
                 break
-
-        # -------------------------------------------------
-        # SAVE SONG
-        # -------------------------------------------------
 
         songs.append(
             normalize_song(
@@ -1549,25 +1781,15 @@ def collect_genie():
         response = request_url(
             GENIE_BASE_URL,
             params={
-                "ditc":
-                    "D",
-
-                "ymd":
-                    ymd,
-
-                "hh":
-                    hh,
-
-                "rtm":
-                    "Y",
-
-                "pg":
-                    page
+                "ditc": "D",
+                "ymd": ymd,
+                "hh": hh,
+                "rtm": "Y",
+                "pg": page
             }
         )
 
         if not response:
-
             continue
 
         if response.status_code != 200:
@@ -1588,10 +1810,6 @@ def collect_genie():
         songs.extend(
             page_songs
         )
-
-    # -----------------------------------------------------
-    # REMOVE DUPLICATES
-    # -----------------------------------------------------
 
     unique = {}
 
@@ -1630,7 +1848,7 @@ def collect_genie():
 
 
 # =========================================================
-# 7. FLO REAL-TIME
+# 6. FLO REAL-TIME
 # =========================================================
 
 def collect_flo():
@@ -1645,7 +1863,6 @@ def collect_flo():
     )
 
     if not response:
-
         return
 
     print(
@@ -1656,7 +1873,6 @@ def collect_flo():
     if response.status_code != 200:
 
         print("SKIP")
-
         return
 
     try:
@@ -1700,8 +1916,10 @@ def collect_flo():
             ""
         )
 
-        if TARGET_ARTIST.lower() \
-                not in artist.lower():
+        if (
+            TARGET_ARTIST.lower()
+            not in artist.lower()
+        ):
 
             continue
 
@@ -1718,13 +1936,6 @@ def collect_flo():
             "score"
         )
 
-        rank_data = track.get(
-            "rank",
-            {}
-        )
-
-        cover = ""
-
         album = track.get(
             "album",
             {}
@@ -1739,6 +1950,8 @@ def collect_flo():
             "urlFormat",
             ""
         )
+
+        cover = ""
 
         if url_format:
 
@@ -1768,7 +1981,7 @@ def collect_flo():
 
 
 # =========================================================
-# 8. VIBE DOMESTIC
+# 7. VIBE DOMESTIC
 # =========================================================
 
 def recursive_vibe_search(
@@ -1843,7 +2056,6 @@ def collect_vibe():
     )
 
     if not response:
-
         return
 
     print(
@@ -1854,7 +2066,6 @@ def collect_vibe():
     if response.status_code != 200:
 
         print("SKIP")
-
         return
 
     try:
@@ -1912,33 +2123,44 @@ def collect_vibe():
 
         title = (
             item.get("trackTitle")
-            or item.get("title")
-            or item.get("trackName")
-            or ""
+            or
+            item.get("title")
+            or
+            item.get("trackName")
+            or
+            ""
         )
 
         artist = (
             item.get("artistName")
-            or item.get("artist")
-            or ""
+            or
+            item.get("artist")
+            or
+            ""
         )
 
         rank = (
             item.get("rank")
-            or item.get("ranking")
+            or
+            item.get("ranking")
         )
 
         track_id = (
             item.get("trackId")
-            or item.get("track_id")
-            or item.get("id")
+            or
+            item.get("track_id")
+            or
+            item.get("id")
         )
 
         cover = (
             item.get("albumImageUrl")
-            or item.get("imageUrl")
-            or item.get("cover")
-            or ""
+            or
+            item.get("imageUrl")
+            or
+            item.get("cover")
+            or
+            ""
         )
 
         if not artist:
@@ -1948,13 +2170,14 @@ def collect_vibe():
                 ensure_ascii=False
             )
 
-            if TARGET_ARTIST.lower() \
-                    in text.lower():
+            if (
+                TARGET_ARTIST.lower()
+                in text.lower()
+            ):
 
                 artist = TARGET_ARTIST
 
         if not title:
-
             continue
 
         try:
@@ -1980,9 +2203,7 @@ def collect_vibe():
 
     songs.sort(
         key=lambda song:
-        song.get(
-            "rank"
-        )
+        song.get("rank")
         if isinstance(
             song.get("rank"),
             int
