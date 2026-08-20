@@ -710,16 +710,4 @@ display:block;
     width:100%;
     align-items:start;
   }
-
-    /* VIDEO */
-    .video-card{
-        max-width:100%;
-        margin:20px auto;
-    }
-    
-    /* VOTE */
-    .vote-list{
-        grid-template-columns:repeat(2, 1fr);
-        gap:20px;
-    }
 }
