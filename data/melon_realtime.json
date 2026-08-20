@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "Guysome",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-21T01:00:00+09:00",
+  "updated_at": "2026-08-21T08:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
@@ -3950,6 +3950,71 @@
           "cover": "https://cdn.guyso.me/image/album/melon/11575849.jpg?v=1724753051034&size=80",
           "likes": 22908,
           "rank_change": -10,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-21T08:00:00+09:00",
+      "date": "2026-08-21",
+      "hour": 8,
+      "platform": "Melon",
+      "chart": "Real-time",
+      "source": "Guysome",
+      "songs": [
+        {
+          "rank": 2,
+          "previous_rank": 2,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/11575849.jpg?v=1724753051034&size=80",
+          "likes": 138250,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 5,
+          "previous_rank": 3,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/13788545.jpg?v=1786941188248&size=80",
+          "likes": 54352,
+          "rank_change": -2,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 8,
+          "previous_rank": 4,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/11875116.jpg?v=1753652582608&size=80",
+          "likes": 45563,
+          "rank_change": -4,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 39,
+          "previous_rank": 47,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/13312413.jpg?v=1775642677521&size=80",
+          "likes": 29922,
+          "rank_change": 8,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 78,
+          "previous_rank": 92,
+          "title": "Pinball",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/11575849.jpg?v=1724753051034&size=80",
+          "likes": 22933,
+          "rank_change": 14,
           "score": null,
           "track_id": null
         }
