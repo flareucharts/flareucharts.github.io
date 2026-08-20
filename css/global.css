@@ -680,9 +680,14 @@ display:block;
 @media (min-width:1024px){
     .app{
         width:100%;
-        max-width:1768px;
+        max-width:768px;
         margin:0 auto;
     }
+
+.home-banner{
+width:100%;
+        max-width:768px;
+}
 
     /* HEADER SEJAJAR DENGAN CONTENT */
     .header{
