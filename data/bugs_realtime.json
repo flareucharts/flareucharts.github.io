@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "Bugs",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-20T21:00:00+09:00",
+  "updated_at": "2026-08-20T22:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -4940,6 +4940,71 @@
           "cover": "https://image.bugsm.co.kr/album/images/50/41063/4106349.jpg?version=20260815004811",
           "likes": null,
           "rank_change": 25,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-20T22:00:00+09:00",
+      "date": "2026-08-20",
+      "hour": 22,
+      "platform": "Bugs",
+      "chart": "Real-time",
+      "source": "Bugs",
+      "songs": [
+        {
+          "rank": 4,
+          "previous_rank": 3,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.bugsm.co.kr/album/images/50/41063/4106349.jpg?version=20260815004811",
+          "likes": null,
+          "rank_change": -1,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 11,
+          "previous_rank": 9,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.bugsm.co.kr/album/images/50/41223/4122375.jpg?version=20260815005745",
+          "likes": null,
+          "rank_change": -2,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 16,
+          "previous_rank": 14,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.bugsm.co.kr/album/images/50/41511/4151191.jpg?version=20260808010146",
+          "likes": null,
+          "rank_change": -2,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 29,
+          "previous_rank": 37,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.bugsm.co.kr/album/images/50/41450/4145009.jpg?version=20260409011011",
+          "likes": null,
+          "rank_change": 8,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 36,
+          "previous_rank": 39,
+          "title": "Pinball",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.bugsm.co.kr/album/images/50/41063/4106349.jpg?version=20260815004811",
+          "likes": null,
+          "rank_change": 3,
           "score": null,
           "track_id": null
         }

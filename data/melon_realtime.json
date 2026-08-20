@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "Guysome",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-20T21:00:00+09:00",
+  "updated_at": "2026-08-20T22:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
@@ -3701,6 +3701,60 @@
           "cover": "https://cdn.guyso.me/image/album/melon/13312413.jpg?v=1775642677521&size=80",
           "likes": 29861,
           "rank_change": 3,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-20T22:00:00+09:00",
+      "date": "2026-08-20",
+      "hour": 22,
+      "platform": "Melon",
+      "chart": "Real-time",
+      "source": "Guysome",
+      "songs": [
+        {
+          "rank": 2,
+          "previous_rank": 2,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/11575849.jpg?v=1724753051034&size=80",
+          "likes": 138144,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 4,
+          "previous_rank": 4,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/13788545.jpg?v=1786941188248&size=80",
+          "likes": 54271,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 6,
+          "previous_rank": 7,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/11875116.jpg?v=1753652582608&size=80",
+          "likes": 45465,
+          "rank_change": 1,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 31,
+          "previous_rank": 36,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://cdn.guyso.me/image/album/melon/13312413.jpg?v=1775642677521&size=80",
+          "likes": 29869,
+          "rank_change": 5,
           "score": null,
           "track_id": null
         }
