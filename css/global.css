@@ -684,34 +684,22 @@ display:block;
         margin:0 auto;
     }
 
-.home-banner{
-width:100%;
+    .home-banner{
+        width:100%;
         max-width:768px;
-}
+    }
 
     /* HEADER SEJAJAR DENGAN CONTENT */
     .header{
         width:100%;
         max-width:768px;
-        margin:0 auto;
-    }
-
-    .menu-btn{
-        left:40px;
     }
 
     /* CONTENT */
-  .global-content{
-    width:100%;
-    max-width:768px;
-    margin:0 auto;
-    padding:16px;
-  }
+    .global-content{
+        width:100%;
+        max-width:768px;
+        margin:0 auto;
+    }
 
-  .desktop-layout{
-    display:flex;
-    gap:20px;
-    width:100%;
-    align-items:start;
-  }
 }
