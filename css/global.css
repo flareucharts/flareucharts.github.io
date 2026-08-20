@@ -667,6 +667,12 @@ border-radius:16px;
     color:#91D3CA;
 }
 
+.logo{
+height:32px;
+width:auto;
+display:block;
+}
+
 /* =========================
    DESKTOP
 ========================= */
@@ -691,12 +697,20 @@ border-radius:16px;
     }
 
     /* CONTENT */
-    .global-content{
-        width:100%;
-        max-width:768px;
-        margin:0 auto;
-        padding:16px;
-    }
+  .global-content{
+    width:100%;
+    max-width:768px;
+    margin:0 auto;
+    padding:16px;
+  }
+
+  .desktop-layout{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:20px;
+    width:100%;
+    align-items:start;
+  }
 
     /* VIDEO */
     .video-card{
@@ -704,23 +718,9 @@ border-radius:16px;
         margin:20px auto;
     }
     
-/* HOME GRID */
-    .desktop-layout{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:20px;
-        align-items:start;
-    }
     /* VOTE */
     .vote-list{
         grid-template-columns:repeat(2, 1fr);
         gap:20px;
     }
 }
-
-.logo{
-height:32px;
-width:auto;
-display:block;
-}
-  
