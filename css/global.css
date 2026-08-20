@@ -681,14 +681,14 @@ display:block;
 
     .app{
         width:100%;
-        max-width:768px;
+        max-width:1024px;
         margin:0 auto;
     }
 
     /* HEADER SEJAJAR DENGAN CONTENT */
     .header{
         width:100%;
-        max-width:768px;
+        max-width:1024px;
         margin:0 auto;
     }
 
@@ -699,14 +699,13 @@ display:block;
     /* CONTENT */
   .global-content{
     width:100%;
-    max-width:768px;
+    max-width:1024px;
     margin:0 auto;
     padding:16px;
   }
 
   .desktop-layout{
-    display:grid;
-    grid-template-columns:repeat(2, minmax(0, 1fr));
+    display:flex;
     gap:20px;
     width:100%;
     align-items:start;
