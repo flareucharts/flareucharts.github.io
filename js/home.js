@@ -123,22 +123,24 @@ if (listenBtn && homePlaySheet) {
    CLOSE LISTEN SHEET
 ========================= */
 
-document.addEventListener(
-  "click",
-  event => {
+if (homePlaySheet) {
 
-    if (
-      homePlaySheet &&
-      !homePlaySheet.contains(event.target) &&
-      !listenBtn.contains(event.target)
-    ) {
+  homePlaySheet.addEventListener(
+    "click",
+    event => {
 
-      homePlaySheet.classList.remove("show");
+      // Hanya tutup kalau yang diklik
+      // adalah background overlay
+      if (event.target === homePlaySheet) {
+
+        homePlaySheet.classList.remove("show");
+
+      }
 
     }
+  );
 
-  }
-);
+}
 
 
 /* =========================
