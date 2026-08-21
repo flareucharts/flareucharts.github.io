@@ -21,6 +21,9 @@ top3.forEach(album => {
 const listenBtn =
   document.getElementById("listenBtn");
 
+const watchBtn =
+  document.getElementById("watchBtn");
+
 const homePlaySheet =
   document.getElementById("homePlaySheet");
 
@@ -37,10 +40,7 @@ const bannerConfig = {
     "Official MV Out Now!",
 
   albumSlug:
-    "youth-error",
-
-  watchUrl:
-    "https://youtu.be/dyxmlYXdxUs"
+    "youth-error"
 
 };
 
@@ -139,6 +139,27 @@ document.addEventListener(
 
   }
 );
+
+
+/* =========================
+   WATCH MV
+========================= */
+
+if (watchBtn && bannerAlbum?.video) {
+
+  watchBtn.addEventListener(
+    "click",
+    () => {
+
+      window.open(
+        bannerAlbum.video,
+        "_blank"
+      );
+
+    }
+  );
+
+}
 
 // =========================
 // UPCOMING SCHEDULE
