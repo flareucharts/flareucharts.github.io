@@ -1309,62 +1309,39 @@ document
 
     console.log("=== FLARE U NOTIFICATION TEST ===");
 
-    /* HTTPS */
     console.log(
       "HTTPS:",
-      location.protocol === "https:"
+      location.protocol
     );
 
-    /* Notification support */
     console.log(
-      "Notification:",
+      "Notification supported:",
       "Notification" in window
     );
 
-    if (!("Notification" in window)) {
-      alert(
-        "Notifications are not supported by this browser."
-      );
-      return;
-    }
-
-    /* Current permission */
     console.log(
       "Permission before:",
       Notification.permission
     );
 
-    /* Request permission */
-    const permission =
+    if (!("Notification" in window)) {
+      alert("Notifications are not supported.");
+      return;
+    }
+
+    const result =
       await Notification.requestPermission();
 
     console.log(
-      "Permission after:",
-      permission
+      "Permission result:",
+      result
     );
-
-    if (permission === "granted") {
-
-      alert(
-        "✅ Notifications enabled!"
-      );
-
-    } else if (permission === "denied") {
-
-      alert(
-        "❌ Notifications are blocked for FLARE U GLOBAL."
-      );
-
-    } else {
-
-      alert(
-        "⚠️ Notification permission was not granted."
-      );
-
-    }
 
   });
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
