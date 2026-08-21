@@ -35,8 +35,8 @@ function getAppLogo(appName) {
         );
 
     return key
-        ? "https://flareucharts.github.io" + appLogos[key]
-        : null;
+    ? appLogos[key]
+    : null;
 }
 
 window.getAppLogo = getAppLogo;
