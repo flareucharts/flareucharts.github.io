@@ -1477,7 +1477,15 @@ const enableNotifications =
 
 
 /* =========================
-   CHECK PERMISSION
+   CHECK SESSION
+========================= */
+
+const notificationDismissed =
+  sessionStorage.getItem("notificationDismissed") === "true";
+
+
+/* =========================
+   UPDATE PROMPT
 ========================= */
 
 function updateNotificationPrompt() {
@@ -1485,11 +1493,9 @@ function updateNotificationPrompt() {
   if (!notificationPrompt) return;
 
   /* Browser tidak support */
-
   if (!("Notification" in window)) {
 
     notificationPrompt.classList.remove("show");
-
     return;
   }
 
@@ -1499,13 +1505,12 @@ function updateNotificationPrompt() {
 
 
   /* =========================
-     ALLOWED
+     ALREADY ALLOWED
   ========================= */
 
   if (permission === "granted") {
 
     notificationPrompt.classList.remove("show");
-
     return;
   }
 
@@ -1517,20 +1522,26 @@ function updateNotificationPrompt() {
   if (permission === "denied") {
 
     notificationPrompt.classList.remove("show");
-
     return;
   }
 
 
   /* =========================
-     NOT DECIDED YET
+     DISMISSED THIS SESSION
+  ========================= */
+
+  if (notificationDismissed) {
+
+    notificationPrompt.classList.remove("show");
+    return;
+  }
+
+
+  /* =========================
+     DEFAULT
   ========================= */
 
   if (permission === "default") {
-
-    /*
-      Tampilkan hanya ketika HOME aktif
-    */
 
     const home =
       document.getElementById("home");
@@ -1543,18 +1554,17 @@ function updateNotificationPrompt() {
       setTimeout(() => {
 
         /*
-          Cek lagi supaya tidak muncul
-          kalau permission sudah berubah
+          Cek ulang sebelum tampil
         */
 
         if (
-          Notification.permission ===
-          "default"
+          Notification.permission === "default" &&
+          sessionStorage.getItem(
+            "notificationDismissed"
+          ) !== "true"
         ) {
 
-          notificationPrompt.classList.add(
-            "show"
-          );
+          notificationPrompt.classList.add("show");
 
         }
 
@@ -1568,7 +1578,7 @@ function updateNotificationPrompt() {
 
 
 /* =========================
-   ENABLE BUTTON
+   ENABLE
 ========================= */
 
 if (enableNotifications) {
@@ -1600,51 +1610,52 @@ if (enableNotifications) {
 
 
         /* =========================
-           ALLOWED
+           GRANTED
         ========================= */
 
         if (permission === "granted") {
 
-    notificationPrompt.classList.remove(
-        "show"
-    );
+          notificationPrompt.classList.remove(
+            "show"
+          );
 
-    try {
 
-        const module =
-            await import(
+          try {
+
+            const module =
+              await import(
                 "./js/firebase-messaging.js"
+              );
+
+
+            const token =
+              await module.enablePushNotifications();
+
+
+            console.log(
+              "🔥 FCM TOKEN:",
+              token
             );
 
-        const token =
-            await module.enablePushNotifications();
+          }
 
-        console.log(
-            "🔥 FCM TOKEN:",
-            token
-        );
+          catch (error) {
 
-    }
+            console.error(
+              "❌ Failed to enable FCM:",
+              error
+            );
 
-    catch (error) {
+          }
 
-        console.error(
-            "❌ Failed to enable FCM:",
-            error
-        );
-
-    }
-
-}
+        }
 
 
         /* =========================
-           BLOCKED
+           DENIED
         ========================= */
 
-        else if (
-          permission === "denied"
-        ) {
+        else if (permission === "denied") {
 
           notificationPrompt.classList.remove(
             "show"
@@ -1670,26 +1681,68 @@ if (enableNotifications) {
 
 
 /* =========================
-   NAVIGATION
+   CLOSE WITHOUT ENABLE
 ========================= */
 
-document.addEventListener(
-  "click",
-  () => {
+if (notificationPrompt) {
 
-    /*
-      Tunggu navigation selesai,
-      lalu cek apakah Home aktif.
-    */
+  notificationPrompt.addEventListener(
+    "click",
+    function(event) {
 
-    setTimeout(() => {
+      /*
+        Kalau klik area prompt,
+        jangan dianggap close.
+      */
 
-      updateNotificationPrompt();
+      if (
+        event.target === notificationPrompt
+      ) {
 
-    }, 50);
+        notificationPrompt.classList.remove(
+          "show"
+        );
 
-  }
-);
+        sessionStorage.setItem(
+          "notificationDismissed",
+          "true"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================
+   CLOSE BUTTON
+   kalau nanti ada tombol X
+========================= */
+
+const notificationClose =
+  document.getElementById("notificationClose");
+
+if (notificationClose) {
+
+  notificationClose.addEventListener(
+    "click",
+    () => {
+
+      notificationPrompt.classList.remove(
+        "show"
+      );
+
+      sessionStorage.setItem(
+        "notificationDismissed",
+        "true"
+      );
+
+    }
+  );
+
+}
 
 
 /* =========================
@@ -1704,26 +1757,6 @@ window.addEventListener(
 
   }
 );
-
-/* =========================
-   CLOSE NOTIFICATION PROMPT
-   CLICK OUTSIDE
-========================= */
-
-document.addEventListener("click", function(event) {
-
-  if (!notificationPrompt) return;
-
-  if (
-    notificationPrompt.classList.contains("show") &&
-    !notificationPrompt.contains(event.target)
-  ) {
-
-    notificationPrompt.classList.remove("show");
-
-  }
-
-});
 
 </script>
 
