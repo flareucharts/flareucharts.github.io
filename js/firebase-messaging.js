@@ -13,6 +13,8 @@ import {
 
 import { app } from "./firebase.js";
 
+console.log("🔥 firebase-messaging.js LOADED");
+console.log("🔥 Firebase app:", app);
 
 /* =========================
    FIREBASE
