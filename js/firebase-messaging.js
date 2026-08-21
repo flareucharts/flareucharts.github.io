@@ -4,15 +4,25 @@ import {
     onMessage
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-messaging.js";
 
+import {
+    getDatabase,
+    ref,
+    push,
+    set
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
 import { app } from "./firebase.js";
 
 
 /* =========================
-   FIREBASE MESSAGING
+   FIREBASE
 ========================= */
 
 const messaging =
     getMessaging(app);
+
+const db =
+    getDatabase(app);
 
 
 /* =========================
@@ -63,6 +73,37 @@ export async function enablePushNotifications() {
         );
 
 
+        /* =========================
+           SAVE TOKEN
+        ========================= */
+
+        const tokenRef =
+            push(
+                ref(
+                    db,
+                    "notificationTokens"
+                )
+            );
+
+
+        await set(
+            tokenRef,
+            {
+                token: token,
+
+                createdAt:
+                    Date.now(),
+
+                active: true
+            }
+        );
+
+
+        console.log(
+            "✅ FCM TOKEN SAVED"
+        );
+
+
         return token;
 
     }
@@ -70,7 +111,7 @@ export async function enablePushNotifications() {
     catch (error) {
 
         console.error(
-            "❌ FCM token error:",
+            "❌ FCM ERROR:",
             error
         );
 
@@ -96,19 +137,3 @@ onMessage(
 
     }
 );
-
-console.log("🔥 firebase-messaging.js LOADED");
-
-window.testFCM = async function () {
-
-    console.log("🔥 TEST FCM START");
-
-    const token =
-        await enablePushNotifications();
-
-    console.log(
-        "🔥 FCM TOKEN:",
-        token
-    );
-
-};
