@@ -5,7 +5,7 @@
 
 .fu {
   width: calc(100% - 36px);
-  max-width: 80%;
+  max-width: 90%;
   margin: 60px auto 12px;
   padding: 24px 30px;
   display: flex;
