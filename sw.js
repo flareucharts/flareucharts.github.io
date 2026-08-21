@@ -3,7 +3,7 @@
    SERVICE WORKER
 ========================= */
 
-const CACHE_NAME = "flare-u-global-v1";
+const CACHE_NAME = "flare-u-global-v2";
 
 
 /* =========================
@@ -41,12 +41,10 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
 
     /*
-       Untuk sekarang request tetap
-       mengambil data dari network.
+       Request tetap mengambil
+       data dari network.
 
-       Firebase, JSON, gambar, CSS,
-       dan halaman tidak dicache
-       secara paksa.
+       Tidak ada cache paksa.
     */
 
 });
@@ -70,47 +68,79 @@ self.addEventListener("push", event => {
 
     } catch (error) {
 
-        data = {
+        console.warn(
+            "FLARE U: Push payload is not JSON."
+        );
 
-            title: "FLARE U GLOBAL",
+        data = {
 
             body:
                 event.data
                     ? event.data.text()
-                    : "You have a new update."
+                    : ""
 
         };
 
     }
 
 
+    /* =========================
+       READ FCM PAYLOAD
+    ========================= */
+
+    const notification =
+        data.notification || {};
+
+
     const title =
+        notification.title ||
         data.title ||
         "FLARE U GLOBAL";
 
 
+    const body =
+        notification.body ||
+        data.body ||
+        "FLARE U GLOBAL has a new update.";
+
+
+    const icon =
+        notification.icon ||
+        data.icon ||
+        "/images/fglogo.jpg";
+
+
+    const badge =
+        notification.badge ||
+        data.badge ||
+        "/images/fglogo.jpg";
+
+
+    const url =
+        data.url ||
+        data.data?.url ||
+        notification.click_action ||
+        "/";
+
+
+    /* =========================
+       NOTIFICATION OPTIONS
+    ========================= */
+
     const options = {
 
-        body:
-            data.body ||
-            "You have a new update.",
+        body: body,
 
 
-        icon:
-            data.icon ||
-            "/images/fglogo.jpg",
+        icon: icon,
 
 
-        badge:
-            data.badge ||
-            "/images/fglogo.jpg",
+        badge: badge,
 
 
         data: {
 
-            url:
-                data.url ||
-                "/"
+            url: url
 
         },
 
@@ -131,6 +161,10 @@ self.addEventListener("push", event => {
 
     };
 
+
+    /* =========================
+       SHOW NOTIFICATION
+    ========================= */
 
     event.waitUntil(
 
