@@ -96,3 +96,19 @@ onMessage(
 
     }
 );
+
+console.log("🔥 firebase-messaging.js LOADED");
+
+window.testFCM = async function () {
+
+    console.log("🔥 TEST FCM START");
+
+    const token =
+        await enablePushNotifications();
+
+    console.log(
+        "🔥 FCM TOKEN:",
+        token
+    );
+
+};
