@@ -107,13 +107,13 @@ self.addEventListener("push", event => {
     const icon =
         notification.icon ||
         data.icon ||
-        "/images/notiflogo.png";
+        "/images/fglogo.jpg";
 
 
     const badge =
         notification.badge ||
         data.badge ||
-        "/images/notiflogo.png";
+        "/images/fglogo.jpg";
 
 
     const url =
