@@ -21,31 +21,121 @@ top3.forEach(album => {
 const listenBtn =
   document.getElementById("listenBtn");
 
-const watchBtn =
-  document.getElementById("watchBtn");
+const homePlaySheet =
+  document.getElementById("homePlaySheet");
 
 
-listenBtn.addEventListener(
+/* =========================
+   BANNER CONFIG
+========================= */
+
+const bannerConfig = {
+
+  title: "WAY 2 U",
+
+  subtitle:
+    "Official MV Out Now!",
+
+  albumSlug:
+    "youth-error",
+
+  watchUrl:
+    "https://youtu.be/dyxmlYXdxUs"
+
+};
+
+
+/* =========================
+   FIND RELATED ALBUM
+========================= */
+
+const bannerAlbum =
+  window.discography.find(
+    album =>
+      album.slug?.trim().toLowerCase() ===
+      bannerConfig.albumSlug.trim().toLowerCase()
+  );
+
+
+/* =========================
+   SET LISTEN LINKS
+========================= */
+
+if (bannerAlbum) {
+
+  document.getElementById(
+    "homeSpotifyLink"
+  ).href =
+    bannerAlbum.spotify || "#";
+
+
+  document.getElementById(
+    "homeAppleLink"
+  ).href =
+    bannerAlbum.apple || "#";
+
+
+  document.getElementById(
+    "homeYoutubeMusicLink"
+  ).href =
+    bannerAlbum.youtubeMusic || "#";
+
+
+  document.getElementById(
+    "homeMelonLink"
+  ).href =
+    bannerAlbum.melon || "#";
+
+
+  document.getElementById(
+    "homeGenieLink"
+  ).href =
+    bannerAlbum.genie || "#";
+
+
+  document.getElementById(
+    "homeBugsLink"
+  ).href =
+    bannerAlbum.bugs || "#";
+
+}
+
+
+/* =========================
+   OPEN LISTEN SHEET
+========================= */
+
+if (listenBtn && homePlaySheet) {
+
+  listenBtn.addEventListener(
+    "click",
+    () => {
+
+      homePlaySheet.classList.add("show");
+
+    }
+  );
+
+}
+
+
+/* =========================
+   CLOSE LISTEN SHEET
+========================= */
+
+document.addEventListener(
   "click",
-  () => {
+  event => {
 
-    window.open(
-      "LINK_SPOTIFY",
-      "_blank"
-    );
+    if (
+      homePlaySheet &&
+      !homePlaySheet.contains(event.target) &&
+      !listenBtn.contains(event.target)
+    ) {
 
-  }
-);
+      homePlaySheet.classList.remove("show");
 
-
-watchBtn.addEventListener(
-  "click",
-  () => {
-
-    window.open(
-      "https://youtu.be/dyxmlYXdxUs?si=q53aA6KJmYXsGLbK",
-      "_blank"
-    );
+    }
 
   }
 );
