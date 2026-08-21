@@ -1476,11 +1476,37 @@ if (enableNotifications) {
 
         if (permission === "granted") {
 
-          notificationPrompt.classList.remove(
-            "show"
-          );
+    notificationPrompt.classList.remove(
+        "show"
+    );
 
-        }
+    try {
+
+        const module =
+            await import(
+                "./js/firebase-messaging.js"
+            );
+
+        const token =
+            await module.enablePushNotifications();
+
+        console.log(
+            "🔥 FCM TOKEN:",
+            token
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "❌ Failed to enable FCM:",
+            error
+        );
+
+    }
+
+}
 
 
         /* =========================
