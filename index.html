@@ -1303,11 +1303,27 @@ if ("serviceWorker" in navigator) {
 </button>
 
 <script>
-document
-  .getElementById("enableNotifications")
-  .addEventListener("click", async () => {
+console.log("🔔 NOTIFICATION TEST SCRIPT LOADED");
 
-    console.log("=== FLARE U NOTIFICATION TEST ===");
+window.addEventListener("load", () => {
+
+  console.log("🔔 WINDOW LOADED");
+
+  const btn =
+    document.getElementById("enableNotifications");
+
+  console.log("🔔 BUTTON:", btn);
+
+  if (!btn) {
+    console.error(
+      "❌ enableNotifications button tidak ditemukan"
+    );
+    return;
+  }
+
+  btn.addEventListener("click", async () => {
+
+    console.log("🔔 NOTIFICATION BUTTON CLICKED");
 
     console.log(
       "HTTPS:",
@@ -1319,29 +1335,27 @@ document
       "Notification" in window
     );
 
+    if (!("Notification" in window)) {
+      return;
+    }
+
     console.log(
       "Permission before:",
       Notification.permission
     );
 
-    if (!("Notification" in window)) {
-      alert("Notifications are not supported.");
-      return;
-    }
-
-    const result =
+    const permission =
       await Notification.requestPermission();
 
     console.log(
-      "Permission result:",
-      result
+      "Permission after:",
+      permission
     );
 
   });
-</script>
 
-</body>
-</html>
+});
+</script>
 
 </body>
 </html>
