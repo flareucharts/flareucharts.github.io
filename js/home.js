@@ -18,6 +18,38 @@ top3.forEach(album => {
   `;
 });
 
+const listenBtn =
+  document.getElementById("listenBtn");
+
+const watchBtn =
+  document.getElementById("watchBtn");
+
+
+listenBtn.addEventListener(
+  "click",
+  () => {
+
+    window.open(
+      "LINK_SPOTIFY",
+      "_blank"
+    );
+
+  }
+);
+
+
+watchBtn.addEventListener(
+  "click",
+  () => {
+
+    window.open(
+      "https://youtu.be/dyxmlYXdxUs?si=q53aA6KJmYXsGLbK",
+      "_blank"
+    );
+
+  }
+);
+
 // =========================
 // UPCOMING SCHEDULE
 // =========================
