@@ -1,7 +1,7 @@
 .album-page{
   max-width:768px;
-  margin:auto;
-  padding:0px;
+  margin-top:0;
+  padding:16px;
   box-sizing:border-box;
   margin-top:0;
   position:relative;
