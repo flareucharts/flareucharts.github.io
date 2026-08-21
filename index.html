@@ -1279,5 +1279,19 @@ window.addEventListener("load", function () {
 
 <script type="module" src="./js/firebase.js"></script>
 
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(() => {
+        console.log("FLARE U Service Worker registered.");
+      })
+      .catch(error => {
+        console.error("Service Worker registration failed:", error);
+      });
+  });
+}
+</script>
+
 </body>
 </html>
