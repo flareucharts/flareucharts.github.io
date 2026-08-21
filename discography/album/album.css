@@ -12,9 +12,15 @@
 /* BACK */
 
 .back-btn{
-  display:inline-block;
-  margin-bottom:20px;
-  margin-top:20px;
+  display:inline-flex;
+  width:30px;
+  height:30px;
+  padding:0;
+  margin-top:16px;
+  margin-bottom:16px;
+  align-items:center;
+  justify-content:center;
+
   transition:
     transform .25s cubic-bezier(.34,1.56,.64,1),
     filter .25s ease;
