@@ -1298,5 +1298,66 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
+<button
+  id="enableNotifications"
+  type="button"
+>
+  🔔 Enable Notifications
+</button>
+
+<script>
+const notificationButton =
+  document.getElementById(
+    "enableNotifications"
+  );
+
+
+async function enableNotifications() {
+
+  if (!("Notification" in window)) {
+
+    alert(
+      "This browser does not support notifications."
+    );
+
+    return;
+
+  }
+
+
+  const permission =
+    await Notification.requestPermission();
+
+
+  if (permission === "granted") {
+
+    notificationButton.textContent =
+      "🔔 Notifications Enabled";
+
+    notificationButton.disabled = true;
+
+    console.log(
+      "FLARE U notifications enabled."
+    );
+
+  }
+
+
+  else if (permission === "denied") {
+
+    notificationButton.textContent =
+      "Notifications Blocked";
+
+  }
+
+}
+
+
+notificationButton.addEventListener(
+  "click",
+  enableNotifications
+);
+</script>
+
 </body>
 </html>
