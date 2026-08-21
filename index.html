@@ -38,6 +38,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <link rel="stylesheet" href="css/fu.css">
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/notif.css">
+<link rel="stylesheet" href="discography/albums/album.css">
 
 </head>
 
@@ -187,29 +188,157 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <div class="desktop-layout">
 
 <section class="home-banner" id="latestBanner">
+
   <video id="bannerVideo" class="banner-video" autoplay muted loop playsinline>
     <source src="images/vidban.mp4" type="video/mp4">
   </video>
-  <img id="bannerImage" class="banner-image" src="images/fallback.png" alt="Latest Release">
+
+  <img
+    id="bannerImage"
+    class="banner-image"
+    src="images/fallback.png"
+    alt="Latest Release"
+  >
+
   <div class="banner-overlay"></div>
+
   <div class="banner-content">
+
     <span class="banner-badge">
-  <span class="live-dot"></span>
-  LATEST RELEASE
-</span>
+      <span class="live-dot"></span>
+      LATEST RELEASE
+    </span>
+
     <h2 id="bannerTitle">WAY 2 U</h2>
+
     <p id="bannerSubtitle">
       Official MV Out Now!
     </p>
+
     <div class="banner-buttons">
-      <button class="banner-btn primary" id="listenBtn">
+
+      <button
+        class="banner-btn primary"
+        id="listenBtn"
+      >
         Listen Now
       </button>
-      <button class="banner-btn secondary" id="watchBtn">
+
+      <button
+        class="banner-btn secondary"
+        id="watchBtn"
+      >
         Watch MV
       </button>
+
     </div>
+
   </div>
+
+
+  <!-- =========================
+       LISTEN SHEET
+  ========================= -->
+
+  <div
+    class="home-play-sheet"
+    id="homePlaySheet"
+  >
+
+    <div class="home-listen-sheet">
+
+      <h3 class="sheet-title">
+        Listen on 🎧
+      </h3>
+
+
+      <a
+        id="homeSpotifyLink"
+        class="platform"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/apps/spotify.png"
+          alt="Spotify"
+        >
+        <span>Spotify</span>
+      </a>
+
+
+      <a
+        id="homeAppleLink"
+        class="platform"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/apps/appmus.png"
+          alt="Apple Music"
+        >
+        <span>Apple Music</span>
+      </a>
+
+
+      <a
+        id="homeYoutubeMusicLink"
+        class="platform"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/apps/ytmusic.png"
+          alt="YouTube Music"
+        >
+        <span>YouTube Music</span>
+      </a>
+
+
+      <a
+        id="homeMelonLink"
+        class="platform"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/icons/melon.png"
+          alt="Melon"
+        >
+        <span>Melon</span>
+      </a>
+
+
+      <a
+        id="homeGenieLink"
+        class="platform"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/icons/genie.png"
+          alt="Genie"
+        >
+        <span>Genie</span>
+      </a>
+
+
+      <a
+        id="homeBugsLink"
+        class="platform"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="images/icons/bugs.png"
+          alt="Bugs"
+        >
+        <span>Bugs</span>
+      </a>
+
+    </div>
+
+  </div>
+
 </section>
 
 
