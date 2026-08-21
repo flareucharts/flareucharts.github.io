@@ -10,8 +10,8 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/images/notiflogo.png",
-      "type": "image/png",
+      "src": "/images/fglogo.jpg",
+      "type": "image/jpeg",
       "purpose": "any"
     }
   ]
