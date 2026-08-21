@@ -3,7 +3,7 @@
   "chart": "TOP200",
   "source": "Genie",
   "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-22T02:00:00+09:00",
+  "updated_at": "2026-08-22T04:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -5673,6 +5673,71 @@
       "snapshot_time": "2026-08-22T02:00:00+09:00",
       "date": "2026-08-22",
       "hour": 2,
+      "platform": "Genie",
+      "chart": "TOP200",
+      "source": "Genie",
+      "songs": [
+        {
+          "rank": 4,
+          "previous_rank": 4,
+          "title": "LOVE ATTACK",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/085/542/577/85542577_1724656614230_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 26,
+          "previous_rank": 26,
+          "title": "Pretty Girl",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/087/826/104/87826104_1782713508473_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 29,
+          "previous_rank": 29,
+          "title": "Deja Vu",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/086/460/181/86460181_1751351841053_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 146,
+          "previous_rank": 146,
+          "title": "Runaway",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/087/458/490/87458490_1775115096303_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        },
+        {
+          "rank": 194,
+          "previous_rank": 194,
+          "title": "Pinball",
+          "artist": "RESCENE (리센느)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/085/542/577/85542577_1724656614230_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-08-22T04:00:00+09:00",
+      "date": "2026-08-22",
+      "hour": 4,
       "platform": "Genie",
       "chart": "TOP200",
       "source": "Genie",
