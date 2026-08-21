@@ -421,91 +421,157 @@ video.addEventListener("error", () => {
 
 
 /* NAV */
+/* =========================
+   NAV
+========================= */
+
 function navigate(page, btn){
 
   // hide semua page
-  document.querySelectorAll('.page')
-    .forEach(p => p.classList.remove('active'));
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
 
   // show target
-  document.getElementById(page)
-    .classList.add('active');
+  const target = document.getElementById(page);
+
+  if (!target) return;
+
+  target.classList.add("active");
+
 
   // active nav
-  document.querySelectorAll('.bottom-nav button')
-    .forEach(b => b.classList.remove('active'));
+  document.querySelectorAll(".bottom-nav button")
+    .forEach(b => b.classList.remove("active"));
 
-  btn.classList.add('active');
+  if (btn) {
+    btn.classList.add("active");
+  }
 
-const homeHeader = document.getElementById("home-header");
 
-if (page === "home") {
+  // header
+  const homeHeader =
+    document.getElementById("home-header");
 
-    homeHeader.style.display = "flex";
+  if (homeHeader) {
 
-} else {
+    if (page === "home") {
 
-    homeHeader.style.display = "none";
+      homeHeader.style.display = "flex";
 
-    document.getElementById("sidebar").classList.remove("show");
-    document.getElementById("overlay").classList.remove("show");
-    document.querySelector(".menu-btn").classList.remove("active");
+    } else {
 
-}
+      homeHeader.style.display = "none";
 
-  // ubah URL TANPA reload
+      document.getElementById("sidebar")
+        ?.classList.remove("show");
+
+      document.getElementById("overlay")
+        ?.classList.remove("show");
+
+      document.querySelector(".menu-btn")
+        ?.classList.remove("active");
+    }
+  }
+
+
+  // =========================
+  // URL SELALU DARI ROOT
+  // =========================
+
   history.pushState(
-    {},
-    '',
-    page === 'home'
-      ? '/'
-      : '/' + page + '/'
+    { page: page },
+    "",
+    page === "home"
+      ? "/"
+      : `/${page}/`
   );
+
+  // kembali ke atas
+  window.scrollTo(0, 0);
 }
 
 // buka page sesuai URL
-window.addEventListener("load", ()=>{
-  let path =
-    window.location.pathname.replace("/","");
+/* =========================
+   OPEN PAGE FROM URL
+========================= */
 
-  // default home
-  if(path === ""){
+function loadPageFromURL(){
+
+  let path =
+    window.location.pathname
+      .replace(/^\/+|\/+$/g, "");
+
+  if (!path) {
     path = "home";
   }
 
-  const targetPage =
+  const target =
     document.getElementById(path);
-  if(targetPage){
 
-    // hide semua
-    document.querySelectorAll('.page')
-      .forEach(p=>p.classList.remove('active'));
+  if (!target) return;
 
-    // show target
-targetPage.classList.add('active');
 
-const homeHeader = document.getElementById("home-header");
+  // hide semua
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
 
-if (path === "home") {
-    homeHeader.style.display = "flex";
-} else {
-    homeHeader.style.display = "none";
+
+  // show target
+  target.classList.add("active");
+
+
+  // header
+  const homeHeader =
+    document.getElementById("home-header");
+
+  if (homeHeader) {
+
+    homeHeader.style.display =
+      path === "home"
+        ? "flex"
+        : "none";
+
+  }
+
+
+  // active bottom nav
+  document.querySelectorAll(".bottom-nav button")
+    .forEach(button => {
+
+      button.classList.remove("active");
+
+      const onclick =
+        button.getAttribute("onclick") || "";
+
+      if (
+        onclick.includes(`'${path}'`)
+      ) {
+        button.classList.add("active");
+      }
+
+    });
 }
 
-    // active nav
-    document.querySelectorAll('.bottom-nav button')
-      .forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.bottom-nav button')
-      .forEach(btn=>{
-        if(
-          btn.getAttribute("onclick")
-          ?.includes(`'${path}'`)
-        ){
-          btn.classList.add("active");
-        }
-      });
-  }
-});
+
+/* =========================
+   BACK / FORWARD
+========================= */
+
+window.addEventListener(
+  "popstate",
+  loadPageFromURL
+);
+
+
+/* =========================
+   INITIAL
+========================= */
+
+window.addEventListener(
+  "load",
+  loadPageFromURL
+);
+
 
 /* MENU */
 function toggleMenu(){
@@ -544,7 +610,6 @@ if (scrollTop > lastScrollTop && scrollTop > 50) {
 
   if(fab) fab.style.bottom = "20px";
   if(hint) hint.style.bottom = "90px";
-  if(party) party.style.bottom = "20px";
 
 }
 
@@ -560,8 +625,6 @@ else {
 
   if(fab) fab.style.bottom = "90px";
   if(hint) hint.style.bottom = "160px";
-  if(party) party.style.bottom = "90px";
-
 }
 
 lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
@@ -577,23 +640,6 @@ window.addEventListener("load", () => {
 
 </script>
 
-<script>
-window.addEventListener("load", function () {
-
-    const splash = document.getElementById("splash");
-
-    setTimeout(() => {
-
-        splash.style.opacity = "0";
-
-        setTimeout(() => {
-            splash.style.display = "none";
-        }, 500);
-
-    }, 500);
-
-});
-</script>
 
 <script type="module" src="./js/firebase.js"></script>
 
