@@ -1,18 +1,18 @@
 import {
-  getMessaging,
-  getToken,
-  onMessage
+    getMessaging,
+    getToken,
+    onMessage
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-messaging.js";
 
-import { db, firebaseApp } from "./firebase.js";
+import { app } from "./firebase.js";
 
 
 /* =========================
-   FIREBASE CLOUD MESSAGING
+   FIREBASE MESSAGING
 ========================= */
 
 const messaging =
-  getMessaging(firebaseApp);
+    getMessaging(app);
 
 
 /* =========================
@@ -20,61 +20,63 @@ const messaging =
 ========================= */
 
 const VAPID_KEY =
-  "PASTE_VAPID_KEY_HERE";
+    "BK36zAxNcBWkDDb1OXEfBKcAI-GkusvJDAbjA5GpiUCy0o-_iilhs0SxWGlwUw8km8fY3ZWkwTjh1OOpAQdYU0M";
 
 
 /* =========================
-   GET PUSH TOKEN
+   ENABLE PUSH
 ========================= */
 
 export async function enablePushNotifications() {
 
-  try {
+    try {
 
-    const registration =
-      await navigator.serviceWorker.ready;
+        const registration =
+            await navigator.serviceWorker.ready;
 
 
-    const token =
-      await getToken(
-        messaging,
-        {
-          vapidKey: VAPID_KEY,
-          serviceWorkerRegistration:
-            registration
+        const token =
+            await getToken(
+                messaging,
+                {
+                    vapidKey: VAPID_KEY,
+
+                    serviceWorkerRegistration:
+                        registration
+                }
+            );
+
+
+        if (!token) {
+
+            console.warn(
+                "FCM token was not generated."
+            );
+
+            return null;
         }
-      );
 
 
-    if (!token) {
+        console.log(
+            "🔥 FCM TOKEN:",
+            token
+        );
 
-      console.warn(
-        "FCM token was not generated."
-      );
 
-      return null;
+        return token;
+
     }
 
+    catch (error) {
 
-    console.log(
-      "🔥 FCM TOKEN:",
-      token
-    );
+        console.error(
+            "❌ FCM token error:",
+            error
+        );
 
+        return null;
 
-    return token;
-
-  }
-
-  catch (error) {
-
-    console.error(
-      "FCM token error:",
-      error
-    );
-
-    return null;
-  }
+    }
 
 }
 
@@ -84,13 +86,13 @@ export async function enablePushNotifications() {
 ========================= */
 
 onMessage(
-  messaging,
-  payload => {
+    messaging,
+    payload => {
 
-    console.log(
-      "🔔 FOREGROUND NOTIFICATION:",
-      payload
-    );
+        console.log(
+            "🔔 FCM MESSAGE:",
+            payload
+        );
 
-  }
+    }
 );
