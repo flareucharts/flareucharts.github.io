@@ -1298,65 +1298,72 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
-<button
-  id="enableNotifications"
-  type="button"
->
+<button id="enableNotifications" type="button">
   🔔 Enable Notifications
 </button>
 
 <script>
-const notificationButton =
-  document.getElementById(
-    "enableNotifications"
-  );
+document
+  .getElementById("enableNotifications")
+  .addEventListener("click", async () => {
 
+    console.log("=== FLARE U NOTIFICATION TEST ===");
 
-async function enableNotifications() {
-
-  if (!("Notification" in window)) {
-
-    alert(
-      "This browser does not support notifications."
+    /* HTTPS */
+    console.log(
+      "HTTPS:",
+      location.protocol === "https:"
     );
 
-    return;
+    /* Notification support */
+    console.log(
+      "Notification:",
+      "Notification" in window
+    );
 
-  }
+    if (!("Notification" in window)) {
+      alert(
+        "Notifications are not supported by this browser."
+      );
+      return;
+    }
 
+    /* Current permission */
+    console.log(
+      "Permission before:",
+      Notification.permission
+    );
 
-  const permission =
-    await Notification.requestPermission();
-
-
-  if (permission === "granted") {
-
-    notificationButton.textContent =
-      "🔔 Notifications Enabled";
-
-    notificationButton.disabled = true;
+    /* Request permission */
+    const permission =
+      await Notification.requestPermission();
 
     console.log(
-      "FLARE U notifications enabled."
+      "Permission after:",
+      permission
     );
 
-  }
+    if (permission === "granted") {
 
+      alert(
+        "✅ Notifications enabled!"
+      );
 
-  else if (permission === "denied") {
+    } else if (permission === "denied") {
 
-    notificationButton.textContent =
-      "Notifications Blocked";
+      alert(
+        "❌ Notifications are blocked for FLARE U GLOBAL."
+      );
 
-  }
+    } else {
 
-}
+      alert(
+        "⚠️ Notification permission was not granted."
+      );
 
+    }
 
-notificationButton.addEventListener(
-  "click",
-  enableNotifications
-);
+  });
 </script>
 
 </body>
