@@ -137,3 +137,23 @@ onMessage(
 
     }
 );
+
+/* =========================
+   TEST FCM
+========================= */
+
+window.testFCM = async function () {
+
+    console.log(
+        "🔥 TEST FCM START"
+    );
+
+    const token =
+        await enablePushNotifications();
+
+    console.log(
+        "🔥 TEST FCM TOKEN:",
+        token
+    );
+
+};
