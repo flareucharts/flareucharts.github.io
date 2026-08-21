@@ -736,6 +736,41 @@ onclick="navigate('guide', document.querySelector('.bottom-nav button:nth-child(
   ◷ &nbsp; BASED ON KST (UTC+9) · UPDATES EVERY DAY AT 00:00 KST
 </div>
 
+<!-- =========================
+     NOTIFICATION PROMPT
+========================= -->
+
+<div
+  class="notification-prompt"
+  id="notificationPrompt"
+>
+
+  <div class="notification-icon">
+    🔔
+  </div>
+
+  <div class="notification-content">
+
+    <h3>
+      Stay Updated
+    </h3>
+
+    <p>
+      Get important FLARE U updates on your phone.
+    </p>
+
+    <button
+      type="button"
+      id="enableNotifications"
+      class="notification-enable"
+    >
+      Enable Notifications
+    </button>
+
+  </div>
+
+</div>
+
 </div>
   
 <!-- OTHER PAGES -->
@@ -1298,63 +1333,220 @@ if ("serviceWorker" in navigator) {
 }
 </script>
 
-<button id="enableNotifications" type="button">
-  🔔 Enable Notifications
-</button>
-
 <script>
-console.log("🔔 NOTIFICATION TEST SCRIPT LOADED");
+/* =========================
+   NOTIFICATION PROMPT
+========================= */
 
-window.addEventListener("load", () => {
+const notificationPrompt =
+  document.getElementById("notificationPrompt");
 
-  console.log("🔔 WINDOW LOADED");
+const enableNotifications =
+  document.getElementById("enableNotifications");
 
-  const btn =
-    document.getElementById("enableNotifications");
 
-  console.log("🔔 BUTTON:", btn);
+/* =========================
+   CHECK PERMISSION
+========================= */
 
-  if (!btn) {
-    console.error(
-      "❌ enableNotifications button tidak ditemukan"
-    );
+function updateNotificationPrompt() {
+
+  if (!notificationPrompt) return;
+
+  /* Browser tidak support */
+
+  if (!("Notification" in window)) {
+
+    notificationPrompt.classList.remove("show");
+
     return;
   }
 
-  btn.addEventListener("click", async () => {
 
-    console.log("🔔 NOTIFICATION BUTTON CLICKED");
+  const permission =
+    Notification.permission;
 
-    console.log(
-      "HTTPS:",
-      location.protocol
-    );
 
-    console.log(
-      "Notification supported:",
-      "Notification" in window
-    );
+  /* =========================
+     ALLOWED
+  ========================= */
 
-    if (!("Notification" in window)) {
-      return;
+  if (permission === "granted") {
+
+    notificationPrompt.classList.remove("show");
+
+    return;
+  }
+
+
+  /* =========================
+     BLOCKED
+  ========================= */
+
+  if (permission === "denied") {
+
+    notificationPrompt.classList.remove("show");
+
+    return;
+  }
+
+
+  /* =========================
+     NOT DECIDED YET
+  ========================= */
+
+  if (permission === "default") {
+
+    /*
+      Tampilkan hanya ketika HOME aktif
+    */
+
+    const home =
+      document.getElementById("home");
+
+    if (
+      home &&
+      home.classList.contains("active")
+    ) {
+
+      setTimeout(() => {
+
+        /*
+          Cek lagi supaya tidak muncul
+          kalau permission sudah berubah
+        */
+
+        if (
+          Notification.permission ===
+          "default"
+        ) {
+
+          notificationPrompt.classList.add(
+            "show"
+          );
+
+        }
+
+      }, 2500);
+
     }
 
-    console.log(
-      "Permission before:",
-      Notification.permission
-    );
+  }
 
-    const permission =
-      await Notification.requestPermission();
+}
 
-    console.log(
-      "Permission after:",
-      permission
-    );
 
-  });
+/* =========================
+   ENABLE BUTTON
+========================= */
 
-});
+if (enableNotifications) {
+
+  enableNotifications.addEventListener(
+    "click",
+    async () => {
+
+      if (!("Notification" in window)) {
+
+        alert(
+          "Notifications are not supported by this browser."
+        );
+
+        return;
+      }
+
+
+      try {
+
+        const permission =
+          await Notification.requestPermission();
+
+
+        console.log(
+          "Notification permission:",
+          permission
+        );
+
+
+        /* =========================
+           ALLOWED
+        ========================= */
+
+        if (permission === "granted") {
+
+          notificationPrompt.classList.remove(
+            "show"
+          );
+
+        }
+
+
+        /* =========================
+           BLOCKED
+        ========================= */
+
+        else if (
+          permission === "denied"
+        ) {
+
+          notificationPrompt.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "Notification permission error:",
+          error
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+document.addEventListener(
+  "click",
+  () => {
+
+    /*
+      Tunggu navigation selesai,
+      lalu cek apakah Home aktif.
+    */
+
+    setTimeout(() => {
+
+      updateNotificationPrompt();
+
+    }, 50);
+
+  }
+);
+
+
+/* =========================
+   INITIAL CHECK
+========================= */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    updateNotificationPrompt();
+
+  }
+);
 </script>
 
 </body>
