@@ -701,7 +701,9 @@ display:block;
         max-width:768px;
         margin:0 auto;
     }
+}
 
+@media (min-width:1024px){
 .banner-badge{
     gap:7px;
     margin-bottom:12px;
@@ -734,6 +736,4 @@ display:block;
     padding:9px 16px;
     font-size:13px;
   }
-
-
 }
