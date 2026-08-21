@@ -10,12 +10,10 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      {
-  "src": "/images/fglobal.png",
-  "sizes": "512x512",
-  "type": "image/png",
-  "purpose": "any maskable"
-}
+      "src": "/images/fglobal.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
