@@ -137,8 +137,65 @@ onMessage(
             payload
         );
 
+
+        /* =========================
+           FOREGROUND NOTIFICATION
+        ========================= */
+
+        const notification =
+            payload.notification || {};
+
+        const title =
+            notification.title ||
+            "FLARE U GLOBAL";
+
+        const body =
+            notification.body ||
+            "";
+
+
+        const url =
+            payload.data?.url ||
+            "https://flareuglobal.com/";
+
+
+        if (
+            Notification.permission ===
+            "granted"
+        ) {
+
+            const notificationInstance =
+                new Notification(
+                    title,
+                    {
+                        body: body,
+
+                        icon:
+                            notification.icon ||
+                            "/images/fglogo.jpg",
+
+                        badge:
+                            notification.badge ||
+                            "/images/notiflogo.png"
+                    }
+                );
+
+
+            notificationInstance.onclick =
+                function () {
+
+                    window.open(
+                        url,
+                        "_blank"
+                    );
+
+                };
+
+        }
+
     }
 );
+
 
 /* =========================
    TEST FCM
