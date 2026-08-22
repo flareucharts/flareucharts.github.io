@@ -55,132 +55,128 @@
    NOTIFICATION PROMPT
 ========================= */
 
-.notification-prompt{
-  position:fixed;
-  left:50%;
-  bottom:82px;
+.notification-prompt {
+  width: 100%;
+  margin: 0 0 16px;
 
-  width:calc(100% - 32px);
-  max-width:390px;
+  display: none;
+}
 
-  display:flex;
-  align-items:flex-start;
-  gap:12px;
 
-  padding:15px;
+/* =========================
+   SHOW
+========================= */
 
-  background:rgba(255,255,255,.97);
-  border:1px solid rgba(36,54,52,.08);
-  border-radius:20px;
+.notification-prompt.show {
+  display: block;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.notification-content {
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 15px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 18px;
 
   box-shadow:
-    0 8px 30px rgba(0,0,0,.14);
+    0 8px 24px rgba(0, 0, 0, 0.08);
+}
 
-  z-index:9998;
 
-  opacity:0;
-  visibility:hidden;
+/* =========================
+   ICON
+========================= */
 
-  transform:
-    translateX(-50%)
-    translateY(20px);
+.notification-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #91d3ca;
+
+  border-radius: 14px;
+
+  font-size: 21px;
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.notification-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-text strong {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #1f1f1f;
+
+  margin-bottom: 3px;
+}
+
+.notification-text p {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  color: #777;
+}
+
+
+/* =========================
+   ENABLE BUTTON
+========================= */
+
+#enableNotifications {
+  flex-shrink: 0;
+
+  border: none;
+
+  padding: 9px 13px;
+
+  border-radius: 12px;
+
+  background: #91d3ca;
+  color: #fff;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
 
   transition:
-    opacity .25s ease,
-    transform .25s ease,
-    visibility .25s ease;
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
 
-
-/* SHOW */
-
-.notification-prompt.show{
-  opacity:1;
-  visibility:visible;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
-}
-
-
-/* ICON */
-
-.notification-icon{
-  width:40px;
-  height:40px;
-
-  flex-shrink:0;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:#91d3ca;
-
-  border-radius:12px;
-
-  font-size:19px;
-}
-
-
-/* CONTENT */
-
-.notification-content{
-  flex:1;
-  min-width:0;
-}
-
-
-.notification-content h3{
-  margin:0 0 4px;
-
-  font-size:15px;
-  font-weight:800;
-
-  color:#243634;
-}
-
-
-.notification-content p{
-  margin:0 0 10px;
-
-  font-size:12px;
-  line-height:1.45;
-
-  color:#6f8682;
-}
-
-
-/* BUTTON */
-
-.notification-enable{
-  border:none;
-
-  padding:8px 13px;
-
-  border-radius:10px;
-
-  background:#91d3ca;
-
-  color:#243634;
-
-  font-size:12px;
-  font-weight:700;
-
-  cursor:pointer;
-
-  transition:
-    transform .15s ease,
-    filter .15s ease;
-}
-
-
-.notification-enable:hover{
-  filter:brightness(1.03);
-}
-
-
-.notification-enable:active{
-  transform:scale(.96);
+#enableNotifications:active {
+  transform: scale(0.95);
+  opacity: 0.8;
 }
