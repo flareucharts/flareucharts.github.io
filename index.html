@@ -837,40 +837,6 @@ onclick="navigate('guide', document.querySelector('.bottom-nav button:nth-child(
 </div>
 </div>
 
-<!-- =========================
-     NOTIFICATION PROMPT
-========================= -->
-
-<div
-  class="notification-prompt"
-  id="notificationPrompt"
->
-
-  <div class="notification-icon">
-    🔔
-  </div>
-
-  <div class="notification-content">
-
-    <h3>
-      Stay Updated
-    </h3>
-
-    <p>
-      Get important FLARE U updates on your phone.
-    </p>
-
-    <button
-      type="button"
-      id="enableNotifications"
-      class="notification-enable"
-    >
-      Enable Notifications
-    </button>
-
-  </div>
-</div>
-
 
 <!-- OTHER PAGES -->
 <!-- ================= CHART PAGE ================= -->
@@ -1448,115 +1414,149 @@ const notificationPrompt =
 const enableNotifications =
   document.getElementById("enableNotifications");
 
+const notificationContent =
+  notificationPrompt?.querySelector(".notification-content");
+
 
 /* =========================
-   UPDATE PROMPT
+   HIDE PROMPT
 ========================= */
 
-function updateNotificationPrompt() {
+function hideNotificationPrompt() {
 
   if (!notificationPrompt) return;
 
+  notificationPrompt.classList.remove("show");
 
-  /* =========================
-     BROWSER NOT SUPPORTED
-  ========================= */
+}
+
+
+/* =========================
+   SHOW PROMPT
+========================= */
+
+function showNotificationPrompt() {
+
+  if (!notificationPrompt) return;
+
+  /* Browser tidak support */
 
   if (!("Notification" in window)) {
 
-    notificationPrompt.classList.remove("show");
-
+    hideNotificationPrompt();
     return;
 
   }
 
 
-  /* =========================
-     PERMISSION
-  ========================= */
-
-  const permission =
-    Notification.permission;
-
-
-  /* =========================
-     ALREADY GRANTED
-  ========================= */
-
-  if (permission === "granted") {
-
-    notificationPrompt.classList.remove("show");
-
-    return;
-
-  }
-
-
-  /* =========================
-     BLOCKED
-  ========================= */
-
-  if (permission === "denied") {
-
-    notificationPrompt.classList.remove("show");
-
-    return;
-
-  }
-
-
-  /* =========================
-     CHECK HOME
-  ========================= */
+  /* Hanya boleh muncul di HOME */
 
   const home =
     document.getElementById("home");
-
 
   if (
     !home ||
     !home.classList.contains("active")
   ) {
 
-    notificationPrompt.classList.remove("show");
-
+    hideNotificationPrompt();
     return;
 
   }
 
 
-  /* =========================
-     SHOW AFTER DELAY
-  ========================= */
+  /* Permission sudah diberikan / ditolak */
 
-  setTimeout(() => {
+  if (
+    Notification.permission !== "default"
+  ) {
+
+    hideNotificationPrompt();
+    return;
+
+  }
+
+
+  notificationPrompt.classList.add("show");
+
+}
+
+
+/* =========================
+   UPDATE PROMPT
+========================= */
+
+let notificationTimer = null;
+
+function updateNotificationPrompt() {
+
+  if (!notificationPrompt) return;
+
+
+  /* Batalkan timer sebelumnya */
+
+  if (notificationTimer) {
+
+    clearTimeout(notificationTimer);
+    notificationTimer = null;
+
+  }
+
+
+  /* Browser tidak support */
+
+  if (!("Notification" in window)) {
+
+    hideNotificationPrompt();
+    return;
+
+  }
+
+
+  /* Permission sudah selesai */
+
+  if (
+    Notification.permission !== "default"
+  ) {
+
+    hideNotificationPrompt();
+    return;
+
+  }
+
+
+  /* Harus HOME */
+
+  const home =
+    document.getElementById("home");
+
+  if (
+    !home ||
+    !home.classList.contains("active")
+  ) {
+
+    hideNotificationPrompt();
+    return;
+
+  }
+
+
+  /* Tampilkan setelah 2.5 detik */
+
+  notificationTimer = setTimeout(() => {
 
     const currentHome =
       document.getElementById("home");
 
-
-    /* User mungkin sudah pindah page */
     if (
-      !currentHome ||
-      !currentHome.classList.contains("active")
+      currentHome &&
+      currentHome.classList.contains("active") &&
+      Notification.permission === "default"
     ) {
 
-      return;
+      showNotificationPrompt();
 
     }
-
-
-    /* Permission berubah */
-    if (
-      Notification.permission !== "default"
-    ) {
-
-      return;
-
-    }
-
-
-    notificationPrompt.classList.add("show");
 
   }, 2500);
 
@@ -1573,7 +1573,8 @@ if (enableNotifications) {
     "click",
     async (event) => {
 
-      /* Jangan trigger close outside */
+      /* Jangan dianggap klik luar */
+
       event.stopPropagation();
 
 
@@ -1606,9 +1607,7 @@ if (enableNotifications) {
 
         if (permission === "granted") {
 
-          notificationPrompt.classList.remove(
-            "show"
-          );
+          hideNotificationPrompt();
 
 
           try {
@@ -1650,9 +1649,7 @@ if (enableNotifications) {
           permission === "denied"
         ) {
 
-          notificationPrompt.classList.remove(
-            "show"
-          );
+          hideNotificationPrompt();
 
         }
 
@@ -1674,27 +1671,85 @@ if (enableNotifications) {
 
 
 /* =========================
-   CLOSE WHEN CLICK OUTSIDE
+   CLICK OUTSIDE CARD
 ========================= */
 
-if (notificationPrompt) {
+document.addEventListener(
+  "click",
+  (event) => {
 
-  notificationPrompt.addEventListener(
-    "click",
-    function(event) {
+    if (!notificationPrompt) return;
 
-      if (
-        event.target === notificationPrompt
-      ) {
 
-        notificationPrompt.classList.remove(
-          "show"
-        );
+    /* Prompt sedang tidak tampil */
 
-      }
+    if (
+      !notificationPrompt.classList.contains("show")
+    ) {
+
+      return;
 
     }
-  );
+
+
+    /*
+      Kalau klik di dalam card,
+      JANGAN tutup.
+    */
+
+    if (
+      notificationContent &&
+      notificationContent.contains(event.target)
+    ) {
+
+      return;
+
+    }
+
+
+    /*
+      Selain card = tutup.
+      Termasuk:
+      - background prompt
+      - area Home
+      - area page lain
+      - navbar
+      - tombol lain
+      - luar card
+    */
+
+    hideNotificationPrompt();
+
+  },
+  true
+);
+
+
+/* =========================
+   PAGE CHANGE
+========================= */
+
+function checkNotificationPage() {
+
+  const home =
+    document.getElementById("home");
+
+
+  if (
+    !home ||
+    !home.classList.contains("active")
+  ) {
+
+    hideNotificationPrompt();
+
+    if (notificationTimer) {
+
+      clearTimeout(notificationTimer);
+      notificationTimer = null;
+
+    }
+
+  }
 
 }
 
@@ -1714,7 +1769,7 @@ window.addEventListener(
 
 
 /* =========================
-   CHECK PAGE CHANGE
+   MONITOR NAVIGATION
 ========================= */
 
 document.addEventListener(
@@ -1723,25 +1778,33 @@ document.addEventListener(
 
     setTimeout(() => {
 
-      const home =
-        document.getElementById("home");
-
-
-      if (
-        !home ||
-        !home.classList.contains("active")
-      ) {
-
-        notificationPrompt?.classList.remove(
-          "show"
-        );
-
-      }
+      checkNotificationPage();
 
     }, 50);
 
   }
 );
+
+
+/* =========================
+   CHECK WHEN TAB BECOMES ACTIVE
+========================= */
+
+document.addEventListener(
+  "visibilitychange",
+  () => {
+
+    if (
+      document.visibilityState === "visible"
+    ) {
+
+      updateNotificationPrompt();
+
+    }
+
+  }
+);
+
 </script>
 
 <script src="/js/notif.js"></script>
