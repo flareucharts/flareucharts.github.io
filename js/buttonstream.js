@@ -272,6 +272,8 @@ function findNextStream(
    FIREBASE LISTENER
 ========================= */
 
+console.log("🔥 STREAM LISTENER START");
+
 onValue(
   ref(
     db,
@@ -280,23 +282,25 @@ onValue(
 
   snapshot => {
 
+    console.log(
+      "🔥 STREAM DATA:",
+      snapshot.val()
+    );
+
     const data =
       snapshot.val();
 
-
     const nextStream =
-      findNextStream(
-        data
-      );
+      findNextStream(data);
 
+    console.log(
+      "🔥 NEXT STREAM:",
+      nextStream
+    );
 
-    if (
-      !nextStream
-    ) {
+    if (!nextStream) {
 
-      if (
-        luPartySchedule
-      ) {
+      if (luPartySchedule) {
 
         luPartySchedule.textContent =
           "NO SCHEDULE ♡";
@@ -307,10 +311,7 @@ onValue(
 
     }
 
-
-    if (
-      luPartySchedule
-    ) {
+    if (luPartySchedule) {
 
       luPartySchedule.textContent =
         formatSchedule(
