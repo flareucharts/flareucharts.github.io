@@ -833,6 +833,9 @@ onclick="navigate('guide', document.querySelector('.bottom-nav button:nth-child(
   ◷ &nbsp; BASED ON KST (UTC+9) · UPDATES EVERY DAY AT 00:00 KST
 </div>
 
+</div>
+</div>
+</div>
 
 <!-- =========================
      NOTIFICATION PROMPT
@@ -866,10 +869,6 @@ onclick="navigate('guide', document.querySelector('.bottom-nav button:nth-child(
     </button>
 
   </div>
-</div>
-
-</div>
-</div>
 </div>
 
 
@@ -1438,6 +1437,7 @@ if ("serviceWorker" in navigator) {
 </script>
 
 <script>
+
 /* =========================
    NOTIFICATION PROMPT
 ========================= */
@@ -1450,14 +1450,6 @@ const enableNotifications =
 
 
 /* =========================
-   CHECK SESSION
-========================= */
-
-const notificationDismissed =
-  sessionStorage.getItem("notificationDismissed") === "true";
-
-
-/* =========================
    UPDATE PROMPT
 ========================= */
 
@@ -1465,26 +1457,38 @@ function updateNotificationPrompt() {
 
   if (!notificationPrompt) return;
 
-  /* Browser tidak support */
+
+  /* =========================
+     BROWSER NOT SUPPORTED
+  ========================= */
+
   if (!("Notification" in window)) {
 
     notificationPrompt.classList.remove("show");
+
     return;
+
   }
 
+
+  /* =========================
+     PERMISSION
+  ========================= */
 
   const permission =
     Notification.permission;
 
 
   /* =========================
-     ALREADY ALLOWED
+     ALREADY GRANTED
   ========================= */
 
   if (permission === "granted") {
 
     notificationPrompt.classList.remove("show");
+
     return;
+
   }
 
 
@@ -1495,70 +1499,83 @@ function updateNotificationPrompt() {
   if (permission === "denied") {
 
     notificationPrompt.classList.remove("show");
+
     return;
+
   }
 
 
   /* =========================
-     DISMISSED THIS SESSION
+     CHECK HOME
   ========================= */
 
-  if (notificationDismissed) {
+  const home =
+    document.getElementById("home");
+
+
+  if (
+    !home ||
+    !home.classList.contains("active")
+  ) {
 
     notificationPrompt.classList.remove("show");
+
     return;
+
   }
 
 
   /* =========================
-     DEFAULT
+     SHOW AFTER DELAY
   ========================= */
 
-  if (permission === "default") {
+  setTimeout(() => {
 
-    const home =
+    const currentHome =
       document.getElementById("home");
 
+
+    /* User mungkin sudah pindah page */
     if (
-      home &&
-      home.classList.contains("active")
+      !currentHome ||
+      !currentHome.classList.contains("active")
     ) {
 
-      setTimeout(() => {
-
-        /*
-          Cek ulang sebelum tampil
-        */
-
-        if (
-          Notification.permission === "default" &&
-          sessionStorage.getItem(
-            "notificationDismissed"
-          ) !== "true"
-        ) {
-
-          notificationPrompt.classList.add("show");
-
-        }
-
-      }, 2500);
+      return;
 
     }
 
-  }
+
+    /* Permission berubah */
+    if (
+      Notification.permission !== "default"
+    ) {
+
+      return;
+
+    }
+
+
+    notificationPrompt.classList.add("show");
+
+  }, 2500);
 
 }
 
 
 /* =========================
-   ENABLE
+   ENABLE NOTIFICATIONS
 ========================= */
 
 if (enableNotifications) {
 
   enableNotifications.addEventListener(
     "click",
-    async () => {
+    async (event) => {
+
+      /* Jangan trigger close outside */
+      event.stopPropagation();
+
 
       if (!("Notification" in window)) {
 
@@ -1567,6 +1584,7 @@ if (enableNotifications) {
         );
 
         return;
+
       }
 
 
@@ -1628,7 +1646,9 @@ if (enableNotifications) {
            DENIED
         ========================= */
 
-        else if (permission === "denied") {
+        else if (
+          permission === "denied"
+        ) {
 
           notificationPrompt.classList.remove(
             "show"
@@ -1654,7 +1674,7 @@ if (enableNotifications) {
 
 
 /* =========================
-   CLOSE WITHOUT ENABLE
+   CLOSE WHEN CLICK OUTSIDE
 ========================= */
 
 if (notificationPrompt) {
@@ -1662,11 +1682,6 @@ if (notificationPrompt) {
   notificationPrompt.addEventListener(
     "click",
     function(event) {
-
-      /*
-        Kalau klik area prompt,
-        jangan dianggap close.
-      */
 
       if (
         event.target === notificationPrompt
@@ -1676,41 +1691,7 @@ if (notificationPrompt) {
           "show"
         );
 
-        sessionStorage.setItem(
-          "notificationDismissed",
-          "true"
-        );
-
       }
-
-    }
-  );
-
-}
-
-
-/* =========================
-   CLOSE BUTTON
-   kalau nanti ada tombol X
-========================= */
-
-const notificationClose =
-  document.getElementById("notificationClose");
-
-if (notificationClose) {
-
-  notificationClose.addEventListener(
-    "click",
-    () => {
-
-      notificationPrompt.classList.remove(
-        "show"
-      );
-
-      sessionStorage.setItem(
-        "notificationDismissed",
-        "true"
-      );
 
     }
   );
@@ -1731,6 +1712,36 @@ window.addEventListener(
   }
 );
 
+
+/* =========================
+   CHECK PAGE CHANGE
+========================= */
+
+document.addEventListener(
+  "click",
+  () => {
+
+    setTimeout(() => {
+
+      const home =
+        document.getElementById("home");
+
+
+      if (
+        !home ||
+        !home.classList.contains("active")
+      ) {
+
+        notificationPrompt?.classList.remove(
+          "show"
+        );
+
+      }
+
+    }, 50);
+
+  }
+);
 </script>
 
 <script src="/js/notif.js"></script>
