@@ -27,7 +27,7 @@ from pathlib import Path
 # HH:00:00+09:00
 #
 # TARGET ARTIST:
-# RESCENE (리센느)
+# FLARE U (플레어 유)
 #
 # RANK CHANGE:
 # dihitung otomatis dari snapshot sebelumnya.
@@ -42,7 +42,7 @@ from pathlib import Path
 # CONFIG
 # =========================================================
 
-TARGET_ARTIST = "RESCENE (리센느)"
+TARGET_ARTIST = "FLARE U (플레어 유)"
 
 KST = ZoneInfo("Asia/Seoul")
 
@@ -640,7 +640,7 @@ def save_snapshot(
 
         print(
             f"[{platform} {chart}] "
-            "RESCENE tidak ditemukan → SKIP"
+            "FLARE U not found → SKIP"
         )
 
         return False
@@ -954,8 +954,8 @@ def collect_melon_top100():
         )
 
         if not (
-            "RESCENE" in artist.upper()
-            or "리센느" in artist
+            "FLARE U" in artist.upper()
+            or "플레어 유" in artist
         ):
 
             continue
@@ -1004,7 +1004,7 @@ def collect_melon_top100():
         )
 
     print(
-        "RESCENE SONGS:",
+        "FLARE U SONGS:",
         len(songs)
     )
 
@@ -1115,8 +1115,8 @@ def collect_melon_hot100(
         )
 
         if not (
-            "RESCENE" in artist.upper()
-            or "리센느" in artist
+            "FLARE U" in artist.upper()
+            or "플레어 유" in artist
         ):
 
             continue
@@ -1165,7 +1165,7 @@ def collect_melon_hot100(
         )
 
     print(
-        "RESCENE SONGS:",
+        "FLARE U SONGS:",
         len(songs)
     )
 
@@ -1487,7 +1487,7 @@ def collect_bugs():
             TARGET_ARTIST.lower()
             not in artist.lower()
             and
-            "리센느" not in artist
+            "플레어 유" not in artist
         ):
 
             continue
