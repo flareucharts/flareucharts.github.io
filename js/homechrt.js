@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
        CONFIG
     ===================================================== */
 
-    const TARGET_SONG = "Pretty Girl";
+    const TARGET_SONG = "WAY 2 U";
 
 
     const CHARTS = [
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FIND PRETTY GIRL
+       FIND TITLE SONG
     ===================================================== */
 
     function findSong(songs) {
@@ -585,7 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         console.log(
-            "🔥 HOME Pretty Girl chart:",
+            "🔥 HOME chart:",
             results
         );
 
