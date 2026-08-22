@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             artist:
                 data.artist ||
-                "RESCENE (리센느)",
+                "FLARE U (플레어 유)",
 
             /*
              * CURRENT
@@ -902,7 +902,7 @@ function renderRankStatus(
 
         const artist =
             song?.artist ||
-            "RESCENE (리센느)";
+            "FLARE U (플레어 유)";
 
         const cover =
             song?.cover || "";
