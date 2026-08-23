@@ -3,7 +3,7 @@
    SERVICE WORKER
 ========================= */
 
-const CACHE_NAME = "flare-u-global-v2";
+const CACHE_NAME = "flare-u-global-v3";
 
 
 /* =========================
@@ -43,8 +43,6 @@ self.addEventListener("fetch", event => {
     /*
        Request tetap mengambil
        data dari network.
-
-       Tidak ada cache paksa.
     */
 
 });
@@ -56,12 +54,14 @@ self.addEventListener("fetch", event => {
 
 self.addEventListener("push", event => {
 
-    let rawData = {};
+    let data = {};
 
     try {
 
         if (event.data) {
-            rawData = event.data.json();
+
+            data = event.data.json();
+
         }
 
     } catch (error) {
@@ -70,25 +70,27 @@ self.addEventListener("push", event => {
             "FLARE U: Push payload is not JSON."
         );
 
-        rawData = {
-            body: event.data
-                ? event.data.text()
-                : ""
+        data = {
+
+            body:
+                event.data
+                    ? event.data.text()
+                    : ""
+
         };
 
     }
 
 
     /* =========================
-       NORMALIZE FCM DATA
+       READ PAYLOAD
     ========================= */
 
-    const fcmData =
-        rawData.data || rawData;
-
-
     const notification =
-        rawData.notification || {};
+        data.notification || {};
+
+    const payloadData =
+        data.data || {};
 
 
     /* =========================
@@ -97,8 +99,8 @@ self.addEventListener("push", event => {
 
     const title =
         notification.title ||
-        fcmData.title ||
-        rawData.title ||
+        payloadData.title ||
+        data.title ||
         "FLARE U GLOBAL";
 
 
@@ -108,8 +110,8 @@ self.addEventListener("push", event => {
 
     const body =
         notification.body ||
-        fcmData.body ||
-        rawData.body ||
+        payloadData.body ||
+        data.body ||
         "FLARE U GLOBAL has a new update.";
 
 
@@ -119,8 +121,8 @@ self.addEventListener("push", event => {
 
     const icon =
         notification.icon ||
-        fcmData.icon ||
-        rawData.icon ||
+        payloadData.icon ||
+        data.icon ||
         "/images/fglogo.jpg";
 
 
@@ -130,8 +132,8 @@ self.addEventListener("push", event => {
 
     const badge =
         notification.badge ||
-        fcmData.badge ||
-        rawData.badge ||
+        payloadData.badge ||
+        data.badge ||
         "/images/notiflogo.png";
 
 
@@ -140,8 +142,8 @@ self.addEventListener("push", event => {
     ========================= */
 
     const url =
-        fcmData.url ||
-        rawData.url ||
+        payloadData.url ||
+        data.url ||
         notification.click_action ||
         "/";
 
@@ -151,34 +153,9 @@ self.addEventListener("push", event => {
     ========================= */
 
     const tag =
-        fcmData.tag ||
-        rawData.tag ||
+        payloadData.tag ||
+        data.tag ||
         ("flare-u-" + Date.now());
-
-
-    /* =========================
-       LOG
-    ========================= */
-
-    console.log(
-        "FLARE U PUSH DATA:",
-        JSON.stringify(rawData)
-    );
-
-    console.log(
-        "TITLE:",
-        title
-    );
-
-    console.log(
-        "BODY:",
-        body
-    );
-
-    console.log(
-        "TAG:",
-        tag
-    );
 
 
     /* =========================
@@ -195,13 +172,20 @@ self.addEventListener("push", event => {
 
         data: {
 
-            url: url,
-
-            tag: tag
+            url: url
 
         },
 
         tag: tag,
+
+        /*
+           Notification dengan tag
+           yang sama akan menggantikan
+           notification sebelumnya.
+
+           Tag berbeda = notification
+           berbeda.
+        */
 
         renotify: true,
 
