@@ -636,22 +636,33 @@ def save_snapshot(
     source_time=None
 ):
 
-    if not songs:
-
-        print(
-            f"[{platform} {chart}] "
-            "FLARE U not found → SKIP"
-        )
-
-        return False
+    # -----------------------------------------------------
+    # SNAPSHOT TIME
+    # -----------------------------------------------------
+    #
+    # Normal:
+    # gunakan source_time jika tersedia.
+    #
+    # Jika target artist tidak ditemukan:
+    # tetap gunakan JAM SEKARANG supaya snapshot
+    # tetap bergerak setiap jam.
+    # -----------------------------------------------------
 
     if snapshot_time is None:
 
-        snapshot_time = (
-            get_snapshot_time(
-                source_time
+        if songs and source_time is not None:
+
+            snapshot_time = (
+                get_snapshot_time(
+                    source_time
+                )
             )
-        )
+
+        else:
+
+            snapshot_time = (
+                get_snapshot_time()
+            )
 
     output_file = OUTPUT_FILES[key]
 
@@ -686,13 +697,37 @@ def save_snapshot(
             return False
 
     # -----------------------------------------------------
-    # CALCULATE PREVIOUS RANK
+    # TARGET ARTIST NOT FOUND
+    # -----------------------------------------------------
+    #
+    # JANGAN SKIP SNAPSHOT.
+    #
+    # Tetap simpan:
+    #
+    # "songs": []
+    #
+    # supaya updated_at dan history
+    # tetap bergerak setiap jam.
     # -----------------------------------------------------
 
-    songs = apply_rank_history(
-        songs=songs,
-        history=history
-    )
+    if not songs:
+
+        print(
+            f"[{platform} {chart}] "
+            f"{TARGET_ARTIST} not found "
+            f"→ SAVE EMPTY SNAPSHOT"
+        )
+
+    else:
+
+        # -------------------------------------------------
+        # CALCULATE PREVIOUS RANK
+        # -------------------------------------------------
+
+        songs = apply_rank_history(
+            songs=songs,
+            history=history
+        )
 
     # -----------------------------------------------------
     # CREATE SNAPSHOT
@@ -832,7 +867,6 @@ def save_snapshot(
             )
 
     return True
-
 
 # =========================================================
 # NORMALIZE
