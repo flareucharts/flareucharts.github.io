@@ -77,24 +77,46 @@ self.addEventListener("push", event => {
        READ DATA
     ========================= */
 
-    const title =
-        data.title ||
-        "FLARE U GLOBAL";
+    const notification =
+    data.notification || {};
 
+const payloadData =
+    data.data || {};
 
-    const body =
-        data.body ||
-        "FLARE U GLOBAL has a new update.";
+const title =
+    notification.title ||
+    payloadData.title ||
+    data.title ||
+    "FLARE U GLOBAL";
 
+const body =
+    notification.body ||
+    payloadData.body ||
+    data.body ||
+    "FLARE U GLOBAL has a new update.";
 
-    const url =
-        data.url ||
-        "/";
+const icon =
+    notification.icon ||
+    payloadData.icon ||
+    data.icon ||
+    "/images/fglogo.jpg";
 
+const badge =
+    notification.badge ||
+    payloadData.badge ||
+    data.badge ||
+    "/images/notiflogo.png";
 
-    const tag =
-        data.tag ||
-        ("flare-u-" + Date.now());
+const url =
+    payloadData.url ||
+    data.url ||
+    notification.click_action ||
+    "/";
+
+const tag =
+    payloadData.tag ||
+    data.tag ||
+    ("flare-u-" + Date.now());
 
 
     const icon =
