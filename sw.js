@@ -153,49 +153,32 @@ self.addEventListener("push", event => {
     ========================= */
 
     const tag =
-        payloadData.tag ||
-        data.tag ||
-        ("flare-u-" + Date.now());
+    data.tag ||
+    ("flare-u-" + Date.now());
 
+const options = {
 
-    /* =========================
-       NOTIFICATION OPTIONS
-    ========================= */
+    body: body,
 
-    const options = {
+    icon: icon,
 
-        body: body,
+    badge: badge,
 
-        icon: icon,
+    data: {
+        url: url
+    },
 
-        badge: badge,
+    tag: tag,
 
-        data: {
+    renotify: true,
 
-            url: url
+    vibrate: [
+        200,
+        100,
+        200
+    ]
 
-        },
-
-        tag: tag,
-
-        /*
-           Notification dengan tag
-           yang sama akan menggantikan
-           notification sebelumnya.
-
-           Tag berbeda = notification
-           berbeda.
-        */
-
-        renotify: true,
-
-        vibrate: [
-            200,
-            100,
-            200
-        ]
-
-    };
+};
 
 
     /* =========================
