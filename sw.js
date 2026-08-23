@@ -58,11 +58,9 @@ self.addEventListener("push", event => {
 
     try {
 
-        if (event.data) {
-
-            data = event.data.json();
-
-        }
+        data = event.data
+            ? event.data.json()
+            : {};
 
     } catch (error) {
 
@@ -70,115 +68,72 @@ self.addEventListener("push", event => {
             "FLARE U: Push payload is not JSON."
         );
 
-        data = {
-
-            body:
-                event.data
-                    ? event.data.text()
-                    : ""
-
-        };
+        return;
 
     }
 
 
     /* =========================
-       READ PAYLOAD
-    ========================= */
-
-    const notification =
-        data.notification || {};
-
-    const payloadData =
-        data.data || {};
-
-
-    /* =========================
-       TITLE
+       READ DATA
     ========================= */
 
     const title =
-        notification.title ||
-        payloadData.title ||
         data.title ||
         "FLARE U GLOBAL";
 
 
-    /* =========================
-       BODY
-    ========================= */
-
     const body =
-        notification.body ||
-        payloadData.body ||
         data.body ||
         "FLARE U GLOBAL has a new update.";
 
 
-    /* =========================
-       ICON
-    ========================= */
+    const url =
+        data.url ||
+        "/";
+
+
+    const tag =
+        data.tag ||
+        ("flare-u-" + Date.now());
+
 
     const icon =
-        notification.icon ||
-        payloadData.icon ||
         data.icon ||
         "/images/fglogo.jpg";
 
 
-    /* =========================
-       BADGE
-    ========================= */
-
     const badge =
-        notification.badge ||
-        payloadData.badge ||
         data.badge ||
         "/images/notiflogo.png";
 
 
     /* =========================
-       URL
+       NOTIFICATION OPTIONS
     ========================= */
 
-    const url =
-        payloadData.url ||
-        data.url ||
-        notification.click_action ||
-        "/";
+    const options = {
 
+        body: body,
 
-    /* =========================
-       TAG
-    ========================= */
+        icon: icon,
 
-    const tag =
-    data.tag ||
-    ("flare-u-" + Date.now());
+        badge: badge,
 
-const options = {
+        tag: tag,
 
-    body: body,
+        renotify: true,
 
-    icon: icon,
+        vibrate: [
+            200,
+            100,
+            200
+        ],
 
-    badge: badge,
+        data: {
+            url: url
+        }
 
-    data: {
-        url: url
-    },
-
-    tag: tag,
-
-    renotify: true,
-
-    vibrate: [
-        200,
-        100,
-        200
-    ]
-
-};
+    };
 
 
     /* =========================
