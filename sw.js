@@ -56,14 +56,12 @@ self.addEventListener("fetch", event => {
 
 self.addEventListener("push", event => {
 
-    let data = {};
+    let rawData = {};
 
     try {
 
         if (event.data) {
-
-            data = event.data.json();
-
+            rawData = event.data.json();
         }
 
     } catch (error) {
@@ -72,55 +70,115 @@ self.addEventListener("push", event => {
             "FLARE U: Push payload is not JSON."
         );
 
-        data = {
-
-            body:
-                event.data
-                    ? event.data.text()
-                    : ""
-
+        rawData = {
+            body: event.data
+                ? event.data.text()
+                : ""
         };
 
     }
 
 
     /* =========================
-       READ FCM PAYLOAD
+       NORMALIZE FCM DATA
     ========================= */
 
-    const notification =
-        data.notification || {};
+    const fcmData =
+        rawData.data || rawData;
 
+
+    const notification =
+        rawData.notification || {};
+
+
+    /* =========================
+       TITLE
+    ========================= */
 
     const title =
         notification.title ||
-        data.title ||
+        fcmData.title ||
+        rawData.title ||
         "FLARE U GLOBAL";
 
 
+    /* =========================
+       BODY
+    ========================= */
+
     const body =
         notification.body ||
-        data.body ||
+        fcmData.body ||
+        rawData.body ||
         "FLARE U GLOBAL has a new update.";
 
 
+    /* =========================
+       ICON
+    ========================= */
+
     const icon =
         notification.icon ||
-        data.icon ||
+        fcmData.icon ||
+        rawData.icon ||
         "/images/fglogo.jpg";
 
 
+    /* =========================
+       BADGE
+    ========================= */
+
     const badge =
         notification.badge ||
-        data.badge ||
+        fcmData.badge ||
+        rawData.badge ||
         "/images/notiflogo.png";
 
 
+    /* =========================
+       URL
+    ========================= */
+
     const url =
-        data.url ||
-        data.data?.url ||
+        fcmData.url ||
+        rawData.url ||
         notification.click_action ||
         "/";
+
+
+    /* =========================
+       TAG
+    ========================= */
+
+    const tag =
+        fcmData.tag ||
+        rawData.tag ||
+        ("flare-u-" + Date.now());
+
+
+    /* =========================
+       LOG
+    ========================= */
+
+    console.log(
+        "FLARE U PUSH DATA:",
+        JSON.stringify(rawData)
+    );
+
+    console.log(
+        "TITLE:",
+        title
+    );
+
+    console.log(
+        "BODY:",
+        body
+    );
+
+    console.log(
+        "TAG:",
+        tag
+    );
 
 
     /* =========================
@@ -131,26 +189,21 @@ self.addEventListener("push", event => {
 
         body: body,
 
-
         icon: icon,
-
 
         badge: badge,
 
-
         data: {
 
-            url: url
+            url: url,
+
+            tag: tag
 
         },
 
+        tag: tag,
 
-tag:
-    data.tag ||
-    ("flare-u-" + Date.now()),
-
-renotify: true,
-
+        renotify: true,
 
         vibrate: [
             200,
