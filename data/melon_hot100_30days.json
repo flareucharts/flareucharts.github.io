@@ -2,8 +2,8 @@
   "platform": "Melon",
   "chart": "HOT100 (30 Days)",
   "source": "Melon",
-  "artist": "RESCENE (리센느)",
-  "updated_at": "2026-08-22T20:00:00+09:00",
+  "artist": "FLARE U (플레어 유)",
+  "updated_at": "2026-08-23T10:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T17:00:00+09:00",
@@ -2419,6 +2419,15 @@
           "track_id": null
         }
       ]
+    },
+    {
+      "snapshot_time": "2026-08-23T10:00:00+09:00",
+      "date": "2026-08-23",
+      "hour": 10,
+      "platform": "Melon",
+      "chart": "HOT100 (30 Days)",
+      "source": "Melon",
+      "songs": []
     }
   ]
 }
