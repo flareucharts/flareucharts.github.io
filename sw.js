@@ -145,12 +145,11 @@ self.addEventListener("push", event => {
         },
 
 
-        tag:
-            data.tag ||
-            "flare-u-global",
+tag:
+    data.tag ||
+    ("flare-u-" + Date.now()),
 
-
-        renotify: true,
+renotify: true,
 
 
         vibrate: [
