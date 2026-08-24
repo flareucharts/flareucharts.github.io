@@ -3,7 +3,7 @@
   "chart": "TOP100",
   "source": "Melon",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-08-24T23:00:00+09:00",
+  "updated_at": "2026-08-25T00:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T17:00:00+09:00",
@@ -6516,6 +6516,15 @@
       "snapshot_time": "2026-08-24T23:00:00+09:00",
       "date": "2026-08-24",
       "hour": 23,
+      "platform": "Melon",
+      "chart": "TOP100",
+      "source": "Melon",
+      "songs": []
+    },
+    {
+      "snapshot_time": "2026-08-25T00:00:00+09:00",
+      "date": "2026-08-25",
+      "hour": 0,
       "platform": "Melon",
       "chart": "TOP100",
       "source": "Melon",
