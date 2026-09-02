@@ -419,6 +419,9 @@ function renderOngoingVote(votes) {
     const track =
         document.querySelector(".onvote-track");
 
+    const section =
+        document.getElementById("ongoingVoteSection");
+
     const loading =
         document.querySelector(".onvote-loading");
 
@@ -455,19 +458,11 @@ function renderOngoingVote(votes) {
 
     if (!ongoingVotes.length) {
 
-        track.innerHTML = `
-            <div class="onvote-slider">
-                <div class="onvote-title">
-                    No ongoing vote
-                </div>
-            </div>
-        `;
+       if (section) {
+           section.style.display = "none";
+       }
 
-        if (indicator) {
-            indicator.textContent = "";
-        }
-
-        return;
+       return;
     }
 
 
