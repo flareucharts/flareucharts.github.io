@@ -227,18 +227,29 @@ new Date(e.date).getDate()
     }
 
     // DAYS
-    for(let d=1; d<=lastDate; d++){
-      const hasEvent =
-        eventDates.includes(d);
-      calendarHTML += `
-        <div
-          class="day ${hasEvent ? 'event' : ''}"
-          onclick="showEvent('${month}', ${d}, this)"
-        >
-          ${d}
-        </div>
-      `;
-    }
+const today = new Date();
+
+for(let d=1; d<=lastDate; d++){
+
+  const hasEvent = eventDates.includes(d);
+
+  const isToday =
+    d === today.getDate() &&
+    monthIndex === today.getMonth() &&
+    year === today.getFullYear();
+
+  calendarHTML += `
+    <div
+      class="day
+        ${hasEvent ? 'event' : ''}
+        ${isToday ? 'today' : ''}
+      "
+      onclick="showEvent('${month}', ${d}, this)"
+    >
+      ${d}
+    </div>
+  `;
+}
 
     // GROUP EVENTS
     const groupedEvents = {};
