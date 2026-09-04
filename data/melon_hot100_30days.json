@@ -3,7 +3,7 @@
   "chart": "HOT100 (30 Days)",
   "source": "Melon",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-09-04T09:00:00+09:00",
+  "updated_at": "2026-09-04T14:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T17:00:00+09:00",
@@ -3513,6 +3513,15 @@
       "snapshot_time": "2026-09-04T09:00:00+09:00",
       "date": "2026-09-04",
       "hour": 9,
+      "platform": "Melon",
+      "chart": "HOT100 (30 Days)",
+      "source": "Melon",
+      "songs": []
+    },
+    {
+      "snapshot_time": "2026-09-04T14:00:00+09:00",
+      "date": "2026-09-04",
+      "hour": 14,
       "platform": "Melon",
       "chart": "HOT100 (30 Days)",
       "source": "Melon",
