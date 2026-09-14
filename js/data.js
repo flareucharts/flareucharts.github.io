@@ -10,7 +10,7 @@ function makeSlug(title){
 window.discography = [
 {
     albumType: "1st Mini Album-JP",
-    title: "YOUTH ERROR (Japan Edition)",
+    title: "YOUTH ERROR Japan Edition (Selected Version)",
     artist: "FLARE U",
     releaseDate: "2026-09-09",
     cover: "youth-error-jp.jpg",
