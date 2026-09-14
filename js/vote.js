@@ -18,6 +18,7 @@ const appLogos = {
     "BigC": "/images/apps/bigc.png",
     "Podoal": "/images/apps/podoal.png",
     "Fandora": "/images/apps/fandora.png",
+    "My1pick": "/images/apps/my1pick.png",
     "DuckAd": "/images/apps/duckad.png"
 };
 
