@@ -465,6 +465,10 @@ function renderOngoingVote(votes) {
        return;
     }
 
+    if (section) {
+        section.style.display = "";
+    }
+
 
     /* =========================
        INITIAL INDICATOR
