@@ -19,6 +19,7 @@ const appLogos = {
     "Podoal": "/images/apps/podoal.png",
     "Fandora": "/images/apps/fandora.png",
     "My1pick": "/images/apps/my1pick.png",
+    "Star Rematch": "/images/apps/starrematch.png",
     "DuckAd": "/images/apps/duckad.png"
 };
 
