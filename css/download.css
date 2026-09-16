@@ -454,3 +454,41 @@
     height:50px;
     transform:rotate(20deg);
 }
+
+/* =========================
+   TODAY SCHEDULE
+========================= */
+
+#download-schedule.today-mode .download-title{
+    margin-bottom:35px;
+}
+
+#download-schedule.today-mode #download-content{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.today-date{
+    font-size:42px;
+    font-weight:700;
+    color:#fdf5c4;
+    margin-bottom:20px;
+}
+
+.today-event{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    align-items:baseline;
+    column-gap:24px;
+}
+
+.today-event .time{
+    font-size:35px;
+    font-weight:600;
+}
+
+.today-event .title{
+    font-size:35px;
+    font-weight:400;
+}
