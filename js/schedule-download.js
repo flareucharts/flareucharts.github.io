@@ -58,30 +58,31 @@ async function downloadSchedule(type = "upcoming") {
     /* FILTER EVENTS */
 
     const events = (window.allSchedule || [])
+    .filter(item => {
+
+        const d = new Date(item.date);
+
+        d.setHours(0,0,0,0);
+
+        if(type === "today"){
+            return d.getTime() === today.getTime();
+        }
+
+        return d >= today;
+
+    })
+    .sort((a,b) => {
+
+        return new Date(a.date) - new Date(b.date);
+
+    });
+
 console.log("========== DOWNLOAD DEBUG ==========");
 console.log("TYPE:", type);
 console.log("ALL SCHEDULE:", window.allSchedule);
 console.log("EVENTS:", events);
 console.log("EVENT COUNT:", events.length);
 console.log("====================================");
-
-        .filter(item => {
-
-            const d = new Date(item.date);
-
-            d.setHours(0,0,0,0);
-
-            if(type === "today"){
-                return d.getTime() === today.getTime();
-            }
-
-            return d >= today;
-        })
-        .sort((a,b) => {
-
-            return new Date(a.date) - new Date(b.date);
-
-        });
 
     /* NO EVENT */
 
@@ -492,23 +493,19 @@ console.log("====================================");
 ========================================= */
 
 window.downloadTodaySchedule = function(){
-
     return downloadSchedule("today");
-
 };
 
 window.downloadUpcomingSchedule = function(){
-
     return downloadSchedule("upcoming");
-
 };
 
 console.log(
-    "downloadTodaySchedule:",
-    typeof window.downloadTodaySchedule
+    "Upcoming:",
+    typeof window.downloadUpcomingSchedule
 );
 
 console.log(
-    "downloadUpcomingSchedule:",
-    typeof window.downloadUpcomingSchedule
+    "Today:",
+    typeof window.downloadTodaySchedule
 );
