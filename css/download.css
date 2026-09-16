@@ -467,20 +467,19 @@
     display:flex;
     flex-direction:column;
     gap:24px;
+    flex:0 0 auto;
 }
 
 #download-schedule.today-mode{
     height:auto !important;
     min-height:0 !important;
-}
-
-#download-schedule.today-mode{
     padding:60px;
 }
 
-#download-schedule.today-mode #download-content{
-    flex:0 0 auto;
+#download-schedule.today-mode #download-footer{
+    margin-top:16px;
 }
+
 .today-date{
     font-size:42px;
     font-weight:700;
