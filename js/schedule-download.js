@@ -58,6 +58,13 @@ async function downloadSchedule(type = "upcoming") {
     /* FILTER EVENTS */
 
     const events = (window.allSchedule || [])
+console.log("========== DOWNLOAD DEBUG ==========");
+console.log("TYPE:", type);
+console.log("ALL SCHEDULE:", window.allSchedule);
+console.log("EVENTS:", events);
+console.log("EVENT COUNT:", events.length);
+console.log("====================================");
+
         .filter(item => {
 
             const d = new Date(item.date);
@@ -338,7 +345,7 @@ async function downloadSchedule(type = "upcoming") {
     target.style.position = "fixed";
     target.style.left = "0px";
     target.style.top = "0px";
-    target.style.visibility = "hidden";
+    target.style.visibility = "none";
 
     target.style.width = "1080px";
     target.style.height = "1350px";
