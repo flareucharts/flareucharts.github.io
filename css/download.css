@@ -154,7 +154,7 @@
     padding:0;
     font-family:"Inter", sans-serif;
     font-weight:900;
-    font-size:90px;
+    font-size:95px;
     line-height:.88;
     letter-spacing:-1px;
     text-align:left;
@@ -466,12 +466,16 @@
 #download-schedule.today-mode #download-content{
     display:flex;
     flex-direction:column;
-    gap:18px;
+    gap:24px;
 }
 
 #download-schedule.today-mode{
     height:auto !important;
     min-height:0 !important;
+}
+
+#download-schedule.today-mode{
+    padding:60px;
 }
 
 #download-schedule.today-mode #download-content{
@@ -507,12 +511,9 @@
 
 .download-menu{
     position:fixed !important;
-
     right:18px !important;
     bottom:158px !important;
-
     width:190px;
-
     display:flex;
     flex-direction:column;
     gap:8px;
