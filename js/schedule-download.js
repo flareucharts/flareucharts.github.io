@@ -343,13 +343,39 @@ console.log("====================================");
        PREPARE IMAGE
     ========================================= */
 
-    target.style.position = "fixed";
-    target.style.left = "0px";
-    target.style.top = "0px";
-    target.style.visibility = "none";
+    /* PREPARE IMAGE */
 
-    target.style.width = "1080px";
+target.style.position = "fixed";
+target.style.left = "0px";
+target.style.top = "0px";
+target.style.visibility = "none";
+
+target.style.width = "1080px";
+target.style.boxSizing = "border-box";
+
+/*
+    TODAY = dynamic height
+    UPCOMING = fixed 1080 x 1350
+*/
+if(type === "today"){
+
+    /*
+        Biarkan browser menghitung
+        tinggi berdasarkan isi.
+    */
+    target.style.height = "auto";
+
+    /*
+        Sedikit padding bawah supaya
+        isi tidak terlalu mepet.
+    */
+    target.style.paddingBottom = "80px";
+
+}else{
+
     target.style.height = "1350px";
+
+}
 
     /* =========================================
        WAIT FOR RENDER
