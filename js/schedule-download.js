@@ -1,311 +1,507 @@
 console.log("schedule-download.js READY");
-console.log("BEFORE FUNCTION");
 
 async function downloadSchedule(type = "upcoming") {
 
-    console.log("schedule-download.js loaded");
-    console.log(window.allSchedule);
+    console.log("DOWNLOAD TYPE:", type);
+    console.log("ALL SCHEDULE:", window.allSchedule);
 
-const res = await fetch("/download/up-schedule-temp.html");
+    const res = await fetch("/download/up-schedule-temp.html");
 
-console.log("FETCH:", res.status);
+    console.log("FETCH:", res.status);
 
-const html = await res.text();
+    const html = await res.text();
 
-console.log(html);
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = html;
 
-console.log("HTML LENGTH:", html.length);
-const wrapper = document.createElement("div");
-wrapper.innerHTML = html;
-const target = wrapper.firstElementChild;
+    const target = wrapper.firstElementChild;
 
-console.log("TARGET TEMPLATE:", target);
+    if(!target){
+        console.error("download-schedule tidak ditemukan");
+        return;
+    }
 
-if(!target){
-    console.error("download-schedule tidak ditemukan");
-    return;
-}
+    document.body.appendChild(target);
 
-document.body.appendChild(target);
+    /* LOAD DOWNLOAD CSS */
+    if(!document.querySelector('link[href*="download.css"]')){
 
-// LOAD DOWNLOAD CSS ONCE
-if(!document.querySelector('link[href*="download.css"]')){
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "/css/download.css";
-    document.head.appendChild(link);
-    await new Promise(resolve=>setTimeout(resolve,300));
-};
+        const link = document.createElement("link");
 
-const content = target.querySelector("#download-content");
-const yearEl = target.querySelector("#download-year");
-const moreEl = target.querySelector("#download-more");
+        link.rel = "stylesheet";
+        link.href = "/css/download.css";
 
-console.log(target, content, yearEl, moreEl);
+        document.head.appendChild(link);
+
+        await new Promise(resolve => setTimeout(resolve, 300));
+    }
+
+    /* ELEMENTS */
+
+    const content = target.querySelector("#download-content");
+    const yearEl = target.querySelector("#download-year");
+    const titleEl = target.querySelector("#download-title");
+    const moreEl = target.querySelector("#download-more");
+
+    if(!content || !yearEl || !moreEl){
+        console.error("Element download tidak lengkap");
+        target.remove();
+        return;
+    }
+
+    /* TODAY */
 
     const today = new Date();
+
     today.setHours(0,0,0,0);
 
-    // =========================
-    // UPCOMING EVENTS
-    // =========================
+    /* FILTER EVENTS */
 
     const events = (window.allSchedule || [])
-    .filter(item => {
+        .filter(item => {
 
-        const d = new Date(item.date);
-        d.setHours(0,0,0,0);
+            const d = new Date(item.date);
 
-        if(type === "today"){
-            return d.getTime() === today.getTime();
+            d.setHours(0,0,0,0);
+
+            if(type === "today"){
+                return d.getTime() === today.getTime();
+            }
+
+            return d >= today;
+        })
+        .sort((a,b) => {
+
+            return new Date(a.date) - new Date(b.date);
+
+        });
+
+    /* NO EVENT */
+
+    if(events.length === 0){
+
+        alert(
+            type === "today"
+                ? "No schedule for today."
+                : "No upcoming schedule."
+        );
+
+        target.remove();
+
+        return;
+    }
+
+    /* =========================================
+       TITLE + MODE
+    ========================================= */
+
+    if(type === "today"){
+
+        target.classList.add("today-mode");
+
+        if(titleEl){
+            titleEl.textContent = "TODAY SCHEDULE";
         }
 
-        return d >= today;
+    }else{
 
-    })
-    .sort((a,b)=>new Date(a.date)-new Date(b.date));
+        target.classList.remove("today-mode");
 
-if(events.length === 0){
+        if(titleEl){
+            titleEl.textContent = "UPCOMING SCHEDULE";
+        }
 
-    alert(
-        type === "today"
-            ? "No schedule for today."
-            : "No upcoming schedule."
-    );
+    }
 
-    target.remove();
-    return;
-}
+    /* =========================================
+       YEAR
+    ========================================= */
 
-    // =========================
-    // YEAR
-    // =========================
+    if(type === "today"){
 
-    const years = [
-        ...new Set(
-            events.map(e =>
-                new Date(e.date).getFullYear()
+        yearEl.textContent = today.getFullYear();
+
+    }else{
+
+        const years = [
+            ...new Set(
+                events.map(event =>
+                    new Date(event.date).getFullYear()
+                )
             )
-        )
-    ];
+        ];
 
-console.log("target =", target);
-console.log("yearEl =", yearEl);
-console.log("content =", content);
-console.log("moreEl =", moreEl);
+        yearEl.textContent =
+            years.length === 1
+                ? years[0]
+                : `${years[0]}–${years[years.length - 1]}`;
 
-    yearEl.textContent =
-        years.length===1
-            ? years[0]
-            : `${years[0]}–${years[years.length-1]}`;
+    }
 
-    // =========================
-    // MAX 7 DATES
-    // =========================
+    /* =========================================
+       TODAY SCHEDULE
+    ========================================= */
 
-const maxEvents = 8;
-const displayEvents = events.slice(0, maxEvents);
-const hasMore = events.length > maxEvents;
-    
-    // kosongkan isi lama
-    content.innerHTML = "";
-    // =========================
-    // BUILD HTML
-    // =========================
-    let currentMonth = "";
-    let currentDate = "";
-    let dayGroup = null;
-    let eventsBox = null;
-    displayEvents.forEach(event=>{
-        const d = new Date(event.date);
-        const month = d.toLocaleString("en-US",{
-            month:"long"
-        }).toUpperCase();
-        const dateKey = d.toISOString().slice(0,10);
-        // =========================
-        // MONTH
-        // =========================
+    if(type === "today"){
 
-        if(month!==currentMonth){
-            currentMonth = month;
-            content.insertAdjacentHTML(
-    "beforeend",
-    `
-    <div class="download-month">
-        ${month}
-    </div>
+        const d = new Date(events[0].date);
 
-    <div class="download-line"></div>
-    `
-);
-        }
+        const weekday = d.toLocaleString("en-US", {
+            weekday:"long"
+        });
 
-        // =========================
-        // DATE
-        // =========================
+        const day = d.getDate();
 
-        if(dateKey!==currentDate){
-            currentDate = dateKey;
-            dayGroup = document.createElement("div");
-            dayGroup.className = "download-day-group";
-            dayGroup.innerHTML = `
-                <div class="download-date">
-                    ${d.getDate()}
-                </div>
-                <div class="download-events"></div>
+        const month = d.toLocaleString("en-US", {
+            month:"short"
+        });
+
+        const dateLabel =
+            `${weekday}, ${day} ${month}`;
+
+        content.innerHTML = `
+
+            <div class="today-date">
+                ${dateLabel}
+            </div>
+
+            <div class="today-events"></div>
+
+        `;
+
+        const eventsBox =
+            content.querySelector(".today-events");
+
+        events.forEach(event => {
+
+            const eventEl =
+                document.createElement("div");
+
+            eventEl.className = "today-event";
+
+            eventEl.innerHTML = `
+
+                <span class="time">
+                    ${event.time || "-"}
+                </span>
+
+                <span class="title">
+                    ${String(event.cat || "")}
+                    ${String(event.title || "")}
+                </span>
+
             `;
 
-            content.appendChild(dayGroup);
-            eventsBox =
-        dayGroup.querySelector(".download-events");
+            eventsBox.appendChild(eventEl);
+
+        });
+
+        /*
+         * TODAY TIDAK PAKAI +MORE
+         */
+
+        moreEl.innerHTML = "";
+
+    }
+
+    /* =========================================
+       UPCOMING SCHEDULE
+    ========================================= */
+
+    else{
+
+        const maxEvents = 8;
+
+        const displayEvents =
+            events.slice(0, maxEvents);
+
+        const hasMore =
+            events.length > maxEvents;
+
+        content.innerHTML = "";
+
+        let currentMonth = "";
+        let currentDate = "";
+
+        let dayGroup = null;
+        let eventsBox = null;
+
+        displayEvents.forEach(event => {
+
+            const d = new Date(event.date);
+
+            const month =
+                d.toLocaleString("en-US", {
+                    month:"long"
+                }).toUpperCase();
+
+            const dateKey =
+                d.getFullYear() +
+                "-" +
+                String(d.getMonth() + 1).padStart(2,"0") +
+                "-" +
+                String(d.getDate()).padStart(2,"0");
+
+            /* MONTH */
+
+            if(month !== currentMonth){
+
+                currentMonth = month;
+
+                content.insertAdjacentHTML(
+                    "beforeend",
+                    `
+                    <div class="download-month">
+                        ${month}
+                    </div>
+
+                    <div class="download-line"></div>
+                    `
+                );
+
+            }
+
+            /* DATE */
+
+            if(dateKey !== currentDate){
+
+                currentDate = dateKey;
+
+                dayGroup =
+                    document.createElement("div");
+
+                dayGroup.className =
+                    "download-day-group";
+
+                dayGroup.innerHTML = `
+
+                    <div class="download-date">
+                        ${d.getDate()}
+                    </div>
+
+                    <div class="download-events"></div>
+
+                `;
+
+                content.appendChild(dayGroup);
+
+                eventsBox =
+                    dayGroup.querySelector(
+                        ".download-events"
+                    );
+            }
+
+            /* EVENT */
+
+            eventsBox.insertAdjacentHTML(
+                "beforeend",
+                `
+                <div class="download-event">
+
+                    <span class="time">
+                        ${event.time || "-"}
+                    </span>
+
+                    <span class="title">
+                        ${String(event.cat || "")}
+                        ${String(event.title || "")}
+                    </span>
+
+                </div>
+                `
+            );
+
+        });
+
+        /* MORE */
+
+        if(hasMore){
+
+            const hiddenEvents =
+                events.length - displayEvents.length;
+
+            moreEl.innerHTML =
+                `+${hiddenEvents} more ↓`;
+
+        }else{
+
+            moreEl.innerHTML = "";
 
         }
 
-        // =========================
-        // EVENT
-        // =========================
+    }
 
-        eventsBox.insertAdjacentHTML(
-    "beforeend",
-    `
-    <div class="download-event">
-    <span class="time">
-        ${event.time || "-"}
-    </span>
-    <span class="title">
-        ${String(event.cat || "")} ${String(event.title || "")}
-    </span>
-    </div>
-    `
-);
+    /* =========================================
+       PREPARE IMAGE
+    ========================================= */
+
+    target.style.position = "fixed";
+    target.style.left = "0px";
+    target.style.top = "0px";
+    target.style.visibility = "hidden";
+
+    target.style.width = "1080px";
+    target.style.height = "1350px";
+
+    /* =========================================
+       WAIT FOR RENDER
+    ========================================= */
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(async () => {
+
+            await document.fonts.ready;
+
+            await new Promise(resolve =>
+                setTimeout(resolve, 500)
+            );
+
+            await document.fonts.load(
+                "300 35px Inter"
+            );
+
+            await document.fonts.load(
+                "500 35px Inter"
+            );
+
+            await document.fonts.load(
+                "600 35px Inter"
+            );
+
+            await document.fonts.load(
+                "700 30px Inter"
+            );
+
+            await document.fonts.load(
+                "900 90px Inter"
+            );
+
+            /* IMAGES */
+
+            const images =
+                target.querySelectorAll("img");
+
+            await Promise.all(
+
+                [...images].map(img => {
+
+                    if(img.complete){
+                        return Promise.resolve();
+                    }
+
+                    return new Promise(resolve => {
+
+                        img.onload = resolve;
+                        img.onerror = resolve;
+
+                    });
+
+                })
+
+            );
+
+            /* FORCE SIZE */
+
+            target.style.width = "1080px";
+            target.style.height = "1350px";
+            target.style.boxSizing = "border-box";
+
+            console.log(
+                "FINAL SIZE:",
+                target.offsetWidth,
+                target.offsetHeight
+            );
+
+            /* FONT EMBED */
+
+            const fontEmbedCSS =
+                await htmlToImage.getFontEmbedCSS(
+                    target
+                );
+
+            /* =========================================
+               CREATE PNG
+            ========================================= */
+
+            htmlToImage.toPng(target, {
+
+                pixelRatio: 1,
+
+                cacheBust: true,
+
+                backgroundColor: "#91d3ca",
+
+                fontEmbedCSS
+
+            })
+
+            .then(function(dataUrl){
+
+                const link =
+                    document.createElement("a");
+
+                link.download =
+                    type === "today"
+                        ? "FLARE-U-Today-Schedule.png"
+                        : "FLARE-U-Upcoming-Schedule.png";
+
+                link.href = dataUrl;
+
+                link.click();
+
+                setTimeout(() => {
+
+                    target.remove();
+
+                }, 500);
+
+            })
+
+            .catch(function(err){
+
+                console.error(
+                    "PNG ERROR:",
+                    err
+                );
+
+                target.remove();
+
+                alert(
+                    "Failed to generate image."
+                );
+
+            });
+
+        });
 
     });
 
-
-    // =========================
-    // MORE
-    // =========================
-
-    if(hasMore){
-    const hiddenEvents = events.length - displayEvents.length;
-    moreEl.innerHTML = `
-        +${hiddenEvents} more ↓
-    `;
-}else{
-    moreEl.innerHTML = "";
 }
 
-// =========================
-// SHOW FOR CAPTURE ONLY
-// =========================
 
-target.style.position="fixed";
-target.style.left="0px";
-target.style.top="0px";
-target.style.visibility="hidden";
-target.style.width="1080px";
-target.style.height="1350px";
-
-    // tunggu browser render
-    requestAnimationFrame(()=>{
-    requestAnimationFrame(async ()=>{
-
-await document.fonts.ready;
-await new Promise(resolve => setTimeout(resolve, 500));
-await document.fonts.load("300 35px Inter"); // light
-await document.fonts.load("500 35px Inter"); // medium
-await document.fonts.load("600 35px Inter"); // semibold
-await document.fonts.load("700 30px Inter"); // bold
-await document.fonts.load("900 90px Inter"); // black
-
-const images = target.querySelectorAll("img");
-await Promise.all(
-    [...images].map(img=>{
-        if(img.complete) return Promise.resolve();
-        return new Promise(resolve=>{
-            img.onload = resolve;
-            img.onerror = resolve;
-        });
-    })
-);
-
-console.log("TARGET:", target);
-console.log("SIZE:", target.offsetWidth, target.offsetHeight);
-console.log("HTML:", target.innerHTML);
-
-console.log("BEFORE PNG");
-console.log(target.offsetWidth, target.offsetHeight);
-console.log(target.querySelector(".download-logo").naturalWidth);
-
-const logo = target.querySelector(".download-logo");
-
-console.log("LOGO:", {
-    src: logo?.src,
-    complete: logo?.complete,
-    naturalWidth: logo?.naturalWidth,
-    naturalHeight: logo?.naturalHeight
-});
-
-console.log("BEFORE FORCE SIZE");
-
-target.style.width = "1080px";
-target.style.height = "1350px";
-target.style.boxSizing = "border-box";
-
-console.log(
-    "AFTER FORCE SIZE:",
-    target.offsetWidth,
-    target.offsetHeight
-);
-
-console.log(
-  "INTER CHECK:",
-  document.fonts.check("900 90px Inter")
-);
-
-const fontEmbedCSS = await htmlToImage.getFontEmbedCSS(target);
-
-htmlToImage.toPng(target, {
-    pixelRatio: 1,
-    cacheBust: true,
-    backgroundColor: "#91d3ca",
-    fontEmbedCSS
-            })
-.then(function(dataUrl){
-
-    const link=document.createElement("a");
-    link.download =
-    type === "today"
-        ? "FLARE-U-Today-Schedule.png"
-        : "FLARE-U-Upcoming-Schedule.png";
-    link.href=dataUrl;
-    link.click();
-
-    setTimeout(()=>{
-        target.remove();
-    },500);
-
-})
-.catch(function(err){
-    console.error("PNG ERROR:", err);
-    target.remove();
-    alert("Failed to generate image.");
-
-});
-
-        });
-
-    });
-
-};
+/* =========================================
+   GLOBAL FUNCTIONS
+========================================= */
 
 window.downloadTodaySchedule = function(){
+
     return downloadSchedule("today");
+
 };
 
 window.downloadUpcomingSchedule = function(){
+
     return downloadSchedule("upcoming");
+
 };
 
-console.log("END FILE");
-console.log(typeof window.downloadUpcomingSchedule);
+console.log(
+    "downloadTodaySchedule:",
+    typeof window.downloadTodaySchedule
+);
+
+console.log(
+    "downloadUpcomingSchedule:",
+    typeof window.downloadUpcomingSchedule
+);
