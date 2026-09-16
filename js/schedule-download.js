@@ -438,15 +438,30 @@ if(type === "today"){
             /* FORCE SIZE */
 
             target.style.width = "1080px";
-            target.style.height = "1350px";
-            target.style.boxSizing = "border-box";
+target.style.boxSizing = "border-box";
 
-            console.log(
-                "FINAL SIZE:",
-                target.offsetWidth,
-                target.offsetHeight
-            );
+if(type === "today"){
 
+    /*
+        Ambil tinggi asli dari isi Today Schedule
+    */
+    const contentHeight = target.scrollHeight;
+
+    target.style.height = `${contentHeight}px`;
+
+}else{
+
+    target.style.height = "1350px";
+
+}
+
+console.log(
+    "FINAL SIZE:",
+    target.offsetWidth,
+    target.offsetHeight
+);
+
+            
             /* FONT EMBED */
 
             const fontEmbedCSS =
