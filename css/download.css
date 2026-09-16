@@ -96,7 +96,7 @@
 #download-schedule{
     pointer-events:none;
     width:1080px !important;
-    height:1350px !important;
+    height:1350px;
     box-sizing:border-box;
     position:fixed;
     overflow:hidden;
@@ -469,6 +469,14 @@
     gap:18px;
 }
 
+#download-schedule.today-mode{
+    height:auto !important;
+    min-height:0 !important;
+}
+
+#download-schedule.today-mode #download-content{
+    flex:0 0 auto;
+}
 .today-date{
     font-size:42px;
     font-weight:700;
