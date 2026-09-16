@@ -492,3 +492,100 @@
     font-size:35px;
     font-weight:400;
 }
+
+/* =========================================
+   DOWNLOAD MENU
+========================================= */
+
+.download-menu{
+    position:fixed !important;
+
+    right:18px !important;
+    bottom:158px !important;
+
+    width:190px;
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+
+    padding:10px;
+
+    background:#ffffff;
+
+    border:1px solid rgba(16,37,34,.08);
+    border-radius:18px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.16);
+
+    z-index:99998 !important;
+
+    /* default: hidden */
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(10px);
+
+    transition:
+        opacity:.25s ease,
+        transform:.25s ease,
+        visibility:.25s ease;
+}
+
+
+/* MENU TERBUKA */
+
+.download-menu.show{
+    opacity:1;
+    visibility:visible;
+
+    transform:translateY(0);
+}
+
+
+/* =========================================
+   MENU ITEM
+========================================= */
+
+.download-menu-item{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    padding:12px 14px;
+
+    border:none;
+    border-radius:12px;
+
+    background:transparent;
+
+    color:#102522;
+
+    font-family:"Inter Local", sans-serif;
+    font-size:13px;
+    font-weight:700;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+
+/* HOVER */
+
+.download-menu-item:hover{
+    background:#91d3ca;
+    transform:translateX(-2px);
+}
+
+
+/* ACTIVE */
+
+.download-menu-item:active{
+    transform:scale(.97);
+}
