@@ -1,7 +1,7 @@
 console.log("schedule-download.js READY");
 console.log("BEFORE FUNCTION");
 
-window.downloadUpcomingSchedule = async function () {
+async function downloadSchedule(type = "upcoming") {
 
     console.log("schedule-download.js loaded");
     console.log(window.allSchedule);
@@ -51,17 +51,31 @@ console.log(target, content, yearEl, moreEl);
     // =========================
 
     const events = (window.allSchedule || [])
-        .filter(item => {
-            const d = new Date(item.date);
-            d.setHours(0,0,0,0);
-            return d >= today;
-        })
-        .sort((a,b)=>new Date(a.date)-new Date(b.date));
+    .filter(item => {
 
-    if(events.length===0){
-        alert("No upcoming schedule.");
-        return;
-    }
+        const d = new Date(item.date);
+        d.setHours(0,0,0,0);
+
+        if(type === "today"){
+            return d.getTime() === today.getTime();
+        }
+
+        return d >= today;
+
+    })
+    .sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+if(events.length === 0){
+
+    alert(
+        type === "today"
+            ? "No schedule for today."
+            : "No upcoming schedule."
+    );
+
+    target.remove();
+    return;
+}
 
     // =========================
     // YEAR
@@ -89,7 +103,7 @@ console.log("moreEl =", moreEl);
     // MAX 7 DATES
     // =========================
 
-    const maxEvents = 8;
+const maxEvents = 8;
 const displayEvents = events.slice(0, maxEvents);
 const hasMore = events.length > maxEvents;
     
@@ -188,7 +202,7 @@ const hasMore = events.length > maxEvents;
 target.style.position="fixed";
 target.style.left="0px";
 target.style.top="0px";
-target.style.visibility="none";
+target.style.visibility="hidden";
 target.style.width="1080px";
 target.style.height="1350px";
 
@@ -260,7 +274,10 @@ htmlToImage.toPng(target, {
 .then(function(dataUrl){
 
     const link=document.createElement("a");
-    link.download="FLARE-U-Upcoming-Schedule.png";
+    link.download =
+    type === "today"
+        ? "FLARE-U-Today-Schedule.png"
+        : "FLARE-U-Upcoming-Schedule.png";
     link.href=dataUrl;
     link.click();
 
@@ -280,6 +297,14 @@ htmlToImage.toPng(target, {
 
     });
 
+};
+
+window.downloadTodaySchedule = function(){
+    return downloadSchedule("today");
+};
+
+window.downloadUpcomingSchedule = function(){
+    return downloadSchedule("upcoming");
 };
 
 console.log("END FILE");
