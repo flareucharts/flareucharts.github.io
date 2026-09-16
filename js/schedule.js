@@ -177,13 +177,36 @@ const monthNames = {
   
   let html = `
 <div class="download-hint" id="download-hint">
-  Download Upcoming Schedule
+  Download Schedule
+</div>
+
+<div class="download-menu" id="download-menu">
+
+  <button
+    class="download-menu-item"
+    type="button"
+    onclick="downloadUpcomingSchedule(); closeDownloadMenu();"
+  >
+    <span>Upcoming Schedule</span>
+  </button>
+
+  <button
+    class="download-menu-item"
+    type="button"
+    onclick="downloadTodaySchedule(); closeDownloadMenu();"
+  >
+    <span>Today Schedule</span>
+  </button>
+
 </div>
 
 <button
     class="download-fab"
-    onclick="downloadUpcomingSchedule();hideDownloadHint();"
-    aria-label="Download Upcoming Schedule">
+    type="button"
+    onclick="toggleDownloadMenu(); hideDownloadHint();"
+    aria-label="Open Download Menu"
+    aria-expanded="false"
+>
 
 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
   <path d="M12 4V15" />
