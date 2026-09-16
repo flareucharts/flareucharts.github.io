@@ -503,6 +503,27 @@ function hideDownloadHint(){
   }
 }
 
+function toggleDownloadMenu(){
+
+  const menu =
+    document.getElementById("download-menu");
+
+  if(!menu) return;
+
+  menu.classList.toggle("show");
+}
+
+
+function closeDownloadMenu(){
+
+  const menu =
+    document.getElementById("download-menu");
+
+  if(!menu) return;
+
+  menu.classList.remove("show");
+}
+
 window.addEventListener("scroll", function(){
   const popup = document.getElementById("event-popup");
   if(popup){popup.classList.remove("show");
@@ -517,5 +538,7 @@ window.showEvent = showEvent;
 window.toggleEvents = toggleEvents;
 window.showDownloadHint = showDownloadHint;
 window.hideDownloadHint = hideDownloadHint;
+window.toggleDownloadMenu = toggleDownloadMenu;
+window.closeDownloadMenu = closeDownloadMenu;
 
 loadPage();
