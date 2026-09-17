@@ -12,9 +12,8 @@
 ========================= */
 
 .comeback-checklist-header {
-    padding: 18px 18px 14px;
+    padding: 10px 10px 14px;
 }
-
 
 .comeback-checklist-header h2 {
     margin: 0;
@@ -23,7 +22,6 @@
     font-weight: 700;
     color: #263b40;
 }
-
 
 .comeback-checklist-header p {
     margin: 4px 0 0;
