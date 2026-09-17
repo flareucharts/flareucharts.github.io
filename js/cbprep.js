@@ -20,72 +20,72 @@ const comebackChecklist = [
     app: "BigC",
     logo: "images/apps/bigc.png",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://link.bigc.im/TCHy/app"
     },
 
     {
     app: "Idol Champ",
     logo: "images/apps/idolchamp.png",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://promo-web.idolchamp.com/app_proxy.html"
     },
 
     {
     app: "Coogoong",
     logo: "images/apps/coogoong.jpg",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://open.coogoong.com/"
     },
 
     {
     app: "Muniverse",
     logo: "images/apps/muniverse.png",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://www.muniverse.io/"
     },
 
     {
     app: "Mubeat",
     logo: "images/apps/mubeat.png",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://mubeat.applink.info/"
     },
 
     {
     app: "LinC",
     logo: "images/apps/linc.png",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://app.linc.fan/"
     },
 
     {
     app: "Higher",
     logo: "images/apps/higher.png",
     target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    note: "Multiple acc",
+    link: "https://higher.fan/app/theme/"
     },
 
     {
     app: "DuckAd",
     logo: "images/apps/duckad.png",
-    target: "TBA",
-    note: "Multiple acc ✅",
-    link: "#"
+    target: "∞ vts as possible",
+    note: "-",
+    link: "https://www.duckad.co.kr"
     },
     
     {
     app: "Mnet Plus",
     logo: "images/apps/mnetplus.webp",
     target: "No Collection",
-    note: "Multiple Device ✅",
-    link: "#"
+    note: "Multiple Device",
+    link: "https://mnetplus.onelink.me/"
     }
 
 ];
