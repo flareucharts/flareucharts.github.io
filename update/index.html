@@ -650,19 +650,21 @@
 }
 
 
+/* =========================
+   X POST
+========================= */
+
 .updated-x-post {
     width: 100%;
-
+    display: flex;
+    justify-content: center;
     overflow: hidden;
 }
 
-
-/* =========================
-   X EMBED
-========================= */
-
 .updated-x-post .twitter-tweet {
-    margin: 0 !important;
+    width: 100% !important;
+    max-width: 550px !important;
+    margin: 0 auto !important;
 }
 
 
@@ -670,7 +672,7 @@
    MOBILE
 ========================= */
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
 
     .updated-header {
         min-height: 46px;
