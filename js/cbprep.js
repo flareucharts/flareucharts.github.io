@@ -42,7 +42,7 @@ const comebackChecklist = [
 
     {
     app: "Muniverse",
-    logo: "images/apps/munivese.png",
+    logo: "images/apps/muniverse.png",
     target: "TBA",
     note: "Multiple acc ✅",
     link: "#"
