@@ -1,0 +1,633 @@
+<!-- =========================
+     UPDATED PAGE
+========================= -->
+
+<section
+    id="updated-page"
+    class="page-section"
+>
+
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
+
+    <div class="updated-header">
+
+        <button
+            type="button"
+            class="updated-back-button"
+            onclick="history.back()"
+            aria-label="Go back"
+        >
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M15 18L9 12L15 6"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+        </button>
+
+        <h1 class="updated-title">
+            FLARE U GLOBAL
+            <span>UPDATES</span>
+        </h1>
+
+    </div>
+
+
+    <!-- =========================
+         UPDATE LIST
+    ========================= -->
+
+    <div class="updated-list">
+
+
+        <!-- =========================
+             UPDATE ITEM 1
+        ========================= -->
+
+        <article class="updated-item">
+
+            <button
+                type="button"
+                class="updated-item-toggle"
+                aria-expanded="false"
+            >
+
+                <div class="updated-item-info">
+
+                    <span class="updated-item-title">
+                        Comeback Voting Info
+                    </span>
+
+                    <span class="updated-item-date">
+                        18 Sep 2026
+                    </span>
+
+                </div>
+
+                <svg
+                    class="updated-chevron"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 9L12 15L18 9"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+            </button>
+
+
+            <!-- X POST CONTENT -->
+
+            <div
+                class="updated-item-content"
+                hidden
+            >
+
+                <div class="updated-x-post">
+
+                    <!--
+                        X embed will go here.
+                        For now this is only a placeholder.
+                    -->
+
+                    <blockquote class="twitter-tweet">
+                        <a href="https://x.com/"></a>
+                    </blockquote>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =========================
+             UPDATE ITEM 2
+        ========================= -->
+
+        <article class="updated-item">
+
+            <button
+                type="button"
+                class="updated-item-toggle"
+                aria-expanded="false"
+            >
+
+                <div class="updated-item-info">
+
+                    <span class="updated-item-title">
+                        Streaming Guide Update
+                    </span>
+
+                    <span class="updated-item-date">
+                        17 Sep 2026
+                    </span>
+
+                </div>
+
+                <svg
+                    class="updated-chevron"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 9L12 15L18 9"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+            </button>
+
+
+            <div
+                class="updated-item-content"
+                hidden
+            >
+
+                <div class="updated-x-post">
+
+                    <blockquote class="twitter-tweet">
+                        <a href="https://x.com/FLAREUGLOBAL/status/2084461208565116962"></a>
+                    </blockquote>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- =========================
+             UPDATE ITEM 3
+        ========================= -->
+
+        <article class="updated-item">
+
+            <button
+                type="button"
+                class="updated-item-toggle"
+                aria-expanded="false"
+            >
+
+                <div class="updated-item-info">
+
+                    <span class="updated-item-title">
+                        Website Update
+                    </span>
+
+                    <span class="updated-item-date">
+                        15 Sep 2026
+                    </span>
+
+                </div>
+
+                <svg
+                    class="updated-chevron"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6 9L12 15L18 9"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+
+            </button>
+
+
+            <div
+                class="updated-item-content"
+                hidden
+            >
+
+                <div class="updated-x-post">
+
+                    <blockquote class="twitter-tweet">
+                        <a href="https://x.com/"></a>
+                    </blockquote>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     X EMBED SCRIPT
+========================= -->
+
+<script
+    async
+    src="https://platform.twitter.com/widgets.js"
+    charset="utf-8"
+>
+
+// =========================
+// UPDATED PAGE
+// ACCORDION
+// =========================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const items =
+        document.querySelectorAll(".updated-item");
+
+
+    items.forEach(item => {
+
+        const toggle =
+            item.querySelector(".updated-item-toggle");
+
+        const content =
+            item.querySelector(".updated-item-content");
+
+
+        if (!toggle || !content) return;
+
+
+        toggle.addEventListener("click", () => {
+
+            const isOpen =
+                toggle.getAttribute("aria-expanded") === "true";
+
+
+            // =========================
+            // CLOSE ALL OTHER ITEMS
+            // =========================
+
+            items.forEach(otherItem => {
+
+                const otherToggle =
+                    otherItem.querySelector(
+                        ".updated-item-toggle"
+                    );
+
+                const otherContent =
+                    otherItem.querySelector(
+                        ".updated-item-content"
+                    );
+
+
+                if (
+                    otherItem !== item &&
+                    otherToggle &&
+                    otherContent
+                ) {
+
+                    otherToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    otherContent.hidden = true;
+
+                }
+
+            });
+
+
+            // =========================
+            // TOGGLE CURRENT ITEM
+            // =========================
+
+            if (isOpen) {
+
+                toggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+                content.hidden = true;
+
+            } else {
+
+                toggle.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+                content.hidden = false;
+
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+<style>
+/* =========================
+   UPDATED PAGE
+========================= */
+
+.updated-page,
+#updated-page {
+    width: 100%;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.updated-header {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+    margin-bottom: 18px;
+}
+
+
+.updated-back-button {
+    position: absolute;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: 0;
+    background: transparent;
+
+    color: #222;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.updated-back-button:active {
+    background: #f2f5f5;
+}
+
+
+.updated-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+
+    color: #222;
+
+    letter-spacing: -0.2px;
+}
+
+
+.updated-title span {
+    font-size: 11px;
+    font-weight: 600;
+
+    margin-top: 2px;
+
+    color: #7d8988;
+
+    letter-spacing: 1.2px;
+}
+
+
+/* =========================
+   UPDATE LIST
+========================= */
+
+.updated-list {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   UPDATE ITEM
+========================= */
+
+.updated-item {
+    width: 100%;
+
+    border-bottom: 1px solid #e7eeee;
+}
+
+
+.updated-item:first-child {
+    border-top: 1px solid #e7eeee;
+}
+
+
+/* =========================
+   TOGGLE
+========================= */
+
+.updated-item-toggle {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 15px 4px;
+
+    border: 0;
+    background: transparent;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    color: #222;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.updated-item-toggle:active {
+    opacity: 0.65;
+}
+
+
+/* =========================
+   TITLE + DATE
+========================= */
+
+.updated-item-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.updated-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+
+    color: #252b2b;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.updated-item-date {
+    font-size: 11px;
+    font-weight: 500;
+
+    color: #8b9695;
+}
+
+
+/* =========================
+   CHEVRON
+========================= */
+
+.updated-chevron {
+    flex: 0 0 auto;
+
+    color: #899493;
+
+    transition:
+        transform 0.22s ease,
+        color 0.22s ease;
+}
+
+
+.updated-item-toggle[aria-expanded="true"] .updated-chevron {
+    transform: rotate(180deg);
+
+    color: #5DB7AB;
+}
+
+
+/* =========================
+   CONTENT
+========================= */
+
+.updated-item-content {
+    padding: 0 0 16px;
+}
+
+
+.updated-x-post {
+    width: 100%;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   X EMBED
+========================= */
+
+.updated-x-post .twitter-tweet {
+    margin: 0 !important;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .updated-header {
+        min-height: 48px;
+        margin-bottom: 14px;
+    }
+
+
+    .updated-back-button {
+        width: 36px;
+        height: 36px;
+    }
+
+
+    .updated-title {
+        font-size: 14px;
+    }
+
+
+    .updated-title span {
+        font-size: 10px;
+    }
+
+
+    .updated-item-toggle {
+        padding: 14px 2px;
+    }
+
+
+    .updated-item-title {
+        font-size: 13.5px;
+    }
+
+
+    .updated-item-date {
+        font-size: 10.5px;
+    }
+
+
+    .updated-item-content {
+        padding-bottom: 14px;
+    }
+
+}
+</style>
