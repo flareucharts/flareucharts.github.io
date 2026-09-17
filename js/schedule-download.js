@@ -369,7 +369,7 @@ if(type === "today"){
         Sedikit padding bawah supaya
         isi tidak terlalu mepet.
     */
-    target.style.paddingBottom = "80px";
+    target.style.paddingBottom = "60px";
 
 }else{
 
