@@ -55,7 +55,7 @@
 
 
 .comeback-checklist-head {
-    min-height: 42px;
+    min-height: 30px;
     background: #f5faf9;
     border-top: 0;
     font-size: 12px;
@@ -80,10 +80,12 @@
 }
 
 .checklist-app-logo {
-    width: 42px;
-    height: 42px;
+    width: 28px;
+    height: 28px;
     object-fit: contain;
     display: block;
+    border-radius:8px;
+    align-items:center;
 }
 
 .checklist-target {
