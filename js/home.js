@@ -414,6 +414,18 @@ if (upcoming.length > 1) {
    HOME — ONGOING VOTE
 ========================= */
 
+/* =========================
+   HOME — ONGOING VOTE
+   HIDE BY DEFAULT
+========================= */
+
+const ongoingVoteSection =
+    document.getElementById("ongoingVoteSection");
+
+if (ongoingVoteSection) {
+    ongoingVoteSection.style.display = "none";
+}
+
 function renderOngoingVote(votes) {
 
     const track =
@@ -444,30 +456,30 @@ function renderOngoingVote(votes) {
 
 
     /* =========================
-       REMOVE LOADING
-    ========================= */
+   NO ONGOING VOTE
+========================= */
 
-    if (loading) {
-        loading.remove();
-    }
-
-
-    /* =========================
-       NO ONGOING VOTE
-    ========================= */
-
-    if (!ongoingVotes.length) {
-
-       if (section) {
-           section.style.display = "none";
-       }
-
-       return;
-    }
+if (!ongoingVotes.length) {
 
     if (section) {
-        section.style.display = "";
+        section.style.display = "none";
     }
+
+    return;
+}
+
+
+/* =========================
+   HAS ONGOING VOTE
+========================= */
+
+if (loading) {
+    loading.remove();
+}
+
+if (section) {
+    section.style.display = "";
+}
 
 
     /* =========================
