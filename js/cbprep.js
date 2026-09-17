@@ -78,7 +78,7 @@ const comebackChecklist = [
     target: "TBA",
     note: "Multiple acc ✅",
     link: "#"
-    }
+    },
     
     {
     app: "Mnet Plus",
