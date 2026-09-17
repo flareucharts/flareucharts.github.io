@@ -1,0 +1,311 @@
+.comeback-checklist-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e7eeee;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.comeback-checklist-header {
+    padding: 18px 18px 14px;
+}
+
+
+.comeback-checklist-header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 700;
+    color: #263b40;
+}
+
+
+.comeback-checklist-header p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #7d9195;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.comeback-checklist-table {
+    width: 100%;
+}
+
+
+.comeback-checklist-row {
+    display: grid;
+    grid-template-columns:
+        minmax(110px, 1.1fr)
+        minmax(130px, 1.5fr)
+        55px
+        105px;
+    align-items: center;
+    min-height: 68px;
+    border-top: 1px solid #edf2f2;
+}
+
+
+.comeback-checklist-head {
+    min-height: 42px;
+    background: #f5faf9;
+    border-top: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: #71878b;
+}
+
+
+/* =========================
+   CELLS
+========================= */
+
+.checklist-app,
+.checklist-target,
+.checklist-check,
+.checklist-action {
+    min-width: 0;
+}
+
+.checklist-app {
+    padding: 12px 8px 12px 18px;
+}
+
+.checklist-app-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    display: block;
+}
+
+.checklist-target {
+    padding: 12px 8px;
+    font-size: 13px;
+    line-height: 1.35;
+    color: #40565b;
+}
+
+.checklist-target small {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+    color: #8a9da0;
+}
+
+.checklist-check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checklist-action {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 18px 12px 8px;
+}
+
+
+/* =========================
+   APP NAME
+========================= */
+
+.checklist-app-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #30474c;
+}
+
+
+/* =========================
+   CHECKBOX
+========================= */
+
+.checklist-checkbox {
+    position: relative;
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+
+.checklist-checkbox input {
+    position: absolute;
+
+    opacity: 0;
+
+    width: 0;
+    height: 0;
+}
+
+
+.checklist-checkbox span {
+    width: 22px;
+    height: 22px;
+
+    border: 2px solid #b8cbcd;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+
+    box-sizing: border-box;
+}
+
+
+.checklist-checkbox input:checked + span {
+    background: #91d3ca;
+    border-color: #91d3ca;
+}
+
+
+.checklist-checkbox input:checked + span::after {
+    content: "";
+
+    position: absolute;
+
+    left: 7px;
+    top: 3px;
+
+    width: 6px;
+    height: 11px;
+
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+
+    transform: rotate(45deg);
+}
+
+
+/* =========================
+   OPEN APP
+========================= */
+
+.checklist-open-app {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    min-width: 88px;
+
+    padding: 8px 10px;
+
+    border-radius: 999px;
+
+    background: #eef8f7;
+
+    color: #4baaa0;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+
+.checklist-open-app svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+
+.checklist-open-app:hover {
+    background: #e1f3f1;
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+    .comeback-checklist-section {
+        margin: 20px 0;
+    }
+
+
+    .comeback-checklist-card {
+        border-radius: 16px;
+    }
+
+
+    .comeback-checklist-header {
+        padding: 16px;
+    }
+
+
+    .comeback-checklist-header h2 {
+        font-size: 17px;
+    }
+
+
+    .comeback-checklist-row {
+        grid-template-columns:
+            minmax(82px, 0.9fr)
+            minmax(100px, 1.4fr)
+            42px
+            78px;
+
+        min-height: 64px;
+    }
+
+
+    .checklist-app {
+        padding-left: 14px;
+    }
+
+
+    .checklist-action {
+        padding-right: 12px;
+    }
+
+
+    .checklist-open-app {
+        min-width: auto;
+        padding: 7px 9px;
+    }
+
+
+    .checklist-open-app span:last-child {
+        display: none;
+    }
+
+
+    .checklist-target {
+        font-size: 12px;
+    }
+
+
+    .checklist-target small {
+        font-size: 10px;
+    }
+
+
+    .checklist-app-name {
+        font-size: 12px;
+    }
+
+}
