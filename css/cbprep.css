@@ -78,11 +78,11 @@
 }
 
 .checklist-app-logo {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     object-fit: contain;
     display: block;
-    border-radius:8px;
+    border-radius:6px;
     align-items:center;
 }
 
@@ -150,17 +150,13 @@
 .checklist-checkbox span {
     width: 22px;
     height: 22px;
-
     border: 2px solid #b8cbcd;
     border-radius: 6px;
-
     background: #ffffff;
-
     transition:
         background 0.15s ease,
         border-color 0.15s ease,
         transform 0.15s ease;
-
     box-sizing: border-box;
 }
 
@@ -173,18 +169,13 @@
 
 .checklist-checkbox input:checked + span::after {
     content: "";
-
     position: absolute;
-
     left: 7px;
     top: 3px;
-
     width: 6px;
     height: 11px;
-
     border: solid #ffffff;
     border-width: 0 2px 2px 0;
-
     transform: rotate(45deg);
 }
 
@@ -195,27 +186,17 @@
 
 .checklist-open-app {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
-
     gap: 5px;
-
     min-width: 88px;
-
     padding: 8px 10px;
-
     border-radius: 999px;
-
     background: #eef8f7;
-
     color: #4baaa0;
-
     font-size: 11px;
     font-weight: 700;
-
     text-decoration: none;
-
     transition:
         background 0.15s ease,
         transform 0.15s ease;
@@ -223,8 +204,8 @@
 
 
 .checklist-open-app svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     fill: currentColor;
     flex-shrink: 0;
 }
@@ -268,8 +249,7 @@
             minmax(100px, 1.4fr)
             42px
             78px;
-
-        min-height: 64px;
+        min-height: 30px;
     }
 
 
