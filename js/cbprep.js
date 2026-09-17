@@ -29,7 +29,7 @@ const comebackChecklist = [
     logo: "images/apps/idolchamp.png",
     target: "TBA",
     note: "Multiple acc",
-    link: "https://promo-web.idolchamp.com/app_proxy.html"
+    link: " https://promo-web.idolchamp.com/app_proxy.html?deeplink="
     },
 
     {
@@ -77,7 +77,7 @@ const comebackChecklist = [
     logo: "images/apps/duckad.png",
     target: "∞ vts as possible",
     note: "-",
-    link: "https://www.duckad.co.kr"
+    link: "http://duckad.co.kr/xe/index.php?"
     },
     
     {
