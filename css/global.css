@@ -311,8 +311,8 @@ transition:.3s ease;
 z-index:9999;
 display:flex;
 flex-direction:column;
-gap:10px;
-  margin-bottom:10px;
+gap:8px;
+margin-bottom:10px;
 }
 
 .sidebar.show{
@@ -323,7 +323,7 @@ left:0;
 .menu-group{
 display:flex;
 flex-direction:column;
-gap:10px;
+gap:8px;
 }
   
 /* LINK */
@@ -346,8 +346,8 @@ transform:translateX(4px);
 width:80%;
 height:1px;
 background:rgba(0,0,0,0.08);
-margin:10px;
-margin-top:20px;
+margin:8px;
+margin-top:18px;
 }
 
 .fanbase-section{
@@ -357,7 +357,7 @@ margin-top:20px;
 .fanbase-list{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:10px;
   padding-left:0;
   margin-top:0;
 }
@@ -374,14 +374,14 @@ margin-top:20px;
 position:fixed;
 inset:0;
 background:#111;
-opacity:0;
+opacity:0%;
 pointer-events:none;
 transition:.3s;
 z-index:9998;
 }
 
 .overlay.show{
-opacity:1;
+opacity:20;
 pointer-events:auto;
 }
 
@@ -400,7 +400,7 @@ display:block;
   flex-direction:column;
   gap:3px;
   padding-left:14px;
-  margin-top:10px;
+  margin-top:8px;
 }
 
 .sidebar-submenu a{
