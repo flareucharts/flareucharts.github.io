@@ -143,3 +143,17 @@ document.addEventListener(
 
     }
 );
+
+
+/* =========================
+   CHECK WHEN RETURNING TO HOME
+========================= */
+
+window.addEventListener(
+    "pageshow",
+    () => {
+
+        checkUpdateUnread();
+
+    }
+);
