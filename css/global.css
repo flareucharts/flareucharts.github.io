@@ -166,6 +166,28 @@ color:white;
     display: none;
 }
 
+.update-menu-link {
+    display: flex;
+    align-items: center;
+}
+
+.update-menu-text {
+    display: inline-block;
+}
+
+.update-unread-dot {
+    width: 6px;
+    height: 6px;
+    margin-left: 7px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: #e85d5d;
+}
+
+.update-unread-dot[hidden] {
+    display: none;
+}
+
 
 /* jadi X */
 .menu-btn.active span:nth-child(1){
