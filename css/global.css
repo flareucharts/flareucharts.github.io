@@ -156,11 +156,14 @@ color:white;
     right: -5px;
     width: 7px;
     height: 7px;
-    display: block;
     border-radius: 50%;
     background: #e85d5d;
-    border:none;
+    border: none;
     box-sizing: content-box;
+}
+
+.menu-unread-dot[hidden] {
+    display: none;
 }
 
 
