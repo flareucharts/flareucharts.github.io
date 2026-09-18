@@ -18,36 +18,47 @@
 
 <main class="global-content">
 
-<section class="chart-sticky">
-<div class="updated-header">
+<section class="updated-page">
 
-<button type="button"
-    class="updated-back-button"
-    onclick="history.back()"
-    aria-label="Go back">
+    <!-- =========================
+         STICKY HEADER
+    ========================= -->
 
-    <svg
-       width="20"
-       height="20"
-       viewBox="0 0 24 24"
-       fill="none"
-       xmlns="http://www.w3.org/2000/svg">
+    <section class="updated-sticky">
+        <div class="updated-header">
 
-    <path
-       d="M15 18L9 12L15 6"
-       stroke="currentColor"
-       stroke-width="2"
-       stroke-linecap="round"
-       stroke-linejoin="round"/>
+            <button
+                type="button"
+                class="updated-back-button"
+                onclick="history.back()"
+                aria-label="Go back"
+            >
 
-    </svg>
-</button>
+                <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M15 18L9 12L15 6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
 
-<h1 class="updated-title">FLARE U GLOBAL
-     <span>UPDATES</span>
-</h1>
-</div>
-</section>
+            </button>
+
+            <h1 class="updated-title">
+                FLARE U GLOBAL
+                <span>UPDATES</span>
+            </h1>
+
+        </div>
+    </section>
 
 <div class="page update-list">
    <article class="updated-item">
@@ -198,9 +209,25 @@ document.addEventListener("DOMContentLoaded", () => {
    UPDATED PAGE
 ========================= */
 
-#updated-page {
+.updated-page {
     width: 100%;
+    max-width: 768px;
+    margin: 0 auto;
 }
+
+
+/* =========================
+   STICKY HEADER
+========================= */
+
+.updated-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #ffffff;
+    padding: 10px 16px 8px;
+}
+
 
 /* =========================
    HEADER
@@ -209,44 +236,64 @@ document.addEventListener("DOMContentLoaded", () => {
 .updated-header {
     position: relative;
     width: 100%;
+    min-height: 42px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom:6px;
-    min-height:42px;
+    margin: 0;
+    box-sizing: border-box;
 }
+
+
+/* =========================
+   BACK BUTTON
+========================= */
 
 .updated-back-button {
     position: absolute;
     left: 0;
-    width: 42px;
-    height: 42px;
+
+    width: 34px;
+    height: 34px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 0;
+
     border: none;
     border-radius: 10px;
+
     background: transparent;
     color: #222;
+
     cursor: pointer;
+
     -webkit-tap-highlight-color: transparent;
 }
-
 
 .updated-back-button:active {
     background: #f2f5f5;
 }
 
 
+/* =========================
+   TITLE
+========================= */
+
 .updated-title {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     margin: 0;
+
     color: #222;
+
     font-size: 14px;
     font-weight: 700;
+
     line-height: 1.25;
     letter-spacing: -.2px;
 }
@@ -254,9 +301,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-title span {
     margin-top: 2px;
+
     color: #7d8988;
+
     font-size: 10px;
     font-weight: 600;
+
     line-height: 1;
     letter-spacing: 1.2px;
 }
@@ -266,13 +316,12 @@ document.addEventListener("DOMContentLoaded", () => {
    UPDATE LIST
 ========================= */
 
-.page.update-list{
-  width:100%;
-  max-width:768px;
-  margin:0 auto;
-  padding:0 16px;
-  display: flex;
-  flex-direction: column;
+.update-list {
+    width: 100%;
+
+    padding: 0 16px;
+
+    box-sizing: border-box;
 }
 
 
@@ -282,6 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-item {
     width: 100%;
+
     border-bottom: 1px solid #e7eeee;
 }
 
@@ -296,20 +346,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-item-toggle {
     width: 100%;
-    min-height: 60px;
+    min-height: 56px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 12px;
-    padding: 11px 2px;
+
+    padding: 10px 0;
+
     border: none;
+
     background: transparent;
     color: #222;
-    text-align: left;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-}
 
+    text-align: left;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    box-sizing: border-box;
+}
 
 .updated-item-toggle:active {
     opacity: .65;
@@ -322,18 +381,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-item-info {
     min-width: 0;
+
     display: flex;
     flex-direction: column;
+
     gap: 3px;
 }
 
 
 .updated-item-title {
     display: block;
+
     color: #252b2b;
-    font-size: 13.5px;
+
+    font-size: 13px;
     font-weight: 600;
+
     line-height: 1.4;
+
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -342,9 +407,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-item-date {
     display: block;
+
     color: #8b9695;
-    font-size: 10.5px;
+
+    font-size: 10px;
     font-weight: 500;
+
     line-height: 1.3;
 }
 
@@ -356,8 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
 .updated-chevron {
     flex: 0 0 auto;
 
-    width: 17px;
-    height: 17px;
+    width: 16px;
+    height: 16px;
 
     color: #899493;
 
@@ -379,7 +447,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-item-content {
     width: 100%;
-    padding: 0 0 14px;
+
+    padding: 0 0 12px;
+
+    box-sizing: border-box;
 }
 
 
@@ -389,14 +460,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .updated-x-post {
     width: 100%;
+
     display: flex;
     justify-content: center;
+
     overflow: hidden;
 }
+
 
 .updated-x-post .twitter-tweet {
     width: 100% !important;
     max-width: 768px !important;
+
     margin: 0 auto !important;
 }
 
@@ -407,99 +482,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 @media (max-width: 768px) {
 
-    .updated-header {
-        min-height: 46px;
-        margin-bottom: 12px;
+    .updated-sticky {
+        padding: 10px 16px 8px;
     }
 
-    .updated-back-button {
-        width: 34px;
-        height: 34px;
+    .updated-header {
+        min-height: 42px;
     }
 
     .updated-title {
         font-size: 13.5px;
     }
 
-
     .updated-title span {
         font-size: 9.5px;
     }
 
-
-    .updated-item-toggle {
-        min-height: 56px;
-
-        padding: 10px 0;
-    }
-
-
-    .updated-item-title {
-        font-size: 13px;
-    }
-
-
-    .updated-item-date {
-        font-size: 10px;
-    }
-
-
-    .updated-chevron {
-        width: 16px;
-        height: 16px;
-    }
-
-
-    .updated-item-content {
-        padding-bottom: 12px;
-    }
-
 }
 
-
-/* =========================
-   TABLET / DESKTOP
-========================= */
-
-@media (min-width: 481px) {
-
-    .updated-header {
-        min-height: 52px;
-        margin-bottom: 16px;
-    }
-
-
-    .updated-back-button {
-        width: 38px;
-        height: 38px;
-    }
-
-
-    .updated-title {
-        font-size: 15px;
-    }
-
-
-    .updated-title span {
-        font-size: 10.5px;
-    }
-
-
-    .updated-item-toggle {
-        min-height: 62px;
-
-        padding: 12px 4px;
-    }
-
-
-    .updated-item-title {
-        font-size: 14px;
-    }
-
-
-    .updated-item-date {
-        font-size: 11px;
-    }
-
-}
 </style>
