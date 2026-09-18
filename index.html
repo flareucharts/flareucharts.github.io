@@ -51,10 +51,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 <!-- HEADER -->
 <header class="header" id="home-header">
 <div class="menu-btn" onclick="toggleMenu()">
-  <span></span>
-  <span></span>
-  <span></span>
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+    <span
+        class="menu-unread-dot"
+        id="menuUnreadDot"
+        hidden
+    ></span>
+
 </div>
+
   <div class="title-wrap">
    <img src="images/logo.png" class="logo">
   </div>
@@ -73,8 +82,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
  <div class="menu-divider"></div>
  <div class="menu-group">
-   <a href="./update/">Update</a>
+
+   <a href="./update/" class="update-menu-link">
+    <span>Update</span>
+    <span class="update-unread-dot" hidden></span>
+   </a>
+
    <a href="#">Funding</a>
+
     <div class="sidebar-section fanbase-section">
      <div class="sidebar-title">
       Fanbases
