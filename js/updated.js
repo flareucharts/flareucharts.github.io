@@ -125,6 +125,13 @@ async function loadUpdates() {
             updates
         );
 
+        localStorage.setItem(
+        LAST_READ_KEY,
+        latestUpdate.id
+        );
+
+setUpdateUnread(false);
+
 
     } catch (error) {
 
