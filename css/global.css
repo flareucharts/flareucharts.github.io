@@ -159,7 +159,7 @@ color:white;
     display: block;
     border-radius: 50%;
     background: #e85d5d;
-    border: 2px solid #ffffff;
+    border:none;
     box-sizing: content-box;
 }
 
