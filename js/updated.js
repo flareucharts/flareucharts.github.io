@@ -7,22 +7,11 @@ import { db } from "./firebase.js";
 
 
 /* =========================
-   UPDATE UNREAD
+   CONSTANT
 ========================= */
 
-function updateUnreadStatus(latestUpdateId) {
-
-    const readId =
-        localStorage.getItem(
-            "flareU_lastReadUpdate"
-        );
-
-    const isUnread =
-        latestUpdateId &&
-        latestUpdateId !== readId;
-
-    setUpdateUnread(isUnread);
-}
+const LAST_READ_KEY =
+    "flareU_lastReadUpdate";
 
 
 /* =========================
@@ -31,17 +20,11 @@ function updateUnreadStatus(latestUpdateId) {
 
 function setUpdateUnread(isUnread) {
 
-    /*
-     * Sidebar dot
-     */
     const sidebarDot =
         document.querySelector(
             ".update-unread-dot"
         );
 
-    /*
-     * Hamburger dot
-     */
     const menuDot =
         document.getElementById(
             "menuUnreadDot"
@@ -54,6 +37,7 @@ function setUpdateUnread(isUnread) {
     if (menuDot) {
         menuDot.hidden = !isUnread;
     }
+
 }
 
 
@@ -82,26 +66,26 @@ async function loadUpdates() {
             snapshot.val();
 
 
-        /*
-         * Firebase object → array
-         */
-
         const updates =
             Object.entries(data)
                 .map(([key, value]) => ({
                     id: key,
                     ...value
-                }));
+                }))
+                .filter(update =>
+                    update &&
+                    update.id
+                );
 
 
-        /*
-         * Sort newest first
-         */
+        /* =========================
+           SORT NEWEST FIRST
+        ========================= */
 
         updates.sort(
             (a, b) =>
-                new Date(b.addedAt) -
-                new Date(a.addedAt)
+                Number(b.addedAt || 0) -
+                Number(a.addedAt || 0)
         );
 
 
@@ -113,24 +97,33 @@ async function loadUpdates() {
         }
 
 
-        /*
-         * Update terbaru
-         */
+        /* =========================
+           CHECK UNREAD
+        ========================= */
 
         const latestUpdate =
             updates[0];
 
+        const readId =
+            localStorage.getItem(
+                LAST_READ_KEY
+            );
 
-        updateUnreadStatus(
-            latestUpdate.id
+        const isUnread =
+            latestUpdate.id !== readId;
+
+        setUpdateUnread(
+            isUnread
         );
 
 
-        /*
-         * Render
-         */
+        /* =========================
+           RENDER
+        ========================= */
 
-        renderUpdates(updates);
+        renderUpdates(
+            updates
+        );
 
 
     } catch (error) {
@@ -141,6 +134,7 @@ async function loadUpdates() {
         );
 
     }
+
 }
 
 
@@ -151,8 +145,8 @@ async function loadUpdates() {
 function renderUpdates(updates) {
 
     const list =
-        document.querySelector(
-            ".update-list"
+        document.getElementById(
+            "updateList"
         );
 
     if (!list) return;
@@ -171,6 +165,9 @@ function renderUpdates(updates) {
         item.className =
             "updated-item";
 
+        item.dataset.updateId =
+            update.id;
+
 
         item.innerHTML = `
 
@@ -183,14 +180,19 @@ function renderUpdates(updates) {
                 <div class="updated-item-info">
 
                     <span class="updated-item-title">
-                        ${update.title || ""}
+                        ${escapeHTML(
+                            update.title || ""
+                        )}
                     </span>
 
                     <span class="updated-item-date">
-                        ${formatDate(update.addedAt)}
+                        ${formatDate(
+                            update.addedAt
+                        )}
                     </span>
 
                 </div>
+
 
                 <svg
                     class="updated-chevron"
@@ -198,6 +200,7 @@ function renderUpdates(updates) {
                     height="18"
                     viewBox="0 0 24 24"
                     fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                 >
 
                     <path
@@ -218,19 +221,24 @@ function renderUpdates(updates) {
                 hidden
             >
 
-                ${renderUpdateContent(update)}
+                ${renderUpdateContent(
+                    update
+                )}
 
             </div>
 
         `;
 
 
-        list.appendChild(item);
+        list.appendChild(
+            item
+        );
 
     });
 
 
     setupAccordion();
+
 }
 
 
@@ -241,11 +249,23 @@ function renderUpdates(updates) {
 function renderUpdateContent(update) {
 
     const type =
-        (update.type || "web")
-            .toLowerCase();
+        String(
+            update.type || "web"
+        )
+        .toLowerCase()
+        .trim();
 
 
-    /* X */
+    const link =
+        String(
+            update.link || ""
+        )
+        .trim();
+
+
+    /* =========================
+       X
+    ========================= */
 
     if (type === "x") {
 
@@ -257,8 +277,11 @@ function renderUpdateContent(update) {
                     class="twitter-tweet"
                 >
 
-                    <a href="${update.link}">
-                    </a>
+                    <a
+                        href="${escapeAttribute(
+                            link
+                        )}"
+                    ></a>
 
                 </blockquote>
 
@@ -268,7 +291,9 @@ function renderUpdateContent(update) {
     }
 
 
-    /* YouTube */
+    /* =========================
+       YOUTUBE
+    ========================= */
 
     if (type === "youtube") {
 
@@ -277,8 +302,12 @@ function renderUpdateContent(update) {
             <div class="updated-youtube">
 
                 <iframe
-                    src="${getYoutubeEmbed(update.link)}"
-                    title="${update.title || "YouTube"}"
+                    src="${escapeAttribute(
+                        getYoutubeEmbed(link)
+                    )}"
+                    title="${escapeAttribute(
+                        update.title || "YouTube"
+                    )}"
                     frameborder="0"
                     allowfullscreen
                 ></iframe>
@@ -289,7 +318,9 @@ function renderUpdateContent(update) {
     }
 
 
-    /* Image */
+    /* =========================
+       IMAGE
+    ========================= */
 
     if (type === "image") {
 
@@ -298,8 +329,13 @@ function renderUpdateContent(update) {
             <div class="updated-image">
 
                 <img
-                    src="${update.link}"
-                    alt="${update.title || ""}"
+                    src="${escapeAttribute(
+                        link
+                    )}"
+                    alt="${escapeAttribute(
+                        update.title || ""
+                    )}"
+                    loading="lazy"
                 >
 
             </div>
@@ -308,15 +344,23 @@ function renderUpdateContent(update) {
     }
 
 
-    /* Text */
+    /* =========================
+       VIDEO
+    ========================= */
 
-    if (type === "text") {
+    if (type === "video") {
 
         return `
 
-            <div class="updated-text">
+            <div class="updated-video">
 
-                ${update.content || ""}
+                <video
+                    src="${escapeAttribute(
+                        link
+                    )}"
+                    controls
+                    playsinline
+                ></video>
 
             </div>
 
@@ -324,14 +368,38 @@ function renderUpdateContent(update) {
     }
 
 
-    /* Default / Web */
+    /* =========================
+       TEXT
+    ========================= */
+
+    if (type === "text") {
+
+        return `
+
+            <div class="updated-text">
+
+                ${escapeHTML(
+                    update.content || link
+                )}
+
+            </div>
+
+        `;
+    }
+
+
+    /* =========================
+       WEB
+    ========================= */
 
     return `
 
         <div class="updated-web">
 
             <a
-                href="${update.link}"
+                href="${escapeAttribute(
+                    link
+                )}"
                 target="_blank"
                 rel="noopener noreferrer"
             >
@@ -341,6 +409,7 @@ function renderUpdateContent(update) {
         </div>
 
     `;
+
 }
 
 
@@ -354,7 +423,6 @@ function getYoutubeEmbed(url) {
 
         const parsed =
             new URL(url);
-
 
         let videoId = "";
 
@@ -389,6 +457,7 @@ function getYoutubeEmbed(url) {
         return url;
 
     }
+
 }
 
 
@@ -405,11 +474,14 @@ function formatDate(value) {
         new Date(value);
 
 
-    if (Number.isNaN(
-        date.getTime()
-    )) {
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
 
-        return value;
+        return "";
+
     }
 
 
@@ -465,17 +537,16 @@ function setupAccordion() {
                     ) === "true";
 
 
-                /*
-                 * Close others
-                 */
+                /* =========================
+                   CLOSE OTHER ITEMS
+                ========================= */
 
                 items.forEach(
                     otherItem => {
 
                         if (
                             otherItem === item
-                        )
-                            return;
+                        ) return;
 
 
                         const otherToggle =
@@ -492,8 +563,7 @@ function setupAccordion() {
                         if (
                             !otherToggle ||
                             !otherContent
-                        )
-                            return;
+                        ) return;
 
 
                         otherToggle.setAttribute(
@@ -508,9 +578,9 @@ function setupAccordion() {
                 );
 
 
-                /*
-                 * Toggle current
-                 */
+                /* =========================
+                   TOGGLE CURRENT
+                ========================= */
 
                 if (isOpen) {
 
@@ -532,20 +602,19 @@ function setupAccordion() {
                     content.hidden =
                         false;
 
-                    /*
-                     * X needs to be
-                     * rendered after opening
-                     */
+
+                    /* =========================
+                       LOAD X WIDGET
+                    ========================= */
 
                     if (
                         window.twttr &&
                         window.twttr.widgets
                     ) {
 
-                        window.twttr.widgets
-                            .load(
-                                content
-                            );
+                        window.twttr.widgets.load(
+                            content
+                        );
 
                     }
 
@@ -560,95 +629,24 @@ function setupAccordion() {
 
 
 /* =========================
-   MARK AS READ
+   ESCAPE HTML
 ========================= */
 
-function markLatestAsRead() {
+function escapeHTML(value) {
 
-    const latest =
-        document.querySelector(
-            ".updated-item"
-        );
-
-    if (!latest) return;
-
-
-    /*
-     * The rendered list is already
-     * sorted newest → oldest.
-     */
-
-    const latestTitle =
-        latest.querySelector(
-            ".updated-item-title"
-        )?.textContent;
-
-
-    if (!latestTitle) return;
-
-
-    /*
-     * We use Firebase ID instead
-     * of title when available.
-     */
-
-    loadLatestIdForRead();
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
-async function loadLatestIdForRead() {
+function escapeAttribute(value) {
 
-    try {
-
-        const snapshot =
-            await get(
-                ref(db, "updates")
-            );
-
-
-        if (!snapshot.exists())
-            return;
-
-
-        const data =
-            snapshot.val();
-
-
-        const updates =
-            Object.entries(data)
-                .map(([key, value]) => ({
-                    id: key,
-                    ...value
-                }))
-                .sort(
-                    (a, b) =>
-                        new Date(b.addedAt) -
-                        new Date(a.addedAt)
-                );
-
-
-        if (!updates.length)
-            return;
-
-
-        localStorage.setItem(
-            "flareU_lastReadUpdate",
-            updates[0].id
-        );
-
-
-        setUpdateUnread(false);
-
-
-    } catch (error) {
-
-        console.error(
-            "Failed to mark updates as read:",
-            error
-        );
-
-    }
+    return escapeHTML(value);
 
 }
 
@@ -662,8 +660,6 @@ document.addEventListener(
     () => {
 
         loadUpdates();
-
-        loadLatestIdForRead();
 
     }
 );
