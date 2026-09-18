@@ -38,359 +38,153 @@
        stroke-linecap="round"
        stroke-linejoin="round"/>
 
-                        </svg>
-
-                    </button>
-
-
-                    <h1 class="updated-title">
-
-                        FLARE U GLOBAL
-
-                        <span>UPDATES</span>
-
-                    </h1>
-
-                </div>
-
-
-                <!-- =========================
-                     UPDATE LIST
-                ========================= -->
-
-                <div class="updated-list">
-
-
-                    <!-- =========================
-                         UPDATE ITEM 1
-                    ========================= -->
-
-                    <article class="updated-item">
-
-                        <button
-                            type="button"
-                            class="updated-item-toggle"
-                            aria-expanded="false"
-                        >
-
-                            <div class="updated-item-info">
-
-                                <span class="updated-item-title">
-                                    Comeback Voting Info
-                                </span>
-
-                                <span class="updated-item-date">
-                                    18 Sep 2026
-                                </span>
-
-                            </div>
-
-
-                            <svg
-                                class="updated-chevron"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-
-                                <path
-                                    d="M6 9L12 15L18 9"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                            </svg>
-
-                        </button>
-
-
-                        <!-- X POST CONTENT -->
-
-                        <div
-                            class="updated-item-content"
-                            hidden
-                        >
-
-                            <div class="updated-x-post">
-
-                                <blockquote class="twitter-tweet">
-
-                                    <a href="https://x.com/FLAREUGLOBAL/status/2084461208565116962"></a>
-
-                                </blockquote>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- =========================
-                         UPDATE ITEM 2
-                    ========================= -->
-
-                    <article class="updated-item">
-
-                        <button
-                            type="button"
-                            class="updated-item-toggle"
-                            aria-expanded="false"
-                        >
-
-                            <div class="updated-item-info">
-
-                                <span class="updated-item-title">
-                                    Streaming Guide Update
-                                </span>
-
-                                <span class="updated-item-date">
-                                    17 Sep 2026
-                                </span>
-
-                            </div>
-
-
-                            <svg
-                                class="updated-chevron"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-
-                                <path
-                                    d="M6 9L12 15L18 9"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                            </svg>
-
-                        </button>
-
-
-                        <!-- X POST CONTENT -->
-
-                        <div
-                            class="updated-item-content"
-                            hidden
-                        >
-
-                            <div class="updated-x-post">
-
-                                <blockquote class="twitter-tweet">
-
-                                    <a href="https://x.com/FLAREUGLOBAL/status/2084461208565116962"></a>
-
-                                </blockquote>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- =========================
-                         UPDATE ITEM 3
-                    ========================= -->
-
-                    <article class="updated-item">
-
-                        <button
-                            type="button"
-                            class="updated-item-toggle"
-                            aria-expanded="false"
-                        >
-
-                            <div class="updated-item-info">
-
-                                <span class="updated-item-title">
-                                    Website Update
-                                </span>
-
-                                <span class="updated-item-date">
-                                    15 Sep 2026
-                                </span>
-
-                            </div>
-
-
-                            <svg
-                                class="updated-chevron"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-
-                                <path
-                                    d="M6 9L12 15L18 9"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                            </svg>
-
-                        </button>
-
-
-                        <!-- X POST CONTENT -->
-
-                        <div
-                            class="updated-item-content"
-                            hidden
-                        >
-
-                            <div class="updated-x-post">
-
-                                <blockquote class="twitter-tweet">
-
-                                    <a href="https://x.com/"></a>
-
-                                </blockquote>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                </div>
-
-            </section>
-
-        </main>
-
-    </div>
-
-
-    <!-- =========================
-         X EMBED
-    ========================= -->
-
-    <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charset="utf-8"
-    ></script>
-
-
-    <!-- =========================
-         UPDATED ACCORDION
-    ========================= -->
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", () => {
-
-            const items =
-                document.querySelectorAll(".updated-item");
-
-
-            items.forEach(item => {
-
-                const toggle =
-                    item.querySelector(
-                        ".updated-item-toggle"
-                    );
-
-                const content =
-                    item.querySelector(
-                        ".updated-item-content"
-                    );
-
-
-                if (!toggle || !content) return;
-
-
-                toggle.addEventListener("click", () => {
-
-                    const isOpen =
-                        toggle.getAttribute(
-                            "aria-expanded"
-                        ) === "true";
-
-
-                    /* =========================
-                       CLOSE OTHER ITEMS
-                    ========================= */
-
-                    items.forEach(otherItem => {
-
-                        if (otherItem === item) return;
-
-
-                        const otherToggle =
-                            otherItem.querySelector(
-                                ".updated-item-toggle"
-                            );
-
-                        const otherContent =
-                            otherItem.querySelector(
-                                ".updated-item-content"
-                            );
-
-
-                        if (
-                            !otherToggle ||
-                            !otherContent
-                        ) return;
-
-
-                        otherToggle.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-                        otherContent.hidden = true;
-
-                    });
-
-
-                    /* =========================
-                       TOGGLE CURRENT ITEM
-                    ========================= */
-
-                    if (isOpen) {
-
-                        toggle.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-                        content.hidden = true;
-
-                    } else {
-
-                        toggle.setAttribute(
-                            "aria-expanded",
-                            "true"
-                        );
-
-                        content.hidden = false;
-
-                    }
-
-                });
-
-            });
-
-        });
-
-    </script>
+    </svg>
+</button>
+
+<h1 class="updated-title">FLARE U GLOBAL
+     <span>UPDATES</span>
+</h1>
+</div>
+
+<div class="page updated-list">
+   <article class="updated-item">
+   <button
+       type="button"
+       class="updated-item-toggle"
+       aria-expanded="false">
+
+   <div class="updated-item-info">
+      <span class="updated-item-title">
+       Comeback Voting Info
+      </span>
+
+      <span class="updated-item-date">
+       18 Sep 2026
+      </span>
+   </div>
+      <svg
+       class="updated-chevron"
+       width="18"
+       height="18"
+       viewBox="0 0 24 24"
+       fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+
+      <path
+       d="M6 9L12 15L18 9"
+       stroke="currentColor"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round"/>
+
+      </svg>
+   </button>
+   
+
+   <!-- X POST CONTENT -->
+ 
+   <div class="updated-item-content" hidden>
+   <div class="updated-x-post">
+   <blockquote class="twitter-tweet">
+     <a  href="https://x.com/FLAREUGLOBAL/status/2084461208565116962">
+     </a>
+   </blockquote>
+   </div>
+   </div>
+</article>
+
+</div>
+</section>
+</main>
+</div>
+
+<!-- =========================
+     X EMBED
+========================= -->
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<!-- =========================
+      UPDATED ACCORDION
+========================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+ const items = document.querySelectorAll(".updated-item");
+   items.forEach(item => {
+      const toggle =
+         item.querySelector(
+            ".updated-item-toggle"
+         );
+
+      const content =
+         item.querySelector(
+            ".updated-item-content"
+          );
+
+    if (!toggle || !content) return;
+    
+    toggle.addEventListener("click", () => {
+
+      const isOpen =
+         toggle.getAttribute(
+            "aria-expanded"
+          ) === "true";
+
+/* =========================
+     CLOSE OTHER ITEMS
+========================= */
+
+    items.forEach(otherItem => {
+       if (otherItem === item) return;
+          const otherToggle =
+            otherItem.querySelector(
+               ".updated-item-toggle"
+            );
+
+          const otherContent =
+            otherItem.querySelector(
+               ".updated-item-content"
+            );
+
+       if (
+          !otherToggle ||
+          !otherContent
+       ) return;
+
+       otherToggle.setAttribute(
+          "aria-expanded",
+          "false"
+       );
+
+       otherContent.hidden = true;
+       });
+
+/* =========================
+   TOGGLE CURRENT ITEM
+========================= */
+
+       if (isOpen) {
+          toggle.setAttribute(
+             "aria-expanded",
+             "false"
+          );
+
+       content.hidden = true;
+          } else {
+
+          toggle.setAttribute(
+             "aria-expanded",
+             "true"
+           );
+
+       content.hidden = false;
+           }
+       });
+     });
+   });
+</script>
 
 </body>
 
@@ -404,7 +198,6 @@
 #updated-page {
     width: 100%;
 }
-
 
 /* =========================
    HEADER
