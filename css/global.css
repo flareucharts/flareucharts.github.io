@@ -150,12 +150,13 @@ color:white;
    HAMBURGER UNREAD DOT
 ========================= */
 
-.menu-unread-dot {
+..menu-unread-dot {
     position: absolute;
     top: -3px;
     right: -4px;
     width: 7px;
     height: 7px;
+    flex: none;
     border-radius: 50%;
     background: #e85d5d;
     border: 2px solid #ffffff;
