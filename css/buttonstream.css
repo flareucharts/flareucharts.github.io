@@ -25,7 +25,7 @@
   border:none;
   border-radius:50%;
 
-  background:#91d3ca;
+  background:var(--theme2);
   color:#102522;
 
   cursor:pointer;
@@ -82,7 +82,7 @@
 
   background:#fff;
 
-  border:2px solid #91d3ca;
+  border:2px solid var(--theme2);
 
   border-radius:28px;
 
