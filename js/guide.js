@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             sections: {
                 "Voting Schedule": [
-                    "./images/guide/votingsche.png"
+                    "/images/guide/votingsche.png"
                 ],
 
                 "The Show": [
