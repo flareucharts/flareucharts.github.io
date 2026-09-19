@@ -316,7 +316,7 @@ color:white;
 }
 
 .banner-btn.primary{
-  background:#91d3ca;
+  background:var(--theme2);
   color:#fff;
 }
 
