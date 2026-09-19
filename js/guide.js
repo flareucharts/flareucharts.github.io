@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "music-show": {
 
             pills: [
-                "Overview",
+                "Voting Schedule",
                 "The Show",
                 "Show Champion",
                 "M Countdown",
@@ -50,6 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
 
             sections: {
+                "Voting Schedule": [
+                    "./images/guide/mushowsche.png"
+                ],
 
                 "The Show": [
                     "./assets/guide/the-show-general.jpg",
