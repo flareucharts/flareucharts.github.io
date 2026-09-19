@@ -43,11 +43,9 @@
 --bg-gradient2: linear-gradient(
   180deg,
   #74b3de 0%,
-  #8cc0e5 15vh,
-  #b2d8f2 30vh,
-  #d8ebf9 45vh,
-  #edf6fc 60vh,
-  #ffffff 100%
+  #b2d8f2 15vh,
+  #d8ebf9 30vh,
+  #ffffff 55%
 );
 }
 
