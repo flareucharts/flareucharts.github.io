@@ -71,7 +71,7 @@
 #month-title{
     font-size:24px;
     font-weight:800;
-    color:#2c7b6e;
+    color:#2c507b;
     letter-spacing:1px;
     text-align:center;
     line-height:1;
@@ -119,16 +119,7 @@ white;
   text-align:center;
   font-size:24px;
   font-weight:800;
-  color:#2c7b6e;
-}
-
-.calendar-year{
-  background:#d8c6f4;
-  color:#333;
-  font-size:14px;
-  font-weight:700;
-  padding:8px 14px;
-  border-radius:12px;
+  color:#2c507b;
 }
 
 .calendar-grid{
@@ -141,7 +132,7 @@ white;
 .day-name{
   font-size:11px;
   font-weight:700;
-  color:#4f7f76;
+  color:#4f617f;
   padding-bottom:4px;
 }
 
@@ -188,7 +179,7 @@ white;
   border-radius:14px;
   font-size:12px;
   font-weight:700;
-  color:#2c7b6e;
+  color:#2c507b;
   margin-bottom:16px;
 }
 
@@ -223,7 +214,7 @@ white;
 .event-day{
   font-size:18px;
   font-weight:800;
-  color:#5aaea0;
+  color:#5a79ae;
   line-height:1;
   margin-bottom:8px;
 }
@@ -265,7 +256,7 @@ white;
 .event-time-inline{
   font-size:12px;
   font-weight:700;
-  background:#b8e5dd;
+  background:#b8cde5;
   padding:4px 8px;
   border-radius:10px;
   white-space:nowrap;
