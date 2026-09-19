@@ -17,6 +17,7 @@
     margin:0 auto;
     padding-top:0;
     background:#fff;
+    margin-bottom:20px;
 }
 
 .page.vote-page .vote-sticky{
@@ -274,7 +275,6 @@
     display:grid;
     grid-template-columns:1fr;
     gap:16px;
-    margin-bottom:20px;
 }
 
 /* =========================
