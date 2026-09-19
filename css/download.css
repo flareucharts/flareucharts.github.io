@@ -17,7 +17,7 @@
   justify-content:center;
   border:none;
   border-radius:50%;
-  background:#91d3ca;
+  background:var(--theme2);
   color:#102522;
   font-size:24px;
   cursor:pointer;
@@ -100,7 +100,7 @@
     box-sizing:border-box;
     position:fixed;
     overflow:hidden;
-    background:#91d3ca;
+    background:var(--theme2);
     color:white;
     padding:60px 80px;
     flex-direction:column;
@@ -279,7 +279,7 @@
 }
 
 .download-confetti span:nth-child(3n+2){
-    background:#6ab3df;
+    background:var(--theme1);
 }
 
 .download-confetti span:nth-child(3n+3){
@@ -403,7 +403,7 @@
 }
 
 .download-confetti-top span:nth-child(3n+2){
-    background:#6ab3df;
+    background:var(--theme1);
 }
 
 .download-confetti-top span:nth-child(3n+3){
