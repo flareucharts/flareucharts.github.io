@@ -16,13 +16,14 @@
     max-width:768px;
     margin:0 auto;
     padding-top:0;
+    background:#fff;
 }
 
 .page.vote-page .vote-sticky{
     position:sticky;
     top:0;
     z-index:1000;
-    background:var(--bg-gradient1);
+    background:#fff;
     width:100%;
 }
 
@@ -47,7 +48,7 @@
     margin:0;
     font-size:var(--title);
     font-weight:700;
-    color:#fff;
+    color:#111;
     padding:0;
 }
 
@@ -78,7 +79,7 @@
 }
 
 .page.vote-page .status-filter.active{
-    color:#fff;
+    color:#111;
 }
 
 .page.vote-page .status-filter.active::after{
@@ -88,7 +89,7 @@
     right:18%;
     bottom:0;
     height:3px;
-    background:#fff;
+    background:#111;
     border-radius:3px 3px 0 0;
 }
 
