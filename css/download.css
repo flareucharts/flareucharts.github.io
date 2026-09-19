@@ -587,7 +587,7 @@
 /* HOVER */
 
 .download-menu-item:hover{
-    background:#91d3ca;
+    background:var(--theme2);
     transform:translateX(-2px);
 }
 
