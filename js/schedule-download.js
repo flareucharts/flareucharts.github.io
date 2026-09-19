@@ -479,7 +479,7 @@ console.log(
 
                 cacheBust: true,
 
-                backgroundColor: "#91d3ca",
+                backgroundColor: "var(--theme2)",
 
                 fontEmbedCSS
 
