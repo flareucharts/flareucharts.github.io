@@ -668,73 +668,97 @@ border-radius:16px;
 
 /* ================= BOTTOM NAV ================= */
 
-.bottom-nav{
-    position:fixed;
-    bottom:16px;
-    left:50%;
-    transform:translateX(-50%);
-
-    width:calc(100% - 32px);
-    max-width:420px;
-    height:60px;
-
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-
-    background:#f3f4fa;
-    border-radius:25px;
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    z-index:999;
-
+.bottom-nav {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 420px;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #f3f4fa;
+    border-radius: 25px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 999;
     transition:
         transform .35s ease,
         opacity .35s ease;
 }
 
-.bottom-nav button{
-    border:none;
-    background:none;
-    font-size:11px;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+/* =========================
+   NAV BUTTON
+========================= */
 
-    cursor:pointer;
-    transition:.25s ease;
+.bottom-nav button {
+    border: none;
+    background: none;
+    font-size: 11px;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .45);
+    transition:
+        color .25s ease,
+        font-weight .25s ease;
 }
 
-.bottom-nav button.active{
-    color:#5DB7AB;
+
+/* =========================
+   ACTIVE
+========================= */
+
+.bottom-nav button.active {
+    color: var(--theme2);
+    font-weight: 700;
 }
 
-.nav-icon{
-    width:22px;
-    height:22px;
-    display:block;
-    margin:0 auto 4px;
-    opacity:.4;
-    transition:.25s;
+
+/* =========================
+   ICON
+========================= */
+
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+    margin: 0 auto 4px;
+    opacity: .45;
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
 }
 
-.bottom-nav button.active .nav-icon{
-    opacity:1;
-    transform:translateY(-2px);
+.nav-icon img {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-.bottom-nav button.active span{
-    color:#5DB7AB;
+
+/* Active icon */
+
+.bottom-nav button.active .nav-icon {
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
-.bottom-nav span{
-    margin-top:5px;
-    font-size:11px;
-    color:#91D3CA;
+
+/* =========================
+   TEXT
+========================= */
+
+.bottom-nav span {
+    margin-top: 5px;
+    font-size: 11px;
+    color: inherit;
 }
 
 .logo{
