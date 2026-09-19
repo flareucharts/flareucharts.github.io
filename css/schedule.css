@@ -59,7 +59,7 @@
     border:none;
     border-radius:50%;
     background:#fff;
-    color:#4d8b7f;
+    color:#4d6a8b;
     font-size:24px;
     font-weight:bold;
     box-shadow:0 2px 8px rgba(0,0,0,.08);
@@ -150,8 +150,8 @@ white;
 }
 
 .day.today{
-  background:rgba(145,211,202,.55);
-  border-color:rgba(145,211,202,.55);
+  background: color-mix(in srgb, var(--theme2) 55%, transparent);
+  border-color: color-mix(in srgb, var(--theme2) 55%, transparent);
   color:#102522;
   font-weight:700;
   border-radius:10px;
