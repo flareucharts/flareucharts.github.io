@@ -1,4 +1,13 @@
 /* ================= TITLE ================= */
+.body.dscr{
+  width:100%;
+  min-height:100dvh;
+  overflow-x:clip;
+  margin:0;
+  padding-bottom:env(safe-area-inset-bottom);
+  background:#fff;
+}
+
 .dscr-title{
   font-size:22px;
   font-weight:700;
