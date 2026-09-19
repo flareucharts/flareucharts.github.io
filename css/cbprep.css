@@ -193,7 +193,7 @@
     padding: 8px 10px;
     border-radius: 999px;
     background: light blue;
-    color: dark blue;
+    color: var(--theme2);
     font-size: 11px;
     font-weight: 700;
     text-decoration: none;
