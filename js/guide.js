@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 ],
 
                 "The Show": [
+                    "../images/guide/theshow1.png",
                     "../images/guide/theshow2.png",
-                    "../images/guide/theshow3.png",
-                    "../images/guide/theshow.png"
+                    "../images/guide/theshow3.png"
                 ],
             }
 
