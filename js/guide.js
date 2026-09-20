@@ -61,41 +61,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 ],
 
                 "The Show": [
-                    "./images/guide/theshow1.png",
                     "./images/guide/theshow2.png",
-                    "./images/guide/theshow3.png"
+                    "./images/guide/theshow3.png",
+                    "./images/guide/theshow.png"
                 ],
-
-                "Show Champion": [
-                    "./assets/guide/show-champion-general.jpg",
-                    "./assets/guide/show-champion-create.jpg",
-                    "./assets/guide/show-champion-vote.jpg"
-                ],
-
-                "M Countdown": [
-                    "./assets/guide/mcountdown-general.jpg",
-                    "./assets/guide/mcountdown-create.jpg",
-                    "./assets/guide/mcountdown-vote.jpg"
-                ],
-
-                "Music Bank": [
-                    "./assets/guide/music-bank-general.jpg",
-                    "./assets/guide/music-bank-create.jpg",
-                    "./assets/guide/music-bank-vote.jpg"
-                ],
-
-                "Music Core": [
-                    "./assets/guide/music-core-general.jpg",
-                    "./assets/guide/music-core-create.jpg",
-                    "./assets/guide/music-core-vote.jpg"
-                ],
-
-                "Inkigayo": [
-                    "./assets/guide/inkigayo-general.jpg",
-                    "./assets/guide/inkigayo-create.jpg",
-                    "./assets/guide/inkigayo-vote.jpg"
-                ]
-
             }
 
         },
@@ -103,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "vote": {
 
             pills: [
-                "BigC",
+                "BIGC",
                 "Idol Champ",
                 "Mnet Plus",
                 "Coogoong",
@@ -117,10 +86,44 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
 
             sections: {
+                "BIGC": [
+                    "../images/guide/bigc1.png",
+                    "../images/guide/bigc2.png", 
+                    "../images/guide/bigc3.png"
+                ],
 
                 "Idol Champ": [
                     "../images/guide/ichamp1.png",
                     "../images/guide/ichamp2.png"
+                ],
+
+                "Mnet Plus": [
+                    "../images/guide/mnet1.png"
+                ],
+
+                "Coogoong": [
+                    "../images/guide/coogoong1.png",
+                    "../images/guide/coogoong2.png"
+                ],
+
+                "Mubeat": [
+                    "../images/guide/mubeat1.png",
+                    "../images/guide/mubeat2.png"
+                ],
+
+                "Muniverse": [
+                    "../images/guide/muniverse1.png",
+                    "../images/guide/muniverse2.png"
+                ],
+
+                "LiNC": [
+                    "../images/guide/linc1.png",
+                    "../images/guide/linc2.png"
+                ],
+
+                "Higher": [
+                    "../images/guide/higher1.png",
+                    "../images/guide/higher2.png"
                 ],
 
                 "DuckAd": [
@@ -129,7 +132,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     "../images/guide/duckad3.png",
                     "../images/guide/duckad4.png"
                 ],
-         
+
+                "Kooky": [
+                    "../images/guide/kooky1.png",
+                    "../images/guide/kooky2.png"
+                ],
+
+        
           }
 
         },
@@ -147,6 +156,11 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
 
             sections: {}
+
+                "Spotify": [
+                    "../images/guide/spotify1.png",
+                    "../images/guide/spotify2.png"
+                ],
 
         },
 
