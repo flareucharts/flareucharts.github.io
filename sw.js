@@ -114,16 +114,6 @@ payloadData.tag ||
 data.tag ||
 ("flare-u-" + Date.now());
 
-const icon =  
-    data.icon ||  
-    "/images/fglogo.jpg";  
-
-
-const badge =  
-    data.badge ||  
-    "/images/notiflogo.png";  
-
-
 /* =========================  
    NOTIFICATION OPTIONS  
 ========================= */  
