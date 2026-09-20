@@ -103,16 +103,17 @@ document.addEventListener("DOMContentLoaded", () => {
         "vote": {
 
             pills: [
-                "Mnet Plus",
+                "BigC",
                 "Idol Champ",
+                "Mnet Plus",
                 "Coogoong",
-                "Muniverse",
                 "Mubeat",
+                "Muniverse",
                 "LiNC",
                 "Higher",
                 "DuckAd",
-                "Upick",
-                "BigC"
+                "Upick", 
+                "Kooky"
             ],
 
             sections: {
