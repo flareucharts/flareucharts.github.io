@@ -16,6 +16,7 @@ import { app } from "./firebase.js";
 console.log("🔥 firebase-messaging.js LOADED");
 console.log("🔥 Firebase app:", app);
 
+
 /* =========================
    FIREBASE
 ========================= */
@@ -139,15 +140,20 @@ onMessage(
 
 
         /* =========================
-           FOREGROUND NOTIFICATION
+           MESSAGE DATA
         ========================= */
 
         const notification =
             payload.notification || {};
 
+        const data =
+            payload.data || {};
+
+
         const title =
             notification.title ||
             "FLARE U GLOBAL";
+
 
         const body =
             notification.body ||
@@ -155,9 +161,38 @@ onMessage(
 
 
         const url =
-            payload.data?.url ||
+            data.url ||
             "https://flareuglobal.com/";
 
+
+        /* =========================
+           NOTIFICATION TAG
+        ========================= */
+
+        const tag =
+            data.tag ||
+            ("flare-u-" + Date.now());
+
+
+        /* =========================
+           ICON
+        ========================= */
+
+        const icon =
+            notification.icon ||
+            data.icon ||
+            "/images/fglogo.jpg";
+
+
+        const badge =
+            notification.badge ||
+            data.badge ||
+            "/images/notiflogo.png";
+
+
+        /* =========================
+           SHOW FOREGROUND
+        ========================= */
 
         if (
             Notification.permission ===
@@ -170,13 +205,17 @@ onMessage(
                     {
                         body: body,
 
-                        icon:
-                            notification.icon ||
-                            "/images/fglogo.jpg",
+                        icon: icon,
 
-                        badge:
-                            notification.badge ||
-                            "/images/notiflogo.png"
+                        badge: badge,
+
+                        tag: tag,
+
+                        renotify: true,
+
+                        data: {
+                            url: url
+                        }
                     }
                 );
 
@@ -184,10 +223,10 @@ onMessage(
             notificationInstance.onclick =
                 function () {
 
-                    window.open(
-                        url,
-                        "_blank"
-                    );
+                    window.focus();
+
+                    window.location.href =
+                        url;
 
                 };
 
