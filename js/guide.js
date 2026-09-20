@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "music-show": {
 
             pills: [
+                "Overview"
                 "Voting Schedule",
                 "The Show",
                 "Show Champion",
@@ -50,14 +51,19 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
 
             sections: {
+                "Overview": [
+                    "../images/guide/criteria.png"
+                 
+                ],
                 "Voting Schedule": [
-                    "../images/guide/votingsche.png"
+                    "../images/guide/votesche.png",
+                    "../images/guide/votestage.png"
                 ],
 
                 "The Show": [
-                    "./assets/guide/the-show-general.jpg",
-                    "./assets/guide/the-show-create.jpg",
-                    "./assets/guide/the-show-vote.jpg"
+                    "./images/guide/theshow1.png",
+                    "./images/guide/theshow2.png",
+                    "./images/guide/theshow3.png"
                 ],
 
                 "Show Champion": [
