@@ -80,6 +80,10 @@ async function loadPage() {
         const schedule =
     Object.values(firebaseData);
 
+console.log("FIRST SCHEDULE DATE:", schedule[0]?.date);
+console.log("FIRST SCHEDULE ITEM:", schedule[0]);
+console.log("PARSED DATE:", new Date(schedule[0]?.date));
+
 console.log(
     "FIREBASE SCHEDULE DATA:",
     schedule
