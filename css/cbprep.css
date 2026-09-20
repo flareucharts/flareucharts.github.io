@@ -93,7 +93,6 @@
     padding: 12px 8px;
     font-size: 11px;
     line-height: 1.35;
-    color: #40565b;
 }
 
 .checklist-target small {
@@ -142,9 +141,7 @@
 
 .checklist-checkbox input {
     position: absolute;
-
     opacity: 0;
-
     width: 0;
     height: 0;
 }
