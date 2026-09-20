@@ -13,8 +13,15 @@ import {
 
 import { app } from "./firebase.js";
 
-console.log("🔥 firebase-messaging.js LOADED");
-console.log("🔥 Firebase app:", app);
+
+console.log(
+    "🔥 firebase-messaging.js LOADED"
+);
+
+console.log(
+    "🔥 Firebase app:",
+    app
+);
 
 
 /* =========================
@@ -44,6 +51,42 @@ export async function enablePushNotifications() {
 
     try {
 
+        if (
+            !("Notification" in window)
+        ) {
+
+            console.warn(
+                "❌ This browser does not support notifications."
+            );
+
+            return null;
+
+        }
+
+
+        if (
+            Notification.permission !==
+            "granted"
+        ) {
+
+            const permission =
+                await Notification.requestPermission();
+
+            if (
+                permission !== "granted"
+            ) {
+
+                console.warn(
+                    "❌ Notification permission denied."
+                );
+
+                return null;
+
+            }
+
+        }
+
+
         const registration =
             await navigator.serviceWorker.ready;
 
@@ -52,7 +95,8 @@ export async function enablePushNotifications() {
             await getToken(
                 messaging,
                 {
-                    vapidKey: VAPID_KEY,
+                    vapidKey:
+                        VAPID_KEY,
 
                     serviceWorkerRegistration:
                         registration
@@ -63,10 +107,11 @@ export async function enablePushNotifications() {
         if (!token) {
 
             console.warn(
-                "FCM token was not generated."
+                "❌ FCM token was not generated."
             );
 
             return null;
+
         }
 
 
@@ -134,14 +179,10 @@ onMessage(
     payload => {
 
         console.log(
-            "🔔 FCM MESSAGE:",
+            "🔔 FCM FOREGROUND MESSAGE:",
             payload
         );
 
-
-        /* =========================
-           MESSAGE DATA
-        ========================= */
 
         const notification =
             payload.notification || {};
@@ -150,15 +191,29 @@ onMessage(
             payload.data || {};
 
 
+        /* =========================
+           TITLE
+        ========================= */
+
         const title =
             notification.title ||
+            data.title ||
             "FLARE U GLOBAL";
 
 
+        /* =========================
+           BODY
+        ========================= */
+
         const body =
             notification.body ||
+            data.body ||
             "";
 
+
+        /* =========================
+           URL
+        ========================= */
 
         const url =
             data.url ||
@@ -166,12 +221,19 @@ onMessage(
 
 
         /* =========================
-           NOTIFICATION TAG
+           TAG
         ========================= */
 
         const tag =
             data.tag ||
-            ("flare-u-" + Date.now());
+            (
+                "flare-u-" +
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2, 8)
+            );
 
 
         /* =========================
@@ -184,6 +246,10 @@ onMessage(
             "/images/fglogo.jpg";
 
 
+        /* =========================
+           BADGE
+        ========================= */
+
         const badge =
             notification.badge ||
             data.badge ||
@@ -191,46 +257,53 @@ onMessage(
 
 
         /* =========================
-           SHOW FOREGROUND
+           SHOW
         ========================= */
 
         if (
-            Notification.permission ===
+            Notification.permission !==
             "granted"
         ) {
 
-            const notificationInstance =
-                new Notification(
-                    title,
-                    {
-                        body: body,
+            console.warn(
+                "⚠️ Notification permission is not granted."
+            );
 
-                        icon: icon,
-
-                        badge: badge,
-
-                        tag: tag,
-
-                        renotify: true,
-
-                        data: {
-                            url: url
-                        }
-                    }
-                );
-
-
-            notificationInstance.onclick =
-                function () {
-
-                    window.focus();
-
-                    window.location.href =
-                        url;
-
-                };
+            return;
 
         }
+
+
+        const notificationInstance =
+            new Notification(
+                title,
+                {
+                    body: body,
+
+                    icon: icon,
+
+                    badge: badge,
+
+                    tag: tag,
+
+                    renotify: true,
+
+                    data: {
+                        url: url
+                    }
+                }
+            );
+
+
+        notificationInstance.onclick =
+            () => {
+
+                window.focus();
+
+                window.location.href =
+                    url;
+
+            };
 
     }
 );
@@ -246,8 +319,10 @@ window.testFCM = async function () {
         "🔥 TEST FCM START"
     );
 
+
     const token =
         await enablePushNotifications();
+
 
     console.log(
         "🔥 TEST FCM TOKEN:",
