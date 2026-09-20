@@ -27,7 +27,7 @@ const comebackChecklist = [
     {
     app: "Idol Champ",
     logo: "images/apps/idolchamp.png",
-    target: "Collect 💙/💛 as many as possible",
+    target: "Collect 💙/❤ as many as possible",
     note: "Unlimited voting | Multiple acc",
     link: " https://promo-web.idolchamp.com/app_proxy.html?deeplink="
     },
