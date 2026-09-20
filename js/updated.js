@@ -10,8 +10,8 @@ import { db } from "./firebase.js";
    CONSTANT
 ========================= */
 
-const LAST_READ_KEY =
-    "flareU_lastReadUpdate";
+const READ_UPDATES_KEY =
+    "flareU_readUpdates";
 
 
 /* =========================
@@ -101,20 +101,24 @@ async function loadUpdates() {
            CHECK UNREAD
         ========================= */
 
-        const latestUpdate =
-            updates[0];
+const readUpdates =
+    JSON.parse(
+        localStorage.getItem(
+            READ_UPDATES_KEY
+        ) || "[]"
+    );
 
-        const readId =
-            localStorage.getItem(
-                LAST_READ_KEY
-            );
+const hasUnread =
+    updates.some(
+        update =>
+            !readUpdates.includes(
+                update.id
+            )
+    );
 
-        const isUnread =
-            latestUpdate.id !== readId;
-
-        setUpdateUnread(
-            isUnread
-        );
+setUpdateUnread(
+    hasUnread
+);
 
 
         /* =========================
@@ -603,12 +607,51 @@ function setupAccordion() {
                         false;
 
 
-localStorage.setItem(
-    LAST_READ_KEY,
-    item.dataset.updateId
-);
+const readUpdates =
+    JSON.parse(
+        localStorage.getItem(
+            READ_UPDATES_KEY
+        ) || "[]"
+    );
 
-setUpdateUnread(false);
+if (
+    !readUpdates.includes(
+        item.dataset.updateId
+    )
+) {
+
+    readUpdates.push(
+        item.dataset.updateId
+    );
+
+    localStorage.setItem(
+        READ_UPDATES_KEY,
+        JSON.stringify(
+            readUpdates
+        )
+    );
+
+}
+
+const allItems =
+    document.querySelectorAll(
+        ".updated-item"
+    );
+
+const hasUnread =
+    Array.from(allItems).some(
+        otherItem => {
+
+            return !readUpdates.includes(
+                otherItem.dataset.updateId
+            );
+
+        }
+    );
+
+setUpdateUnread(
+    hasUnread
+);
 
 
                     /* =========================
