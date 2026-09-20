@@ -1,332 +1,253 @@
 import {
-    getMessaging,
-    getToken,
-    onMessage
+getMessaging,
+getToken,
+onMessage
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-messaging.js";
 
 import {
-    getDatabase,
-    ref,
-    push,
-    set
+getDatabase,
+ref,
+push,
+set
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
 import { app } from "./firebase.js";
 
-
-console.log(
-    "🔥 firebase-messaging.js LOADED"
-);
-
-console.log(
-    "🔥 Firebase app:",
-    app
-);
-
+console.log("🔥 firebase-messaging.js LOADED");
+console.log("🔥 Firebase app:", app);
 
 /* =========================
-   FIREBASE
+FIREBASE
 ========================= */
 
 const messaging =
-    getMessaging(app);
+getMessaging(app);
 
 const db =
-    getDatabase(app);
-
+getDatabase(app);
 
 /* =========================
-   VAPID KEY
+VAPID KEY
 ========================= */
 
 const VAPID_KEY =
-    "BK36zAxNcBWkDDb1OXEfBKcAI-GkusvJDAbjA5GpiUCy0o-_iilhs0SxWGlwUw8km8fY3ZWkwTjh1OOpAQdYU0M";
-
+"BK36zAxNcBWkDDb1OXEfBKcAI-GkusvJDAbjA5GpiUCy0o-_iilhs0SxWGlwUw8km8fY3ZWkwTjh1OOpAQdYU0M";
 
 /* =========================
-   ENABLE PUSH
+ENABLE PUSH
 ========================= */
 
 export async function enablePushNotifications() {
 
-    try {
+try {  
 
-        if (
-            !("Notification" in window)
-        ) {
-
-            console.warn(
-                "❌ This browser does not support notifications."
-            );
-
-            return null;
-
-        }
+    const registration =  
+        await navigator.serviceWorker.ready;  
 
 
-        if (
-            Notification.permission !==
-            "granted"
-        ) {
+    const token =  
+        await getToken(  
+            messaging,  
+            {  
+                vapidKey: VAPID_KEY,  
 
-            const permission =
-                await Notification.requestPermission();
-
-            if (
-                permission !== "granted"
-            ) {
-
-                console.warn(
-                    "❌ Notification permission denied."
-                );
-
-                return null;
-
-            }
-
-        }
+                serviceWorkerRegistration:  
+                    registration  
+            }  
+        );  
 
 
-        const registration =
-            await navigator.serviceWorker.ready;
+    if (!token) {  
+
+        console.warn(  
+            "FCM token was not generated."  
+        );  
+
+        return null;  
+    }  
 
 
-        const token =
-            await getToken(
-                messaging,
-                {
-                    vapidKey:
-                        VAPID_KEY,
-
-                    serviceWorkerRegistration:
-                        registration
-                }
-            );
+    console.log(  
+        "🔥 FCM TOKEN:",  
+        token  
+    );  
 
 
-        if (!token) {
+    /* =========================  
+       SAVE TOKEN  
+    ========================= */  
 
-            console.warn(
-                "❌ FCM token was not generated."
-            );
-
-            return null;
-
-        }
-
-
-        console.log(
-            "🔥 FCM TOKEN:",
-            token
-        );
+    const tokenRef =  
+        push(  
+            ref(  
+                db,  
+                "notificationTokens"  
+            )  
+        );  
 
 
-        /* =========================
-           SAVE TOKEN
-        ========================= */
+    await set(  
+        tokenRef,  
+        {  
+            token: token,  
 
-        const tokenRef =
-            push(
-                ref(
-                    db,
-                    "notificationTokens"
-                )
-            );
+            createdAt:  
+                Date.now(),  
 
-
-        await set(
-            tokenRef,
-            {
-                token: token,
-
-                createdAt:
-                    Date.now(),
-
-                active: true
-            }
-        );
+            active: true  
+        }  
+    );  
 
 
-        console.log(
-            "✅ FCM TOKEN SAVED"
-        );
+    console.log(  
+        "✅ FCM TOKEN SAVED"  
+    );  
 
 
-        return token;
+    return token;  
 
-    }
+}  
 
-    catch (error) {
+catch (error) {  
 
-        console.error(
-            "❌ FCM ERROR:",
-            error
-        );
+    console.error(  
+        "❌ FCM ERROR:",  
+        error  
+    );  
 
-        return null;
-
-    }
+    return null;  
 
 }
 
+}
 
 /* =========================
-   FOREGROUND MESSAGE
+FOREGROUND MESSAGE
 ========================= */
 
 onMessage(
-    messaging,
-    payload => {
+messaging,
+payload => {
 
-        console.log(
-            "🔔 FCM FOREGROUND MESSAGE:",
-            payload
-        );
-
-
-        const notification =
-            payload.notification || {};
-
-        const data =
-            payload.data || {};
+console.log(  
+        "🔔 FCM MESSAGE:",  
+        payload  
+    );  
 
 
-        /* =========================
-           TITLE
-        ========================= */
+    /* =========================  
+       MESSAGE DATA  
+    ========================= */  
 
-        const title =
-            notification.title ||
-            data.title ||
-            "FLARE U GLOBAL";
+    const notification =  
+        payload.notification || {};  
 
-
-        /* =========================
-           BODY
-        ========================= */
-
-        const body =
-            notification.body ||
-            data.body ||
-            "";
+    const data =  
+        payload.data || {};  
 
 
-        /* =========================
-           URL
-        ========================= */
-
-        const url =
-            data.url ||
-            "https://flareuglobal.com/";
+    const title =  
+        notification.title ||  
+        "FLARE U GLOBAL";  
 
 
-        /* =========================
-           TAG
-        ========================= */
-
-        const tag =
-            data.tag ||
-            (
-                "flare-u-" +
-                Date.now() +
-                "-" +
-                Math.random()
-                    .toString(36)
-                    .substring(2, 8)
-            );
+    const body =  
+        notification.body ||  
+        "";  
 
 
-        /* =========================
-           ICON
-        ========================= */
-
-        const icon =
-            notification.icon ||
-            data.icon ||
-            "/images/fglogo.jpg";
+    const url =  
+        data.url ||  
+        "https://flareuglobal.com/";  
 
 
-        /* =========================
-           BADGE
-        ========================= */
+    /* =========================  
+       NOTIFICATION TAG  
+    ========================= */  
 
-        const badge =
-            notification.badge ||
-            data.badge ||
-            "/images/notiflogo.png";
-
-
-        /* =========================
-           SHOW
-        ========================= */
-
-        if (
-            Notification.permission !==
-            "granted"
-        ) {
-
-            console.warn(
-                "⚠️ Notification permission is not granted."
-            );
-
-            return;
-
-        }
+    const tag =  
+        data.tag ||  
+        ("flare-u-" + Date.now());  
 
 
-        const notificationInstance =
-            new Notification(
-                title,
-                {
-                    body: body,
+    /* =========================  
+       ICON  
+    ========================= */  
 
-                    icon: icon,
-
-                    badge: badge,
-
-                    tag: tag,
-
-                    renotify: true,
-
-                    data: {
-                        url: url
-                    }
-                }
-            );
+    const icon =  
+        notification.icon ||  
+        data.icon ||  
+        "/images/fglogo.jpg";  
 
 
-        notificationInstance.onclick =
-            () => {
+    const badge =  
+        notification.badge ||  
+        data.badge ||  
+        "/images/notiflogo.png";  
 
-                window.focus();
 
-                window.location.href =
-                    url;
+    /* =========================  
+       SHOW FOREGROUND  
+    ========================= */  
 
-            };
+    if (  
+        Notification.permission ===  
+        "granted"  
+    ) {  
 
-    }
+        const notificationInstance =  
+            new Notification(  
+                title,  
+                {  
+                    body: body,  
+
+                    icon: icon,  
+
+                    badge: badge,  
+
+                    tag: tag,  
+
+                    renotify: true,  
+
+                    data: {  
+                        url: url  
+                    }  
+                }  
+            );  
+
+
+        notificationInstance.onclick =  
+            function () {  
+
+                window.focus();  
+
+                window.location.href =  
+                    url;  
+
+            };  
+
+    }  
+
+}
+
 );
 
-
 /* =========================
-   TEST FCM
+TEST FCM
 ========================= */
 
 window.testFCM = async function () {
 
-    console.log(
-        "🔥 TEST FCM START"
-    );
+console.log(  
+    "🔥 TEST FCM START"  
+);  
 
+const token =  
+    await enablePushNotifications();  
 
-    const token =
-        await enablePushNotifications();
-
-
-    console.log(
-        "🔥 TEST FCM TOKEN:",
-        token
-    );
+console.log(  
+    "🔥 TEST FCM TOKEN:",  
+    token  
+);
 
 };
