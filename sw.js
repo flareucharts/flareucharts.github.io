@@ -1,310 +1,258 @@
 /* =========================
-   FLARE U GLOBAL
-   SERVICE WORKER
+FLARE U GLOBAL
+SERVICE WORKER
 ========================= */
 
-const CACHE_NAME = "flare-u-global-v4";
-
+const CACHE_NAME = "flare-u-global-v3";
 
 /* =========================
-   INSTALL
+INSTALL
 ========================= */
 
 self.addEventListener("install", event => {
 
-    console.log(
-        "🔥 FLARE U Service Worker installed."
-    );
+console.log(  
+    "FLARE U Service Worker installed."  
+);  
 
-    self.skipWaiting();
+self.skipWaiting();
 
 });
 
-
 /* =========================
-   ACTIVATE
+ACTIVATE
 ========================= */
 
 self.addEventListener("activate", event => {
 
-    event.waitUntil(
-        self.clients.claim()
-    );
+event.waitUntil(  
+    self.clients.claim()  
+);
 
 });
 
-
 /* =========================
-   FETCH
+FETCH
 ========================= */
 
 self.addEventListener("fetch", event => {
 
-    /*
-       Network request.
-       Firebase/API tetap mengambil
-       data terbaru dari network.
-    */
+/*  
+   Request tetap mengambil  
+   data dari network.  
+*/
 
 });
 
-
 /* =========================
-   PUSH
+PUSH NOTIFICATION
 ========================= */
 
 self.addEventListener("push", event => {
 
-    event.waitUntil(
+let data = {};  
 
-        (async () => {
+try {  
 
-            let payload = {};
+    data = event.data  
+        ? event.data.json()  
+        : {};  
 
-            try {
+} catch (error) {  
 
-                if (event.data) {
+    console.warn(  
+        "FLARE U: Push payload is not JSON."  
+    );  
 
-                    payload =
-                        event.data.json();
+    return;  
 
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "⚠️ FLARE U: Invalid push payload.",
-                    error
-                );
-
-                return;
-
-            }
+}  
 
 
-            /* =========================
-               PAYLOAD
-            ========================= */
+/* =========================  
+   READ DATA  
+========================= */  
 
-            const notification =
-                payload.notification || {};
+const notification =  
+data.notification || {};
 
-            const data =
-                payload.data || {};
+const payloadData =
+data.data || {};
 
+const title =
+notification.title ||
+payloadData.title ||
+data.title ||
+"FLARE U GLOBAL";
 
-            /* =========================
-               TITLE
-            ========================= */
+const body =
+notification.body ||
+payloadData.body ||
+data.body ||
+"FLARE U GLOBAL has a new update.";
 
-            const title =
-                notification.title ||
-                data.title ||
-                payload.title ||
-                "FLARE U GLOBAL";
+const icon =
+notification.icon ||
+payloadData.icon ||
+data.icon ||
+"/images/fglogo.jpg";
 
+const badge =
+notification.badge ||
+payloadData.badge ||
+data.badge ||
+"/images/notiflogo.png";
 
-            /* =========================
-               BODY
-            ========================= */
+const url =
+payloadData.url ||
+data.url ||
+notification.click_action ||
+"/";
 
-            const body =
-                notification.body ||
-                data.body ||
-                payload.body ||
-                "FLARE U GLOBAL has a new update.";
+const tag =
+payloadData.tag ||
+data.tag ||
+("flare-u-" + Date.now());
 
-
-            /* =========================
-               ICON
-            ========================= */
-
-            const icon =
-                notification.icon ||
-                data.icon ||
-                "/images/fglogo.jpg";
-
-
-            /* =========================
-               BADGE
-            ========================= */
-
-            const badge =
-                notification.badge ||
-                data.badge ||
-                "/images/notiflogo.png";
+const icon =  
+    data.icon ||  
+    "/images/fglogo.jpg";  
 
 
-            /* =========================
-               URL
-            ========================= */
-
-            const url =
-                data.url ||
-                payload.url ||
-                notification.click_action ||
-                "https://flareuglobal.com/";
+const badge =  
+    data.badge ||  
+    "/images/notiflogo.png";  
 
 
-            /* =========================
-               UNIQUE TAG
-            ========================= */
+/* =========================  
+   NOTIFICATION OPTIONS  
+========================= */  
 
-            /*
-               IMPORTANT:
+const options = {  
 
-               Jangan gunakan satu tag global.
+    body: body,  
 
-               Setiap notification harus
-               mempunyai tag berbeda supaya
-               notification sebelumnya tidak
-               digantikan.
-            */
+    icon: icon,  
 
-            const tag =
-                data.tag ||
-                payload.tag ||
-                (
-                    "flare-u-" +
-                    Date.now() +
-                    "-" +
-                    Math.random()
-                        .toString(36)
-                        .substring(2, 8)
-                );
+    badge: badge,  
 
+    tag: tag,  
 
-            /* =========================
-               NOTIFICATION OPTIONS
-            ========================= */
+    renotify: true,  
 
-            const options = {
+    vibrate: [  
+        200,  
+        100,  
+        200  
+    ],  
 
-                body: body,
+    data: {  
+        url: url  
+    }  
 
-                icon: icon,
-
-                badge: badge,
-
-                tag: tag,
-
-                renotify: true,
-
-                data: {
-                    url: url
-                }
-
-            };
+};  
 
 
-            /* =========================
-               SHOW
-            ========================= */
+/* =========================  
+   SHOW NOTIFICATION  
+========================= */  
 
-            console.log(
-                "🔔 FLARE U SHOW NOTIFICATION:",
-                {
-                    title,
-                    body,
-                    tag,
-                    url
-                }
-            );
+event.waitUntil(  
 
+    self.registration.showNotification(  
+        title,  
+        options  
+    )  
 
-            await self.registration
-                .showNotification(
-                    title,
-                    options
-                );
-
-        })()
-
-    );
+);
 
 });
 
-
 /* =========================
-   NOTIFICATION CLICK
+NOTIFICATION CLICK
 ========================= */
 
 self.addEventListener(
-    "notificationclick",
-    event => {
+"notificationclick",
+event => {
 
-        event.notification.close();
-
-
-        const url =
-            event.notification.data?.url ||
-            "https://flareuglobal.com/";
+event.notification.close();  
 
 
-        event.waitUntil(
-
-            clients.matchAll({
-
-                type: "window",
-
-                includeUncontrolled: true
-
-            })
-
-            .then(clientList => {
-
-                /* =========================
-                   EXISTING FLARE U WINDOW
-                ========================= */
-
-                for (
-                    const client
-                    of clientList
-                ) {
-
-                    if (
-                        client.url.includes(
-                            "flareuglobal.com"
-                        )
-                    ) {
-
-                        if (
-                            "navigate"
-                            in client
-                        ) {
-
-                            return client
-                                .navigate(url)
-                                .then(() =>
-                                    client.focus()
-                                );
-
-                        }
-
-                        return client.focus();
-
-                    }
-
-                }
+    const url =  
+        event.notification.data?.url ||  
+        "/";  
 
 
-                /* =========================
-                   OPEN NEW WINDOW
-                ========================= */
+    event.waitUntil(  
 
-                if (
-                    clients.openWindow
-                ) {
+        clients.matchAll({  
 
-                    return clients.openWindow(
-                        url
-                    );
+            type: "window",  
 
-                }
+            includeUncontrolled: true  
 
-            })
+        })  
 
-        );
+        .then(clientList => {  
 
-    }
+
+            /* =========================  
+               USE EXISTING FLARE U TAB  
+            ========================= */  
+
+            for (  
+                const client  
+                of clientList  
+            ) {  
+
+                if (  
+                    client.url.includes(  
+                        "flareuglobal.com"  
+                    )  
+                ) {  
+
+                    if (  
+                        "navigate"  
+                        in client  
+                    ) {  
+
+                        client.navigate(url);  
+
+                    }  
+
+                    if (  
+                        "focus"  
+                        in client  
+                    ) {  
+
+                        return client.focus();  
+
+                    }  
+
+                }  
+
+            }  
+
+
+            /* =========================  
+               OPEN FLARE U  
+            ========================= */  
+
+            if (  
+                clients.openWindow  
+            ) {  
+
+                return clients.openWindow(  
+                    url  
+                );  
+
+            }  
+
+        })  
+
+    );  
+
+}
+
 );
