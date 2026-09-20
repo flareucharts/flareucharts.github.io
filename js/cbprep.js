@@ -19,64 +19,64 @@ const comebackChecklist = [
     {
     app: "BigC",
     logo: "images/apps/bigc.png",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "Collect Free gems 💎 as many as possible",
+    note: "Unlimited Voting | Multiple acc",
     link: "https://link.bigc.im/TCHy/app"
     },
 
     {
     app: "Idol Champ",
     logo: "images/apps/idolchamp.png",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "Collect 💙/💛 as many as possible",
+    note: "Unlimited voting | Multiple acc",
     link: " https://promo-web.idolchamp.com/app_proxy.html?deeplink="
     },
 
     {
     app: "Coogoong",
     logo: "images/apps/coogoong.jpg",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "Collect 💙/💛 as many as possible",
+    note: "Unlimited voting | Multiple acc",
     link: "https://open.coogoong.com/"
     },
 
     {
     app: "Muniverse",
     logo: "images/apps/muniverse.png",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "Collect AD Lumy as many as possible | Live vote: 250 AD Lumy/acc",
+    note: "Unlimited for pre-vote | Multiple acc",
     link: "https://www.muniverse.io/"
     },
 
     {
     app: "Mubeat",
     logo: "images/apps/mubeat.png",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "Collect heartbeat as many as possible | Live vote: 150 💜/acc",
+    note: "Unlimited for pre-vote | Multiple acc",
     link: "https://mubeat.applink.info/"
     },
 
     {
     app: "LinC",
     logo: "images/apps/linc.png",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "1,500 fanpoints/acc (Pre-vote)",
+    note: "Multiple acc | for a week vote",
     link: "https://app.linc.fan/"
     },
 
     {
     app: "Higher",
     logo: "images/apps/higher.png",
-    target: "TBA",
-    note: "Multiple acc",
+    target: "750💎 (Hot Stage) | 250💎 (Live vote)",
+    note: "Multiple acc | for a week vote",
     link: "https://higher.fan/app/theme/"
     },
 
     {
     app: "DuckAd",
     logo: "images/apps/duckad.png",
-    target: "∞ vts as possible",
-    note: "-",
+    target: "Collect vts as many as possible",
+    note: "for streaming sponsor k-streaming platform",
     link: "http://duckad.co.kr/xe/index.php?"
     },
     
