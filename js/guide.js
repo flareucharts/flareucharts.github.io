@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "music-show": {
 
             pills: [
-                "Overview"
+                "Overview",
                 "Voting Schedule",
                 "The Show",
                 "Show Champion",
