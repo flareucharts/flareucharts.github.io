@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 ],
 
                 "The Show": [
-                    "./images/guide/theshow2.png",
-                    "./images/guide/theshow3.png",
-                    "./images/guide/theshow.png"
+                    "../images/guide/theshow2.png",
+                    "../images/guide/theshow3.png",
+                    "../images/guide/theshow.png"
                 ],
             }
 
@@ -155,13 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Genie"
             ],
 
-            sections: {}
+            sections: {
 
                 "Spotify": [
                     "../images/guide/spotify1.png",
                     "../images/guide/spotify2.png"
                 ],
 
+            }
         },
 
 
