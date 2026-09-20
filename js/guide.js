@@ -53,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             sections: {
                 "Overview": [
                     "../images/guide/criteria.png"
-                 
                 ],
+
                 "Voting Schedule": [
                     "../images/guide/votesche.png",
                     "../images/guide/votestage.png"
@@ -117,11 +117,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             sections: {
 
+                "Idol Champ": [
+                    "../images/guide/ichamp1.png",
+                    "../images/guide/ichamp2.png"
+                ],
+
                 "DuckAd": [
-                    "/images/guide/duckad1.png",
-                    "/images/guide/duckad2.png",
-                    "/images/guide/duckad3.png",
-                    "/images/guide/duckad4.png"
+                    "../images/guide/duckad1.png",
+                    "../images/guide/duckad2.png",
+                    "../images/guide/duckad3.png",
+                    "../images/guide/duckad4.png"
                 ],
          
           }
