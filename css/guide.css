@@ -203,8 +203,8 @@
 
 
 #guide .guide-pill.active{
-    background:#74b3de;
-    border-color:#74b3de;
+    background:var(--theme2);
+    border-color:var(--theme2);
     color:#fff;
 }
 
