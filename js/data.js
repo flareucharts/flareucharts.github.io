@@ -9,7 +9,7 @@ function makeSlug(title){
 
 window.discography = [
 {
-    albumType: "2nd Mini Album-JP",
+    albumType: "2nd Mini Album",
     title: "LOVE HOOD",
     artist: "FLARE U",
     releaseDate: "2026-10-14",
