@@ -95,7 +95,7 @@ const icon =
 notification.icon ||
 payloadData.icon ||
 data.icon ||
-"/images/fglogo.jpg";
+"/images/fglogo2.jpg";
 
 const badge =
 notification.badge ||
