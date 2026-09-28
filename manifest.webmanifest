@@ -10,7 +10,7 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/images/fglobal.png",
+      "src": "/images/fglobal2.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
