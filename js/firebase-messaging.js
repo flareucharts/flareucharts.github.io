@@ -177,7 +177,7 @@ console.log(
     const icon =  
         notification.icon ||  
         data.icon ||  
-        "/images/fglogo.jpg";  
+        "/images/fglogo2.jpg";  
 
 
     const badge =  
