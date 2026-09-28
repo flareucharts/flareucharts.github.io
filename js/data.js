@@ -9,6 +9,22 @@ function makeSlug(title){
 
 window.discography = [
 {
+    albumType: "2nd Mini Album-JP",
+    title: "LOVE HOOD",
+    artist: "FLARE U",
+    releaseDate: "2026-10-14",
+    cover: "love-hood.png",
+    spotify: " ",
+    apple: " ",
+    youtubeMusic: " ",
+    melon: " ",
+    genie: " ",
+    bugs: " ",
+    tracks: " ",
+    video: " "
+  },
+
+{
     albumType: "1st Mini Album-JP",
     title: "YOUTH ERROR (Japan Edition)",
     artist: "FLARE U",
