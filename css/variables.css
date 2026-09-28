@@ -1,7 +1,8 @@
 :root{
   /* Color */
   --theme1:#91d3ca;
-  --theme2:#74b3de;
+  --theme4:#74b3de;
+  --theme2:#8da5ee;
   --theme3:#5db7ab;
   --background:#ffffff;
   --surface:#ffffff;
@@ -39,8 +40,15 @@
     #ffffff 55vh
   );
 
-
 --bg-gradient2: linear-gradient(
+  180deg,
+  #8da5ee 0%,
+  #b8c9f5 15vh,
+  #dce5fa 30vh,
+  #ffffff 55%
+);
+
+--bg-gradient1: linear-gradient(
   180deg,
   #74b3de 0%,
   #b2d8f2 15vh,
