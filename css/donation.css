@@ -67,8 +67,8 @@ button {
 .funding-page {
     width: 100%;
     max-width: 768px;
-    margin: 0 auto 20px;
-    padding: 16px;
+    margin-top: 0;;
+    padding: 0 16px;
     background: #fff;
 }
 
@@ -84,7 +84,7 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 16px;
+    padding: 12px 0;
 }
 
 .funding-title h2 {
