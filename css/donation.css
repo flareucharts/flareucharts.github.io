@@ -17,6 +17,11 @@
     --title: 22px;
 }
 
+#funding .global-content{
+    margin-top:16px !important;
+    margin-bottom:16px !important;
+    padding:16px !important;
+}
 
 /* =========================================================
    FUNDING PAGE
