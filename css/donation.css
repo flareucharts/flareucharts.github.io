@@ -14,6 +14,7 @@
     --border: #e3ebeb;
     --radius-lg: 22px;
     --radius-md: 15px;
+    --title: 22px;
 }
 
 
@@ -67,7 +68,7 @@ button {
     width: 100%;
     max-width: 768px;
     margin: 0 auto 20px;
-    padding-top: 0;
+    padding: 16px;
     background: #fff;
 }
 
@@ -75,7 +76,6 @@ button {
     position: sticky;
     top: 0;
     z-index: 1000;
-
     background: #fff;
     width: 100%;
 }
@@ -83,20 +83,15 @@ button {
 .funding-title {
     display: flex;
     align-items: center;
-
     gap: 10px;
-
-    padding: 12px 16px 0 16px;
+    padding: 12px 16px;
 }
 
 .funding-title h2 {
     margin: 0;
-
     font-size: var(--title);
     font-weight: 700;
-
     color: #111;
-
     padding: 0;
 }
 
@@ -108,22 +103,36 @@ button {
 .funding-home-btn {
     display: grid;
     place-items: center;
-
     width: 25px;
     height: 25px;
-
     flex: 0 0 auto;
-
     border-radius: 5px;
-
     text-decoration: none;
 }
 
 .funding-home-btn img {
     width: 25px;
     height: 25px;
-
     object-fit: contain;
+}
+
+.eyebrow,
+.campaign-label,
+.section-kicker {
+margin: 0 0 5px;
+color: var(--theme-dark);
+font-size: 11px;
+font-weight: 700;
+letter-spacing: 0.08em;
+
+}
+
+.funding-header h1 {
+margin: 0;
+
+font-size: 24px;
+line-height: 1.2;
+
 }
 
 #fundingTarget {
