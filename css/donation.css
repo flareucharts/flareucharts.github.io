@@ -6,15 +6,12 @@
 :root {
     --funding-bg: #f5faf9;
     --funding-card: #ffffff;
-
     --theme: #91d3ca;
     --theme-dark: #5db7ab;
     --theme-soft: #e7eeee;
-
     --text: #263b40;
     --muted: #718083;
     --border: #e3ebeb;
-
     --radius-lg: 22px;
     --radius-md: 15px;
 }
