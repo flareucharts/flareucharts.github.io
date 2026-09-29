@@ -274,37 +274,80 @@
                 Currency
             </label>
 
-            <select
-                id="currency"
-                name="currency"
-                required
+<!-- CURRENCY -->
+
+<div class="form-group">
+
+    <label for="currency">
+        Currency
+    </label>
+
+    <div class="currency-dropdown" id="currencyDropdown">
+
+        <button
+            type="button"
+            class="currency-trigger"
+            id="currencyTrigger"
+        >
+            <span id="currencyLabel">
+                Select currency
+            </span>
+
+            <span class="dropdown-arrow">▾</span>
+        </button>
+
+        <div
+            class="currency-menu"
+            id="currencyMenu"
+        >
+
+            <div
+                class="currency-option"
+                data-value="USD"
             >
+                USD — US Dollar
+            </div>
 
-                <option value="">
-                    Select currency
-                </option>
+            <div
+                class="currency-option"
+                data-value="IDR"
+            >
+                IDR — Indonesian Rupiah
+            </div>
 
-                <option value="USD">
-                    USD — US Dollar
-                </option>
+            <div
+                class="currency-option"
+                data-value="THB"
+            >
+                THB — Thai Baht
+            </div>
 
-                <option value="IDR">
-                    IDR — Indonesian Rupiah
-                </option>
+            <div
+                class="currency-option"
+                data-value="TWD"
+            >
+                TWD — Taiwan Dollar
+            </div>
 
-                <option value="THB">
-                    THB — Thai Baht
-                </option>
+            <div
+                class="currency-option"
+                data-value="PHP"
+            >
+                PHP — Philippine Peso
+            </div>
 
-                <option value="TWD">
-                    TWD — Taiwan Dollar
-                </option>
+        </div>
 
-                <option value="PHP">
-                    PHP — Philippine Peso
-                </option>
+        <input
+            type="hidden"
+            id="currency"
+            name="currency"
+            required
+        >
 
-            </select>
+    </div>
+
+</div>
 
         </div>
 
