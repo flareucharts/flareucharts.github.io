@@ -18,6 +18,110 @@
 }
 
 
+/* =========================================================
+   FUNDING PAGE
+========================================================= */
+
+#funding{
+    margin-top:0 !important;
+    padding:0 !important;
+}
+
+#funding .global-content{
+    margin:0 !important;
+    padding:0 16px !important;
+    background:#fff;
+}
+
+.page.funding-page{
+    width:100%;
+    max-width:768px;
+    margin:0 auto;
+    padding-top:0;
+}
+
+
+/* =========================================================
+   STICKY HEADER
+========================================================= */
+
+.page.funding-page .funding-sticky{
+    position:sticky;
+    top:0;
+    z-index:1000;
+
+    width:100%;
+
+    background:#fff;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page.funding-page .funding-title{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 16px 0 16px;
+}
+
+.page.funding-page .funding-title h2{
+    margin:0;
+
+    color:#111;
+
+    font-size:var(--title);
+    font-weight:700;
+
+    padding:0;
+}
+
+
+/* =========================================================
+   HOME BUTTON
+========================================================= */
+
+.page.funding-page .funding-title-home{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    width:25px;
+    height:25px;
+
+    flex:0 0 auto;
+
+    text-decoration:none;
+}
+
+.page.funding-page .funding-title-home img{
+    width:25px;
+    height:25px;
+
+    object-fit:contain;
+}
+
+
+/* =========================================================
+   STICKY BAR
+========================================================= */
+
+#funding .funding-sticky-bar{
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    width:100%;
+
+    padding:12px 0 10px;
+
+    background:#fff;
+}
+
 /* =========================
    BASE
 ========================= */
@@ -53,67 +157,6 @@ textarea {
 
 button {
     cursor: pointer;
-}
-
-
-/* =========================
-   PAGE
-========================= */
-
-/* =========================
-   FUNDING TITLE
-========================= */
-
-.funding-page {
-    width: 100%;
-    max-width: 768px;
-    margin-top: 0;;
-    padding: 0 16px;
-    background: #fff;
-}
-
-.funding-sticky {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: #fff;
-    width: 100%;
-}
-
-.funding-title {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 0;
-}
-
-.funding-title h2 {
-    margin: 0;
-    font-size: var(--title);
-    font-weight: 700;
-    color: #111;
-    padding: 0;
-}
-
-
-/* =========================
-   HOME BUTTON
-========================= */
-
-.funding-home-btn {
-    display: grid;
-    place-items: center;
-    width: 25px;
-    height: 25px;
-    flex: 0 0 auto;
-    border-radius: 5px;
-    text-decoration: none;
-}
-
-.funding-home-btn img {
-    width: 25px;
-    height: 25px;
-    object-fit: contain;
 }
 
 .eyebrow,
