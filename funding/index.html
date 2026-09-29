@@ -4,11 +4,10 @@
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>Album Detail</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<title>Comeback Funding | FLARE U GLOBAL</title>
+<title>Funding | FLARE U GLOBAL</title>
 
 <link rel="stylesheet" href="../css/global.css">
 <link rel="stylesheet" href="../css/donation.css">
@@ -19,721 +18,730 @@
 
 <div class="app">
 
-<main class="funding-page">
+<body>
 
-<!-- =========================
-     HEADER
-========================== -->
+<div class="app">
 
-<section class="funding-sticky">
+<main class="page funding-page active" id="funding">
+
+  <!-- =========================
+       FUNDING STICKY
+  ========================== -->
+
+  <section class="funding-sticky">
+
     <div class="funding-title">
-        <a href="../" class="funding-home-btn" aria-label="Home">
-            <img
-                src="../images/icons/home.svg"
-                alt=""
-                aria-hidden="true"
-            >
-        </a>
 
-        <h2>FLARE U GLOBAL Funding</h2>
+      <a
+        href="../"
+        class="funding-title-home"
+        aria-label="Home"
+      >
+        <img
+          src="../assets/icons/home.svg"
+          alt=""
+        >
+      </a>
+
+      <h2>Comeback Funding</h2>
+
     </div>
-</section>
+
+    <!-- =========================
+         FUNDING STICKY BAR
+    ========================== -->
+
+    <div
+      class="funding-sticky-bar"
+      id="funding-sticky-bar"
+    ></div>
+
+  </section>
 
 
-<!-- =========================
-     CAMPAIGN
-========================== -->
+  <!-- =========================
+       CAMPAIGN
+  ========================== -->
 
-<section class="funding-card campaign-card">
+  <section class="funding-card campaign-card">
 
     <div class="campaign-label">
-        DONATION DRIVE
+      DONATION DRIVE
     </div>
 
     <h2>
-        FLARE U's Comeback Support
+      FLARE U's Comeback Support
     </h2>
 
     <p class="campaign-description">
-        Let's support FLARE U's comeback together.
-        Every contribution helps us prepare and support
-        upcoming fan projects.
+      Let's support FLARE U's comeback together.
+      Every contribution helps us prepare and support
+      upcoming fan projects.
     </p>
-
-
-    <!-- PROGRESS -->
 
     <div class="funding-progress">
 
-        <div class="progress-heading">
+      <div class="progress-heading">
 
-            <div>
+        <div>
 
-                <span class="progress-label">
-                    Estimated progress (~End 2026.10.12)
-                </span>
+          <span class="progress-label">
+            Estimated progress (~End 2026.10.12)
+          </span>
 
-<strong id="raisedAmount">
-    ~$0
-</strong>
+          <strong id="raisedAmount">
+            ~$0
+          </strong>
 
-<span>
-    / <span id="fundingTarget">~$0</span>
-</span>
-
-            </div>
-
-            <strong id="progressPercent">
-                0%
-            </strong>
+          <span>
+            / <span id="fundingTarget">~$0</span>
+          </span>
 
         </div>
 
+        <strong id="progressPercent">
+          0%
+        </strong>
 
-        <div class="progress-track">
+      </div>
 
-            <div
-                class="progress-fill"
-                id="progressFill"
-            ></div>
+      <div class="progress-track">
 
-        </div>
+        <div
+          class="progress-fill"
+          id="progressFill"
+        ></div>
 
+      </div>
 
-        <p class="progress-note">
-            *USD progress is an estimated conversion
-            based on current exchange rates.
-        </p>
+      <p class="progress-note">
+        *USD progress is an estimated conversion
+        based on current exchange rates.
+      </p>
 
     </div>
 
-
     <button
-        class="primary-btn"
-        id="supportBtn"
-        type="button"
+      class="primary-btn"
+      id="supportBtn"
+      type="button"
     >
-        Support Now
+      Support Now
     </button>
 
-</section>
+  </section>
 
 
-<!-- =========================
-     SUPPORT FORM
-========================== -->
+  <!-- =========================
+       SUPPORT FORM
+  ========================== -->
 
-<section
+  <section
     class="funding-card support-form-card"
     id="supportSection"
     hidden
->
+  >
 
     <div class="section-heading">
 
-        <span class="section-kicker">
-            SUPPORT FLARE U
-        </span>
+      <span class="section-kicker">
+        SUPPORT FLARE U
+      </span>
 
-        <h2>
-            Submit Your Support
-        </h2>
+      <h2>
+        Submit Your Support
+      </h2>
 
-        <p>
-            Complete your payment first, then submit
-            your payment proof below.
-        </p>
+      <p>
+        Complete your payment first, then submit
+        your payment proof below.
+      </p>
 
     </div>
 
 
     <form id="supportForm">
 
-        <!-- NAME -->
+      <!-- NAME -->
 
-        <div class="form-group">
+      <div class="form-group">
 
-            <label for="supporterName">
-                Name / Nickname / Username
-            </label>
+        <label for="supporterName">
+          Name / Nickname / Username
+        </label>
 
-            <input
-                type="text"
-                id="supporterName"
-                name="name"
-                placeholder="Enter your name"
-                autocomplete="nickname"
-                required
+        <input
+          type="text"
+          id="supporterName"
+          name="name"
+          placeholder="Enter your name"
+          autocomplete="nickname"
+          required
+        >
+
+      </div>
+
+
+      <!-- PAYMENT METHOD -->
+
+      <div class="form-group">
+
+        <label for="paymentMethod">
+          Payment Method
+        </label>
+
+        <div
+          class="payment-method-dropdown"
+          id="paymentMethodDropdown"
+        >
+
+          <button
+            type="button"
+            class="payment-method-trigger"
+            id="paymentMethodTrigger"
+          >
+            <span id="paymentMethodLabel">
+              Select payment method
+            </span>
+
+            <span class="dropdown-arrow">
+              ▾
+            </span>
+          </button>
+
+          <div
+            class="payment-method-menu"
+            id="paymentMethodMenu"
+          >
+
+            <div
+              class="payment-method-option"
+              data-value="paypal"
             >
+              PayPal
+            </div>
+
+            <div
+              class="payment-method-option"
+              data-value="qris"
+            >
+              QRIS
+            </div>
+
+            <div
+              class="payment-method-option"
+              data-value="other"
+            >
+              Other
+            </div>
+
+          </div>
+
+          <input
+            type="hidden"
+            id="paymentMethod"
+            name="method"
+            required
+          >
 
         </div>
 
-
-        <!-- PAYMENT METHOD -->
-
-        <div class="form-group">
-
-            <label for="paymentMethod">
-                Payment Method
-            </label>
-
-<div class="payment-method-dropdown" id="paymentMethodDropdown">
-
-    <button
-        type="button"
-        class="payment-method-trigger"
-        id="paymentMethodTrigger"
-    >
-        <span id="paymentMethodLabel">
-            Select payment method
-        </span>
-
-        <span class="dropdown-arrow">▾</span>
-    </button>
-
-    <div
-        class="payment-method-menu"
-        id="paymentMethodMenu"
-    >
-        <div
-            class="payment-method-option"
-            data-value="paypal"
-        >
-            PayPal
-        </div>
-
-        <div
-            class="payment-method-option"
-            data-value="qris"
-        >
-            QRIS
-        </div>
-
-        <div
-            class="payment-method-option"
-            data-value="other"
-        >
-            Other
-        </div>
-    </div>
-
-    <input
-        type="hidden"
-        id="paymentMethod"
-        name="method"
-        required
-    >
-
-</div>
-
-        </div>
+      </div>
 
 
-        <!-- PAYMENT DESTINATION -->
+      <!-- PAYMENT DESTINATION -->
 
-        <div
-    class="payment-destination"
-    id="paymentDestination"
-    hidden
->
-
-    <div
-        class="payment-method-logo"
-        id="paymentMethodLogo"
+      <div
+        class="payment-destination"
+        id="paymentDestination"
         hidden
-    >
-        <img
+      >
+
+        <div
+          class="payment-method-logo"
+          id="paymentMethodLogo"
+          hidden
+        >
+
+          <img
             id="paymentLogo"
             src=""
             alt=""
-        >
-    </div>
-
-    <div
-        id="destinationContent"
-    ></div>
-
-    <button
-        type="button"
-        id="copyPaymentBtn"
-    >
-        Copy
-    </button>
-
-</div>
-
-
-        <!-- CURRENCY -->
-
-        <div class="form-group">
-
-            <label for="currency">
-                Currency
-            </label>
-
-<!-- CURRENCY -->
-
-<div class="form-group">
-
-    <label for="currency">
-        Currency
-    </label>
-
-    <div class="currency-dropdown" id="currencyDropdown">
-
-        <button
-            type="button"
-            class="currency-trigger"
-            id="currencyTrigger"
-        >
-            <span id="currencyLabel">
-                Select currency
-            </span>
-
-            <span class="dropdown-arrow">▾</span>
-        </button>
-
-        <div
-            class="currency-menu"
-            id="currencyMenu"
-        >
-
-            <div
-                class="currency-option"
-                data-value="USD"
-            >
-                USD — US Dollar
-            </div>
-
-            <div
-                class="currency-option"
-                data-value="IDR"
-            >
-                IDR — Indonesian Rupiah
-            </div>
-
-            <div
-                class="currency-option"
-                data-value="THB"
-            >
-                THB — Thai Baht
-            </div>
-
-            <div
-                class="currency-option"
-                data-value="TWD"
-            >
-                TWD — Taiwan Dollar
-            </div>
-
-            <div
-                class="currency-option"
-                data-value="PHP"
-            >
-                PHP — Philippine Peso
-            </div>
+          >
 
         </div>
 
-        <input
+        <div id="destinationContent"></div>
+
+        <button
+          type="button"
+          id="copyPaymentBtn"
+        >
+          Copy
+        </button>
+
+      </div>
+
+
+      <!-- CURRENCY -->
+
+      <div class="form-group">
+
+        <label for="currency">
+          Currency
+        </label>
+
+        <div
+          class="currency-dropdown"
+          id="currencyDropdown"
+        >
+
+          <button
+            type="button"
+            class="currency-trigger"
+            id="currencyTrigger"
+          >
+
+            <span id="currencyLabel">
+              Select currency
+            </span>
+
+            <span class="dropdown-arrow">
+              ▾
+            </span>
+
+          </button>
+
+          <div
+            class="currency-menu"
+            id="currencyMenu"
+          >
+
+            <div
+              class="currency-option"
+              data-value="USD"
+            >
+              USD — US Dollar
+            </div>
+
+            <div
+              class="currency-option"
+              data-value="IDR"
+            >
+              IDR — Indonesian Rupiah
+            </div>
+
+            <div
+              class="currency-option"
+              data-value="THB"
+            >
+              THB — Thai Baht
+            </div>
+
+            <div
+              class="currency-option"
+              data-value="TWD"
+            >
+              TWD — Taiwan Dollar
+            </div>
+
+            <div
+              class="currency-option"
+              data-value="PHP"
+            >
+              PHP — Philippine Peso
+            </div>
+
+          </div>
+
+          <input
             type="hidden"
             id="currency"
             name="currency"
             required
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- AMOUNT -->
+
+      <div class="form-group">
+
+        <label for="supportAmount">
+          Amount
+        </label>
+
+        <input
+          type="number"
+          id="supportAmount"
+          name="amount"
+          placeholder="Enter amount"
+          min="0.01"
+          step="0.01"
+          inputmode="decimal"
+          required
         >
 
-    </div>
+        <p class="field-note">
+          Enter the amount you sent.
+        </p>
 
-</div>
-
-        </div>
-
-
-        <!-- AMOUNT -->
-
-        <div class="form-group">
-
-            <label for="supportAmount">
-                Amount
-            </label>
-
-            <input
-                type="number"
-                id="supportAmount"
-                name="amount"
-                placeholder="Enter amount"
-                min="0.01"
-                step="0.01"
-                inputmode="decimal"
-                required
-            >
-
-            <p class="field-note">
-                Enter the amount you sent.
-            </p>
-
-        </div>
+      </div>
 
 
-        <!-- PAYMENT PROOF -->
+      <!-- PAYMENT PROOF -->
 
-        <div class="form-group">
+      <div class="form-group">
 
-            <label for="paymentProof">
-                Payment Proof
-            </label>
+        <label for="paymentProof">
+          Payment Proof
+        </label>
 
-            <label
-                class="upload-box"
-                for="paymentProof"
-            >
-
-                <span class="upload-icon">
-                    ↑
-                </span>
-
-                <span id="uploadText">
-                    Upload payment screenshot
-                </span>
-
-                <small>
-                    PNG, JPG or WEBP
-                </small>
-
-            </label>
-
-            <input
-                type="file"
-                id="paymentProof"
-                name="proof"
-                accept="image/png,image/jpeg,image/webp"
-                required
-                hidden
-            >
-
-        </div>
-
-
-        <!-- SUPPORT MESSAGE -->
-
-        <div class="form-group">
-
-            <label for="supportMessage">
-
-                Note
-
-                <span class="optional">
-                    (optional)
-                </span>
-
-            </label>
-
-            <textarea
-                id="supportMessage"
-                name="message"
-                maxlength="150"
-                placeholder="FLARE U Fighting!!!! 💚 from U'REs"
-                rows="3"
-            ></textarea>
-
-            <div class="character-count">
-
-                <span id="messageCount">
-                    0
-                </span>/150
-
-            </div>
-
-            <p class="field-note">
-                Leave a message for FLARE U!
-            </p>
-
-        </div>
-
-
-        <!-- PUBLIC NAME -->
-
-        <div class="form-group">
-
-            <span class="form-label">
-                Display Name Publicly
-            </span>
-
-            <label class="radio-option">
-
-                <input
-                    type="radio"
-                    name="displayName"
-                    value="public"
-                    checked
-                >
-
-                <span>
-                    Display my name publicly
-                </span>
-
-            </label>
-
-
-            <label class="radio-option">
-
-                <input
-                    type="radio"
-                    name="displayName"
-                    value="anonymous"
-                >
-
-                <span>
-                    Hide my name publicly
-                </span>
-
-            </label>
-
-        </div>
-
-
-        <!-- SUBMIT -->
-
-        <button
-            type="submit"
-            class="primary-btn submit-btn"
+        <label
+          class="upload-box"
+          for="paymentProof"
         >
-            Submit Support
-        </button>
 
+          <span class="upload-icon">
+            ↑
+          </span>
 
-        <button
-            type="button"
-            class="secondary-btn"
-            id="cancelSupport"
+          <span id="uploadText">
+            Upload payment screenshot
+          </span>
+
+          <small>
+            PNG, JPG or WEBP
+          </small>
+
+        </label>
+
+        <input
+          type="file"
+          id="paymentProof"
+          name="proof"
+          accept="image/png,image/jpeg,image/webp"
+          required
+          hidden
         >
-            Cancel
-        </button>
+
+      </div>
+
+
+      <!-- SUPPORT MESSAGE -->
+
+      <div class="form-group">
+
+        <label for="supportMessage">
+
+          Note
+
+          <span class="optional">
+            (optional)
+          </span>
+
+        </label>
+
+        <textarea
+          id="supportMessage"
+          name="message"
+          maxlength="150"
+          placeholder="FLARE U Fighting!!!! 💚 from U'REs"
+          rows="3"
+        ></textarea>
+
+        <div class="character-count">
+
+          <span id="messageCount">
+            0
+          </span>/150
+
+        </div>
+
+        <p class="field-note">
+          Leave a message for FLARE U!
+        </p>
+
+      </div>
+
+
+      <!-- PUBLIC NAME -->
+
+      <div class="form-group">
+
+        <span class="form-label">
+          Display Name Publicly
+        </span>
+
+        <label class="radio-option">
+
+          <input
+            type="radio"
+            name="displayName"
+            value="public"
+            checked
+            required
+          >
+
+          <span>
+            Display my name publicly
+          </span>
+
+        </label>
+
+        <label class="radio-option">
+
+          <input
+            type="radio"
+            name="displayName"
+            value="anonymous"
+          >
+
+          <span>
+            Hide my name publicly
+          </span>
+
+        </label>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+
+      <button
+        type="submit"
+        class="primary-btn submit-btn"
+      >
+        Submit Support
+      </button>
+
+      <button
+        type="button"
+        class="secondary-btn"
+        id="cancelSupport"
+      >
+        Cancel
+      </button>
 
     </form>
 
 
-    <!-- =========================
-         SUCCESS
-    ========================== -->
+    <!-- SUCCESS -->
 
     <div
-        class="form-success"
-        id="formSuccess"
-        hidden
+      class="form-success"
+      id="formSuccess"
+      hidden
     >
 
-        <div class="success-icon">
-            ✓
-        </div>
+      <div class="success-icon">
+        ✓
+      </div>
 
-        <h3>
-            Thank you for your support! 💚
-        </h3>
+      <h3>
+        Thank you for your support! 💚
+      </h3>
 
-        <p>
-            Your submission has been received.
-            It will appear in the transparency section
-            after verification.
-        </p>
+      <p>
+        Your submission has been received.
+        It will appear in the transparency section
+        after verification.
+      </p>
 
-        <button
-            type="button"
-            class="secondary-btn"
-            id="successClose"
-        >
-            Done
-        </button>
+      <button
+        type="button"
+        class="secondary-btn"
+        id="successClose"
+      >
+        Done
+      </button>
 
     </div>
 
-</section>
+  </section>
 
 
-<!-- =========================
-     FUNDING GOALS
-========================== -->
+  <!-- =========================
+       FUNDING GOALS
+  ========================== -->
 
-<section class="funding-section">
+  <section class="funding-section">
 
     <div class="section-heading">
 
-        <span class="section-kicker">
-            CAMPAIGN PLAN
-        </span>
+      <span class="section-kicker">
+        CAMPAIGN PLAN
+      </span>
 
-        <h2>
-            Funding Goals
-        </h2>
+      <h2>
+        Funding Goals
+      </h2>
 
-        <p>
-            Estimated budget for comeback support.
-        </p>
+      <p>
+        Estimated budget for comeback support.
+      </p>
 
     </div>
-
-
-    <!--
-        Goals are loaded dynamically
-        from the FUNDING_GOALS sheet.
-    -->
 
     <div
-        class="goal-list"
-        id="goalList"
+      class="goal-list"
+      id="goalList"
     >
 
-        <div class="empty-state">
-            Loading funding goals...
-        </div>
+      <div class="empty-state">
+        Loading funding goals...
+      </div>
 
     </div>
-
 
     <p class="small-note">
-        *Budget estimates may be adjusted depending on
-        actual costs and campaign needs.
+      *Budget estimates may be adjusted depending on
+      actual costs and campaign needs.
     </p>
 
-</section>
+  </section>
 
 
-<!-- =========================
-     TRANSPARENCY
-========================== -->
+  <!-- =========================
+       TRANSPARENCY
+  ========================== -->
 
-<section class="funding-card transparency-card">
+  <section class="funding-card transparency-card">
 
     <div class="section-heading">
 
-        <span class="section-kicker">
-            TRANSPARENCY
-        </span>
+      <span class="section-kicker">
+        TRANSPARENCY
+      </span>
 
-        <h2>
-            Funding Transparency
-        </h2>
+      <h2>
+        Funding Transparency
+      </h2>
 
-        <p>
-            Verified contributions are listed below.
-        </p>
+      <p>
+        Verified contributions are listed below.
+      </p>
 
     </div>
 
-
-    <!-- =========================
-         CURRENCY TOTALS
-    ========================== -->
-
     <div
-        class="currency-summary"
-        id="currencySummary"
+      class="currency-summary"
+      id="currencySummary"
     ></div>
 
 
-    <!-- =========================
-         SORT
-    ========================== -->
+    <!-- SORT -->
 
     <div class="transparency-toolbar">
 
-        <span>
-            Verified contributions
-        </span>
+      <span>
+        Verified contributions
+      </span>
 
-<div class="sort-filter">
+      <div class="sort-filter">
 
-    <button
-        type="button"
-        class="sort-trigger"
-        id="sortTrigger"
-    >
-        <span id="sortLabel">Latest</span>
-        <span class="dropdown-arrow">▾</span>
-    </button>
+        <button
+          type="button"
+          class="sort-trigger"
+          id="sortTrigger"
+        >
 
-    <div
-        class="sort-dropdown"
-        id="sortDropdown"
-    >
+          <span id="sortLabel">
+            Latest
+          </span>
+
+          <span class="dropdown-arrow">
+            ▾
+          </span>
+
+        </button>
+
         <div
+          class="sort-dropdown"
+          id="sortDropdown"
+        >
+
+          <div
             class="sort-option active"
             data-value="latest"
-        >
+          >
             Latest
-        </div>
+          </div>
 
-        <div
+          <div
             class="sort-option"
             data-value="oldest"
-        >
+          >
             Oldest
-        </div>
+          </div>
 
-        <div
+          <div
             class="sort-option"
             data-value="highest"
-        >
+          >
             Highest Amount
-        </div>
+          </div>
 
-        <div
+          <div
             class="sort-option"
             data-value="currency"
-        >
+          >
             Currency
+          </div>
+
         </div>
+
+        <input
+          type="hidden"
+          id="sortSelect"
+          value="latest"
+        >
+
+      </div>
+
     </div>
 
-    <input
-        type="hidden"
-        id="sortSelect"
-        value="latest"
-    >
 
-</div>
-
-    </div>
-
-
-    <!-- =========================
-         TRANSACTIONS
-    ========================== -->
+    <!-- TRANSACTIONS -->
 
     <div
-        class="transaction-list"
-        id="transactionList"
+      class="transaction-list"
+      id="transactionList"
     ></div>
 
-
     <p class="transparency-note">
-        *Only verified contributions are displayed.
-        Original currency amounts are shown as received.
-        USD campaign progress uses estimated exchange rates.
+      *Only verified contributions are displayed.
+      Original currency amounts are shown as received.
+      USD campaign progress uses estimated exchange rates.
     </p>
 
-</section>
+  </section>
 
 
-<!-- =========================
-     FOOTER NOTE
-========================== -->
+  <!-- =========================
+       FOOTER NOTE
+  ========================== -->
 
-<section class="funding-note">
+  <section class="funding-note">
 
     <p>
-        Thank you for supporting with FLARE U GLOBAL. 💚
+      Thank you for supporting with FLARE U GLOBAL. 💚
     </p>
 
     <p>
-        Every contribution helps us prepare for the comeback.
+      Every contribution helps us prepare for the comeback.
     </p>
 
-</section>
+  </section>
 
 </main>
 
 <script src="../js/donation.js"></script>
+
+</div>
 
 </body>
 </html>
