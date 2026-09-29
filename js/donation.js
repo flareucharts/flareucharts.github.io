@@ -278,6 +278,18 @@ const paymentInfo = {
 
     },
 
+    gcash: {
+
+        logo:
+            "../images/pay/gcash.png",
+
+        alt:
+            "G-Cash",
+
+        value:
+            "Scan the QR code above to send your support."
+    },
+
     other: {
 
         logo:
