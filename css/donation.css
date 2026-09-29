@@ -939,6 +939,143 @@ display: none !important;
 }
 
 /* =========================
+   PAYMENT METHOD DROPDOWN
+========================= */
+
+.payment-method-dropdown {
+    position: relative;
+    z-index: 200;
+}
+
+.payment-method-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 14px;
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border: 1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.08),
+        inset 0 1px rgba(255,255,255,.4);
+
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.payment-method-menu {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: 0;
+
+    width: 100%;
+
+    display: none;
+
+    padding: 8px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border: 1px solid rgba(255,255,255,.5);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.12),
+        inset 0 1px rgba(255,255,255,.4);
+
+    z-index: 9999;
+}
+
+.payment-method-menu.active {
+    display: block;
+}
+
+.payment-method-option {
+    display: flex;
+    align-items: center;
+
+    padding: 12px 14px;
+    margin: 2px 0;
+
+    border-radius: 10px;
+
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+.payment-method-option:hover {
+    background: rgba(0,0,0,.05);
+}
+
+.payment-method-option.active {
+    background: rgba(0,0,0,.06);
+    color: #111;
+    font-weight: 600;
+}
+
+
+/* =========================
+   SORT FILTER
+========================= */
+
+.sort-filter {
+    position: relative;
+    z-index: 100;
+}
+
+.sort-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 150px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255,255,255,.5);
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.08),
+        inset 0 1px rgba(255,255,255,.4);
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.sort-trigger:hover {
+    background: rgba(255,255,255,.95);
+}
+
+.sort-filter .dropdown-arrow,
+.payment-method-dropdown .dropdown-arrow {
+    transition: transform .2s;
+}
+
+.sort-filter.active .dropdown-arrow,
+.payment-method-dropdown.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* =========================
 MOBILE
 ========================= */
 
