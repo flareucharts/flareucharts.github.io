@@ -180,29 +180,54 @@
                 Payment Method
             </label>
 
-            <select
-                id="paymentMethod"
-                name="method"
-                required
-            >
+<div class="payment-method-dropdown" id="paymentMethodDropdown">
 
-                <option value="">
-                    Select payment method
-                </option>
+    <button
+        type="button"
+        class="payment-method-trigger"
+        id="paymentMethodTrigger"
+    >
+        <span id="paymentMethodLabel">
+            Select payment method
+        </span>
 
-                <option value="paypal">
-                    PayPal
-                </option>
+        <span class="dropdown-arrow">▾</span>
+    </button>
 
-                <option value="qris">
-                    QRIS 🇮🇩
-                </option>
+    <div
+        class="payment-method-menu"
+        id="paymentMethodMenu"
+    >
+        <div
+            class="payment-method-option"
+            data-value="paypal"
+        >
+            PayPal
+        </div>
 
-                <option value="other">
-                    Other
-                </option>
+        <div
+            class="payment-method-option"
+            data-value="qris"
+        >
+            QRIS
+        </div>
 
-            </select>
+        <div
+            class="payment-method-option"
+            data-value="other"
+        >
+            Other
+        </div>
+    </div>
+
+    <input
+        type="hidden"
+        id="paymentMethod"
+        name="method"
+        required
+    >
+
+</div>
 
         </div>
 
@@ -576,25 +601,57 @@
             Verified contributions
         </span>
 
-        <select id="sortSelect">
+<div class="sort-filter">
 
-            <option value="latest">
-                Latest
-            </option>
+    <button
+        type="button"
+        class="sort-trigger"
+        id="sortTrigger"
+    >
+        <span id="sortLabel">Latest</span>
+        <span class="dropdown-arrow">▾</span>
+    </button>
 
-            <option value="oldest">
-                Oldest
-            </option>
+    <div
+        class="sort-dropdown"
+        id="sortDropdown"
+    >
+        <div
+            class="sort-option active"
+            data-value="latest"
+        >
+            Latest
+        </div>
 
-            <option value="highest">
-                Highest Amount
-            </option>
+        <div
+            class="sort-option"
+            data-value="oldest"
+        >
+            Oldest
+        </div>
 
-            <option value="currency">
-                Currency
-            </option>
+        <div
+            class="sort-option"
+            data-value="highest"
+        >
+            Highest Amount
+        </div>
 
-        </select>
+        <div
+            class="sort-option"
+            data-value="currency"
+        >
+            Currency
+        </div>
+    </div>
+
+    <input
+        type="hidden"
+        id="sortSelect"
+        value="latest"
+    >
+
+</div>
 
     </div>
 
