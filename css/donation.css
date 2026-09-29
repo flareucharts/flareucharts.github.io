@@ -24,11 +24,11 @@
 
 #funding{
     margin-top:0 !important;
-    padding:0 !important;
+    padding:16px !important;
 }
 
 #funding .global-content{
-    margin:0 !important;
+    margin-top:16px !important;
     padding:0 16px !important;
     background:#fff;
 }
@@ -49,9 +49,7 @@
     position:sticky;
     top:0;
     z-index:1000;
-
     width:100%;
-
     background:#fff;
 }
 
@@ -63,9 +61,7 @@
 .page.funding-page .funding-title{
     display:flex;
     align-items:center;
-
     gap:10px;
-
     padding:12px 16px 0 16px;
 }
 
@@ -89,19 +85,15 @@
     display:flex;
     align-items:center;
     justify-content:center;
-
     width:25px;
     height:25px;
-
     flex:0 0 auto;
-
     text-decoration:none;
 }
 
 .page.funding-page .funding-title-home img{
     width:25px;
     height:25px;
-
     object-fit:contain;
 }
 
@@ -114,11 +106,8 @@
     position:sticky;
     top:0;
     z-index:50;
-
     width:100%;
-
     padding:12px 0 10px;
-
     background:#fff;
 }
 
@@ -136,10 +125,8 @@ html {
 
 body {
     margin: 0;
-
     background: var(--funding-bg);
     color: var(--text);
-
     font-family:
         Inter,
         -apple-system,
@@ -173,7 +160,7 @@ letter-spacing: 0.08em;
 .funding-header h1 {
 margin: 0;
 
-font-size: 24px;
+font-size: 20px;
 line-height: 1.2;
 
 }
