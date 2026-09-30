@@ -28,7 +28,7 @@ import { db } from "./firebase.js";
        "https://script.google.com/macros/s/XXXXXXXX/exec";
 */
 
-const APPS_SCRIPT_URL = "";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwzj_Z803mGAjpNHEUAAq5NFlDyZEV4Rzm2sipYNVxO2xski0LreN1D_kms9Jx9UQ3ASQ/exec";
 
 
 /* =========================================================
