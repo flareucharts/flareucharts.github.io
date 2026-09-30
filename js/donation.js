@@ -1,36 +1,49 @@
 /* =========================================================
    FLARE U GLOBAL
-   COMEBACK FUNDING
+   FUNDING / DONATION
+   FIREBASE VERSION
+========================================================= */
+
+import {
+    ref,
+    get
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+import { db } from "./firebase.js";
+
+
+/* =========================================================
+   FUNDING STATUS
 ========================================================= */
 
 const FUNDING_ENABLED = true;
 
 
 /* =========================================================
-   CONFIG
+   STATE
 ========================================================= */
 
-const API_URL =
-    "YOUR_APPS_SCRIPT_WEB_APP_URL";
+let currentMethod = "kofi";
+let currentSort = "latest";
+
+let allFunding = [];
+let allGoals = [];
+let allExpenses = [];
+
+let campaignTargetUSD = 0;
 
 
 /* =========================================================
-   ESTIMATED EXCHANGE RATES
-   1 unit currency → USD
+   MANUAL EXCHANGE RATES
+   VALUE = USD EQUIVALENT
 ========================================================= */
 
-const estimatedRates = {
-
+const EXCHANGE_RATES = {
     USD: 1,
-
     IDR: 1 / 17000,
-
     THB: 1 / 32,
-
     TWD: 1 / 31,
-
     PHP: 1 / 58
-
 };
 
 
@@ -41,12 +54,13 @@ const estimatedRates = {
 const fundingClosed =
     document.getElementById("fundingClosed");
 
+const fundingMethodTabs =
+    document.querySelector(".funding-method-tabs");
 
 const fundingMethodFilters =
     document.querySelectorAll(
         ".funding-method-filter"
     );
-
 
 const fundingContents =
     document.querySelectorAll(
@@ -55,58 +69,1569 @@ const fundingContents =
 
 
 /* =========================================================
+   HELPER
+========================================================= */
+
+function cleanString(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+    return String(value).trim();
+}
+
+
+function toNumber(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+        return 0;
+    }
+
+    if (typeof value === "number") {
+        return Number.isFinite(value)
+            ? value
+            : 0;
+    }
+
+    const number =
+        Number(
+            String(value)
+                .replace(/,/g, "")
+                .trim()
+        );
+
+    return Number.isFinite(number)
+        ? number
+        : 0;
+}
+
+
+function escapeHTML(value) {
+
+    return cleanString(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function normalizeBoolean(value) {
+
+    if (
+        value === true ||
+        value === 1
+    ) {
+        return true;
+    }
+
+    const valueString =
+        cleanString(value)
+            .toLowerCase();
+
+    return [
+        "true",
+        "yes",
+        "y",
+        "1",
+        "received",
+        "checked"
+    ].includes(valueString);
+}
+
+
+function isReceived(value) {
+
+    return normalizeBoolean(value);
+}
+
+
+function isActive(value) {
+
+    if (
+        value === undefined ||
+        value === null ||
+        value === ""
+    ) {
+        return true;
+    }
+
+    return normalizeBoolean(value);
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function parseDate(value) {
+
+    if (!value) {
+        return 0;
+    }
+
+    const date =
+        new Date(value);
+
+    const time =
+        date.getTime();
+
+    return Number.isFinite(time)
+        ? time
+        : 0;
+}
+
+
+function formatDate(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return cleanString(value);
+    }
+
+    return new Intl.DateTimeFormat(
+        "en-GB",
+        {
+            timeZone: "Asia/Seoul",
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        }
+    ).format(date);
+}
+
+
+/* =========================================================
+   CURRENCY
+========================================================= */
+
+function normalizeCurrency(value) {
+
+    return cleanString(value)
+        .toUpperCase();
+}
+
+
+function estimateUSD(
+    amount,
+    currency
+) {
+
+    const code =
+        normalizeCurrency(currency);
+
+    const rate =
+        EXCHANGE_RATES[code];
+
+    if (!rate) {
+        return 0;
+    }
+
+    return (
+        toNumber(amount) *
+        rate
+    );
+}
+
+
+function formatCurrency(
+    amount,
+    currency
+) {
+
+    const code =
+        normalizeCurrency(currency);
+
+    const number =
+        toNumber(amount);
+
+    if (!code) {
+        return String(number);
+    }
+
+    try {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                style: "currency",
+                currency: code,
+                maximumFractionDigits:
+                    code === "IDR"
+                        ? 0
+                        : 2
+            }
+        ).format(number);
+
+    } catch {
+
+        return `${code} ${number}`;
+
+    }
+}
+
+
+/* =========================================================
+   NORMALIZE FUNDING
+========================================================= */
+
+function normalizeFunding(
+    item,
+    id
+) {
+
+    return {
+
+        id:
+            cleanString(
+                item.ID ??
+                item.id ??
+                id
+            ),
+
+        submittedAt:
+            item["Submitted At"] ??
+            item.submittedAt ??
+            item.submitted_at ??
+            "",
+
+        name:
+            item.Name ??
+            item.name ??
+            "",
+
+        method:
+            item.Method ??
+            item.method ??
+            "",
+
+        currency:
+            normalizeCurrency(
+                item.Currency ??
+                item.currency ??
+                ""
+            ),
+
+        submittedAmount:
+            toNumber(
+                item["Submitted Amount"] ??
+                item.submittedAmount ??
+                item.submitted_amount
+            ),
+
+        actualReceived:
+            toNumber(
+                item["Actual Received"] ??
+                item.actualReceived ??
+                item.actual_received
+            ),
+
+        proof:
+            item.Proof ??
+            item.proof ??
+            "",
+
+        note:
+            item.Note ??
+            item.note ??
+            "",
+
+        display:
+            item.Display ??
+            item.display ??
+            "anonymous",
+
+        received:
+            item.Received ??
+            item.received ??
+            false
+    };
+}
+
+
+/* =========================================================
+   NORMALIZE GOALS
+========================================================= */
+
+function normalizeGoal(
+    item,
+    id
+) {
+
+    return {
+
+        id:
+            cleanString(
+                item.ID ??
+                item.id ??
+                id
+            ),
+
+        icon:
+            item.Icon ??
+            item.icon ??
+            "🎯",
+
+        goal:
+            item.Goal ??
+            item.goal ??
+            "",
+
+        description:
+            item.Description ??
+            item.description ??
+            "",
+
+        amount:
+            toNumber(
+                item.Amount ??
+                item.amount
+            ),
+
+        currency:
+            normalizeCurrency(
+                item.Currency ??
+                item.currency ??
+                "USD"
+            ),
+
+        active:
+            isActive(
+                item.Active ??
+                item.active
+            )
+    };
+}
+
+
+/* =========================================================
+   NORMALIZE EXPENSES
+========================================================= */
+
+function normalizeExpense(
+    item,
+    id
+) {
+
+    return {
+
+        id:
+            cleanString(
+                item.ID ??
+                item.id ??
+                id
+            ),
+
+        date:
+            item.Date ??
+            item.date ??
+            "",
+
+        category:
+            item.Category ??
+            item.category ??
+            "",
+
+        description:
+            item.Description ??
+            item.description ??
+            "",
+
+        amount:
+            toNumber(
+                item.Amount ??
+                item.amount
+            ),
+
+        currency:
+            normalizeCurrency(
+                item.Currency ??
+                item.currency ??
+                "USD"
+            ),
+
+        proof:
+            item.Proof ??
+            item.proof ??
+            ""
+    };
+}
+
+
+/* =========================================================
+   FUNDING CLOSE / OPEN
+========================================================= */
+
+function applyFundingState() {
+
+    if (FUNDING_ENABLED) {
+
+        if (fundingClosed) {
+            fundingClosed.hidden = true;
+        }
+
+        if (fundingMethodTabs) {
+            fundingMethodTabs.hidden = false;
+        }
+
+        fundingContents.forEach(
+            content => {
+
+                content.hidden =
+                    content.id !==
+                    `funding-${currentMethod}`;
+
+            }
+        );
+
+    } else {
+
+        if (fundingClosed) {
+            fundingClosed.hidden = false;
+        }
+
+        if (fundingMethodTabs) {
+            fundingMethodTabs.hidden = true;
+        }
+
+        fundingContents.forEach(
+            content => {
+
+                content.hidden = true;
+
+            }
+        );
+
+    }
+}
+
+
+/* =========================================================
+   METHOD TABS
+========================================================= */
+
+function setupMethodTabs() {
+
+    fundingMethodFilters.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const method =
+                        cleanString(
+                            button.dataset.method
+                        ).toLowerCase();
+
+                    if (!method) {
+                        return;
+                    }
+
+                    currentMethod =
+                        method;
+
+
+                    fundingMethodFilters
+                        .forEach(
+                            item => {
+
+                                item.classList.toggle(
+                                    "active",
+                                    item === button
+                                );
+
+                            }
+                        );
+
+
+                    fundingContents
+                        .forEach(
+                            content => {
+
+                                content.hidden =
+                                    content.id !==
+                                    `funding-${method}`;
+
+                            }
+                        );
+
+
+                    /*
+                       Close E-Wallet form
+                       when leaving the E-Wallet tab.
+                    */
+
+                    const supportSection =
+                        document.getElementById(
+                            "supportSection"
+                        );
+
+                    if (
+                        supportSection &&
+                        method !== "ewallet"
+                    ) {
+
+                        supportSection.hidden =
+                            true;
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    applyFundingState();
+}
+
+
+/* =========================================================
+   CAMPAIGN TARGET
+========================================================= */
+
+function calculateCampaignTarget() {
+
+    campaignTargetUSD = 0;
+
+    allGoals.forEach(
+        goal => {
+
+            if (!goal.active) {
+                return;
+            }
+
+            campaignTargetUSD +=
+                estimateUSD(
+                    goal.amount,
+                    goal.currency
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   VERIFIED FUNDING
+========================================================= */
+
+function getVerifiedFunding() {
+
+    return allFunding.filter(
+        item =>
+            isReceived(
+                item.received
+            )
+    );
+}
+
+
+/* =========================================================
+   METHOD MATCH
+========================================================= */
+
+function normalizeMethod(value) {
+
+    return cleanString(value)
+        .toLowerCase()
+        .replace(/[\s_-]+/g, "");
+}
+
+
+function methodMatches(
+    fundingMethod,
+    targetMethod
+) {
+
+    const item =
+        normalizeMethod(
+            fundingMethod
+        );
+
+    const target =
+        normalizeMethod(
+            targetMethod
+        );
+
+
+    if (target === "kofi") {
+
+        return (
+            item === "kofi" ||
+            item === "kofi"
+        );
+
+    }
+
+
+    if (target === "ewallet") {
+
+        return (
+            item === "ewallet"
+        );
+
+    }
+
+
+    return false;
+}
+
+
+/* =========================================================
+   RAISED
+========================================================= */
+
+function getRaisedUSD(
+    method
+) {
+
+    return getVerifiedFunding()
+        .filter(
+            item =>
+                methodMatches(
+                    item.method,
+                    method
+                )
+        )
+        .reduce(
+            (
+                total,
+                item
+            ) => {
+
+                return total +
+                    estimateUSD(
+                        item.actualReceived,
+                        item.currency
+                    );
+
+            },
+            0
+        );
+}
+
+
+/* =========================================================
+   UPDATE CAMPAIGN
+========================================================= */
+
+function updateCampaign(
+    method
+) {
+
+    const suffix =
+        method === "kofi"
+            ? "Kofi"
+            : "Ewallet";
+
+
+    const raisedAmount =
+        document.getElementById(
+            `raisedAmount${suffix}`
+        );
+
+    const fundingTarget =
+        document.getElementById(
+            `fundingTarget${suffix}`
+        );
+
+    const progressFill =
+        document.getElementById(
+            `progressFill${suffix}`
+        );
+
+    const progressPercent =
+        document.getElementById(
+            `progressPercent${suffix}`
+        );
+
+
+    if (!raisedAmount) {
+        return;
+    }
+
+
+    const raised =
+        getRaisedUSD(
+            method
+        );
+
+
+    const target =
+        campaignTargetUSD;
+
+
+    raisedAmount.textContent =
+        `$${raised.toFixed(2)}`;
+
+
+    if (fundingTarget) {
+
+        fundingTarget.textContent =
+            `$${target.toFixed(2)}`;
+
+    }
+
+
+    let percentage = 0;
+
+
+    if (target > 0) {
+
+        percentage =
+            (raised / target) * 100;
+
+    }
+
+
+    percentage =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                percentage
+            )
+        );
+
+
+    if (progressFill) {
+
+        progressFill.style.width =
+            `${percentage}%`;
+
+    }
+
+
+    if (progressPercent) {
+
+        progressPercent.textContent =
+            `${percentage.toFixed(1)}%`;
+
+    }
+
+}
+
+
+/* =========================================================
+   FUNDING GOALS
+========================================================= */
+
+function renderFundingGoals(
+    method
+) {
+
+    const suffix =
+        method === "kofi"
+            ? "Kofi"
+            : "Ewallet";
+
+
+    const container =
+        document.getElementById(
+            `goalList${suffix}`
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const activeGoals =
+        allGoals.filter(
+            goal =>
+                goal.active
+        );
+
+
+    if (!activeGoals.length) {
+
+        container.innerHTML = `
+            <div class="funding-empty">
+                No funding goals available.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        activeGoals
+            .map(
+                goal => {
+
+                    return `
+                        <div class="funding-goal">
+
+                            <div class="funding-goal-icon">
+                                ${escapeHTML(
+                                    goal.icon
+                                )}
+                            </div>
+
+                            <div class="funding-goal-content">
+
+                                <div class="funding-goal-title">
+                                    ${escapeHTML(
+                                        goal.goal
+                                    )}
+                                </div>
+
+                                ${
+                                    goal.description
+                                        ? `
+                                            <div class="funding-goal-description">
+                                                ${escapeHTML(
+                                                    goal.description
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                            <div class="funding-goal-amount">
+                                ${escapeHTML(
+                                    formatCurrency(
+                                        goal.amount,
+                                        goal.currency
+                                    )
+                                )}
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   SORT TRANSACTIONS
+========================================================= */
+
+function getTransactions(
+    method
+) {
+
+    const transactions =
+        getVerifiedFunding()
+            .filter(
+                item =>
+                    methodMatches(
+                        item.method,
+                        method
+                    )
+            );
+
+
+    if (
+        currentSort === "latest"
+    ) {
+
+        transactions.sort(
+            (a, b) =>
+                parseDate(
+                    b.submittedAt
+                ) -
+                parseDate(
+                    a.submittedAt
+                )
+        );
+
+    }
+
+    else if (
+        currentSort === "oldest"
+    ) {
+
+        transactions.sort(
+            (a, b) =>
+                parseDate(
+                    a.submittedAt
+                ) -
+                parseDate(
+                    b.submittedAt
+                )
+        );
+
+    }
+
+    else if (
+        currentSort === "highest"
+    ) {
+
+        transactions.sort(
+            (a, b) =>
+                estimateUSD(
+                    b.actualReceived,
+                    b.currency
+                ) -
+                estimateUSD(
+                    a.actualReceived,
+                    a.currency
+                )
+        );
+
+    }
+
+    else if (
+        currentSort === "currency"
+    ) {
+
+        transactions.sort(
+            (a, b) =>
+                String(
+                    a.currency
+                ).localeCompare(
+                    String(
+                        b.currency
+                    )
+                )
+        );
+
+    }
+
+
+    return transactions;
+}
+
+
+/* =========================================================
+   DISPLAY NAME
+========================================================= */
+
+function getDisplayName(
+    transaction
+) {
+
+    const display =
+        cleanString(
+            transaction.display
+        ).toLowerCase();
+
+
+    if (
+        display === "public"
+    ) {
+
+        return (
+            cleanString(
+                transaction.name
+            ) ||
+            "Supporter"
+        );
+
+    }
+
+
+    return "Anonymous";
+}
+
+
+/* =========================================================
+   TRANSACTIONS
+========================================================= */
+
+function renderTransactions(
+    method
+) {
+
+    const suffix =
+        method === "kofi"
+            ? "Kofi"
+            : "Ewallet";
+
+
+    const container =
+        document.getElementById(
+            `transactionList${suffix}`
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const transactions =
+        getTransactions(
+            method
+        );
+
+
+    if (!transactions.length) {
+
+        container.innerHTML = `
+            <div class="funding-empty">
+                No verified contributions yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        transactions
+            .map(
+                transaction => {
+
+                    const name =
+                        getDisplayName(
+                            transaction
+                        );
+
+
+                    const amount =
+                        formatCurrency(
+                            transaction.actualReceived,
+                            transaction.currency
+                        );
+
+
+                    const date =
+                        formatDate(
+                            transaction.submittedAt
+                        );
+
+
+                    return `
+                        <div class="funding-transaction">
+
+                            <div class="funding-transaction-main">
+
+                                <div class="funding-transaction-name">
+                                    ${escapeHTML(
+                                        name
+                                    )}
+                                </div>
+
+                                ${
+                                    transaction.note
+                                        ? `
+                                            <div class="funding-transaction-note">
+                                                ${escapeHTML(
+                                                    transaction.note
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                                ${
+                                    date
+                                        ? `
+                                            <div class="funding-transaction-date">
+                                                ${escapeHTML(
+                                                    date
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                            <div class="funding-transaction-amount">
+                                ${escapeHTML(
+                                    amount
+                                )}
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   CURRENCY SUMMARY
+========================================================= */
+
+function renderCurrencySummary(
+    method
+) {
+
+    const suffix =
+        method === "kofi"
+            ? "Kofi"
+            : "Ewallet";
+
+
+    const container =
+        document.getElementById(
+            `currencySummary${suffix}`
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const transactions =
+        getVerifiedFunding()
+            .filter(
+                item =>
+                    methodMatches(
+                        item.method,
+                        method
+                    )
+            );
+
+
+    if (!transactions.length) {
+
+        container.innerHTML = "";
+
+        return;
+    }
+
+
+    const summary = {};
+
+
+    transactions.forEach(
+        transaction => {
+
+            const currency =
+                transaction.currency ||
+                "UNKNOWN";
+
+
+            if (
+                !summary[currency]
+            ) {
+
+                summary[currency] = 0;
+
+            }
+
+
+            summary[currency] +=
+                toNumber(
+                    transaction.actualReceived
+                );
+
+        }
+    );
+
+
+    container.innerHTML =
+        Object.entries(summary)
+            .map(
+                ([currency, amount]) => {
+
+                    return `
+                        <span class="currency-summary-item">
+                            ${escapeHTML(
+                                currency
+                            )}
+                            ${escapeHTML(
+                                amount.toLocaleString(
+                                    "en-US"
+                                )
+                            )}
+                        </span>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   SORT DROPDOWN
+========================================================= */
+
+function setupSortDropdown(
+    method
+) {
+
+    const suffix =
+        method === "kofi"
+            ? "Kofi"
+            : "Ewallet";
+
+
+    const trigger =
+        document.getElementById(
+            `sortTrigger${suffix}`
+        );
+
+    const label =
+        document.getElementById(
+            `sortLabel${suffix}`
+        );
+
+    const dropdown =
+        document.getElementById(
+            `sortDropdown${suffix}`
+        );
+
+    const select =
+        document.getElementById(
+            `sortSelect${suffix}`
+        );
+
+
+    if (
+        !trigger ||
+        !dropdown
+    ) {
+        return;
+    }
+
+
+    trigger.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+            document
+                .querySelectorAll(
+                    ".sort-dropdown.active"
+                )
+                .forEach(
+                    item => {
+
+                        if (
+                            item !== dropdown
+                        ) {
+
+                            item.classList
+                                .remove(
+                                    "active"
+                                );
+
+                        }
+
+                    }
+                );
+
+
+            dropdown.classList.toggle(
+                "active"
+            );
+
+        }
+    );
+
+
+    dropdown.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+        }
+    );
+
+
+    const options =
+        dropdown.querySelectorAll(
+            "[data-sort]"
+        );
+
+
+    options.forEach(
+        option => {
+
+            option.addEventListener(
+                "click",
+                () => {
+
+                    const value =
+                        option.dataset.sort;
+
+
+                    if (!value) {
+                        return;
+                    }
+
+
+                    currentSort =
+                        value;
+
+
+                    options.forEach(
+                        item =>
+                            item.classList
+                                .remove(
+                                    "active"
+                                )
+                    );
+
+
+                    option.classList.add(
+                        "active"
+                    );
+
+
+                    if (label) {
+
+                        label.textContent =
+                            option.textContent
+                                .trim();
+
+                    }
+
+
+                    if (select) {
+
+                        select.value =
+                            currentSort;
+
+                    }
+
+
+                    syncSortDropdowns();
+
+
+                    dropdown.classList
+                        .remove(
+                            "active"
+                        );
+
+
+                    renderTransactions(
+                        "kofi"
+                    );
+
+                    renderTransactions(
+                        "ewallet"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    if (select) {
+
+        select.value =
+            currentSort;
+
+
+        select.addEventListener(
+            "change",
+            () => {
+
+                currentSort =
+                    select.value ||
+                    "latest";
+
+
+                syncSortDropdowns();
+
+
+                renderTransactions(
+                    "kofi"
+                );
+
+                renderTransactions(
+                    "ewallet"
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+function syncSortDropdowns() {
+
+    [
+        "Kofi",
+        "Ewallet"
+    ].forEach(
+        suffix => {
+
+            const label =
+                document.getElementById(
+                    `sortLabel${suffix}`
+                );
+
+            const select =
+                document.getElementById(
+                    `sortSelect${suffix}`
+                );
+
+            const dropdown =
+                document.getElementById(
+                    `sortDropdown${suffix}`
+                );
+
+
+            if (select) {
+
+                select.value =
+                    currentSort;
+
+            }
+
+
+            if (!dropdown) {
+                return;
+            }
+
+
+            const options =
+                dropdown.querySelectorAll(
+                    "[data-sort]"
+                );
+
+
+            options.forEach(
+                option => {
+
+                    const active =
+                        option.dataset.sort ===
+                        currentSort;
+
+
+                    option.classList.toggle(
+                        "active",
+                        active
+                    );
+
+
+                    if (
+                        active &&
+                        label
+                    ) {
+
+                        label.textContent =
+                            option.textContent
+                                .trim();
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
    SUPPORT FORM
 ========================================================= */
 
 const supportBtn =
-    document.getElementById("supportBtn");
+    document.getElementById(
+        "supportBtn"
+    );
 
 const supportSection =
-    document.getElementById("supportSection");
+    document.getElementById(
+        "supportSection"
+    );
 
 const supportForm =
-    document.getElementById("supportForm");
+    document.getElementById(
+        "supportForm"
+    );
 
 const cancelSupport =
-    document.getElementById("cancelSupport");
+    document.getElementById(
+        "cancelSupport"
+    );
 
-const formSuccess =
-    document.getElementById("formSuccess");
 
-const successClose =
-    document.getElementById("successClose");
+if (
+    supportBtn &&
+    supportSection
+) {
 
-const supportName =
-    document.getElementById("supportName");
+    supportBtn.addEventListener(
+        "click",
+        () => {
 
-const supportAmount =
-    document.getElementById("supportAmount");
+            supportSection.hidden =
+                false;
 
-const supportNote =
-    document.getElementById("supportNote");
+            supportSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-const supportProof =
-    document.getElementById("supportProof");
+        }
+    );
 
-const uploadText =
-    document.getElementById("uploadText");
+}
 
-const characterCount =
-    document.getElementById("characterCount");
+
+if (
+    cancelSupport &&
+    supportSection
+) {
+
+    cancelSupport.addEventListener(
+        "click",
+        () => {
+
+            supportSection.hidden =
+                true;
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    PAYMENT METHOD
 ========================================================= */
 
-const supportPaymentMethod =
+const paymentMethod =
     document.getElementById(
         "supportPaymentMethod"
-    );
-
-const paymentMethodDropdown =
-    document.getElementById(
-        "paymentMethodDropdown"
     );
 
 const paymentMethodTrigger =
@@ -123,16 +1648,6 @@ const paymentMethodMenu =
     document.getElementById(
         "paymentMethodMenu"
     );
-
-const paymentMethodOptions =
-    document.querySelectorAll(
-        ".payment-method-option"
-    );
-
-
-/* =========================================================
-   PAYMENT DESTINATION
-========================================================= */
 
 const paymentDestination =
     document.getElementById(
@@ -155,457 +1670,119 @@ const copyPaymentBtn =
     );
 
 
-/* =========================================================
-   CURRENCY
-========================================================= */
-
-const supportCurrency =
-    document.getElementById(
-        "supportCurrency"
-    );
-
-const currencyDropdown =
-    document.getElementById(
-        "currencyDropdown"
-    );
-
-const currencyTrigger =
-    document.getElementById(
-        "currencyTrigger"
-    );
-
-const currencyLabel =
-    document.getElementById(
-        "currencyLabel"
-    );
-
-const currencyMenu =
-    document.getElementById(
-        "currencyMenu"
-    );
-
-const currencyOptions =
-    document.querySelectorAll(
-        ".currency-option"
-    );
-
-
-/* =========================================================
-   FUNDING DISPLAY
-========================================================= */
-
-const raisedAmountKofi =
-    document.getElementById(
-        "raisedAmountKofi"
-    );
-
-const fundingTargetKofi =
-    document.getElementById(
-        "fundingTargetKofi"
-    );
-
-const progressPercentKofi =
-    document.getElementById(
-        "progressPercentKofi"
-    );
-
-const progressFillKofi =
-    document.getElementById(
-        "progressFillKofi"
-    );
-
-
-const raisedAmountEwallet =
-    document.getElementById(
-        "raisedAmountEwallet"
-    );
-
-const fundingTargetEwallet =
-    document.getElementById(
-        "fundingTargetEwallet"
-    );
-
-const progressPercentEwallet =
-    document.getElementById(
-        "progressPercentEwallet"
-    );
-
-const progressFillEwallet =
-    document.getElementById(
-        "progressFillEwallet"
-    );
-
-
-/* =========================================================
-   FUNDING DATA
-========================================================= */
-
-const goalListKofi =
-    document.getElementById(
-        "goalListKofi"
-    );
-
-const goalListEwallet =
-    document.getElementById(
-        "goalListEwallet"
-    );
-
-
-const currencySummaryKofi =
-    document.getElementById(
-        "currencySummaryKofi"
-    );
-
-const currencySummaryEwallet =
-    document.getElementById(
-        "currencySummaryEwallet"
-    );
-
-
-const transactionListKofi =
-    document.getElementById(
-        "transactionListKofi"
-    );
-
-const transactionListEwallet =
-    document.getElementById(
-        "transactionListEwallet"
-    );
-
-
-/* =========================================================
-   SORT
-========================================================= */
-
-const sortTriggerKofi =
-    document.getElementById(
-        "sortTriggerKofi"
-    );
-
-const sortDropdownKofi =
-    document.getElementById(
-        "sortDropdownKofi"
-    );
-
-const sortLabelKofi =
-    document.getElementById(
-        "sortLabelKofi"
-    );
-
-const sortSelectKofi =
-    document.getElementById(
-        "sortSelectKofi"
-    );
-
-
-const sortTriggerEwallet =
-    document.getElementById(
-        "sortTriggerEwallet"
-    );
-
-const sortDropdownEwallet =
-    document.getElementById(
-        "sortDropdownEwallet"
-    );
-
-const sortLabelEwallet =
-    document.getElementById(
-        "sortLabelEwallet"
-    );
-
-const sortSelectEwallet =
-    document.getElementById(
-        "sortSelectEwallet"
-    );
-
-
-/* =========================================================
-   STATE
-========================================================= */
-
-let transactions = [];
-
-let fundingGoals = [];
-
-let campaignTargetUSD = 0;
-
-
-/* =========================================================
-   FUNDING CLOSED
-========================================================= */
-
-function updateFundingState() {
-
-    if (!fundingClosed) {
-        return;
-    }
-
-    if (FUNDING_ENABLED) {
-
-        fundingClosed.hidden = true;
-
-        fundingMethodFilters.forEach(
-            tab => {
-                tab.hidden = false;
-            }
-        );
-
-        fundingContents.forEach(
-            content => {
-                content.hidden =
-                    !content.classList.contains(
-                        "active"
-                    );
-            }
-        );
-
-    } else {
-
-        fundingClosed.hidden = false;
-
-        fundingMethodFilters.forEach(
-            tab => {
-                tab.hidden = true;
-            }
-        );
-
-        fundingContents.forEach(
-            content => {
-                content.hidden = true;
-                content.classList.remove(
-                    "active"
-                );
-            }
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FUNDING METHOD TABS
-========================================================= */
-
-function switchFundingMethod(
-    method
-) {
-
-    if (!FUNDING_ENABLED) {
-        return;
-    }
-
-
-    fundingMethodFilters.forEach(
-        tab => {
-
-            const active =
-                tab.dataset.method === method;
-
-            tab.classList.toggle(
-                "active",
-                active
-            );
-
-            tab.setAttribute(
-                "aria-selected",
-                active
-                    ? "true"
-                    : "false"
-            );
-
-        }
-    );
-
-
-    fundingContents.forEach(
-        content => {
-
-            const active =
-                content.dataset.method === method;
-
-
-            content.classList.toggle(
-                "active",
-                active
-            );
-
-
-            content.hidden =
-                !active;
-
-        }
-    );
-
-}
-
-
-fundingMethodFilters.forEach(
-    button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                switchFundingMethod(
-                    button.dataset.method
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   PAYMENT INFORMATION
-========================================================= */
+/*
+   Isi manual sesuai data pembayaranmu.
+*/
 
 const paymentInfo = {
 
-    qris: {
-
-        logo:
-            "../images/pay/qris.png",
-
-        alt:
-            "QRIS",
-
-        value:
-            "Scan the QR code above to send your support."
-
+    "QRIS": {
+        value: "",
+        logo: "",
+        alt: "QRIS"
     },
 
-
-    gcash: {
-
-        logo:
-            "../images/pay/gcash.png",
-
-        alt:
-            "G-Cash",
-
-        value:
-            "Scan the QR code above to send your support."
-
+    "G-Cash": {
+        value: "",
+        logo: "",
+        alt: "G-Cash"
     },
 
-
-    other: {
-
-        logo:
-            "../images/pay/other.png",
-
-        alt:
-            "Other payment method",
-
-        value:
-            "Payment information will appear here."
-
+    "Other": {
+        value: "",
+        logo: "",
+        alt: "Other"
     }
 
 };
 
 
-/* =========================================================
-   CUSTOM DROPDOWN HELPERS
-========================================================= */
+function updatePaymentDestination() {
 
-function closeAllDropdowns(
-    except = null
-) {
-
-    document
-        .querySelectorAll(
-            ".payment-method-dropdown, " +
-            ".currency-dropdown, " +
-            ".sort-filter"
-        )
-        .forEach(
-            dropdown => {
-
-                if (
-                    dropdown === except
-                ) {
-                    return;
-                }
-
-
-                dropdown.classList.remove(
-                    "active"
-                );
-
-
-                const menu =
-                    dropdown.querySelector(
-                        ".payment-method-menu, " +
-                        ".currency-menu, " +
-                        ".sort-dropdown"
-                    );
-
-
-                if (menu) {
-
-                    menu.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-}
-
-
-function toggleDropdown(
-    container,
-    menu
-) {
-
-    if (
-        !container ||
-        !menu
-    ) {
+    if (!paymentMethod) {
         return;
     }
 
 
-    const isOpen =
-        container.classList.contains(
-            "active"
+    const method =
+        cleanString(
+            paymentMethod.value
         );
 
 
-    closeAllDropdowns(
-        isOpen
-            ? null
-            : container
-    );
+    const info =
+        paymentInfo[method];
 
 
-    container.classList.toggle(
-        "active",
-        !isOpen
-    );
+    if (
+        !method ||
+        !info
+    ) {
+
+        if (paymentDestination) {
+
+            paymentDestination.hidden =
+                true;
+
+        }
+
+        return;
+
+    }
 
 
-    menu.classList.toggle(
-        "active",
-        !isOpen
-    );
+    if (paymentDestination) {
+
+        paymentDestination.hidden =
+            false;
+
+    }
+
+
+    if (destinationContent) {
+
+        destinationContent.textContent =
+            info.value ||
+            "Payment destination will be provided here.";
+
+    }
+
+
+    if (paymentMethodLogo) {
+
+        if (info.logo) {
+
+            paymentMethodLogo.hidden =
+                false;
+
+            paymentMethodLogo.innerHTML = `
+                <img
+                    src="${escapeHTML(
+                        info.logo
+                    )}"
+                    alt="${escapeHTML(
+                        info.alt || method
+                    )}"
+                >
+            `;
+
+        } else {
+
+            paymentMethodLogo.hidden =
+                true;
+
+            paymentMethodLogo.innerHTML =
+                "";
+
+        }
+
+    }
 
 }
 
 
-/* =========================================================
-   PAYMENT METHOD DROPDOWN
-========================================================= */
-
 if (
     paymentMethodTrigger &&
-    paymentMethodDropdown &&
     paymentMethodMenu
 ) {
 
@@ -615,381 +1792,95 @@ if (
 
             event.stopPropagation();
 
-            toggleDropdown(
-                paymentMethodDropdown,
-                paymentMethodMenu
-            );
+            paymentMethodMenu.classList
+                .toggle("active");
 
         }
     );
 
-}
 
-
-paymentMethodOptions.forEach(
-    option => {
-
-        option.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-
-
-                const value =
-                    option.dataset.value;
-
-
-                const text =
-                    option.textContent.trim();
-
-
-                if (supportPaymentMethod) {
-
-                    supportPaymentMethod.value =
-                        value;
-
-                }
-
-
-                if (paymentMethodLabel) {
-
-                    paymentMethodLabel.textContent =
-                        text;
-
-                }
-
-
-                paymentMethodOptions.forEach(
-                    item => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                option.classList.add(
-                    "active"
-                );
-
-
-                closeAllDropdowns();
-
-
-                updatePaymentDestination(
-                    value
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   CURRENCY DROPDOWN
-========================================================= */
-
-if (
-    currencyTrigger &&
-    currencyDropdown &&
-    currencyMenu
-) {
-
-    currencyTrigger.addEventListener(
+    paymentMethodMenu.addEventListener(
         "click",
         event => {
 
             event.stopPropagation();
 
-            toggleDropdown(
-                currencyDropdown,
-                currencyMenu
-            );
-
         }
     );
 
-}
 
-
-currencyOptions.forEach(
-    option => {
-
-        option.addEventListener(
-            "click",
-            event => {
-
-                event.stopPropagation();
-
-
-                const value =
-                    option.dataset.value;
-
-
-                const text =
-                    option.textContent.trim();
-
-
-                if (supportCurrency) {
-
-                    supportCurrency.value =
-                        value;
-
-                }
-
-
-                if (currencyLabel) {
-
-                    currencyLabel.textContent =
-                        text;
-
-                }
-
-
-                currencyOptions.forEach(
-                    item => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                option.classList.add(
-                    "active"
-                );
-
-
-                closeAllDropdowns();
-
-            }
+    const options =
+        paymentMethodMenu.querySelectorAll(
+            "[data-value]"
         );
 
-    }
-);
+
+    options.forEach(
+        option => {
+
+            option.addEventListener(
+                "click",
+                () => {
+
+                    const value =
+                        option.dataset.value;
 
 
-/* =========================================================
-   SORT DROPDOWNS
-========================================================= */
-
-function setupSortDropdown(
-    trigger,
-    dropdown,
-    label,
-    select
-) {
-
-    if (
-        !trigger ||
-        !dropdown ||
-        !label ||
-        !select
-    ) {
-        return;
-    }
+                    if (!value) {
+                        return;
+                    }
 
 
-    trigger.addEventListener(
-        "click",
-        event => {
+                    if (paymentMethod) {
 
-            event.stopPropagation();
-
-
-            const filter =
-                trigger.closest(
-                    ".sort-filter"
-                );
-
-
-            toggleDropdown(
-                filter,
-                dropdown
-            );
-
-        }
-    );
-
-
-    dropdown
-        .querySelectorAll(
-            ".sort-option"
-        )
-        .forEach(
-            option => {
-
-                option.addEventListener(
-                    "click",
-                    event => {
-
-                        event.stopPropagation();
-
-
-                        /*
-                         * HTML memakai data-sort,
-                         * bukan data-value.
-                         */
-
-                        const value =
-                            option.dataset.sort;
-
-
-                        const text =
-                            option.textContent.trim();
-
-
-                        select.value =
+                        paymentMethod.value =
                             value;
 
-
-                        label.textContent =
-                            text;
+                    }
 
 
-                        dropdown
-                            .querySelectorAll(
-                                ".sort-option"
-                            )
-                            .forEach(
-                                item => {
+                    if (paymentMethodLabel) {
 
-                                    item.classList.remove(
-                                        "active"
-                                    );
+                        paymentMethodLabel.textContent =
+                            option.textContent
+                                .trim();
 
-                                }
-                            );
+                    }
 
 
-                        option.classList.add(
+                    options.forEach(
+                        item =>
+                            item.classList
+                                .remove(
+                                    "active"
+                                )
+                    );
+
+
+                    option.classList.add(
+                        "active"
+                    );
+
+
+                    paymentMethodMenu.classList
+                        .remove(
                             "active"
                         );
 
 
-                        closeAllDropdowns();
+                    updatePaymentDestination();
 
+                }
+            );
 
-                        sortTransactions();
-
-                    }
-                );
-
-            }
-        );
-
-}
-
-
-setupSortDropdown(
-    sortTriggerKofi,
-    sortDropdownKofi,
-    sortLabelKofi,
-    sortSelectKofi
-);
-
-
-setupSortDropdown(
-    sortTriggerEwallet,
-    sortDropdownEwallet,
-    sortLabelEwallet,
-    sortSelectEwallet
-);
-
-
-/* =========================================================
-   CLOSE DROPDOWNS OUTSIDE
-========================================================= */
-
-document.addEventListener(
-    "click",
-    () => {
-
-        closeAllDropdowns();
-
-    }
-);
-
-
-/* =========================================================
-   PAYMENT DESTINATION
-========================================================= */
-
-function updatePaymentDestination(
-    method
-) {
-
-    if (
-        !paymentDestination ||
-        !destinationContent
-    ) {
-        return;
-    }
-
-
-    const info =
-        paymentInfo[method];
-
-
-    if (!info) {
-
-        paymentDestination.hidden =
-            true;
-
-        return;
-
-    }
-
-
-    paymentDestination.hidden =
-        false;
-
-
-    /*
-     * HTML kamu menggunakan div
-     * #paymentMethodLogo.
-     *
-     * Jadi kita tidak mencari
-     * #paymentLogo lagi.
-     */
-
-    if (
-        paymentMethodLogo
-    ) {
-
-        paymentMethodLogo.innerHTML = `
-            <img
-                src="${escapeHTML(info.logo)}"
-                alt="${escapeHTML(info.alt || "")}"
-            >
-        `;
-
-    }
-
-
-    destinationContent.textContent =
-        info.value;
-
-
-    if (copyPaymentBtn) {
-
-        copyPaymentBtn.dataset.value =
-            info.value;
-
-    }
+        }
+    );
 
 }
 
 
 /* =========================================================
-   COPY PAYMENT DESTINATION
+   COPY PAYMENT
 ========================================================= */
 
 if (copyPaymentBtn) {
@@ -998,8 +1889,15 @@ if (copyPaymentBtn) {
         "click",
         async () => {
 
+            const method =
+                cleanString(
+                    paymentMethod?.value
+                );
+
+
             const value =
-                copyPaymentBtn.dataset.value;
+                paymentInfo[method]
+                    ?.value;
 
 
             if (!value) {
@@ -1009,12 +1907,11 @@ if (copyPaymentBtn) {
 
             try {
 
-                await navigator.clipboard.writeText(
-                    value
-                );
+                await navigator.clipboard
+                    .writeText(value);
 
 
-                const originalText =
+                const original =
                     copyPaymentBtn.textContent;
 
 
@@ -1026,7 +1923,7 @@ if (copyPaymentBtn) {
                     () => {
 
                         copyPaymentBtn.textContent =
-                            originalText;
+                            original;
 
                     },
                     1500
@@ -1049,46 +1946,118 @@ if (copyPaymentBtn) {
 
 
 /* =========================================================
-   SUPPORT FORM OPEN
+   CURRENCY
 ========================================================= */
+
+const currency =
+    document.getElementById(
+        "supportCurrency"
+    );
+
+const currencyTrigger =
+    document.getElementById(
+        "currencyTrigger"
+    );
+
+const currencyLabel =
+    document.getElementById(
+        "currencyLabel"
+    );
+
+const currencyMenu =
+    document.getElementById(
+        "currencyMenu"
+    );
+
 
 if (
-    supportBtn &&
-    supportSection
+    currencyTrigger &&
+    currencyMenu
 ) {
 
-    supportBtn.addEventListener(
+    currencyTrigger.addEventListener(
         "click",
-        () => {
+        event => {
 
-            supportSection.hidden =
-                false;
+            event.stopPropagation();
 
+            currencyMenu.classList
+                .toggle("active");
 
-            if (formSuccess) {
-
-                formSuccess.hidden =
-                    true;
-
-            }
+        }
+    );
 
 
-            if (supportForm) {
+    currencyMenu.addEventListener(
+        "click",
+        event => {
 
-                supportForm.hidden =
-                    false;
+            event.stopPropagation();
 
-            }
+        }
+    );
 
 
-            supportSection.scrollIntoView({
-                behavior:
-                    "smooth",
+    const options =
+        currencyMenu.querySelectorAll(
+            "[data-value]"
+        );
 
-                block:
-                    "start"
 
-            });
+    options.forEach(
+        option => {
+
+            option.addEventListener(
+                "click",
+                () => {
+
+                    const value =
+                        option.dataset.value;
+
+
+                    if (!value) {
+                        return;
+                    }
+
+
+                    if (currency) {
+
+                        currency.value =
+                            value;
+
+                    }
+
+
+                    if (currencyLabel) {
+
+                        currencyLabel.textContent =
+                            option.textContent
+                                .trim();
+
+                    }
+
+
+                    options.forEach(
+                        item =>
+                            item.classList
+                                .remove(
+                                    "active"
+                                )
+                    );
+
+
+                    option.classList.add(
+                        "active"
+                    );
+
+
+                    currencyMenu.classList
+                        .remove(
+                            "active"
+                        );
+
+                }
+            );
 
         }
     );
@@ -1097,52 +2066,45 @@ if (
 
 
 /* =========================================================
-   CANCEL SUPPORT
+   PAYMENT PROOF
 ========================================================= */
 
-if (cancelSupport) {
-
-    cancelSupport.addEventListener(
-        "click",
-        () => {
-
-            supportSection.hidden =
-                true;
-
-            closeAllDropdowns();
-
-        }
+const paymentProof =
+    document.getElementById(
+        "supportProof"
     );
 
-}
+const uploadText =
+    document.getElementById(
+        "uploadText"
+    );
 
 
-/* =========================================================
-   FILE UPLOAD
-========================================================= */
+if (paymentProof) {
 
-if (supportProof) {
-
-    supportProof.addEventListener(
+    paymentProof.addEventListener(
         "change",
         () => {
 
-            const file =
-                supportProof.files[0];
+            if (!uploadText) {
+                return;
+            }
 
 
-            if (!file) {
+            if (
+                paymentProof.files &&
+                paymentProof.files.length
+            ) {
+
+                uploadText.textContent =
+                    paymentProof.files[0].name;
+
+            } else {
 
                 uploadText.textContent =
                     "Upload payment proof";
 
-                return;
-
             }
-
-
-            uploadText.textContent =
-                file.name;
 
         }
     );
@@ -1151,20 +2113,70 @@ if (supportProof) {
 
 
 /* =========================================================
-   NOTE CHARACTER COUNT
+   NOTE
 ========================================================= */
 
+const supportMessage =
+    document.getElementById(
+        "supportNote"
+    );
+
+const messageCount =
+    document.getElementById(
+        "characterCount"
+    );
+
+
 if (
-    supportNote &&
-    characterCount
+    supportMessage &&
+    messageCount
 ) {
 
-    supportNote.addEventListener(
+    function updateMessageCount() {
+
+        messageCount.textContent =
+            `${supportMessage.value.length} / 150`;
+
+    }
+
+
+    supportMessage.addEventListener(
         "input",
+        updateMessageCount
+    );
+
+
+    updateMessageCount();
+
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+const formSuccess =
+    document.getElementById(
+        "formSuccess"
+    );
+
+const successClose =
+    document.getElementById(
+        "successClose"
+    );
+
+
+if (
+    formSuccess &&
+    successClose
+) {
+
+    successClose.addEventListener(
+        "click",
         () => {
 
-            characterCount.textContent =
-                `${supportNote.value.length} / 150`;
+            formSuccess.hidden =
+                true;
 
         }
     );
@@ -1185,1763 +2197,304 @@ if (supportForm) {
             event.preventDefault();
 
 
-            if (
-                !supportForm.checkValidity()
-            ) {
+            /*
+               IMPORTANT:
 
-                supportForm.reportValidity();
+               Firebase is used for READ.
 
-                return;
+               Apps Script is only needed here
+               if you want to submit the form
+               into Google Sheets.
+            */
 
-            }
 
-
-            const selectedMethod =
-                supportPaymentMethod?.value ||
-                "";
-
-
-            const selectedCurrency =
-                supportCurrency?.value ||
-                "";
-
-
-            const amount =
-                supportAmount?.value ||
-                "";
-
-
-            if (!selectedMethod) {
-
-                alert(
-                    "Please select a payment method."
-                );
-
-                return;
-
-            }
-
-
-            if (!selectedCurrency) {
-
-                alert(
-                    "Please select a currency."
-                );
-
-                return;
-
-            }
-
-
-            if (
-                !amount ||
-                Number(amount) <= 0
-            ) {
-
-                alert(
-                    "Please enter a valid amount."
-                );
-
-                return;
-
-            }
-
-
-            const file =
-                supportProof?.files?.[0];
-
-
-            if (!file) {
-
-                alert(
-                    "Please upload your payment proof."
-                );
-
-                return;
-
-            }
-
-
-            const displayName =
-                supportForm.querySelector(
-                    'input[name="display"]:checked'
-                );
-
-
-            const formData = {
-
-                action:
-                    "submitFunding",
-
-                name:
-                    supportName?.value.trim() ||
-                    "",
-
-                method:
-                    selectedMethod,
-
-                currency:
-                    selectedCurrency,
-
-                submittedAmount:
-                    Number(amount),
-
-                message:
-                    supportNote?.value.trim() ||
-                    "",
-
-                displayName:
-                    displayName
-                        ? displayName.value
-                        : "public",
-
-                proof:
-                    await fileToBase64(
-                        file
-                    )
-
-            };
-
-
-            try {
-
-                const submitButton =
-                    document.getElementById(
-                        "submitSupport"
-                    );
-
-
-                if (submitButton) {
-
-                    submitButton.disabled =
-                        true;
-
-                    submitButton.textContent =
-                        "Submitting...";
-
-                }
-
-
-                if (
-                    !API_URL ||
-                    API_URL ===
-                    "YOUR_APPS_SCRIPT_WEB_APP_URL"
-                ) {
-
-                    throw new Error(
-                        "Funding API URL has not been configured."
-                    );
-
-                }
-
-
-                const response =
-                    await fetch(
-                        API_URL,
-                        {
-
-                            method:
-                                "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "text/plain;charset=utf-8"
-
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    formData
-                                )
-
-                        }
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `HTTP ${response.status}`
-                    );
-
-                }
-
-
-                const result =
-                    await response.json();
-
-
-                if (!result.success) {
-
-                    throw new Error(
-                        result.message ||
-                        "Submission failed."
-                    );
-
-                }
-
-
-                /*
-                 * SUCCESS
-                 */
-
-                supportForm.hidden =
-                    true;
-
-
-                if (formSuccess) {
-
-                    formSuccess.hidden =
-                        false;
-
-                }
-
-
-                supportForm.reset();
-
-
-                resetFundingForm();
-
-
-            } catch (error) {
-
-                console.error(
-                    "Funding submission error:",
-                    error
-                );
-
-
-                alert(
-                    error.message ||
-                    "Something went wrong. Please try again."
-                );
-
-
-            } finally {
-
-                const submitButton =
-                    document.getElementById(
-                        "submitSupport"
-                    );
-
-
-                if (submitButton) {
-
-                    submitButton.disabled =
-                        false;
-
-                    submitButton.textContent =
-                        "Submit Support";
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   RESET FORM UI
-========================================================= */
-
-function resetFundingForm() {
-
-    if (supportPaymentMethod) {
-
-        supportPaymentMethod.value =
-            "";
-
-    }
-
-
-    if (paymentMethodLabel) {
-
-        paymentMethodLabel.textContent =
-            "Select payment method";
-
-    }
-
-
-    paymentMethodOptions.forEach(
-        option => {
-
-            option.classList.remove(
-                "active"
+            alert(
+                "The funding form submission endpoint has not been configured yet."
             );
 
         }
     );
 
-
-    if (supportCurrency) {
-
-        supportCurrency.value =
-            "";
-
-    }
+}
 
 
-    if (currencyLabel) {
+/* =========================================================
+   RENDER ALL
+========================================================= */
 
-        currencyLabel.textContent =
-            "Select currency";
+function renderAll() {
 
-    }
-
-
-    currencyOptions.forEach(
-        option => {
-
-            option.classList.remove(
-                "active"
-            );
-
-        }
-    );
+    calculateCampaignTarget();
 
 
-    if (uploadText) {
-
-        uploadText.textContent =
-            "Upload payment proof";
-
-    }
+    updateCampaign("kofi");
+    updateCampaign("ewallet");
 
 
-    if (characterCount) {
-
-        characterCount.textContent =
-            "0 / 150";
-
-    }
+    renderFundingGoals("kofi");
+    renderFundingGoals("ewallet");
 
 
-    if (paymentDestination) {
-
-        paymentDestination.hidden =
-            true;
-
-    }
+    renderCurrencySummary("kofi");
+    renderCurrencySummary("ewallet");
 
 
-    closeAllDropdowns();
+    renderTransactions("kofi");
+    renderTransactions("ewallet");
 
 }
 
 
 /* =========================================================
-   SUCCESS CLOSE
+   LOADING
 ========================================================= */
 
-if (successClose) {
+function showLoading() {
 
-    successClose.addEventListener(
-        "click",
-        () => {
+    [
+        "goalListKofi",
+        "goalListEwallet"
+    ].forEach(
+        id => {
 
-            if (formSuccess) {
+            const element =
+                document.getElementById(id);
 
-                formSuccess.hidden =
-                    true;
+            if (element) {
 
-            }
-
-
-            if (supportForm) {
-
-                supportForm.hidden =
-                    false;
-
-            }
-
-
-            if (supportSection) {
-
-                supportSection.hidden =
-                    true;
+                element.innerHTML = `
+                    <div class="funding-loading">
+                        Loading...
+                    </div>
+                `;
 
             }
 
         }
     );
-
-}
-
-
-/* =========================================================
-   FORMAT CURRENCY
-========================================================= */
-
-function formatCurrency(
-    amount,
-    currencyCode
-) {
-
-    const number =
-        Number(amount) || 0;
-
-
-    try {
-
-        return new Intl.NumberFormat(
-            "en-US",
-            {
-
-                style:
-                    "currency",
-
-                currency:
-                    currencyCode,
-
-                maximumFractionDigits:
-                    currencyCode === "IDR"
-                        ? 0
-                        : 2
-
-            }
-        ).format(number);
-
-
-    } catch (error) {
-
-        return `${currencyCode} ${number.toLocaleString()}`;
-
-    }
-
-}
-
-
-/* =========================================================
-   FORMAT DATE
-========================================================= */
-
-function formatDate(
-    value
-) {
-
-    if (!value) {
-        return "-";
-    }
-
-
-    const date =
-        new Date(value);
-
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return value;
-
-    }
-
-
-    return date.toLocaleDateString(
-        "en-US",
-        {
-
-            year:
-                "numeric",
-
-            month:
-                "short",
-
-            day:
-                "numeric"
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   GET TRANSACTION DATE
-========================================================= */
-
-function getTransactionDate(
-    transaction
-) {
-
-    return (
-        transaction.submittedAt ||
-        transaction.date ||
-        transaction.createdAt ||
-        ""
-    );
-
-}
-
-
-/* =========================================================
-   CONVERT TO ESTIMATED USD
-========================================================= */
-
-function convertToEstimatedUSD(
-    amount,
-    currencyCode
-) {
-
-    const number =
-        Number(amount) || 0;
-
-
-    const rate =
-        estimatedRates[
-            currencyCode
-        ] || 0;
-
-
-    return number * rate;
-
-}
-
-
-/* =========================================================
-   UPDATE PROGRESS
-========================================================= */
-
-function updateProgress() {
-
-    const totalUSD =
-        transactions.reduce(
-            (
-                total,
-                transaction
-            ) => {
-
-                return total +
-                    convertToEstimatedUSD(
-                        transaction.actualReceived,
-                        transaction.currency
-                    );
-
-            },
-            0
-        );
-
-
-    const raisedText =
-        `~$${Math.round(
-            totalUSD
-        ).toLocaleString(
-            "en-US"
-        )}`;
-
-
-    const targetText =
-        campaignTargetUSD > 0
-            ? `Goal: ~$${Math.round(
-                campaignTargetUSD
-            ).toLocaleString(
-                "en-US"
-            )}`
-            : "Goal: ~$0";
 
 
     [
-        raisedAmountKofi,
-        raisedAmountEwallet
-    ]
-        .forEach(
-            element => {
+        "transactionListKofi",
+        "transactionListEwallet"
+    ].forEach(
+        id => {
 
-                if (element) {
+            const element =
+                document.getElementById(id);
 
-                    element.textContent =
-                        raisedText;
+            if (element) {
 
-                }
-
-            }
-        );
-
-
-    [
-        fundingTargetKofi,
-        fundingTargetEwallet
-    ]
-        .forEach(
-            element => {
-
-                if (element) {
-
-                    element.textContent =
-                        targetText;
-
-                }
+                element.innerHTML = `
+                    <div class="funding-loading">
+                        Loading...
+                    </div>
+                `;
 
             }
-        );
-
-
-    let percentage =
-        0;
-
-
-    if (
-        campaignTargetUSD > 0
-    ) {
-
-        percentage =
-            Math.min(
-                (
-                    totalUSD /
-                    campaignTargetUSD
-                ) * 100,
-                100
-            );
-
-    }
-
-
-    const percentageText =
-        `${Math.round(
-            percentage
-        )}%`;
-
-
-    [
-        progressPercentKofi,
-        progressPercentEwallet
-    ]
-        .forEach(
-            element => {
-
-                if (element) {
-
-                    element.textContent =
-                        percentageText;
-
-                }
-
-            }
-        );
-
-
-    [
-        progressFillKofi,
-        progressFillEwallet
-    ]
-        .forEach(
-            element => {
-
-                if (element) {
-
-                    element.style.width =
-                        `${percentage}%`;
-
-                }
-
-            }
-        );
-
-}
-
-
-/* =========================================================
-   RENDER CURRENCY SUMMARY
-========================================================= */
-
-function renderCurrencySummary(
-    container
-) {
-
-    if (!container) {
-        return;
-    }
-
-
-    const totals = {};
-
-
-    transactions.forEach(
-        transaction => {
-
-            const code =
-                transaction.currency;
-
-
-            const amount =
-                Number(
-                    transaction.actualReceived
-                ) || 0;
-
-
-            if (!code) {
-                return;
-            }
-
-
-            totals[code] =
-                (
-                    totals[code] || 0
-                ) + amount;
 
         }
     );
 
-
-    const currencies =
-        Object.keys(
-            totals
-        );
-
-
-    if (!currencies.length) {
-
-        container.innerHTML =
-            "";
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        currencies
-            .sort()
-            .map(
-                code => {
-
-                    return `
-                        <div class="currency-total">
-
-                            <span>
-                                ${escapeHTML(code)}
-                            </span>
-
-                            <strong>
-                                ${escapeHTML(
-                                    formatCurrency(
-                                        totals[code],
-                                        code
-                                    )
-                                )}
-                            </strong>
-
-                        </div>
-                    `;
-
-                }
-            )
-            .join("");
-
 }
 
 
 /* =========================================================
-   RENDER FUNDING GOALS
-========================================================= */
-
-function renderFundingGoals(
-    container
-) {
-
-    if (!container) {
-        return;
-    }
-
-
-    const activeGoals =
-        fundingGoals.filter(
-            goal =>
-                isActive(goal)
-        );
-
-
-    if (!activeGoals.length) {
-
-        container.innerHTML = `
-            <div class="empty-state">
-                No funding goals available.
-            </div>
-        `;
-
-        updateCampaignTarget();
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        activeGoals
-            .map(
-                goal => {
-
-                    const icon =
-                        goal.icon ||
-                        "💚";
-
-
-                    const goalName =
-                        goal.goal ||
-                        "";
-
-
-                    const description =
-                        goal.description ||
-                        "";
-
-
-                    const amount =
-                        Number(
-                            goal.amount
-                        ) || 0;
-
-
-                    const code =
-                        goal.currency ||
-                        "USD";
-
-
-                    return `
-                        <div class="funding-goal">
-
-                            <div class="goal-icon">
-                                ${escapeHTML(icon)}
-                            </div>
-
-                            <div class="goal-content">
-
-                                <strong>
-                                    ${escapeHTML(goalName)}
-                                </strong>
-
-                                ${
-                                    description
-                                        ? `
-                                            <p>
-                                                ${escapeHTML(
-                                                    description
-                                                )}
-                                            </p>
-                                        `
-                                        : ""
-                                }
-
-                            </div>
-
-                            <div class="goal-amount">
-
-                                ${escapeHTML(
-                                    formatCurrency(
-                                        amount,
-                                        code
-                                    )
-                                )}
-
-                            </div>
-
-                        </div>
-                    `;
-
-                }
-            )
-            .join("");
-
-
-    updateCampaignTarget();
-
-}
-
-
-/* =========================================================
-   UPDATE CAMPAIGN TARGET
-========================================================= */
-
-function updateCampaignTarget() {
-
-    campaignTargetUSD =
-        fundingGoals
-            .filter(
-                goal =>
-                    isActive(goal)
-            )
-            .reduce(
-                (
-                    total,
-                    goal
-                ) => {
-
-                    return total +
-                        convertToEstimatedUSD(
-                            goal.amount,
-                            goal.currency
-                        );
-
-                },
-                0
-            );
-
-
-    updateProgress();
-
-}
-
-
-/* =========================================================
-   RENDER TRANSACTIONS
-========================================================= */
-
-function renderTransactions(
-    container
-) {
-
-    if (!container) {
-        return;
-    }
-
-
-    if (!transactions.length) {
-
-        container.innerHTML = `
-            <div class="empty-state">
-                No verified contributions yet.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        transactions
-            .map(
-                transaction => {
-
-                    const name =
-                        transaction.displayName ===
-                        "anonymous"
-
-                            ? "Anonymous"
-
-                            : (
-                                transaction.name ||
-                                "Supporter"
-                            );
-
-
-                    const currencyCode =
-                        transaction.currency ||
-                        "USD";
-
-
-                    const amount =
-                        Number(
-                            transaction.actualReceived
-                        ) || 0;
-
-
-                    const message =
-                        transaction.message ||
-                        transaction.note ||
-                        "";
-
-
-                    const date =
-                        formatDate(
-                            getTransactionDate(
-                                transaction
-                            )
-                        );
-
-
-                    return `
-                        <div class="transaction-item">
-
-                            <div class="transaction-main">
-
-                                <div class="transaction-name">
-                                    ${escapeHTML(name)}
-                                </div>
-
-                                ${
-                                    message
-                                        ? `
-                                            <div class="transaction-message">
-                                                ${escapeHTML(message)}
-                                            </div>
-                                        `
-                                        : ""
-                                }
-
-                                <div class="transaction-date">
-                                    ${escapeHTML(date)}
-                                </div>
-
-                            </div>
-
-                            <div class="transaction-amount">
-
-                                ${escapeHTML(
-                                    formatCurrency(
-                                        amount,
-                                        currencyCode
-                                    )
-                                )}
-
-                            </div>
-
-                        </div>
-                    `;
-
-                }
-            )
-            .join("");
-
-}
-
-
-/* =========================================================
-   SORT TRANSACTIONS
-========================================================= */
-
-function sortTransactions() {
-
-    /*
-     * Use the currently visible tab's sort.
-     */
-
-    const activeContent =
-        document.querySelector(
-            ".funding-content.active"
-        );
-
-
-    let mode =
-        "latest";
-
-
-    if (
-        activeContent?.dataset.method ===
-        "ewallet"
-    ) {
-
-        mode =
-            sortSelectEwallet?.value ||
-            "latest";
-
-    } else {
-
-        mode =
-            sortSelectKofi?.value ||
-            "latest";
-
-    }
-
-
-    const sortedTransactions =
-        [...transactions];
-
-
-    sortedTransactions.sort(
-        (
-            a,
-            b
-        ) => {
-
-            if (
-                mode === "latest"
-            ) {
-
-                return (
-                    new Date(
-                        getTransactionDate(b)
-                    ) -
-                    new Date(
-                        getTransactionDate(a)
-                    )
-                );
-
-            }
-
-
-            if (
-                mode === "oldest"
-            ) {
-
-                return (
-                    new Date(
-                        getTransactionDate(a)
-                    ) -
-                    new Date(
-                        getTransactionDate(b)
-                    )
-                );
-
-            }
-
-
-            if (
-                mode === "highest"
-            ) {
-
-                return (
-                    convertToEstimatedUSD(
-                        b.actualReceived,
-                        b.currency
-                    ) -
-                    convertToEstimatedUSD(
-                        a.actualReceived,
-                        a.currency
-                    )
-                );
-
-            }
-
-
-            if (
-                mode === "currency"
-            ) {
-
-                return (
-                    (
-                        a.currency ||
-                        ""
-                    ).localeCompare(
-                        b.currency ||
-                        ""
-                    )
-                );
-
-            }
-
-
-            return 0;
-
-        }
-    );
-
-
-    /*
-     * Temporarily use sorted data for rendering.
-     */
-
-    const original =
-        transactions;
-
-
-    transactions =
-        sortedTransactions;
-
-
-    renderTransactions(
-        transactionListKofi
-    );
-
-    renderTransactions(
-        transactionListEwallet
-    );
-
-
-    transactions =
-        original;
-
-}
-
-
-/* =========================================================
-   LOAD FUNDING DATA
+   LOAD FUNDING FROM FIREBASE
 ========================================================= */
 
 async function loadFundingData() {
 
-    if (
-        !API_URL ||
-        API_URL ===
-        "YOUR_APPS_SCRIPT_WEB_APP_URL"
-    ) {
-
-        console.warn(
-            "Funding API URL has not been configured."
-        );
-
-
-        renderFundingGoals(
-            goalListKofi
-        );
-
-
-        renderFundingGoals(
-            goalListEwallet
-        );
-
-
-        renderTransactions(
-            transactionListKofi
-        );
-
-
-        renderTransactions(
-            transactionListEwallet
-        );
-
-
-        updateProgress();
-
-        return;
-
-    }
+    showLoading();
 
 
     try {
 
-        const response =
-            await fetch(
-                `${API_URL}?action=getFunding`
+        /* =================================================
+           FUNDING
+        ================================================= */
+
+        const fundingSnapshot =
+            await get(
+                ref(
+                    db,
+                    "funding"
+                )
             );
 
 
-        if (!response.ok) {
+        if (
+            fundingSnapshot.exists()
+        ) {
 
-            throw new Error(
-                `HTTP ${response.status}`
-            );
+            const firebaseData =
+                fundingSnapshot.val();
+
+
+            allFunding =
+                Object.entries(
+                    firebaseData
+                )
+                .map(
+                    ([id, item]) =>
+                        normalizeFunding(
+                            item || {},
+                            id
+                        )
+                );
+
+        } else {
+
+            allFunding = [];
 
         }
 
 
-        const data =
-            await response.json();
+        /* =================================================
+           FUNDING GOALS
+        ================================================= */
 
-
-        if (!data.success) {
-
-            throw new Error(
-                data.message ||
-                "Failed to load funding data."
+        const goalsSnapshot =
+            await get(
+                ref(
+                    db,
+                    "fundingGoals"
+                )
             );
+
+
+        if (
+            goalsSnapshot.exists()
+        ) {
+
+            const firebaseData =
+                goalsSnapshot.val();
+
+
+            allGoals =
+                Object.entries(
+                    firebaseData
+                )
+                .map(
+                    ([id, item]) =>
+                        normalizeGoal(
+                            item || {},
+                            id
+                        )
+                );
+
+        } else {
+
+            allGoals = [];
 
         }
 
 
-        transactions =
-            Array.isArray(
-                data.transactions
-            )
+        /* =================================================
+           FUNDING EXPENSES
+        ================================================= */
 
-                ? data.transactions
-                    .map(
-                        normalizeTransaction
-                    )
-                    .filter(
-                        isReceived
-                    )
-
-                : [];
+        const expensesSnapshot =
+            await get(
+                ref(
+                    db,
+                    "fundingExpenses"
+                )
+            );
 
 
-        fundingGoals =
-            Array.isArray(
-                data.goals
-            )
+        if (
+            expensesSnapshot.exists()
+        ) {
 
-                ? data.goals
-                    .map(
-                        normalizeGoal
-                    )
-                    .filter(
-                        isActive
-                    )
-
-                : [];
+            const firebaseData =
+                expensesSnapshot.val();
 
 
-        renderFundingGoals(
-            goalListKofi
+            allExpenses =
+                Object.entries(
+                    firebaseData
+                )
+                .map(
+                    ([id, item]) =>
+                        normalizeExpense(
+                            item || {},
+                            id
+                        )
+                );
+
+        } else {
+
+            allExpenses = [];
+
+        }
+
+
+        /* =================================================
+           DEBUG
+        ================================================= */
+
+        console.log(
+            "FIREBASE FUNDING:",
+            allFunding
+        );
+
+        console.log(
+            "FIREBASE FUNDING GOALS:",
+            allGoals
+        );
+
+        console.log(
+            "FIREBASE FUNDING EXPENSES:",
+            allExpenses
         );
 
 
-        renderFundingGoals(
-            goalListEwallet
-        );
+        /*
+           Optional global access for debugging
+        */
+
+        window.allFunding =
+            allFunding;
+
+        window.allFundingGoals =
+            allGoals;
+
+        window.allFundingExpenses =
+            allExpenses;
 
 
-        renderCurrencySummary(
-            currencySummaryKofi
-        );
+        /* =================================================
+           RENDER
+        ================================================= */
 
-
-        renderCurrencySummary(
-            currencySummaryEwallet
-        );
-
-
-        sortTransactions();
-
-
-        updateProgress();
+        renderAll();
 
 
     } catch (error) {
 
         console.error(
-            "Failed to load funding data:",
+            "Failed to load Funding from Firebase:",
             error
         );
 
 
-        if (goalListKofi) {
-
-            goalListKofi.innerHTML = `
-                <div class="empty-state">
-                    Unable to load funding goals.
-                </div>
-            `;
-
-        }
-
-
-        if (goalListEwallet) {
-
-            goalListEwallet.innerHTML = `
-                <div class="empty-state">
-                    Unable to load funding goals.
-                </div>
-            `;
-
-        }
-
-
-        if (transactionListKofi) {
-
-            transactionListKofi.innerHTML = `
-                <div class="empty-state">
-                    Unable to load verified contributions.
-                </div>
-            `;
-
-        }
-
-
-        if (transactionListEwallet) {
-
-            transactionListEwallet.innerHTML = `
-                <div class="empty-state">
-                    Unable to load verified contributions.
-                </div>
-            `;
-
-        }
-
-    }
-
-}
-
-
-/* =========================================================
-   NORMALIZE TRANSACTION
-========================================================= */
-
-function normalizeTransaction(
-    item
-) {
-
-    return {
-
-        id:
-            item.ID ??
-            item.id ??
-            "",
-
-
-        submittedAt:
-            item["Submitted At"] ??
-            item.submittedAt ??
-            item.date ??
-            "",
-
-
-        name:
-            item.Name ??
-            item.name ??
-            "",
-
-
-        method:
-            item.Method ??
-            item.method ??
-            "",
-
-
-        currency:
-            String(
-                item.Currency ??
-                item.currency ??
-                "USD"
-            ).toUpperCase(),
-
-
-        submittedAmount:
-            Number(
-                item["Submitted Amount"] ??
-                item.submittedAmount ??
-                item.amount ??
-                0
-            ),
-
-
-        actualReceived:
-            Number(
-                item["Actual Received"] ??
-                item.actualReceived ??
-                0
-            ),
-
-
-        proof:
-            item.Proof ??
-            item.proof ??
-            "",
-
-
-        note:
-            item.Note ??
-            item.note ??
-            item.Message ??
-            item.message ??
-            "",
-
-
-        message:
-            item.Note ??
-            item.note ??
-            item.Message ??
-            item.message ??
-            "",
-
-
-        displayName:
-            String(
-                item.Display ??
-                item.displayName ??
-                "public"
-            ).toLowerCase(),
-
-
-        received:
-            item.Received ??
-            item.received ??
-            false
-
-    };
-
-}
-
-
-/* =========================================================
-   NORMALIZE GOAL
-========================================================= */
-
-function normalizeGoal(
-    item
-) {
-
-    return {
-
-        id:
-            item.ID ??
-            item.id ??
-            "",
-
-
-        icon:
-            item.Icon ??
-            item.icon ??
-            "💚",
-
-
-        goal:
-            item.Goal ??
-            item.goal ??
-            "",
-
-
-        description:
-            item.Description ??
-            item.description ??
-            "",
-
-
-        amount:
-            Number(
-                item.Amount ??
-                item.amount ??
-                0
-            ),
-
-
-        currency:
-            String(
-                item.Currency ??
-                item.currency ??
-                "USD"
-            ).toUpperCase(),
-
-
-        active:
-            item.Active ??
-            item.active ??
-            true
-
-    };
-
-}
-
-
-/* =========================================================
-   RECEIVED CHECK
-========================================================= */
-
-function isReceived(
-    transaction
-) {
-
-    const value =
-        transaction.received;
-
-
-    if (
-        value === true ||
-        value === 1
-    ) {
-
-        return true;
-
-    }
-
-
-    if (
-        typeof value === "string"
-    ) {
-
-        return [
-            "true",
-            "yes",
-            "y",
-            "1",
-            "received"
-        ].includes(
-            value.trim().toLowerCase()
-        );
-
-    }
-
-
-    return false;
-
-}
-
-
-/* =========================================================
-   ACTIVE CHECK
-========================================================= */
-
-function isActive(
-    item
-) {
-
-    const value =
-        item.active;
-
-
-    if (
-        value === true ||
-        value === 1
-    ) {
-
-        return true;
-
-    }
-
-
-    if (
-        typeof value === "string"
-    ) {
-
-        return [
-            "true",
-            "yes",
-            "y",
-            "1",
-            "active"
-        ].includes(
-            value.trim().toLowerCase()
-        );
-
-    }
-
-
-    return false;
-
-}
-
-
-/* =========================================================
-   FILE → BASE64
-========================================================= */
-
-function fileToBase64(
-    file
-) {
-
-    return new Promise(
-        (
-            resolve,
-            reject
-        ) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                () => {
-
-                    const result =
-                        String(
-                            reader.result
-                        );
-
-
-                    const base64 =
-                        result.split(",")[1];
-
-
-                    resolve(
-                        base64
-                    );
-
-                };
-
-
-            reader.onerror =
-                error => {
-
-                    reject(
-                        error
-                    );
-
-                };
-
-
-            reader.readAsDataURL(
-                file
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(
-    value
-) {
-
-    return String(
-        value ?? ""
-    )
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-function initializeFunding() {
-
-    console.log(
-        "[FLARE U Funding] Initialized"
-    );
-
-
-    /* =========================
-       FUNDING STATE
-    ========================= */
-
-    updateFundingState();
-
-
-    if (FUNDING_ENABLED) {
-
-        switchFundingMethod(
-            "kofi"
-        );
-
-    }
-
-
-    /* =========================
-       DEFAULT SORT
-    ========================= */
-
-    if (sortSelectKofi) {
-
-        sortSelectKofi.value =
-            "latest";
-
-    }
-
-
-    if (sortSelectEwallet) {
-
-        sortSelectEwallet.value =
-            "latest";
-
-    }
-
-
-    /* =========================
-       INITIAL DISPLAY
-    ========================= */
-
-    [
-        raisedAmountKofi,
-        raisedAmountEwallet
-    ]
-        .forEach(
-            element => {
+        [
+            "goalListKofi",
+            "goalListEwallet"
+        ].forEach(
+            id => {
+
+                const element =
+                    document.getElementById(id);
 
                 if (element) {
 
-                    element.textContent =
-                        "~$0";
+                    element.innerHTML = `
+                        <div class="funding-error">
+                            Failed to load funding goals.
+                        </div>
+                    `;
 
                 }
 
@@ -2949,65 +2502,29 @@ function initializeFunding() {
         );
 
 
-    [
-        fundingTargetKofi,
-        fundingTargetEwallet
-    ]
-        .forEach(
-            element => {
+        [
+            "transactionListKofi",
+            "transactionListEwallet"
+        ].forEach(
+            id => {
+
+                const element =
+                    document.getElementById(id);
 
                 if (element) {
 
-                    element.textContent =
-                        "Goal: ~$0";
+                    element.innerHTML = `
+                        <div class="funding-error">
+                            Failed to load funding data.
+                        </div>
+                    `;
 
                 }
 
             }
         );
 
-
-    [
-        progressPercentKofi,
-        progressPercentEwallet
-    ]
-        .forEach(
-            element => {
-
-                if (element) {
-
-                    element.textContent =
-                        "0%";
-
-                }
-
-            }
-        );
-
-
-    [
-        progressFillKofi,
-        progressFillEwallet
-    ]
-        .forEach(
-            element => {
-
-                if (element) {
-
-                    element.style.width =
-                        "0%";
-
-                }
-
-            }
-        );
-
-
-    /* =========================
-       LOAD DATA
-    ========================= */
-
-    loadFundingData();
+    }
 
 }
 
@@ -3016,18 +2533,22 @@ function initializeFunding() {
    START
 ========================================================= */
 
-if (
-    document.readyState ===
-    "loading"
-) {
+function initFunding() {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeFunding
-    );
+    applyFundingState();
 
-} else {
+    setupMethodTabs();
 
-    initializeFunding();
+    setupSortDropdown("kofi");
+    setupSortDropdown("ewallet");
+
+    syncSortDropdowns();
+
+    updatePaymentDestination();
+
+    loadFundingData();
 
 }
+
+
+initFunding();
