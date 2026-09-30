@@ -1,7 +1,7 @@
 /* =========================================================
    FLARE U GLOBAL
    FUNDING / DONATION
-   FIREBASE VERSION
+   FIREBASE READ + GOOGLE APPS SCRIPT WRITE
 ========================================================= */
 
 import {
@@ -10,6 +10,21 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
 import { db } from "./firebase.js";
+
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+/*
+   PASTE GOOGLE APPS SCRIPT WEB APP URL HERE
+
+   Example:
+   const APPS_SCRIPT_URL =
+       "https://script.google.com/macros/s/XXXXXXXX/exec";
+*/
+
+const APPS_SCRIPT_URL = "";
 
 
 /* =========================================================
@@ -38,11 +53,17 @@ let campaignTargetUSD = 0;
 ========================================================= */
 
 const EXCHANGE_RATES = {
+
     USD: 1,
+
     IDR: 1 / 17000,
+
     THB: 1 / 32,
+
     TWD: 1 / 31,
+
     PHP: 1 / 58
+
 };
 
 
@@ -51,10 +72,14 @@ const EXCHANGE_RATES = {
 ========================================================= */
 
 const fundingClosed =
-    document.getElementById("fundingClosed");
+    document.getElementById(
+        "fundingClosed"
+    );
 
 const fundingMethodTabs =
-    document.querySelector(".funding-method-tabs");
+    document.querySelector(
+        ".funding-method-tabs"
+    );
 
 const fundingMethodFilters =
     document.querySelectorAll(
@@ -81,6 +106,7 @@ function cleanString(value) {
     }
 
     return String(value).trim();
+
 }
 
 
@@ -94,7 +120,9 @@ function toNumber(value) {
         return 0;
     }
 
-    if (typeof value === "number") {
+    if (
+        typeof value === "number"
+    ) {
 
         return Number.isFinite(value)
             ? value
@@ -112,17 +140,34 @@ function toNumber(value) {
     return Number.isFinite(number)
         ? number
         : 0;
+
 }
 
 
 function escapeHTML(value) {
 
     return cleanString(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 
@@ -147,12 +192,16 @@ function normalizeBoolean(value) {
         "received",
         "checked"
     ].includes(text);
+
 }
 
 
 function isReceived(value) {
 
-    return normalizeBoolean(value);
+    return normalizeBoolean(
+        value
+    );
+
 }
 
 
@@ -166,7 +215,10 @@ function isActive(value) {
         return true;
     }
 
-    return normalizeBoolean(value);
+    return normalizeBoolean(
+        value
+    );
+
 }
 
 
@@ -189,6 +241,7 @@ function parseDate(value) {
     return Number.isFinite(time)
         ? time
         : 0;
+
 }
 
 
@@ -206,7 +259,9 @@ function formatDate(value) {
             date.getTime()
         )
     ) {
-        return cleanString(value);
+        return cleanString(
+            value
+        );
     }
 
     return new Intl.DateTimeFormat(
@@ -221,6 +276,7 @@ function formatDate(value) {
             hour12: false
         }
     ).format(date);
+
 }
 
 
@@ -232,6 +288,7 @@ function normalizeCurrency(value) {
 
     return cleanString(value)
         .toUpperCase();
+
 }
 
 
@@ -241,7 +298,9 @@ function estimateUSD(
 ) {
 
     const code =
-        normalizeCurrency(currency);
+        normalizeCurrency(
+            currency
+        );
 
     const rate =
         EXCHANGE_RATES[code];
@@ -254,6 +313,7 @@ function estimateUSD(
         toNumber(amount) *
         rate
     );
+
 }
 
 
@@ -263,13 +323,17 @@ function formatCurrency(
 ) {
 
     const code =
-        normalizeCurrency(currency);
+        normalizeCurrency(
+            currency
+        );
 
     const number =
         toNumber(amount);
 
     if (!code) {
-        return String(number);
+        return String(
+            number
+        );
     }
 
     try {
@@ -291,6 +355,7 @@ function formatCurrency(
         return `${code} ${number}`;
 
     }
+
 }
 
 
@@ -368,7 +433,9 @@ function normalizeFunding(
             item.Received ??
             item.received ??
             false
+
     };
+
 }
 
 
@@ -423,7 +490,9 @@ function normalizeGoal(
                 item.Active ??
                 item.active
             )
+
     };
+
 }
 
 
@@ -477,7 +546,9 @@ function normalizeExpense(
             item.Proof ??
             item.proof ??
             ""
+
     };
+
 }
 
 
@@ -499,7 +570,9 @@ function applyFundingState() {
 
         fundingContents.forEach(
             content => {
+
                 content.hidden = true;
+
             }
         );
 
@@ -518,6 +591,7 @@ function applyFundingState() {
     switchFundingMethod(
         currentMethod
     );
+
 }
 
 
@@ -530,8 +604,9 @@ function switchFundingMethod(
 ) {
 
     method =
-        cleanString(method)
-            .toLowerCase();
+        cleanString(
+            method
+        ).toLowerCase();
 
 
     if (
@@ -545,10 +620,6 @@ function switchFundingMethod(
     currentMethod =
         method;
 
-
-    /* =========================
-       ACTIVE TAB
-    ========================= */
 
     fundingMethodFilters.forEach(
         button => {
@@ -567,10 +638,6 @@ function switchFundingMethod(
     );
 
 
-    /* =========================
-       SHOW ONLY CURRENT CONTENT
-    ========================= */
-
     fundingContents.forEach(
         content => {
 
@@ -581,8 +648,7 @@ function switchFundingMethod(
                             "funding-",
                             ""
                         )
-                )
-                .toLowerCase();
+                ).toLowerCase();
 
             content.hidden =
                 contentMethod !== method;
@@ -591,14 +657,11 @@ function switchFundingMethod(
     );
 
 
-    /* =========================
-       CLOSE E-WALLET FORM
-    ========================= */
-
     const supportSection =
         document.getElementById(
             "supportSection"
         );
+
 
     if (
         supportSection &&
@@ -639,6 +702,7 @@ function setupMethodTabs() {
     switchFundingMethod(
         currentMethod
     );
+
 }
 
 
@@ -666,6 +730,7 @@ function calculateCampaignTarget() {
 
         }
     );
+
 }
 
 
@@ -681,6 +746,7 @@ function getVerifiedFunding() {
                 item.received
             )
     );
+
 }
 
 
@@ -690,12 +756,15 @@ function getVerifiedFunding() {
 
 function normalizeMethod(value) {
 
-    return cleanString(value)
+    return cleanString(
+        value
+    )
         .toLowerCase()
         .replace(
             /[\s_-]+/g,
             ""
         );
+
 }
 
 
@@ -715,25 +784,26 @@ function methodMatches(
         );
 
 
-    if (target === "kofi") {
+    if (
+        target === "kofi"
+    ) {
 
-        return (
-            item === "kofi"
-        );
+        return item === "kofi";
 
     }
 
 
-    if (target === "ewallet") {
+    if (
+        target === "ewallet"
+    ) {
 
-        return (
-            item === "ewallet"
-        );
+        return item === "ewallet";
 
     }
 
 
     return false;
+
 }
 
 
@@ -770,6 +840,7 @@ function getRaisedUSD(
             },
             0
         );
+
 }
 
 
@@ -830,7 +901,7 @@ function updateCampaign(
     if (fundingTarget) {
 
         fundingTarget.textContent =
-            `$${target.toFixed(2)}`;
+            `Goal: $${target.toFixed(2)}`;
 
     }
 
@@ -967,6 +1038,7 @@ function renderFundingGoals(
                 `
             )
             .join("");
+
 }
 
 
@@ -1058,6 +1130,7 @@ function getTransactions(
 
 
     return transactions;
+
 }
 
 
@@ -1090,6 +1163,7 @@ function getDisplayName(
 
 
     return "Anonymous";
+
 }
 
 
@@ -1211,6 +1285,7 @@ function renderTransactions(
                 }
             )
             .join("");
+
 }
 
 
@@ -1304,6 +1379,7 @@ function renderCurrencySummary(
                 `
             )
             .join("");
+
 }
 
 
@@ -1324,11 +1400,6 @@ function setupSortDropdown(
     const trigger =
         document.getElementById(
             `sortTrigger${suffix}`
-        );
-
-    const label =
-        document.getElementById(
-            `sortLabel${suffix}`
         );
 
     const dropdown =
@@ -1480,6 +1551,10 @@ function setupSortDropdown(
 
 }
 
+
+/* =========================================================
+   SYNC SORT DROPDOWNS
+========================================================= */
 
 function syncSortDropdowns() {
 
@@ -1675,19 +1750,19 @@ const copyPaymentBtn =
 
 const paymentInfo = {
 
-    "QRIS": {
+    qris: {
         value: "",
         logo: "",
         alt: "QRIS"
     },
 
-    "G-Cash": {
+    gcash: {
         value: "",
         logo: "",
         alt: "G-Cash"
     },
 
-    "Other": {
+    other: {
         value: "",
         logo: "",
         alt: "Other"
@@ -1695,6 +1770,10 @@ const paymentInfo = {
 
 };
 
+
+/* =========================================================
+   UPDATE PAYMENT DESTINATION
+========================================================= */
 
 function updatePaymentDestination() {
 
@@ -1706,7 +1785,7 @@ function updatePaymentDestination() {
     const method =
         cleanString(
             paymentMethod.value
-        );
+        ).toLowerCase();
 
 
     const info =
@@ -1792,7 +1871,9 @@ if (
             event.stopPropagation();
 
             paymentMethodMenu.classList
-                .toggle("active");
+                .toggle(
+                    "active"
+                );
 
         }
     );
@@ -1822,7 +1903,9 @@ if (
                 () => {
 
                     const value =
-                        option.dataset.value;
+                        cleanString(
+                            option.dataset.value
+                        ).toLowerCase();
 
 
                     if (!value) {
@@ -1879,6 +1962,74 @@ if (
 
 
 /* =========================================================
+   COPY PAYMENT DESTINATION
+========================================================= */
+
+if (copyPaymentBtn) {
+
+    copyPaymentBtn.addEventListener(
+        "click",
+        async () => {
+
+            const text =
+                destinationContent
+                    ? cleanString(
+                        destinationContent
+                            .textContent
+                    )
+                    : "";
+
+
+            if (
+                !text ||
+                text ===
+                    "Payment destination will be provided here."
+            ) {
+                return;
+            }
+
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    text
+                );
+
+
+                const originalText =
+                    copyPaymentBtn.textContent;
+
+
+                copyPaymentBtn.textContent =
+                    "Copied";
+
+
+                setTimeout(
+                    () => {
+
+                        copyPaymentBtn.textContent =
+                            originalText;
+
+                    },
+                    1500
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Failed to copy payment destination:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
    CURRENCY DROPDOWN
 ========================================================= */
 
@@ -1915,7 +2066,9 @@ if (
             event.stopPropagation();
 
             currencyMenu.classList
-                .toggle("active");
+                .toggle(
+                    "active"
+                );
 
         }
     );
@@ -1945,7 +2098,9 @@ if (
                 () => {
 
                     const value =
-                        option.dataset.value;
+                        cleanString(
+                            option.dataset.value
+                        ).toUpperCase();
 
 
                     if (!value) {
@@ -2165,6 +2320,532 @@ document.addEventListener(
 
 
 /* =========================================================
+   FORM VALIDATION
+========================================================= */
+
+function validateSupportForm() {
+
+    if (!supportForm) {
+        return false;
+    }
+
+
+    const name =
+        document.getElementById(
+            "supportName"
+        );
+
+    const amount =
+        document.getElementById(
+            "supportAmount"
+        );
+
+
+    if (
+        !name ||
+        !cleanString(
+            name.value
+        )
+    ) {
+
+        alert(
+            "Please enter your name or nickname."
+        );
+
+        name?.focus();
+
+        return false;
+
+    }
+
+
+    if (
+        !paymentMethod ||
+        !cleanString(
+            paymentMethod.value
+        )
+    ) {
+
+        alert(
+            "Please select a payment method."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !currency ||
+        !cleanString(
+            currency.value
+        )
+    ) {
+
+        alert(
+            "Please select a currency."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !amount ||
+        toNumber(
+            amount.value
+        ) <= 0
+    ) {
+
+        alert(
+            "Please enter a valid payment amount."
+        );
+
+        amount?.focus();
+
+        return false;
+
+    }
+
+
+    if (
+        !paymentProof ||
+        !paymentProof.files ||
+        !paymentProof.files.length
+    ) {
+
+        alert(
+            "Please upload your payment proof."
+        );
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   FILE TO BASE64
+========================================================= */
+
+function fileToBase64(
+    file
+) {
+
+    return new Promise(
+        (
+            resolve,
+            reject
+        ) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload = () => {
+
+                resolve(
+                    reader.result
+                );
+
+            };
+
+
+            reader.onerror = () => {
+
+                reject(
+                    reader.error
+                );
+
+            };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SUBMIT TO GOOGLE APPS SCRIPT
+========================================================= */
+
+async function submitSupportToAppsScript() {
+
+    if (!APPS_SCRIPT_URL) {
+
+        throw new Error(
+            "Google Apps Script URL has not been configured."
+        );
+
+    }
+
+
+    const name =
+        document.getElementById(
+            "supportName"
+        );
+
+
+    const amount =
+        document.getElementById(
+            "supportAmount"
+        );
+
+
+    const note =
+        document.getElementById(
+            "supportNote"
+        );
+
+
+    const display =
+        document.querySelector(
+            'input[name="display"]:checked'
+        );
+
+
+    if (
+        !name ||
+        !amount ||
+        !paymentMethod ||
+        !currency ||
+        !paymentProof
+    ) {
+
+        throw new Error(
+            "Required form elements are missing."
+        );
+
+    }
+
+
+    const file =
+        paymentProof.files?.[0];
+
+
+    if (!file) {
+
+        throw new Error(
+            "Payment proof is required."
+        );
+
+    }
+
+
+    /* =========================
+       FILE VALIDATION
+    ========================= */
+
+    const allowedTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+    ];
+
+
+    if (
+        !allowedTypes.includes(
+            file.type
+        )
+    ) {
+
+        throw new Error(
+            "Payment proof must be PNG, JPG, or WEBP."
+        );
+
+    }
+
+
+    const maxFileSize =
+        5 * 1024 * 1024;
+
+
+    if (
+        file.size > maxFileSize
+    ) {
+
+        throw new Error(
+            "Payment proof must be 5 MB or smaller."
+        );
+
+    }
+
+
+    /* =========================
+       READ FILE
+    ========================= */
+
+    const base64 =
+        await fileToBase64(
+            file
+        );
+
+
+    const payload = {
+
+        action:
+            "submitFunding",
+
+        name:
+            cleanString(
+                name.value
+            ),
+
+        paymentMethod:
+            cleanString(
+                paymentMethod.value
+            ).toLowerCase(),
+
+        currency:
+            cleanString(
+                currency.value
+            ).toUpperCase(),
+
+        amount:
+            toNumber(
+                amount.value
+            ),
+
+        proofName:
+            file.name,
+
+        proofType:
+            file.type,
+
+        proofData:
+            base64,
+
+        note:
+            note
+                ? cleanString(
+                    note.value
+                )
+                : "",
+
+        display:
+            display
+                ? display.value
+                : "anonymous"
+
+    };
+
+
+    console.log(
+        "Submitting funding:",
+        {
+            ...payload,
+            proofData:
+                "[base64 omitted]"
+        }
+    );
+
+
+    /*
+       IMPORTANT:
+
+       Apps Script receives this JSON body.
+    */
+
+    const response =
+        await fetch(
+            APPS_SCRIPT_URL,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+
+                body:
+                    JSON.stringify(
+                        payload
+                    )
+
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            `Server returned HTTP ${response.status}.`
+        );
+
+    }
+
+
+    const text =
+        await response.text();
+
+
+    let result;
+
+
+    try {
+
+        result =
+            JSON.parse(
+                text
+            );
+
+    } catch {
+
+        console.error(
+            "Invalid Apps Script response:",
+            text
+        );
+
+        throw new Error(
+            "Invalid response from the funding server."
+        );
+
+    }
+
+
+    if (
+        !result.success
+    ) {
+
+        throw new Error(
+            result.message ||
+            "The funding submission was rejected."
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetSupportForm() {
+
+    if (!supportForm) {
+        return;
+    }
+
+
+    supportForm.reset();
+
+
+    if (paymentMethod) {
+        paymentMethod.value = "";
+    }
+
+
+    if (currency) {
+        currency.value = "";
+    }
+
+
+    if (paymentMethodLabel) {
+
+        paymentMethodLabel.textContent =
+            "Select payment method";
+
+    }
+
+
+    if (currencyLabel) {
+
+        currencyLabel.textContent =
+            "Select currency";
+
+    }
+
+
+    if (paymentDestination) {
+
+        paymentDestination.hidden =
+            true;
+
+    }
+
+
+    if (paymentMethodLogo) {
+
+        paymentMethodLogo.hidden =
+            true;
+
+        paymentMethodLogo.innerHTML =
+            "";
+
+    }
+
+
+    if (destinationContent) {
+
+        destinationContent.textContent =
+            "";
+
+    }
+
+
+    if (uploadText) {
+
+        uploadText.textContent =
+            "Upload payment proof";
+
+    }
+
+
+    if (messageCount) {
+
+        messageCount.textContent =
+            "0 / 150";
+
+    }
+
+
+    document
+        .querySelectorAll(
+            "#paymentMethodMenu [data-value]"
+        )
+        .forEach(
+            option => {
+
+                option.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    document
+        .querySelectorAll(
+            "#currencyMenu [data-value]"
+        )
+        .forEach(
+            option => {
+
+                option.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
    FORM SUBMIT
 ========================================================= */
 
@@ -2177,17 +2858,131 @@ if (supportForm) {
             event.preventDefault();
 
 
-            /*
-               READ = FIREBASE
+            if (
+                !validateSupportForm()
+            ) {
+                return;
+            }
 
-               WRITE TO GOOGLE SHEET
-               WILL BE CONNECTED HERE
-               THROUGH APPS SCRIPT.
-            */
 
-            alert(
-                "The funding form submission endpoint has not been configured yet."
-            );
+            const submitButton =
+                document.getElementById(
+                    "submitSupport"
+                );
+
+
+            const originalText =
+                submitButton
+                    ? submitButton.textContent
+                    : "Submit Support";
+
+
+            try {
+
+                if (submitButton) {
+
+                    submitButton.disabled =
+                        true;
+
+                    submitButton.textContent =
+                        "Submitting...";
+
+                }
+
+
+                const result =
+                    await submitSupportToAppsScript();
+
+
+                console.log(
+                    "Funding submitted successfully:",
+                    result
+                );
+
+
+                supportForm.hidden =
+                    true;
+
+
+                if (formSuccess) {
+
+                    formSuccess.hidden =
+                        false;
+
+                    formSuccess.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+
+                resetSupportForm();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Funding submission failed:",
+                    error
+                );
+
+
+                alert(
+                    error?.message ||
+                    "Something went wrong while submitting your support."
+                );
+
+
+            } finally {
+
+                if (submitButton) {
+
+                    submitButton.disabled =
+                        false;
+
+                    submitButton.textContent =
+                        originalText;
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SUCCESS CLOSE
+========================================================= */
+
+if (
+    successClose &&
+    formSuccess
+) {
+
+    successClose.addEventListener(
+        "click",
+        () => {
+
+            formSuccess.hidden =
+                true;
+
+            if (supportSection) {
+
+                supportSection.hidden =
+                    true;
+
+            }
+
+            if (supportForm) {
+
+                supportForm.hidden =
+                    false;
+
+            }
 
         }
     );
@@ -2257,11 +3052,15 @@ function showLoading() {
         id => {
 
             const element =
-                document.getElementById(id);
+                document.getElementById(
+                    id
+                );
+
 
             if (!element) {
                 return;
             }
+
 
             element.innerHTML = `
                 <div class="funding-loading">
@@ -2458,11 +3257,15 @@ async function loadFundingData() {
             id => {
 
                 const element =
-                    document.getElementById(id);
+                    document.getElementById(
+                        id
+                    );
+
 
                 if (!element) {
                     return;
                 }
+
 
                 element.innerHTML = `
                     <div class="funding-error">
@@ -2481,11 +3284,15 @@ async function loadFundingData() {
             id => {
 
                 const element =
-                    document.getElementById(id);
+                    document.getElementById(
+                        id
+                    );
+
 
                 if (!element) {
                     return;
                 }
+
 
                 element.innerHTML = `
                     <div class="funding-error">
@@ -2509,19 +3316,25 @@ function initFunding() {
 
     setupMethodTabs();
 
+
     setupSortDropdown(
         "kofi"
     );
+
 
     setupSortDropdown(
         "ewallet"
     );
 
+
     syncSortDropdowns();
+
 
     updatePaymentDestination();
 
+
     applyFundingState();
+
 
     loadFundingData();
 
