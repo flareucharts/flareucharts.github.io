@@ -6,112 +6,25 @@
 :root {
     --funding-bg: #f5faf9;
     --funding-card: #ffffff;
+
     --theme: #91d3ca;
     --theme-dark: #5db7ab;
     --theme-soft: #e7eeee;
+
     --text: #263b40;
     --muted: #718083;
     --border: #e3ebeb;
+
     --radius-lg: 22px;
     --radius-md: 15px;
+
     --title: 22px;
 }
 
-#funding .global-content{
-    margin-bottom:16px !important;
-    padding:16px !important;
-}
 
 /* =========================================================
-   FUNDING PAGE
-========================================================= */
-
-#funding{
-    margin-top:0 !important;
-    padding:0 !important;
-}
-
-.page.funding-page{
-    width:100%;
-    max-width:768px;
-    margin:0 auto;
-    padding-top:0;
-}
-
-
-/* =========================================================
-   STICKY HEADER
-========================================================= */
-
-.page.funding-page .funding-sticky{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    width:100%;
-    background:#fff;
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.page.funding-page .funding-title{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:12px 16px 0 16px;
-}
-
-.page.funding-page .funding-title h2{
-    margin:0;
-
-    color:#111;
-
-    font-size:var(--title);
-    font-weight:700;
-
-    padding:0;
-}
-
-
-/* =========================================================
-   HOME BUTTON
-========================================================= */
-
-.page.funding-page .funding-title-home{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:25px;
-    height:25px;
-    flex:0 0 auto;
-    text-decoration:none;
-}
-
-.page.funding-page .funding-title-home img{
-    width:25px;
-    height:25px;
-    object-fit:contain;
-}
-
-
-/* =========================================================
-   STICKY BAR
-========================================================= */
-
-#funding .funding-sticky-bar{
-    position:sticky;
-    top:0;
-    z-index:50;
-    width:100%;
-    padding:12px 0 10px;
-    background:#fff;
-}
-
-/* =========================
    BASE
-========================= */
+========================================================= */
 
 * {
     box-sizing: border-box;
@@ -123,15 +36,17 @@ html {
 
 body {
     margin: 0;
+    padding: 0;
+
     background: var(--funding-bg);
     color: var(--text);
+
     font-family:
         Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-    padding:0:
 }
 
 button,
@@ -145,48 +60,289 @@ button {
     cursor: pointer;
 }
 
+[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   FUNDING PAGE
+========================================================= */
+
+#funding {
+    margin-top: 0 !important;
+    padding: 0 !important;
+}
+
+.page.funding-page {
+    width: 100%;
+    max-width: 768px;
+
+    margin: 0 auto;
+
+    padding-top: 0;
+}
+
+
+/* =========================================================
+   GLOBAL CONTENT
+========================================================= */
+
+#funding .global-content {
+    width: 100%;
+
+    margin-bottom: 16px !important;
+
+    padding: 16px !important;
+
+    background: var(--funding-bg);
+}
+
+
+/* =========================================================
+   STICKY HEADER
+========================================================= */
+
+.page.funding-page .funding-sticky {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    background: #fff;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page.funding-page .funding-title {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 16px 0;
+}
+
+.page.funding-page .funding-title h2 {
+    margin: 0;
+    padding: 0;
+
+    color: #111;
+
+    font-size: var(--title);
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   HOME BUTTON
+========================================================= */
+
+.page.funding-page .funding-title-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+
+    flex: 0 0 auto;
+
+    text-decoration: none;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.page.funding-page .funding-title-home img {
+    display: block;
+
+    width: 25px;
+    height: 25px;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   FUNDING METHOD TABS
+========================================================= */
+
+.funding-method-tabs {
+    position: relative;
+
+    display: flex;
+    align-items: stretch;
+
+    width: 100%;
+
+    padding: 10px 16px 0;
+
+    background: #fff;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+
+    border-bottom: 1px solid #edf1f1;
+}
+
+.funding-method-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   TAB BUTTON
+========================================================= */
+
+.funding-method-filter {
+    position: relative;
+
+    flex: 1 1 0;
+
+    min-width: 0;
+
+    height: 40px;
+
+    margin: 0;
+    padding: 0 12px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 40px;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+/* =========================================================
+   ACTIVE TAB
+========================================================= */
+
+.funding-method-filter.active {
+    color: var(--theme-dark);
+}
+
+
+/* =========================================================
+   ACTIVE TAB LINE
+========================================================= */
+
+.funding-method-filter.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 12px;
+    right: 12px;
+
+    bottom: 0;
+
+    height: 2px;
+
+    background: var(--theme-dark);
+
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   FUNDING CONTENT
+========================================================= */
+
+.funding-content {
+    width: 100%;
+}
+
+.funding-content[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
 .eyebrow,
 .campaign-label,
 .section-kicker {
-margin: 0 0 5px;
-color: var(--theme-dark);
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 0.08em;
+    margin: 0 0 5px;
 
+    color: var(--theme-dark);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
 }
 
 .funding-header h1 {
-margin: 0;
+    margin: 0;
 
-font-size: 20px;
-line-height: 1.2;
-
+    font-size: 20px;
+    line-height: 1.2;
 }
 
-#fundingTarget {
+#fundingTarget,
+#fundingTargetKofi,
+#fundingTargetEwallet {
     font-size: 18px;
     font-weight: 600;
 }
 
 
-/* =========================
+/* =========================================================
    CARD
-========================= */
+========================================================= */
 
 .funding-card {
     padding: 22px;
+
     background: var(--funding-card);
+
     border: 1px solid var(--border);
+
     border-radius: var(--radius-lg);
+
     box-shadow:
-        0 5px 20px rgba(38, 59, 64, 0.045);
+        0 5px 20px rgba(
+            38,
+            59,
+            64,
+            0.045
+        );
 }
 
 
-/* =========================
+/* =========================================================
    CAMPAIGN
-========================= */
+========================================================= */
 
 .campaign-card {
     margin-bottom: 28px;
@@ -208,60 +364,6 @@ line-height: 1.2;
     line-height: 1.65;
 }
 
-/* =========================================================
-   FUNDING METHOD TABS
-========================================================= */
-
-.funding-method-tabs {
-    display: flex;
-    width: 100%;
-    padding: 12px 0 10px;
-    background: #fff;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.funding-method-tabs::-webkit-scrollbar {
-    display: none;
-}
-
-.funding-method-filter {
-    position: relative;
-    flex: 1;
-    padding: 9px 16px;
-    border: none;
-    background: transparent;
-    color: #718083;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.funding-method-filter.active {
-    color: #5db7ab;
-}
-
-.funding-method-filter.active::after {
-    content: "";
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 0;
-    height: 2px;
-    background: #5db7ab;
-    border-radius: 999px;
-}
-
-
-/* =========================================================
-   FUNDING CONTENT
-========================================================= */
-
-.funding-content[hidden] {
-    display: none;
-}
-
 
 /* =========================================================
    KO-FI EMBED
@@ -269,21 +371,25 @@ line-height: 1.2;
 
 .kofi-embed {
     width: 100%;
+
     margin-top: 20px;
+
     overflow: hidden;
 }
 
 .kofi-embed iframe {
     display: block;
+
     width: 100%;
     max-width: 100%;
+
     border: 0;
 }
 
 
-/* =========================
+/* =========================================================
    PROGRESS
-========================= */
+========================================================= */
 
 .funding-progress {
     margin-bottom: 22px;
@@ -291,8 +397,10 @@ line-height: 1.2;
 
 .progress-heading {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
     justify-content: space-between;
+
+    gap: 12px;
 
     margin-bottom: 9px;
 }
@@ -304,6 +412,8 @@ line-height: 1.2;
     flex-wrap: wrap;
 
     gap: 4px;
+
+    min-width: 0;
 }
 
 .progress-label {
@@ -353,13 +463,14 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    BUTTONS
-========================= */
+========================================================= */
 
 .primary-btn,
 .secondary-btn {
     width: 100%;
+
     min-height: 46px;
 
     border-radius: 13px;
@@ -375,13 +486,15 @@ line-height: 1.2;
     border: 0;
 
     background: var(--theme-dark);
-    color: white;
+
+    color: #fff;
 }
 
 .secondary-btn {
     border: 1px solid var(--border);
 
-    background: white;
+    background: #fff;
+
     color: var(--text);
 }
 
@@ -398,9 +511,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    SUPPORT FORM
-========================= */
+========================================================= */
 
 .support-form-card {
     margin-top: -10px;
@@ -414,20 +527,24 @@ line-height: 1.2;
 
     from {
         opacity: 0;
-        transform: translateY(-8px);
+
+        transform:
+            translateY(-8px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
     }
 
 }
 
 
-/* =========================
+/* =========================================================
    SECTION HEADING
-========================= */
+========================================================= */
 
 .section-heading {
     margin-bottom: 20px;
@@ -437,6 +554,7 @@ line-height: 1.2;
     margin: 4px 0 7px;
 
     font-size: 21px;
+    line-height: 1.3;
 }
 
 .section-heading p {
@@ -449,9 +567,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    FORM
-========================= */
+========================================================= */
 
 .form-group {
     position: relative;
@@ -475,18 +593,29 @@ line-height: 1.2;
     font-weight: 400;
 }
 
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group textarea {
     width: 100%;
 
     border: 1px solid var(--border);
+
     border-radius: 12px;
 
     background: #fbfdfd;
+
     color: var(--text);
 
     outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .form-group input[type="text"],
@@ -512,13 +641,18 @@ line-height: 1.2;
     border-color: var(--theme);
 
     box-shadow:
-        0 0 0 3px rgba(145, 211, 202, 0.15);
+        0 0 0 3px rgba(
+            145,
+            211,
+            202,
+            0.15
+        );
 }
 
 
-/* =========================
+/* =========================================================
    AMOUNT
-========================= */
+========================================================= */
 
 #supportAmount {
     appearance: textfield;
@@ -536,11 +670,6 @@ line-height: 1.2;
    CUSTOM DROPDOWNS
 ========================================================= */
 
-
-/* =========================
-   PAYMENT METHOD
-========================= */
-
 .payment-method-dropdown,
 .currency-dropdown,
 .sort-filter {
@@ -548,32 +677,47 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    PAYMENT METHOD TRIGGER
-========================= */
+========================================================= */
 
 .payment-method-trigger {
-    width: 100%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    width: 100%;
     min-height: 45px;
 
     padding: 10px 14px;
 
     border: 1px solid var(--border);
+
     border-radius: 14px;
 
-    background: rgba(255, 255, 255, .85);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.85
+    );
 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 
     box-shadow:
-        0 8px 20px rgba(0, 0, 0, .08),
-        inset 0 1px rgba(255, 255, 255, .4);
+        0 8px 20px rgba(
+            0,
+            0,
+            0,
+            0.08
+        ),
+        inset 0 1px rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
 
     color: #555;
 
@@ -583,41 +727,61 @@ line-height: 1.2;
     text-align: left;
 
     transition:
-        border-color .2s ease,
-        background .2s ease;
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .payment-method-trigger:hover {
-    background: rgba(255, 255, 255, .95);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.95
+    );
 }
 
 
-/* =========================
+/* =========================================================
    CURRENCY TRIGGER
-========================= */
+========================================================= */
 
 .currency-trigger {
-    width: 100%;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
 
+    width: 100%;
     min-height: 45px;
 
     padding: 10px 14px;
 
     border: 1px solid var(--border);
+
     border-radius: 14px;
 
-    background: rgba(255, 255, 255, .85);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.85
+    );
 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 
     box-shadow:
-        0 8px 20px rgba(0, 0, 0, .08),
-        inset 0 1px rgba(255, 255, 255, .4);
+        0 8px 20px rgba(
+            0,
+            0,
+            0,
+            0.08
+        ),
+        inset 0 1px rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
 
     color: #555;
 
@@ -627,18 +791,23 @@ line-height: 1.2;
     text-align: left;
 
     transition:
-        border-color .2s ease,
-        background .2s ease;
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .currency-trigger:hover {
-    background: rgba(255, 255, 255, .95);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.95
+    );
 }
 
 
-/* =========================
+/* =========================================================
    DROPDOWN ARROW
-========================= */
+========================================================= */
 
 .dropdown-arrow {
     flex-shrink: 0;
@@ -646,19 +815,22 @@ line-height: 1.2;
     margin-left: 10px;
 
     transition:
-        transform .2s ease;
+        transform 0.2s ease;
 }
 
-.payment-method-dropdown.active .dropdown-arrow,
-.currency-dropdown.active .dropdown-arrow,
-.sort-filter.active .dropdown-arrow {
+.payment-method-dropdown.active
+.dropdown-arrow,
+.currency-dropdown.active
+.dropdown-arrow,
+.sort-filter.active
+.dropdown-arrow {
     transform: rotate(180deg);
 }
 
 
-/* =========================
+/* =========================================================
    PAYMENT METHOD MENU
-========================= */
+========================================================= */
 
 .payment-method-menu {
     position: absolute;
@@ -666,26 +838,47 @@ line-height: 1.2;
     top: calc(100% + 8px);
     left: 0;
 
-    width: 100%;
-    min-width: 190px;
+    z-index: 9999;
 
     display: none;
 
+    width: 100%;
+    min-width: 190px;
+
     padding: 8px;
 
-    border: 1px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.5
+    );
+
     border-radius: 18px;
 
-    background: rgba(255, 255, 255, .85);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.85
+    );
 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, .12),
-        inset 0 1px rgba(255, 255, 255, .4);
-
-    z-index: 9999;
+        0 12px 30px rgba(
+            0,
+            0,
+            0,
+            0.12
+        ),
+        inset 0 1px rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
 }
 
 .payment-method-menu.active {
@@ -693,9 +886,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    CURRENCY MENU
-========================= */
+========================================================= */
 
 .currency-menu {
     position: absolute;
@@ -703,26 +896,47 @@ line-height: 1.2;
     top: calc(100% + 8px);
     left: 0;
 
-    width: 100%;
-    min-width: 190px;
+    z-index: 9999;
 
     display: none;
 
+    width: 100%;
+    min-width: 190px;
+
     padding: 8px;
 
-    border: 1px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.5
+    );
+
     border-radius: 18px;
 
-    background: rgba(255, 255, 255, .85);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.85
+    );
 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, .12),
-        inset 0 1px rgba(255, 255, 255, .4);
-
-    z-index: 9999;
+        0 12px 30px rgba(
+            0,
+            0,
+            0,
+            0.12
+        ),
+        inset 0 1px rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
 }
 
 .currency-menu.active {
@@ -730,9 +944,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    PAYMENT METHOD OPTIONS
-========================= */
+========================================================= */
 
 .payment-method-option {
     display: flex;
@@ -752,16 +966,26 @@ line-height: 1.2;
     cursor: pointer;
 
     transition:
-        background .2s ease,
-        color .2s ease;
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .payment-method-option:hover {
-    background: rgba(0, 0, 0, .05);
+    background: rgba(
+        0,
+        0,
+        0,
+        0.05
+    );
 }
 
 .payment-method-option.active {
-    background: rgba(0, 0, 0, .06);
+    background: rgba(
+        0,
+        0,
+        0,
+        0.06
+    );
 
     color: #111;
 
@@ -769,9 +993,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    CURRENCY OPTIONS
-========================= */
+========================================================= */
 
 .currency-option {
     display: flex;
@@ -791,16 +1015,26 @@ line-height: 1.2;
     cursor: pointer;
 
     transition:
-        background .2s ease,
-        color .2s ease;
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .currency-option:hover {
-    background: rgba(0, 0, 0, .05);
+    background: rgba(
+        0,
+        0,
+        0,
+        0.05
+    );
 }
 
 .currency-option.active {
-    background: rgba(0, 0, 0, .06);
+    background: rgba(
+        0,
+        0,
+        0,
+        0.06
+    );
 
     color: #111;
 
@@ -808,9 +1042,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    SORT FILTER
-========================= */
+========================================================= */
 
 .sort-filter {
     position: relative;
@@ -819,9 +1053,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    SORT TRIGGER
-========================= */
+========================================================= */
 
 .sort-trigger {
     display: flex;
@@ -833,17 +1067,38 @@ line-height: 1.2;
 
     padding: 8px 12px;
 
-    border: 1px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.5
+    );
+
     border-radius: 14px;
 
-    background: rgba(255, 255, 255, .85);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.85
+    );
 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 
     box-shadow:
-        0 8px 20px rgba(0, 0, 0, .08),
-        inset 0 1px rgba(255, 255, 255, .4);
+        0 8px 20px rgba(
+            0,
+            0,
+            0,
+            0.08
+        ),
+        inset 0 1px rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
 
     color: #555;
 
@@ -853,17 +1108,22 @@ line-height: 1.2;
     text-align: left;
 
     transition:
-        background .2s ease;
+        background 0.2s ease;
 }
 
 .sort-trigger:hover {
-    background: rgba(255, 255, 255, .95);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.95
+    );
 }
 
 
-/* =========================
+/* =========================================================
    SORT MENU
-========================= */
+========================================================= */
 
 .sort-dropdown {
     position: absolute;
@@ -872,25 +1132,46 @@ line-height: 1.2;
     right: 0;
     left: auto;
 
+    z-index: 9999;
+
     display: none;
 
     min-width: 190px;
 
     padding: 8px;
 
-    border: 1px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(
+        255,
+        255,
+        255,
+        0.5
+    );
+
     border-radius: 18px;
 
-    background: rgba(255, 255, 255, .85);
+    background: rgba(
+        255,
+        255,
+        255,
+        0.85
+    );
 
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, .12),
-        inset 0 1px rgba(255, 255, 255, .4);
-
-    z-index: 9999;
+        0 12px 30px rgba(
+            0,
+            0,
+            0,
+            0.12
+        ),
+        inset 0 1px rgba(
+            255,
+            255,
+            255,
+            0.4
+        );
 }
 
 .sort-dropdown.active {
@@ -898,9 +1179,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    SORT OPTIONS
-========================= */
+========================================================= */
 
 .sort-option {
     display: flex;
@@ -920,16 +1201,26 @@ line-height: 1.2;
     cursor: pointer;
 
     transition:
-        background .2s ease,
-        color .2s ease;
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .sort-option:hover {
-    background: rgba(0, 0, 0, .05);
+    background: rgba(
+        0,
+        0,
+        0,
+        0.05
+    );
 }
 
 .sort-option.active {
-    background: rgba(0, 0, 0, .06);
+    background: rgba(
+        0,
+        0,
+        0,
+        0.06
+    );
 
     color: #111;
 
@@ -937,9 +1228,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    PAYMENT DESTINATION
-========================= */
+========================================================= */
 
 .payment-destination {
     position: relative;
@@ -949,6 +1240,7 @@ line-height: 1.2;
     padding: 13px;
 
     border: 1px solid var(--border);
+
     border-radius: 13px;
 
     background: var(--funding-bg);
@@ -988,9 +1280,11 @@ line-height: 1.2;
     padding: 5px 8px;
 
     border: 0;
+
     border-radius: 7px;
 
-    background: white;
+    background: #fff;
+
     color: var(--theme-dark);
 
     font-size: 11px;
@@ -998,9 +1292,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    UPLOAD
-========================= */
+========================================================= */
 
 .upload-box {
     display: flex;
@@ -1013,6 +1307,7 @@ line-height: 1.2;
     padding: 15px;
 
     border: 1.5px dashed #cbdada;
+
     border-radius: 14px;
 
     background: #fbfdfd;
@@ -1069,9 +1364,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    NOTE
-========================= */
+========================================================= */
 
 .character-count {
     position: absolute;
@@ -1093,9 +1388,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    RADIO
-========================= */
+========================================================= */
 
 .radio-option {
     display: flex !important;
@@ -1113,9 +1408,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    SUBMIT
-========================= */
+========================================================= */
 
 .submit-btn {
     margin-top: 4px;
@@ -1126,9 +1421,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    SUCCESS
-========================= */
+========================================================= */
 
 .form-success {
     padding: 20px 0 5px;
@@ -1148,6 +1443,7 @@ line-height: 1.2;
     border-radius: 50%;
 
     background: var(--theme-soft);
+
     color: var(--theme-dark);
 
     font-size: 23px;
@@ -1186,9 +1482,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    GOAL ITEM
-========================= */
+========================================================= */
 
 .funding-goal {
     display: flex;
@@ -1199,15 +1495,16 @@ line-height: 1.2;
     padding: 14px;
 
     border: 1px solid var(--border);
+
     border-radius: 15px;
 
-    background: white;
+    background: #fff;
 }
 
 
-/* =========================
+/* =========================================================
    GOAL ICON
-========================= */
+========================================================= */
 
 .goal-icon {
     display: grid;
@@ -1226,9 +1523,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    GOAL CONTENT
-========================= */
+========================================================= */
 
 .goal-content {
     flex: 1;
@@ -1254,9 +1551,9 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    GOAL AMOUNT
-========================= */
+========================================================= */
 
 .goal-amount {
     flex-shrink: 0;
@@ -1269,7 +1566,7 @@ line-height: 1.2;
 
 
 /* =========================================================
-   DYNAMIC DATA STATES
+   DATA STATES
 ========================================================= */
 
 .data-loading,
@@ -1298,15 +1595,21 @@ line-height: 1.2;
 }
 
 
-/* =========================
+/* =========================================================
    CURRENCY SUMMARY
-========================= */
+========================================================= */
 
 .currency-summary {
     display: grid;
 
     grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
 
     gap: 8px;
 
@@ -1337,7 +1640,7 @@ line-height: 1.2;
 
 
 /* =========================================================
-   TOOLBAR
+   TRANSPARENCY TOOLBAR
 ========================================================= */
 
 .transparency-toolbar {
@@ -1376,19 +1679,20 @@ line-height: 1.2;
 }
 
 .transaction-main {
-    display: flex;
-    align-items: flex-start;
+    display: block;
 
-    gap: 12px;
+    min-width: 0;
 }
 
 .transaction-name {
     margin: 0 0 3px;
 
-    font-size: 13px;
-    font-weight: 700;
+    max-width: 70%;
 
     overflow: hidden;
+
+    font-size: 13px;
+    font-weight: 700;
 
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1419,6 +1723,7 @@ line-height: 1.2;
     border-radius: 9px;
 
     background: var(--funding-bg);
+
     color: var(--text);
 
     font-size: 11px;
@@ -1429,7 +1734,7 @@ line-height: 1.2;
 
 
 /* =========================================================
-   FOOTER
+   FUNDING NOTE / FOOTER
 ========================================================= */
 
 .funding-note {
@@ -1443,13 +1748,74 @@ line-height: 1.2;
     text-align: center;
 }
 
+.funding-note p {
+    margin: 0 0 5px;
+}
+
+.funding-note p:last-child {
+    margin-bottom: 0;
+}
+
 
 /* =========================================================
-   HIDDEN
+   FUNDING CLOSED
 ========================================================= */
 
-[hidden] {
-    display: none !important;
+.funding-closed {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px 24px;
+
+    text-align: center;
+}
+
+.funding-closed-icon {
+    display: grid;
+    place-items: center;
+
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 18px;
+
+    border-radius: 50%;
+
+    background: var(--theme-soft);
+
+    color: var(--theme-dark);
+
+    font-size: 25px;
+}
+
+.funding-closed .section-kicker {
+    margin-bottom: 7px;
+}
+
+.funding-closed h2 {
+    max-width: 420px;
+
+    margin: 0 0 10px;
+
+    color: var(--text);
+
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.funding-closed p {
+    max-width: 460px;
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 
@@ -1460,7 +1826,12 @@ line-height: 1.2;
 @media (max-width: 768px) {
 
     .funding-page {
-        padding-top: 18px;
+        padding-top: 0;
+    }
+
+
+    #funding .global-content {
+        padding: 16px !important;
     }
 
 
@@ -1475,7 +1846,14 @@ line-height: 1.2;
 
 
     .currency-summary {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
     }
 
 
@@ -1508,64 +1886,70 @@ line-height: 1.2;
         font-size: 12px;
     }
 
+
+    .transparency-toolbar {
+        align-items: flex-start;
+    }
+
 }
+
 
 /* =========================================================
-   FUNDING CLOSED
+   SMALL MOBILE
 ========================================================= */
 
-.funding-closed {
-    min-height: calc(100vh - 80px);
+@media (max-width: 420px) {
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    .funding-method-tabs {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
 
-    padding: 60px 24px;
 
-    text-align: center;
-}
+    .funding-method-filter {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 
-.funding-closed-icon {
-    display: grid;
-    place-items: center;
 
-    width: 58px;
-    height: 58px;
+    .funding-method-filter.active::after {
+        left: 8px;
+        right: 8px;
+    }
 
-    margin-bottom: 18px;
 
-    border-radius: 50%;
+    .transparency-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-    background: var(--theme-soft);
-    color: var(--theme-dark);
 
-    font-size: 25px;
-}
+    .sort-filter,
+    .sort-trigger {
+        width: 100%;
+    }
 
-.funding-closed .section-kicker {
-    margin-bottom: 7px;
-}
 
-.funding-closed h2 {
-    max-width: 420px;
+    .sort-trigger {
+        min-width: 0;
+    }
 
-    margin: 0 0 10px;
 
-    color: var(--text);
+    .sort-dropdown {
+        left: 0;
+        right: 0;
 
-    font-size: 22px;
-    line-height: 1.3;
-}
+        width: 100%;
+    }
 
-.funding-closed p {
-    max-width: 460px;
 
-    margin: 0;
+    .progress-heading {
+        gap: 8px;
+    }
 
-    color: var(--muted);
 
-    font-size: 13px;
-    line-height: 1.6;
+    .goal-amount {
+        font-size: 11px;
+    }
+
 }
