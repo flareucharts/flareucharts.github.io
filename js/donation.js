@@ -6,46 +6,47 @@
 const FUNDING_ENABLED = true;
 
 
-/* =========================
+/* =========================================================
    CONFIG
-========================= */
+========================================================= */
 
 const API_URL =
     "YOUR_APPS_SCRIPT_WEB_APP_URL";
 
 
-/* =========================
+/* =========================================================
    ESTIMATED EXCHANGE RATES
    1 unit currency → USD
-========================= */
+========================================================= */
 
 const estimatedRates = {
 
     USD: 1,
 
-    IDR:
-        1 / 17000,
+    IDR: 1 / 17000,
 
-    THB:
-        1 / 32,
+    THB: 1 / 32,
 
-    TWD:
-        1 / 31,
+    TWD: 1 / 31,
 
-    PHP:
-        1 / 58
+    PHP: 1 / 58
 
 };
 
 
 /* =========================================================
-   FUNDING METHOD TABS
+   DOM
 ========================================================= */
+
+const fundingClosed =
+    document.getElementById("fundingClosed");
+
 
 const fundingMethodFilters =
     document.querySelectorAll(
         ".funding-method-filter"
     );
+
 
 const fundingContents =
     document.querySelectorAll(
@@ -53,103 +54,54 @@ const fundingContents =
     );
 
 
-fundingMethodFilters.forEach(button => {
+/* =========================================================
+   SUPPORT FORM
+========================================================= */
 
-    button.addEventListener(
-        "click",
-        () => {
+const supportBtn =
+    document.getElementById("supportBtn");
 
-            const target =
-                button.dataset.method;
+const supportSection =
+    document.getElementById("supportSection");
 
+const supportForm =
+    document.getElementById("supportForm");
 
-            fundingMethodFilters.forEach(
-                tab => {
+const cancelSupport =
+    document.getElementById("cancelSupport");
 
-                    tab.classList.remove(
-                        "active"
-                    );
+const formSuccess =
+    document.getElementById("formSuccess");
 
-                }
-            );
+const successClose =
+    document.getElementById("successClose");
 
+const supportName =
+    document.getElementById("supportName");
 
-            button.classList.add(
-                "active"
-            );
+const supportAmount =
+    document.getElementById("supportAmount");
 
+const supportNote =
+    document.getElementById("supportNote");
 
-            fundingContents.forEach(
-                content => {
+const supportProof =
+    document.getElementById("supportProof");
 
-                    const isActive =
-                        content.id ===
-                        `funding-${target}`;
+const uploadText =
+    document.getElementById("uploadText");
 
-
-                    content.hidden =
-                        !isActive;
-
-                    content.classList.toggle(
-                        "active",
-                        isActive
-                    );
-
-                }
-            );
-
-        }
-    );
-
-});
+const characterCount =
+    document.getElementById("characterCount");
 
 
 /* =========================================================
-   DOM ELEMENTS
+   PAYMENT METHOD
 ========================================================= */
 
-/* =========================
-   SUPPORT FORM
-========================= */
-
-const supportBtn =
+const supportPaymentMethod =
     document.getElementById(
-        "supportBtn"
-    );
-
-const supportSection =
-    document.getElementById(
-        "supportSection"
-    );
-
-const supportForm =
-    document.getElementById(
-        "supportForm"
-    );
-
-const cancelSupport =
-    document.getElementById(
-        "cancelSupport"
-    );
-
-const formSuccess =
-    document.getElementById(
-        "formSuccess"
-    );
-
-const successClose =
-    document.getElementById(
-        "successClose"
-    );
-
-
-/* =========================
-   PAYMENT METHOD
-========================= */
-
-const paymentMethod =
-    document.getElementById(
-        "paymentMethod"
+        "supportPaymentMethod"
     );
 
 const paymentMethodDropdown =
@@ -178,9 +130,9 @@ const paymentMethodOptions =
     );
 
 
-/* =========================
+/* =========================================================
    PAYMENT DESTINATION
-========================= */
+========================================================= */
 
 const paymentDestination =
     document.getElementById(
@@ -190,11 +142,6 @@ const paymentDestination =
 const paymentMethodLogo =
     document.getElementById(
         "paymentMethodLogo"
-    );
-
-const paymentLogo =
-    document.getElementById(
-        "paymentLogo"
     );
 
 const destinationContent =
@@ -208,13 +155,13 @@ const copyPaymentBtn =
     );
 
 
-/* =========================
+/* =========================================================
    CURRENCY
-========================= */
+========================================================= */
 
-const currency =
+const supportCurrency =
     document.getElementById(
-        "currency"
+        "supportCurrency"
     );
 
 const currencyDropdown =
@@ -243,34 +190,9 @@ const currencyOptions =
     );
 
 
-/* =========================
-   FORM
-========================= */
-
-const paymentProof =
-    document.getElementById(
-        "paymentProof"
-    );
-
-const uploadText =
-    document.getElementById(
-        "uploadText"
-    );
-
-const supportMessage =
-    document.getElementById(
-        "supportMessage"
-    );
-
-const messageCount =
-    document.getElementById(
-        "messageCount"
-    );
-
-
-/* =========================
+/* =========================================================
    FUNDING DISPLAY
-========================= */
+========================================================= */
 
 const raisedAmountKofi =
     document.getElementById(
@@ -314,9 +236,9 @@ const progressFillEwallet =
     );
 
 
-/* =========================
+/* =========================================================
    FUNDING DATA
-========================= */
+========================================================= */
 
 const goalListKofi =
     document.getElementById(
@@ -351,14 +273,9 @@ const transactionListEwallet =
     );
 
 
-/* =========================
+/* =========================================================
    SORT
-========================= */
-
-const sortFilterKofi =
-    document.getElementById(
-        "sortFilterKofi"
-    );
+========================================================= */
 
 const sortTriggerKofi =
     document.getElementById(
@@ -381,11 +298,6 @@ const sortSelectKofi =
     );
 
 
-const sortFilterEwallet =
-    document.getElementById(
-        "sortFilterEwallet"
-    );
-
 const sortTriggerEwallet =
     document.getElementById(
         "sortTriggerEwallet"
@@ -407,15 +319,143 @@ const sortSelectEwallet =
     );
 
 
-/* =========================
+/* =========================================================
    STATE
-========================= */
+========================================================= */
 
 let transactions = [];
 
 let fundingGoals = [];
 
 let campaignTargetUSD = 0;
+
+
+/* =========================================================
+   FUNDING CLOSED
+========================================================= */
+
+function updateFundingState() {
+
+    if (!fundingClosed) {
+        return;
+    }
+
+    if (FUNDING_ENABLED) {
+
+        fundingClosed.hidden = true;
+
+        fundingMethodFilters.forEach(
+            tab => {
+                tab.hidden = false;
+            }
+        );
+
+        fundingContents.forEach(
+            content => {
+                content.hidden =
+                    !content.classList.contains(
+                        "active"
+                    );
+            }
+        );
+
+    } else {
+
+        fundingClosed.hidden = false;
+
+        fundingMethodFilters.forEach(
+            tab => {
+                tab.hidden = true;
+            }
+        );
+
+        fundingContents.forEach(
+            content => {
+                content.hidden = true;
+                content.classList.remove(
+                    "active"
+                );
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FUNDING METHOD TABS
+========================================================= */
+
+function switchFundingMethod(
+    method
+) {
+
+    if (!FUNDING_ENABLED) {
+        return;
+    }
+
+
+    fundingMethodFilters.forEach(
+        tab => {
+
+            const active =
+                tab.dataset.method === method;
+
+            tab.classList.toggle(
+                "active",
+                active
+            );
+
+            tab.setAttribute(
+                "aria-selected",
+                active
+                    ? "true"
+                    : "false"
+            );
+
+        }
+    );
+
+
+    fundingContents.forEach(
+        content => {
+
+            const active =
+                content.dataset.method === method;
+
+
+            content.classList.toggle(
+                "active",
+                active
+            );
+
+
+            content.hidden =
+                !active;
+
+        }
+    );
+
+}
+
+
+fundingMethodFilters.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                switchFundingMethod(
+                    button.dataset.method
+                );
+
+            }
+        );
+
+    }
+);
 
 
 /* =========================================================
@@ -469,7 +509,7 @@ const paymentInfo = {
 
 
 /* =========================================================
-   CUSTOM DROPDOWN
+   CUSTOM DROPDOWN HELPERS
 ========================================================= */
 
 function closeAllDropdowns(
@@ -482,37 +522,39 @@ function closeAllDropdowns(
             ".currency-dropdown, " +
             ".sort-filter"
         )
-        .forEach(dropdown => {
+        .forEach(
+            dropdown => {
 
-            if (
-                dropdown === except
-            ) {
-                return;
-            }
-
-
-            dropdown.classList.remove(
-                "active"
-            );
+                if (
+                    dropdown === except
+                ) {
+                    return;
+                }
 
 
-            const menu =
-                dropdown.querySelector(
-                    ".payment-method-menu, " +
-                    ".currency-menu, " +
-                    ".sort-dropdown"
-                );
-
-
-            if (menu) {
-
-                menu.classList.remove(
+                dropdown.classList.remove(
                     "active"
                 );
 
-            }
 
-        });
+                const menu =
+                    dropdown.querySelector(
+                        ".payment-method-menu, " +
+                        ".currency-menu, " +
+                        ".sort-dropdown"
+                    );
+
+
+                if (menu) {
+
+                    menu.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
 
 }
 
@@ -521,6 +563,14 @@ function toggleDropdown(
     container,
     menu
 ) {
+
+    if (
+        !container ||
+        !menu
+    ) {
+        return;
+    }
+
 
     const isOpen =
         container.classList.contains(
@@ -535,27 +585,16 @@ function toggleDropdown(
     );
 
 
-    if (isOpen) {
+    container.classList.toggle(
+        "active",
+        !isOpen
+    );
 
-        container.classList.remove(
-            "active"
-        );
 
-        menu.classList.remove(
-            "active"
-        );
-
-    } else {
-
-        container.classList.add(
-            "active"
-        );
-
-        menu.classList.add(
-            "active"
-        );
-
-    }
+    menu.classList.toggle(
+        "active",
+        !isOpen
+    );
 
 }
 
@@ -575,7 +614,6 @@ if (
         event => {
 
             event.stopPropagation();
-
 
             toggleDropdown(
                 paymentMethodDropdown,
@@ -606,12 +644,20 @@ paymentMethodOptions.forEach(
                     option.textContent.trim();
 
 
-                paymentMethod.value =
-                    value;
+                if (supportPaymentMethod) {
+
+                    supportPaymentMethod.value =
+                        value;
+
+                }
 
 
-                paymentMethodLabel.textContent =
-                    text;
+                if (paymentMethodLabel) {
+
+                    paymentMethodLabel.textContent =
+                        text;
+
+                }
 
 
                 paymentMethodOptions.forEach(
@@ -660,7 +706,6 @@ if (
 
             event.stopPropagation();
 
-
             toggleDropdown(
                 currencyDropdown,
                 currencyMenu
@@ -690,12 +735,20 @@ currencyOptions.forEach(
                     option.textContent.trim();
 
 
-                currency.value =
-                    value;
+                if (supportCurrency) {
+
+                    supportCurrency.value =
+                        value;
+
+                }
 
 
-                currencyLabel.textContent =
-                    text;
+                if (currencyLabel) {
+
+                    currencyLabel.textContent =
+                        text;
+
+                }
 
 
                 currencyOptions.forEach(
@@ -724,11 +777,10 @@ currencyOptions.forEach(
 
 
 /* =========================================================
-   SORT DROPDOWN SETUP
+   SORT DROPDOWNS
 ========================================================= */
 
 function setupSortDropdown(
-    filter,
     trigger,
     dropdown,
     label,
@@ -736,7 +788,6 @@ function setupSortDropdown(
 ) {
 
     if (
-        !filter ||
         !trigger ||
         !dropdown ||
         !label ||
@@ -753,6 +804,12 @@ function setupSortDropdown(
             event.stopPropagation();
 
 
+            const filter =
+                trigger.closest(
+                    ".sort-filter"
+                );
+
+
             toggleDropdown(
                 filter,
                 dropdown
@@ -766,66 +823,72 @@ function setupSortDropdown(
         .querySelectorAll(
             ".sort-option"
         )
-        .forEach(option => {
+        .forEach(
+            option => {
 
-            option.addEventListener(
-                "click",
-                event => {
+                option.addEventListener(
+                    "click",
+                    event => {
 
-                    event.stopPropagation();
-
-
-                    const value =
-                        option.dataset.value;
+                        event.stopPropagation();
 
 
-                    const text =
-                        option.textContent.trim();
+                        /*
+                         * HTML memakai data-sort,
+                         * bukan data-value.
+                         */
+
+                        const value =
+                            option.dataset.sort;
 
 
-                    select.value =
-                        value;
+                        const text =
+                            option.textContent.trim();
 
 
-                    label.textContent =
-                        text;
+                        select.value =
+                            value;
 
 
-                    dropdown
-                        .querySelectorAll(
-                            ".sort-option"
-                        )
-                        .forEach(
-                            item => {
+                        label.textContent =
+                            text;
 
-                                item.classList.remove(
-                                    "active"
-                                );
 
-                            }
+                        dropdown
+                            .querySelectorAll(
+                                ".sort-option"
+                            )
+                            .forEach(
+                                item => {
+
+                                    item.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                        option.classList.add(
+                            "active"
                         );
 
 
-                    option.classList.add(
-                        "active"
-                    );
+                        closeAllDropdowns();
 
 
-                    closeAllDropdowns();
+                        sortTransactions();
 
+                    }
+                );
 
-                    sortTransactions();
-
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
 
 setupSortDropdown(
-    sortFilterKofi,
     sortTriggerKofi,
     sortDropdownKofi,
     sortLabelKofi,
@@ -834,7 +897,6 @@ setupSortDropdown(
 
 
 setupSortDropdown(
-    sortFilterEwallet,
     sortTriggerEwallet,
     sortDropdownEwallet,
     sortLabelEwallet,
@@ -864,6 +926,14 @@ function updatePaymentDestination(
     method
 ) {
 
+    if (
+        !paymentDestination ||
+        !destinationContent
+    ) {
+        return;
+    }
+
+
     const info =
         paymentInfo[method];
 
@@ -882,31 +952,24 @@ function updatePaymentDestination(
         false;
 
 
-    if (info.logo) {
+    /*
+     * HTML kamu menggunakan div
+     * #paymentMethodLogo.
+     *
+     * Jadi kita tidak mencari
+     * #paymentLogo lagi.
+     */
 
-        paymentMethodLogo.hidden =
-            false;
+    if (
+        paymentMethodLogo
+    ) {
 
-
-        paymentLogo.src =
-            info.logo;
-
-
-        paymentLogo.alt =
-            info.alt || "";
-
-    } else {
-
-        paymentMethodLogo.hidden =
-            true;
-
-
-        paymentLogo.src =
-            "";
-
-
-        paymentLogo.alt =
-            "";
+        paymentMethodLogo.innerHTML = `
+            <img
+                src="${escapeHTML(info.logo)}"
+                alt="${escapeHTML(info.alt || "")}"
+            >
+        `;
 
     }
 
@@ -915,8 +978,12 @@ function updatePaymentDestination(
         info.value;
 
 
-    copyPaymentBtn.dataset.value =
-        info.value;
+    if (copyPaymentBtn) {
+
+        copyPaymentBtn.dataset.value =
+            info.value;
+
+    }
 
 }
 
@@ -985,7 +1052,10 @@ if (copyPaymentBtn) {
    SUPPORT FORM OPEN
 ========================================================= */
 
-if (supportBtn) {
+if (
+    supportBtn &&
+    supportSection
+) {
 
     supportBtn.addEventListener(
         "click",
@@ -995,8 +1065,20 @@ if (supportBtn) {
                 false;
 
 
-            formSuccess.hidden =
-                true;
+            if (formSuccess) {
+
+                formSuccess.hidden =
+                    true;
+
+            }
+
+
+            if (supportForm) {
+
+                supportForm.hidden =
+                    false;
+
+            }
 
 
             supportSection.scrollIntoView({
@@ -1027,7 +1109,6 @@ if (cancelSupport) {
             supportSection.hidden =
                 true;
 
-
             closeAllDropdowns();
 
         }
@@ -1040,20 +1121,20 @@ if (cancelSupport) {
    FILE UPLOAD
 ========================================================= */
 
-if (paymentProof) {
+if (supportProof) {
 
-    paymentProof.addEventListener(
+    supportProof.addEventListener(
         "change",
         () => {
 
             const file =
-                paymentProof.files[0];
+                supportProof.files[0];
 
 
             if (!file) {
 
                 uploadText.textContent =
-                    "Upload payment screenshot";
+                    "Upload payment proof";
 
                 return;
 
@@ -1070,17 +1151,20 @@ if (paymentProof) {
 
 
 /* =========================================================
-   MESSAGE CHARACTER COUNT
+   NOTE CHARACTER COUNT
 ========================================================= */
 
-if (supportMessage) {
+if (
+    supportNote &&
+    characterCount
+) {
 
-    supportMessage.addEventListener(
+    supportNote.addEventListener(
         "input",
         () => {
 
-            messageCount.textContent =
-                supportMessage.value.length;
+            characterCount.textContent =
+                `${supportNote.value.length} / 150`;
 
         }
     );
@@ -1113,17 +1197,18 @@ if (supportForm) {
 
 
             const selectedMethod =
-                paymentMethod.value;
+                supportPaymentMethod?.value ||
+                "";
 
 
             const selectedCurrency =
-                currency.value;
+                supportCurrency?.value ||
+                "";
 
 
             const amount =
-                document.getElementById(
-                    "supportAmount"
-                ).value;
+                supportAmount?.value ||
+                "";
 
 
             if (!selectedMethod) {
@@ -1163,7 +1248,7 @@ if (supportForm) {
 
 
             const file =
-                paymentProof.files[0];
+                supportProof?.files?.[0];
 
 
             if (!file) {
@@ -1179,7 +1264,7 @@ if (supportForm) {
 
             const displayName =
                 supportForm.querySelector(
-                    'input[name="displayName"]:checked'
+                    'input[name="display"]:checked'
                 );
 
 
@@ -1189,12 +1274,8 @@ if (supportForm) {
                     "submitFunding",
 
                 name:
-                    document
-                        .getElementById(
-                            "supporterName"
-                        )
-                        .value
-                        .trim(),
+                    supportName?.value.trim() ||
+                    "",
 
                 method:
                     selectedMethod,
@@ -1206,7 +1287,8 @@ if (supportForm) {
                     Number(amount),
 
                 message:
-                    supportMessage.value.trim(),
+                    supportNote?.value.trim() ||
+                    "",
 
                 displayName:
                     displayName
@@ -1224,8 +1306,8 @@ if (supportForm) {
             try {
 
                 const submitButton =
-                    supportForm.querySelector(
-                        ".submit-btn"
+                    document.getElementById(
+                        "submitSupport"
                     );
 
 
@@ -1234,9 +1316,21 @@ if (supportForm) {
                     submitButton.disabled =
                         true;
 
-
                     submitButton.textContent =
                         "Submitting...";
+
+                }
+
+
+                if (
+                    !API_URL ||
+                    API_URL ===
+                    "YOUR_APPS_SCRIPT_WEB_APP_URL"
+                ) {
+
+                    throw new Error(
+                        "Funding API URL has not been configured."
+                    );
 
                 }
 
@@ -1265,6 +1359,15 @@ if (supportForm) {
                     );
 
 
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+
+                }
+
+
                 const result =
                     await response.json();
 
@@ -1279,65 +1382,26 @@ if (supportForm) {
                 }
 
 
+                /*
+                 * SUCCESS
+                 */
+
                 supportForm.hidden =
                     true;
 
 
-                formSuccess.hidden =
-                    false;
+                if (formSuccess) {
+
+                    formSuccess.hidden =
+                        false;
+
+                }
 
 
                 supportForm.reset();
 
 
-                paymentMethod.value =
-                    "";
-
-
-                paymentMethodLabel.textContent =
-                    "Select payment method";
-
-
-                paymentMethodOptions.forEach(
-                    option => {
-
-                        option.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                currency.value =
-                    "";
-
-
-                currencyLabel.textContent =
-                    "Select currency";
-
-
-                currencyOptions.forEach(
-                    option => {
-
-                        option.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                uploadText.textContent =
-                    "Upload payment screenshot";
-
-
-                messageCount.textContent =
-                    "0";
-
-
-                paymentDestination.hidden =
-                    true;
+                resetFundingForm();
 
 
             } catch (error) {
@@ -1357,8 +1421,8 @@ if (supportForm) {
             } finally {
 
                 const submitButton =
-                    supportForm.querySelector(
-                        ".submit-btn"
+                    document.getElementById(
+                        "submitSupport"
                     );
 
 
@@ -1366,7 +1430,6 @@ if (supportForm) {
 
                     submitButton.disabled =
                         false;
-
 
                     submitButton.textContent =
                         "Submit Support";
@@ -1382,6 +1445,95 @@ if (supportForm) {
 
 
 /* =========================================================
+   RESET FORM UI
+========================================================= */
+
+function resetFundingForm() {
+
+    if (supportPaymentMethod) {
+
+        supportPaymentMethod.value =
+            "";
+
+    }
+
+
+    if (paymentMethodLabel) {
+
+        paymentMethodLabel.textContent =
+            "Select payment method";
+
+    }
+
+
+    paymentMethodOptions.forEach(
+        option => {
+
+            option.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    if (supportCurrency) {
+
+        supportCurrency.value =
+            "";
+
+    }
+
+
+    if (currencyLabel) {
+
+        currencyLabel.textContent =
+            "Select currency";
+
+    }
+
+
+    currencyOptions.forEach(
+        option => {
+
+            option.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    if (uploadText) {
+
+        uploadText.textContent =
+            "Upload payment proof";
+
+    }
+
+
+    if (characterCount) {
+
+        characterCount.textContent =
+            "0 / 150";
+
+    }
+
+
+    if (paymentDestination) {
+
+        paymentDestination.hidden =
+            true;
+
+    }
+
+
+    closeAllDropdowns();
+
+}
+
+
+/* =========================================================
    SUCCESS CLOSE
 ========================================================= */
 
@@ -1391,16 +1543,28 @@ if (successClose) {
         "click",
         () => {
 
-            formSuccess.hidden =
-                true;
+            if (formSuccess) {
+
+                formSuccess.hidden =
+                    true;
+
+            }
 
 
-            supportForm.hidden =
-                false;
+            if (supportForm) {
+
+                supportForm.hidden =
+                    false;
+
+            }
 
 
-            supportSection.hidden =
-                true;
+            if (supportSection) {
+
+                supportSection.hidden =
+                    true;
+
+            }
 
         }
     );
@@ -1574,47 +1738,52 @@ function updateProgress() {
 
     const targetText =
         campaignTargetUSD > 0
-            ? `$${Math.round(
+            ? `Goal: ~$${Math.round(
                 campaignTargetUSD
             ).toLocaleString(
                 "en-US"
             )}`
-            : "~$0";
+            : "Goal: ~$0";
 
 
-    if (raisedAmountKofi) {
+    [
+        raisedAmountKofi,
+        raisedAmountEwallet
+    ]
+        .forEach(
+            element => {
 
-        raisedAmountKofi.textContent =
-            raisedText;
+                if (element) {
 
-    }
+                    element.textContent =
+                        raisedText;
 
+                }
 
-    if (raisedAmountEwallet) {
-
-        raisedAmountEwallet.textContent =
-            raisedText;
-
-    }
-
-
-    if (fundingTargetKofi) {
-
-        fundingTargetKofi.textContent =
-            targetText;
-
-    }
+            }
+        );
 
 
-    if (fundingTargetEwallet) {
+    [
+        fundingTargetKofi,
+        fundingTargetEwallet
+    ]
+        .forEach(
+            element => {
 
-        fundingTargetEwallet.textContent =
-            targetText;
+                if (element) {
 
-    }
+                    element.textContent =
+                        targetText;
+
+                }
+
+            }
+        );
 
 
-    let percentage = 0;
+    let percentage =
+        0;
 
 
     if (
@@ -1639,36 +1808,40 @@ function updateProgress() {
         )}%`;
 
 
-    if (progressPercentKofi) {
+    [
+        progressPercentKofi,
+        progressPercentEwallet
+    ]
+        .forEach(
+            element => {
 
-        progressPercentKofi.textContent =
-            percentageText;
+                if (element) {
 
-    }
+                    element.textContent =
+                        percentageText;
 
+                }
 
-    if (progressPercentEwallet) {
-
-        progressPercentEwallet.textContent =
-            percentageText;
-
-    }
-
-
-    if (progressFillKofi) {
-
-        progressFillKofi.style.width =
-            `${percentage}%`;
-
-    }
+            }
+        );
 
 
-    if (progressFillEwallet) {
+    [
+        progressFillKofi,
+        progressFillEwallet
+    ]
+        .forEach(
+            element => {
 
-        progressFillEwallet.style.width =
-            `${percentage}%`;
+                if (element) {
 
-    }
+                    element.style.width =
+                        `${percentage}%`;
+
+                }
+
+            }
+        );
 
 }
 
@@ -1707,12 +1880,10 @@ function renderCurrencySummary(
             }
 
 
-            if (!totals[code]) {
-                totals[code] = 0;
-            }
-
-
-            totals[code] += amount;
+            totals[code] =
+                (
+                    totals[code] || 0
+                ) + amount;
 
         }
     );
@@ -1744,9 +1915,7 @@ function renderCurrencySummary(
                         <div class="currency-total">
 
                             <span>
-                                ${escapeHTML(
-                                    code
-                                )}
+                                ${escapeHTML(code)}
                             </span>
 
                             <strong>
@@ -1781,7 +1950,14 @@ function renderFundingGoals(
     }
 
 
-    if (!fundingGoals.length) {
+    const activeGoals =
+        fundingGoals.filter(
+            goal =>
+                isActive(goal)
+        );
+
+
+    if (!activeGoals.length) {
 
         container.innerHTML = `
             <div class="empty-state">
@@ -1789,17 +1965,15 @@ function renderFundingGoals(
             </div>
         `;
 
+        updateCampaignTarget();
+
         return;
 
     }
 
 
     container.innerHTML =
-        fundingGoals
-            .filter(
-                goal =>
-                    isActive(goal)
-            )
+        activeGoals
             .map(
                 goal => {
 
@@ -1833,17 +2007,13 @@ function renderFundingGoals(
                         <div class="funding-goal">
 
                             <div class="goal-icon">
-                                ${escapeHTML(
-                                    icon
-                                )}
+                                ${escapeHTML(icon)}
                             </div>
 
                             <div class="goal-content">
 
                                 <strong>
-                                    ${escapeHTML(
-                                        goalName
-                                    )}
+                                    ${escapeHTML(goalName)}
                                 </strong>
 
                                 ${
@@ -1879,11 +2049,18 @@ function renderFundingGoals(
             .join("");
 
 
-    /* =========================
-       CAMPAIGN TARGET
-    ========================= */
+    updateCampaignTarget();
 
-    const targetGoal =
+}
+
+
+/* =========================================================
+   UPDATE CAMPAIGN TARGET
+========================================================= */
+
+function updateCampaignTarget() {
+
+    campaignTargetUSD =
         fundingGoals
             .filter(
                 goal =>
@@ -1895,36 +2072,15 @@ function renderFundingGoals(
                     goal
                 ) => {
 
-                    const amount =
-                        Number(
-                            goal.amount
-                        ) || 0;
-
-
-                    const code =
-                        goal.currency ||
-                        "USD";
-
-
                     return total +
                         convertToEstimatedUSD(
-                            amount,
-                            code
+                            goal.amount,
+                            goal.currency
                         );
 
                 },
                 0
             );
-
-
-    if (
-        targetGoal > 0
-    ) {
-
-        campaignTargetUSD =
-            targetGoal;
-
-    }
 
 
     updateProgress();
@@ -2006,31 +2162,24 @@ function renderTransactions(
                             <div class="transaction-main">
 
                                 <div class="transaction-name">
-                                    ${escapeHTML(
-                                        name
-                                    )}
+                                    ${escapeHTML(name)}
                                 </div>
 
                                 ${
                                     message
                                         ? `
                                             <div class="transaction-message">
-                                                ${escapeHTML(
-                                                    message
-                                                )}
+                                                ${escapeHTML(message)}
                                             </div>
                                         `
                                         : ""
                                 }
 
                                 <div class="transaction-date">
-                                    ${escapeHTML(
-                                        date
-                                    )}
+                                    ${escapeHTML(date)}
                                 </div>
 
                             </div>
-
 
                             <div class="transaction-amount">
 
@@ -2059,13 +2208,43 @@ function renderTransactions(
 
 function sortTransactions() {
 
-    const mode =
-        sortSelectEwallet?.value ||
-        sortSelectKofi?.value ||
+    /*
+     * Use the currently visible tab's sort.
+     */
+
+    const activeContent =
+        document.querySelector(
+            ".funding-content.active"
+        );
+
+
+    let mode =
         "latest";
 
 
-    transactions.sort(
+    if (
+        activeContent?.dataset.method ===
+        "ewallet"
+    ) {
+
+        mode =
+            sortSelectEwallet?.value ||
+            "latest";
+
+    } else {
+
+        mode =
+            sortSelectKofi?.value ||
+            "latest";
+
+    }
+
+
+    const sortedTransactions =
+        [...transactions];
+
+
+    sortedTransactions.sort(
         (
             a,
             b
@@ -2077,14 +2256,10 @@ function sortTransactions() {
 
                 return (
                     new Date(
-                        getTransactionDate(
-                            b
-                        )
+                        getTransactionDate(b)
                     ) -
                     new Date(
-                        getTransactionDate(
-                            a
-                        )
+                        getTransactionDate(a)
                     )
                 );
 
@@ -2097,14 +2272,10 @@ function sortTransactions() {
 
                 return (
                     new Date(
-                        getTransactionDate(
-                            a
-                        )
+                        getTransactionDate(a)
                     ) -
                     new Date(
-                        getTransactionDate(
-                            b
-                        )
+                        getTransactionDate(b)
                     )
                 );
 
@@ -2115,23 +2286,15 @@ function sortTransactions() {
                 mode === "highest"
             ) {
 
-                const amountA =
-                    convertToEstimatedUSD(
-                        a.actualReceived,
-                        a.currency
-                    );
-
-
-                const amountB =
+                return (
                     convertToEstimatedUSD(
                         b.actualReceived,
                         b.currency
-                    );
-
-
-                return (
-                    amountB -
-                    amountA
+                    ) -
+                    convertToEstimatedUSD(
+                        a.actualReceived,
+                        a.currency
+                    )
                 );
 
             }
@@ -2160,14 +2323,29 @@ function sortTransactions() {
     );
 
 
+    /*
+     * Temporarily use sorted data for rendering.
+     */
+
+    const original =
+        transactions;
+
+
+    transactions =
+        sortedTransactions;
+
+
     renderTransactions(
         transactionListKofi
     );
 
-
     renderTransactions(
         transactionListEwallet
     );
+
+
+    transactions =
+        original;
 
 }
 
@@ -2209,6 +2387,8 @@ async function loadFundingData() {
         );
 
 
+        updateProgress();
+
         return;
 
     }
@@ -2245,10 +2425,6 @@ async function loadFundingData() {
         }
 
 
-        /* =========================
-           TRANSACTIONS
-        ========================= */
-
         transactions =
             Array.isArray(
                 data.transactions
@@ -2259,18 +2435,11 @@ async function loadFundingData() {
                         normalizeTransaction
                     )
                     .filter(
-                        transaction =>
-                            isReceived(
-                                transaction
-                            )
+                        isReceived
                     )
 
                 : [];
 
-
-        /* =========================
-           GOALS
-        ========================= */
 
         fundingGoals =
             Array.isArray(
@@ -2282,10 +2451,7 @@ async function loadFundingData() {
                         normalizeGoal
                     )
                     .filter(
-                        goal =>
-                            isActive(
-                                goal
-                            )
+                        isActive
                     )
 
                 : [];
@@ -2301,9 +2467,6 @@ async function loadFundingData() {
         );
 
 
-        sortTransactions();
-
-
         renderCurrencySummary(
             currencySummaryKofi
         );
@@ -2312,6 +2475,9 @@ async function loadFundingData() {
         renderCurrencySummary(
             currencySummaryEwallet
         );
+
+
+        sortTransactions();
 
 
         updateProgress();
@@ -2566,9 +2732,7 @@ function isReceived(
             "1",
             "received"
         ].includes(
-            value
-                .trim()
-                .toLowerCase()
+            value.trim().toLowerCase()
         );
 
     }
@@ -2612,9 +2776,7 @@ function isActive(
             "1",
             "active"
         ].includes(
-            value
-                .trim()
-                .toLowerCase()
+            value.trim().toLowerCase()
         );
 
     }
@@ -2647,13 +2809,13 @@ function fileToBase64(
                 () => {
 
                     const result =
-                        reader.result;
+                        String(
+                            reader.result
+                        );
 
 
                     const base64 =
-                        String(
-                            result
-                        ).split(",")[1];
+                        result.split(",")[1];
 
 
                     resolve(
@@ -2724,6 +2886,27 @@ function escapeHTML(
 
 function initializeFunding() {
 
+    console.log(
+        "[FLARE U Funding] Initialized"
+    );
+
+
+    /* =========================
+       FUNDING STATE
+    ========================= */
+
+    updateFundingState();
+
+
+    if (FUNDING_ENABLED) {
+
+        switchFundingMethod(
+            "kofi"
+        );
+
+    }
+
+
     /* =========================
        DEFAULT SORT
     ========================= */
@@ -2776,7 +2959,7 @@ function initializeFunding() {
                 if (element) {
 
                     element.textContent =
-                        "~$0";
+                        "Goal: ~$0";
 
                 }
 
