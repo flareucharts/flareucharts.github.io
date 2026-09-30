@@ -1,7 +1,11 @@
 /* =========================================================
    FLARE U GLOBAL
    FUNDING / DONATION
-   FIREBASE READ + GOOGLE APPS SCRIPT WRITE
+
+   KO-FI  : EMBED ONLY
+   E-WALLET:
+     Firebase READ
+     Google Apps Script WRITE
 ========================================================= */
 
 import {
@@ -45,7 +49,13 @@ let allFunding = [];
 let allGoals = [];
 let allExpenses = [];
 
-let campaignTargetUSD = 0;
+
+/*
+   E-Wallet transactions shown per batch.
+*/
+const TRANSACTIONS_PER_PAGE = 10;
+
+let transactionVisibleCount = TRANSACTIONS_PER_PAGE;
 
 
 /* =========================================================
@@ -143,26 +153,11 @@ function toNumber(value) {
 function escapeHTML(value) {
 
     return cleanString(value)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
@@ -255,9 +250,7 @@ function formatDate(value) {
             date.getTime()
         )
     ) {
-        return cleanString(
-            value
-        );
+        return cleanString(value);
     }
 
     return new Intl.DateTimeFormat(
@@ -327,9 +320,7 @@ function formatCurrency(
         toNumber(amount);
 
     if (!code) {
-        return String(
-            number
-        );
+        return String(number);
     }
 
     try {
@@ -566,9 +557,7 @@ function applyFundingState() {
 
         fundingContents.forEach(
             content => {
-
                 content.hidden = true;
-
             }
         );
 
@@ -615,6 +604,17 @@ function switchFundingMethod(
 
     currentMethod =
         method;
+
+
+    /*
+       Reset E-Wallet pagination whenever
+       the funding method changes.
+    */
+
+    if (method === "ewallet") {
+        transactionVisibleCount =
+            TRANSACTIONS_PER_PAGE;
+    }
 
 
     fundingMethodFilters.forEach(
@@ -703,34 +703,6 @@ function setupMethodTabs() {
 
 
 /* =========================================================
-   CAMPAIGN TARGET
-========================================================= */
-
-function calculateCampaignTarget() {
-
-    campaignTargetUSD = 0;
-
-
-    allGoals.forEach(
-        goal => {
-
-            if (!goal.active) {
-                return;
-            }
-
-            campaignTargetUSD +=
-                estimateUSD(
-                    goal.amount,
-                    goal.currency
-                );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
    VERIFIED FUNDING
 ========================================================= */
 
@@ -799,241 +771,6 @@ function methodMatches(
 
 
     return false;
-
-}
-
-
-/* =========================================================
-   RAISED
-========================================================= */
-
-function getRaisedUSD(
-    method
-) {
-
-    return getVerifiedFunding()
-        .filter(
-            item =>
-                methodMatches(
-                    item.method,
-                    method
-                )
-        )
-        .reduce(
-            (
-                total,
-                item
-            ) => {
-
-                return (
-                    total +
-                    estimateUSD(
-                        item.actualReceived,
-                        item.currency
-                    )
-                );
-
-            },
-            0
-        );
-
-}
-
-
-/* =========================================================
-   UPDATE CAMPAIGN
-========================================================= */
-
-function updateCampaign(
-    method
-) {
-
-    const suffix =
-        method === "kofi"
-            ? "Kofi"
-            : "Ewallet";
-
-
-    const raisedAmount =
-        document.getElementById(
-            `raisedAmount${suffix}`
-        );
-
-    const fundingTarget =
-        document.getElementById(
-            `fundingTarget${suffix}`
-        );
-
-    const progressFill =
-        document.getElementById(
-            `progressFill${suffix}`
-        );
-
-    const progressPercent =
-        document.getElementById(
-            `progressPercent${suffix}`
-        );
-
-
-    if (!raisedAmount) {
-        return;
-    }
-
-
-    const raised =
-        getRaisedUSD(
-            method
-        );
-
-
-    const target =
-        campaignTargetUSD;
-
-
-    raisedAmount.textContent =
-        `$${raised.toFixed(2)}`;
-
-
-    if (fundingTarget) {
-
-        fundingTarget.textContent =
-            `Goal: $${target.toFixed(2)}`;
-
-    }
-
-
-    let percentage = 0;
-
-
-    if (target > 0) {
-
-        percentage =
-            (raised / target) * 100;
-
-    }
-
-
-    percentage =
-        Math.min(
-            100,
-            Math.max(
-                0,
-                percentage
-            )
-        );
-
-
-    if (progressFill) {
-
-        progressFill.style.width =
-            `${percentage}%`;
-
-    }
-
-
-    if (progressPercent) {
-
-        progressPercent.textContent =
-            `${percentage.toFixed(1)}%`;
-
-    }
-
-}
-
-
-/* =========================================================
-   FUNDING GOALS
-========================================================= */
-
-function renderFundingGoals(
-    method
-) {
-
-    const suffix =
-        method === "kofi"
-            ? "Kofi"
-            : "Ewallet";
-
-
-    const container =
-        document.getElementById(
-            `goalList${suffix}`
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const activeGoals =
-        allGoals.filter(
-            goal =>
-                goal.active
-        );
-
-
-    if (!activeGoals.length) {
-
-        container.innerHTML = `
-            <div class="funding-empty">
-                No funding goals available.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        activeGoals
-            .map(
-                goal => `
-
-                    <div class="funding-goal">
-
-                        <div class="funding-goal-icon">
-                            ${escapeHTML(
-                                goal.icon
-                            )}
-                        </div>
-
-                        <div class="funding-goal-content">
-
-                            <div class="funding-goal-title">
-                                ${escapeHTML(
-                                    goal.goal
-                                )}
-                            </div>
-
-                            ${
-                                goal.description
-                                    ? `
-                                        <div class="funding-goal-description">
-                                            ${escapeHTML(
-                                                goal.description
-                                            )}
-                                        </div>
-                                      `
-                                    : ""
-                            }
-
-                        </div>
-
-                        <div class="funding-goal-amount">
-                            ${escapeHTML(
-                                formatCurrency(
-                                    goal.amount,
-                                    goal.currency
-                                )
-                            )}
-                        </div>
-
-                    </div>
-
-                `
-            )
-            .join("");
 
 }
 
@@ -1188,6 +925,12 @@ function renderTransactions(
     }
 
 
+    const moreButton =
+        document.getElementById(
+            `moreTransactions${suffix}`
+        );
+
+
     const transactions =
         getTransactions(
             method
@@ -1202,12 +945,52 @@ function renderTransactions(
             </div>
         `;
 
+        if (moreButton) {
+            moreButton.hidden = true;
+        }
+
         return;
+
     }
 
 
+    /*
+       Ko-fi no longer uses the FLARE U
+       transaction list.
+
+       If a Ko-fi transaction container
+       happens to exist in old HTML, hide it.
+    */
+
+    if (
+        method === "kofi"
+    ) {
+
+        container.innerHTML = "";
+
+        if (moreButton) {
+            moreButton.hidden = true;
+        }
+
+        return;
+
+    }
+
+
+    /*
+       E-Wallet:
+       show only the current visible batch.
+    */
+
+    const visibleTransactions =
+        transactions.slice(
+            0,
+            transactionVisibleCount
+        );
+
+
     container.innerHTML =
-        transactions
+        visibleTransactions
             .map(
                 transaction => {
 
@@ -1282,6 +1065,50 @@ function renderTransactions(
             )
             .join("");
 
+
+    /*
+       Show More + only when more transactions
+       are available.
+    */
+
+    if (moreButton) {
+
+        moreButton.hidden =
+            transactionVisibleCount >=
+            transactions.length;
+
+    }
+
+}
+
+
+/* =========================================================
+   MORE TRANSACTIONS
+========================================================= */
+
+const moreTransactionsEwallet =
+    document.getElementById(
+        "moreTransactionsEwallet"
+    );
+
+
+if (moreTransactionsEwallet) {
+
+    moreTransactionsEwallet.addEventListener(
+        "click",
+        () => {
+
+            transactionVisibleCount +=
+                TRANSACTIONS_PER_PAGE;
+
+
+            renderTransactions(
+                "ewallet"
+            );
+
+        }
+    );
+
 }
 
 
@@ -1310,6 +1137,21 @@ function renderCurrencySummary(
     }
 
 
+    /*
+       Ko-fi is handled entirely by Ko-fi.
+    */
+
+    if (
+        method === "kofi"
+    ) {
+
+        container.innerHTML = "";
+
+        return;
+
+    }
+
+
     const transactions =
         getVerifiedFunding()
             .filter(
@@ -1326,6 +1168,7 @@ function renderCurrencySummary(
         container.innerHTML = "";
 
         return;
+
     }
 
 
@@ -1409,6 +1252,31 @@ function setupSortDropdown(
         );
 
 
+    /*
+       No sort UI needed for Ko-fi.
+    */
+
+    if (
+        method === "kofi"
+    ) {
+
+        if (trigger) {
+            trigger.hidden = true;
+        }
+
+        if (dropdown) {
+            dropdown.hidden = true;
+        }
+
+        if (select) {
+            select.hidden = true;
+        }
+
+        return;
+
+    }
+
+
     if (
         !trigger ||
         !dropdown
@@ -1490,6 +1358,10 @@ function setupSortDropdown(
                         value;
 
 
+                    transactionVisibleCount =
+                        TRANSACTIONS_PER_PAGE;
+
+
                     syncSortDropdowns();
 
 
@@ -1498,10 +1370,6 @@ function setupSortDropdown(
                             "active"
                         );
 
-
-                    renderTransactions(
-                        "kofi"
-                    );
 
                     renderTransactions(
                         "ewallet"
@@ -1529,12 +1397,12 @@ function setupSortDropdown(
                     "latest";
 
 
+                transactionVisibleCount =
+                    TRANSACTIONS_PER_PAGE;
+
+
                 syncSortDropdowns();
 
-
-                renderTransactions(
-                    "kofi"
-                );
 
                 renderTransactions(
                     "ewallet"
@@ -1554,74 +1422,67 @@ function setupSortDropdown(
 
 function syncSortDropdowns() {
 
-    [
-        "Kofi",
-        "Ewallet"
-    ].forEach(
-        suffix => {
-
-            const label =
-                document.getElementById(
-                    `sortLabel${suffix}`
-                );
-
-            const select =
-                document.getElementById(
-                    `sortSelect${suffix}`
-                );
-
-            const dropdown =
-                document.getElementById(
-                    `sortDropdown${suffix}`
-                );
+    const suffix = "Ewallet";
 
 
-            if (select) {
+    const label =
+        document.getElementById(
+            `sortLabel${suffix}`
+        );
 
-                select.value =
-                    currentSort;
+    const select =
+        document.getElementById(
+            `sortSelect${suffix}`
+        );
 
-            }
-
-
-            if (!dropdown) {
-                return;
-            }
-
-
-            const options =
-                dropdown.querySelectorAll(
-                    "[data-sort]"
-                );
+    const dropdown =
+        document.getElementById(
+            `sortDropdown${suffix}`
+        );
 
 
-            options.forEach(
-                option => {
+    if (select) {
 
-                    const active =
-                        option.dataset.sort ===
-                        currentSort;
+        select.value =
+            currentSort;
 
-
-                    option.classList.toggle(
-                        "active",
-                        active
-                    );
+    }
 
 
-                    if (
-                        active &&
-                        label
-                    ) {
+    if (!dropdown) {
+        return;
+    }
 
-                        label.textContent =
-                            option.textContent
-                                .trim();
 
-                    }
+    const options =
+        dropdown.querySelectorAll(
+            "[data-sort]"
+        );
 
-                }
+
+    options.forEach(
+        option => {
+
+            const active =
+                option.dataset.sort ===
+                currentSort;
+
+
+            option.classList.toggle(
+                "active",
+                active
             );
+
+
+            if (
+                active &&
+                label
+            ) {
+
+                label.textContent =
+                    option.textContent.trim();
+
+            }
 
         }
     );
@@ -1746,13 +1607,13 @@ const copyPaymentBtn =
 
 const paymentInfo = {
 
-qris: {
-    value: "QRIS",
-    logo: "../images/qris.png",
-    alt: "QRIS"
-}, 
+    qris: {
+        value: "QRIS",
+        logo: "../images/qris.png",
+        alt: "QRIS"
+    },
 
-other: {
+    other: {
         value: "Other",
         logo: "../images/other.png",
         alt: "Other Payment"
@@ -1792,6 +1653,7 @@ function updatePaymentDestination() {
         }
 
         return;
+
     }
 
 
@@ -1914,18 +1776,16 @@ if (
                     if (paymentMethodLabel) {
 
                         paymentMethodLabel.textContent =
-                            option.textContent
-                                .trim();
+                            option.textContent.trim();
 
                     }
 
 
                     options.forEach(
                         item =>
-                            item.classList
-                                .remove(
-                                    "active"
-                                )
+                            item.classList.remove(
+                                "active"
+                            )
                     );
 
 
@@ -1964,8 +1824,7 @@ if (copyPaymentBtn) {
             const text =
                 destinationContent
                     ? cleanString(
-                        destinationContent
-                            .textContent
+                        destinationContent.textContent
                     )
                     : "";
 
@@ -2109,18 +1968,16 @@ if (
                     if (currencyLabel) {
 
                         currencyLabel.textContent =
-                            option.textContent
-                                .trim();
+                            option.textContent.trim();
 
                     }
 
 
                     options.forEach(
                         item =>
-                            item.classList
-                                .remove(
-                                    "active"
-                                )
+                            item.classList.remove(
+                                "active"
+                            )
                     );
 
 
@@ -2640,12 +2497,6 @@ async function submitSupportToAppsScript() {
     );
 
 
-    /*
-       IMPORTANT:
-
-       Apps Script receives this JSON body.
-    */
-
     const response =
         await fetch(
             APPS_SCRIPT_URL,
@@ -2986,38 +2837,14 @@ if (
 
 function renderAll() {
 
-    calculateCampaignTarget();
-
-
-    updateCampaign(
-        "kofi"
-    );
-
-    updateCampaign(
-        "ewallet"
-    );
-
-
-    renderFundingGoals(
-        "kofi"
-    );
-
-    renderFundingGoals(
-        "ewallet"
-    );
-
-
-    renderCurrencySummary(
-        "kofi"
-    );
+    /*
+       Ko-fi:
+       No FLARE U campaign calculation.
+       Ko-fi handles its own goal/progress.
+    */
 
     renderCurrencySummary(
         "ewallet"
-    );
-
-
-    renderTransactions(
-        "kofi"
     );
 
     renderTransactions(
@@ -3033,33 +2860,21 @@ function renderAll() {
 
 function showLoading() {
 
-    [
-        "goalListKofi",
-        "goalListEwallet",
-        "transactionListKofi",
-        "transactionListEwallet"
-    ].forEach(
-        id => {
-
-            const element =
-                document.getElementById(
-                    id
-                );
+    const ewalletTransactions =
+        document.getElementById(
+            "transactionListEwallet"
+        );
 
 
-            if (!element) {
-                return;
-            }
+    if (ewalletTransactions) {
 
+        ewalletTransactions.innerHTML = `
+            <div class="funding-loading">
+                Loading...
+            </div>
+        `;
 
-            element.innerHTML = `
-                <div class="funding-loading">
-                    Loading...
-                </div>
-            `;
-
-        }
-    );
+    }
 
 }
 
@@ -3240,58 +3055,21 @@ async function loadFundingData() {
         );
 
 
-        [
-            "goalListKofi",
-            "goalListEwallet"
-        ].forEach(
-            id => {
-
-                const element =
-                    document.getElementById(
-                        id
-                    );
+        const transactionList =
+            document.getElementById(
+                "transactionListEwallet"
+            );
 
 
-                if (!element) {
-                    return;
-                }
+        if (transactionList) {
 
+            transactionList.innerHTML = `
+                <div class="funding-error">
+                    Failed to load funding data.
+                </div>
+            `;
 
-                element.innerHTML = `
-                    <div class="funding-error">
-                        Failed to load funding goals.
-                    </div>
-                `;
-
-            }
-        );
-
-
-        [
-            "transactionListKofi",
-            "transactionListEwallet"
-        ].forEach(
-            id => {
-
-                const element =
-                    document.getElementById(
-                        id
-                    );
-
-
-                if (!element) {
-                    return;
-                }
-
-
-                element.innerHTML = `
-                    <div class="funding-error">
-                        Failed to load funding data.
-                    </div>
-                `;
-
-            }
-        );
+        }
 
     }
 
@@ -3307,10 +3085,10 @@ function initFunding() {
     setupMethodTabs();
 
 
-    setupSortDropdown(
-        "kofi"
-    );
-
+    /*
+       Only E-Wallet needs the FLARE U
+       transaction sorting system.
+    */
 
     setupSortDropdown(
         "ewallet"
