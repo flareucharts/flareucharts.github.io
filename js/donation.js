@@ -2994,29 +2994,34 @@ async function loadFundingData() {
 
     } catch (error) {
 
-        console.error(
-            "Failed to load Funding from Firebase:",
-            error
+    console.error(
+        "Failed to load Funding from Firebase:",
+        error
+    );
+
+    alert(
+        "Funding error:\n\n" +
+        (error?.message || String(error))
+    );
+
+
+    const transactionList =
+        document.getElementById(
+            "transactionListEwallet"
         );
 
 
-        const transactionList =
-            document.getElementById(
-                "transactionListEwallet"
-            );
+    if (transactionList) {
 
-
-        if (transactionList) {
-
-            transactionList.innerHTML = `
-                <div class="funding-error">
-                    Failed to load funding data.
-                </div>
-            `;
-
-        }
+        transactionList.innerHTML = `
+            <div class="funding-error">
+                Failed to load funding data.
+            </div>
+        `;
 
     }
+
+}
 
 }
 
