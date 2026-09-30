@@ -2211,6 +2211,38 @@ function escapeHTML(
 
 }
 
+// =========================
+// FUNDING TABS
+// =========================
+
+const fundingMethodFilters =
+    document.querySelectorAll(".funding-method-filter");
+
+const fundingMethodContents =
+    document.querySelectorAll(".funding-method-content");
+
+fundingMethodFilters.forEach(button => {
+    button.addEventListener("click", () => {
+
+        const target = button.dataset.method;
+
+        fundingMethodFilters.forEach(tab => {
+            tab.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        fundingMethodContents.forEach(content => {
+            const isActive =
+                content.id === `funding-${target}`;
+
+            content.hidden = !isActive;
+            content.classList.toggle("active", isActive);
+        });
+
+    });
+});
+
 
 /* =========================================================
    INITIALIZE
@@ -2294,3 +2326,4 @@ if (
     initializeFunding();
 
 }
+
