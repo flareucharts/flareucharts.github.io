@@ -1750,7 +1750,7 @@ qris: {
     value: "QRIS",
     logo: "../images/qris.png",
     alt: "QRIS"
-}
+}, 
 
 other: {
         value: "Other",
