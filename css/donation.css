@@ -208,6 +208,78 @@ line-height: 1.2;
     line-height: 1.65;
 }
 
+/* =========================================================
+   FUNDING METHOD TABS
+========================================================= */
+
+.funding-method-tabs {
+    display: flex;
+    width: 100%;
+    padding: 12px 0 10px;
+    background: #fff;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.funding-method-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.funding-method-filter {
+    position: relative;
+    flex: 1;
+    padding: 9px 16px;
+    border: none;
+    background: transparent;
+    color: #718083;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.funding-method-filter.active {
+    color: #5db7ab;
+}
+
+.funding-method-filter.active::after {
+    content: "";
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    height: 2px;
+    background: #5db7ab;
+    border-radius: 999px;
+}
+
+
+/* =========================================================
+   FUNDING CONTENT
+========================================================= */
+
+.funding-content[hidden] {
+    display: none;
+}
+
+
+/* =========================================================
+   KO-FI EMBED
+========================================================= */
+
+.kofi-embed {
+    width: 100%;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.kofi-embed iframe {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border: 0;
+}
+
 
 /* =========================
    PROGRESS
