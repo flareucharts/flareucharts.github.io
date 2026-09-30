@@ -215,7 +215,9 @@ button {
     margin: 0;
     padding: 0 12px;
 
-    border: 0;
+    border: none;
+
+    outline: none;
 
     background: transparent;
 
@@ -240,10 +242,10 @@ button {
         color 0.2s ease;
 }
 
-
-/* =========================================================
-   ACTIVE TAB
-========================================================= */
+.funding-method-filter:focus-visible {
+    outline: 2px solid var(--theme);
+    outline-offset: -2px;
+}
 
 .funding-method-filter.active {
     color: var(--theme-dark);
@@ -527,16 +529,12 @@ button {
 
     from {
         opacity: 0;
-
-        transform:
-            translateY(-8px);
+        transform: translateY(-8px);
     }
 
     to {
         opacity: 1;
-
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
 }
@@ -667,7 +665,7 @@ button {
 
 
 /* =========================================================
-   CUSTOM DROPDOWNS
+   CUSTOM DROPDOWN WRAPPERS
 ========================================================= */
 
 .payment-method-dropdown,
@@ -681,70 +679,7 @@ button {
    PAYMENT METHOD TRIGGER
 ========================================================= */
 
-.payment-method-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-    min-height: 45px;
-
-    padding: 10px 14px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 14px;
-
-    background: rgba(
-        255,
-        255,
-        255,
-        0.85
-    );
-
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-
-    box-shadow:
-        0 8px 20px rgba(
-            0,
-            0,
-            0,
-            0.08
-        ),
-        inset 0 1px rgba(
-            255,
-            255,
-            255,
-            0.4
-        );
-
-    color: #555;
-
-    font-size: 14px;
-    font-weight: 500;
-
-    text-align: left;
-
-    transition:
-        border-color 0.2s ease,
-        background 0.2s ease;
-}
-
-.payment-method-trigger:hover {
-    background: rgba(
-        255,
-        255,
-        255,
-        0.95
-    );
-}
-
-
-/* =========================================================
-   CURRENCY TRIGGER
-========================================================= */
-
+.payment-method-trigger,
 .currency-trigger {
     display: flex;
     align-items: center;
@@ -759,29 +694,7 @@ button {
 
     border-radius: 14px;
 
-    background: rgba(
-        255,
-        255,
-        255,
-        0.85
-    );
-
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-
-    box-shadow:
-        0 8px 20px rgba(
-            0,
-            0,
-            0,
-            0.08
-        ),
-        inset 0 1px rgba(
-            255,
-            255,
-            255,
-            0.4
-        );
+    background: #fff;
 
     color: #555;
 
@@ -790,18 +703,30 @@ button {
 
     text-align: left;
 
+    outline: none;
+
     transition:
         border-color 0.2s ease,
-        background 0.2s ease;
+        background 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
+.payment-method-trigger:hover,
 .currency-trigger:hover {
-    background: rgba(
-        255,
-        255,
-        255,
-        0.95
-    );
+    background: #fcfefe;
+}
+
+.payment-method-trigger:focus-visible,
+.currency-trigger:focus-visible {
+    border-color: var(--theme);
+
+    box-shadow:
+        0 0 0 3px rgba(
+            145,
+            211,
+            202,
+            0.15
+        );
 }
 
 
@@ -832,64 +757,7 @@ button {
    PAYMENT METHOD MENU
 ========================================================= */
 
-.payment-method-menu {
-    position: absolute;
-
-    top: calc(100% + 8px);
-    left: 0;
-
-    z-index: 9999;
-
-    display: none;
-
-    width: 100%;
-    min-width: 190px;
-
-    padding: 8px;
-
-    border: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.5
-    );
-
-    border-radius: 18px;
-
-    background: rgba(
-        255,
-        255,
-        255,
-        0.85
-    );
-
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-
-    box-shadow:
-        0 12px 30px rgba(
-            0,
-            0,
-            0,
-            0.12
-        ),
-        inset 0 1px rgba(
-            255,
-            255,
-            255,
-            0.4
-        );
-}
-
-.payment-method-menu.active {
-    display: block;
-}
-
-
-/* =========================================================
-   CURRENCY MENU
-========================================================= */
-
+.payment-method-menu,
 .currency-menu {
     position: absolute;
 
@@ -909,7 +777,7 @@ button {
         255,
         255,
         255,
-        0.5
+        0.8
     );
 
     border-radius: 18px;
@@ -918,11 +786,11 @@ button {
         255,
         255,
         255,
-        0.85
+        0.96
     );
 
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
     box-shadow:
         0 12px 30px rgba(
@@ -930,87 +798,42 @@ button {
             0,
             0,
             0.12
-        ),
-        inset 0 1px rgba(
-            255,
-            255,
-            255,
-            0.4
         );
 }
 
+.payment-method-menu.active,
 .currency-menu.active {
     display: block;
 }
 
 
 /* =========================================================
-   PAYMENT METHOD OPTIONS
+   PAYMENT / CURRENCY OPTIONS
 ========================================================= */
 
-.payment-method-option {
-    display: flex;
-    align-items: center;
-
-    padding: 12px 14px;
-
-    margin: 2px 0;
-
-    border-radius: 10px;
-
-    color: #555;
-
-    font-size: 14px;
-    font-weight: 500;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-.payment-method-option:hover {
-    background: rgba(
-        0,
-        0,
-        0,
-        0.05
-    );
-}
-
-.payment-method-option.active {
-    background: rgba(
-        0,
-        0,
-        0,
-        0.06
-    );
-
-    color: #111;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   CURRENCY OPTIONS
-========================================================= */
-
+.payment-method-option,
 .currency-option {
     display: flex;
     align-items: center;
 
+    width: 100%;
+
     padding: 12px 14px;
 
     margin: 2px 0;
 
+    border: 0;
+
     border-radius: 10px;
+
+    background: transparent;
 
     color: #555;
 
     font-size: 14px;
     font-weight: 500;
+
+    text-align: left;
 
     cursor: pointer;
 
@@ -1019,6 +842,7 @@ button {
         color 0.2s ease;
 }
 
+.payment-method-option:hover,
 .currency-option:hover {
     background: rgba(
         0,
@@ -1028,6 +852,7 @@ button {
     );
 }
 
+.payment-method-option.active,
 .currency-option.active {
     background: rgba(
         0,
@@ -1062,43 +887,17 @@ button {
     align-items: center;
     justify-content: space-between;
 
+    width: auto;
     min-width: 150px;
     min-height: 38px;
 
     padding: 8px 12px;
 
-    border: 1px solid rgba(
-        255,
-        255,
-        255,
-        0.5
-    );
+    border: 1px solid var(--border);
 
-    border-radius: 14px;
+    border-radius: 12px;
 
-    background: rgba(
-        255,
-        255,
-        255,
-        0.85
-    );
-
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-
-    box-shadow:
-        0 8px 20px rgba(
-            0,
-            0,
-            0,
-            0.08
-        ),
-        inset 0 1px rgba(
-            255,
-            255,
-            255,
-            0.4
-        );
+    background: #fff;
 
     color: #555;
 
@@ -1107,17 +906,15 @@ button {
 
     text-align: left;
 
+    outline: none;
+
     transition:
-        background 0.2s ease;
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .sort-trigger:hover {
-    background: rgba(
-        255,
-        255,
-        255,
-        0.95
-    );
+    background: #fcfefe;
 }
 
 
@@ -1136,7 +933,9 @@ button {
 
     display: none;
 
+    width: max-content;
     min-width: 190px;
+    max-width: 240px;
 
     padding: 8px;
 
@@ -1144,7 +943,7 @@ button {
         255,
         255,
         255,
-        0.5
+        0.8
     );
 
     border-radius: 18px;
@@ -1153,11 +952,11 @@ button {
         255,
         255,
         255,
-        0.85
+        0.96
     );
 
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
     box-shadow:
         0 12px 30px rgba(
@@ -1165,12 +964,6 @@ button {
             0,
             0,
             0.12
-        ),
-        inset 0 1px rgba(
-            255,
-            255,
-            255,
-            0.4
         );
 }
 
@@ -1187,18 +980,28 @@ button {
     display: flex;
     align-items: center;
 
+    width: 100%;
+
     padding: 12px 14px;
 
     margin: 2px 0;
 
+    border: 0;
+
     border-radius: 10px;
+
+    background: transparent;
 
     color: #555;
 
     font-size: 14px;
     font-weight: 500;
 
+    text-align: left;
+
     cursor: pointer;
+
+    white-space: nowrap;
 
     transition:
         background 0.2s ease,
@@ -1506,6 +1309,7 @@ button {
    GOAL ICON
 ========================================================= */
 
+.funding-goal-icon,
 .goal-icon {
     display: grid;
     place-items: center;
@@ -1527,10 +1331,25 @@ button {
    GOAL CONTENT
 ========================================================= */
 
+.funding-goal-content,
 .goal-content {
     flex: 1;
 
     min-width: 0;
+}
+
+.funding-goal-title {
+    margin-bottom: 3px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.funding-goal-description {
+    color: var(--muted);
+
+    font-size: 10px;
+    line-height: 1.4;
 }
 
 .goal-content strong {
@@ -1555,6 +1374,7 @@ button {
    GOAL AMOUNT
 ========================================================= */
 
+.funding-goal-amount,
 .goal-amount {
     flex-shrink: 0;
 
@@ -1569,6 +1389,9 @@ button {
    DATA STATES
 ========================================================= */
 
+.funding-loading,
+.funding-error,
+.funding-empty,
 .data-loading,
 .data-error,
 .empty-state {
@@ -1581,6 +1404,7 @@ button {
     text-align: center;
 }
 
+.funding-error,
 .data-error {
     color: #a66;
 }
@@ -1616,12 +1440,20 @@ button {
     margin-bottom: 18px;
 }
 
+.currency-summary-item,
 .currency-total {
+    display: block;
+
     padding: 12px;
 
     border-radius: 13px;
 
     background: var(--funding-bg);
+
+    color: var(--text);
+
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .currency-total span {
@@ -1668,26 +1500,33 @@ button {
     flex-direction: column;
 }
 
+.funding-transaction,
 .transaction-item {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 12px;
+
     padding: 13px 0;
 
     border-bottom: 1px solid var(--border);
 }
 
+.funding-transaction:last-child,
 .transaction-item:last-child {
     border-bottom: 0;
 }
 
+.funding-transaction-main,
 .transaction-main {
-    display: block;
+    flex: 1;
 
     min-width: 0;
 }
 
+.funding-transaction-name,
 .transaction-name {
     margin: 0 0 3px;
-
-    max-width: 70%;
 
     overflow: hidden;
 
@@ -1698,23 +1537,14 @@ button {
     white-space: nowrap;
 }
 
+.funding-transaction-date,
 .transaction-date {
     color: var(--muted);
 
     font-size: 10px;
 }
 
-.transaction-amount {
-    flex-shrink: 0;
-
-    margin-left: auto;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    text-align: right;
-}
-
+.funding-transaction-note,
 .transaction-message {
     margin: 8px 0 0;
 
@@ -1730,6 +1560,18 @@ button {
     line-height: 1.45;
 
     word-break: break-word;
+}
+
+.funding-transaction-amount,
+.transaction-amount {
+    flex-shrink: 0;
+
+    margin-left: auto;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    text-align: right;
 }
 
 
@@ -1829,33 +1671,17 @@ button {
         padding-top: 0;
     }
 
-
     #funding .global-content {
         padding: 16px !important;
     }
-
 
     .funding-card {
         padding: 18px;
     }
 
-
     .campaign-card h2 {
         font-size: 22px;
     }
-
-
-    .currency-summary {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(
-                    0,
-                    1fr
-                )
-            );
-    }
-
 
     .funding-goal {
         gap: 10px;
@@ -1863,29 +1689,26 @@ button {
         padding: 12px;
     }
 
-
+    .funding-goal-icon,
     .goal-icon {
         width: 36px;
         height: 36px;
     }
 
-
-    .goal-content strong {
+    .funding-goal-title {
         font-size: 12px;
     }
 
-
+    .funding-goal-amount,
     .goal-amount {
         font-size: 12px;
     }
-
 
     .sort-trigger {
         min-width: 135px;
 
         font-size: 12px;
     }
-
 
     .transparency-toolbar {
         align-items: flex-start;
@@ -1905,49 +1728,43 @@ button {
         padding-right: 12px;
     }
 
-
     .funding-method-filter {
         padding-left: 8px;
         padding-right: 8px;
     }
-
 
     .funding-method-filter.active::after {
         left: 8px;
         right: 8px;
     }
 
-
     .transparency-toolbar {
         flex-direction: column;
         align-items: stretch;
     }
-
 
     .sort-filter,
     .sort-trigger {
         width: 100%;
     }
 
-
     .sort-trigger {
         min-width: 0;
     }
-
 
     .sort-dropdown {
         left: 0;
         right: 0;
 
         width: 100%;
+        max-width: none;
     }
-
 
     .progress-heading {
         gap: 8px;
     }
 
-
+    .funding-goal-amount,
     .goal-amount {
         font-size: 11px;
     }
