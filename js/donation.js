@@ -5,11 +5,13 @@
 
 const FUNDING_ENABLED = true;
 
+
 /* =========================
    CONFIG
 ========================= */
 
-const API_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL";
+const API_URL =
+    "YOUR_APPS_SCRIPT_WEB_APP_URL";
 
 
 /* =========================
@@ -18,35 +20,127 @@ const API_URL = "YOUR_APPS_SCRIPT_WEB_APP_URL";
 ========================= */
 
 const estimatedRates = {
+
     USD: 1,
-    IDR: 1 / 17000,
-    THB: 1 / 32,
-    TWD: 1 / 31,
-    PHP: 1 / 58
+
+    IDR:
+        1 / 17000,
+
+    THB:
+        1 / 32,
+
+    TWD:
+        1 / 31,
+
+    PHP:
+        1 / 58
+
 };
 
 
-/* =========================
+/* =========================================================
+   FUNDING METHOD TABS
+========================================================= */
+
+const fundingMethodFilters =
+    document.querySelectorAll(
+        ".funding-method-filter"
+    );
+
+const fundingContents =
+    document.querySelectorAll(
+        ".funding-content"
+    );
+
+
+fundingMethodFilters.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const target =
+                button.dataset.method;
+
+
+            fundingMethodFilters.forEach(
+                tab => {
+
+                    tab.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            button.classList.add(
+                "active"
+            );
+
+
+            fundingContents.forEach(
+                content => {
+
+                    const isActive =
+                        content.id ===
+                        `funding-${target}`;
+
+
+                    content.hidden =
+                        !isActive;
+
+                    content.classList.toggle(
+                        "active",
+                        isActive
+                    );
+
+                }
+            );
+
+        }
+    );
+
+});
+
+
+/* =========================================================
    DOM ELEMENTS
+========================================================= */
+
+/* =========================
+   SUPPORT FORM
 ========================= */
 
 const supportBtn =
-    document.getElementById("supportBtn");
+    document.getElementById(
+        "supportBtn"
+    );
 
 const supportSection =
-    document.getElementById("supportSection");
+    document.getElementById(
+        "supportSection"
+    );
 
 const supportForm =
-    document.getElementById("supportForm");
+    document.getElementById(
+        "supportForm"
+    );
 
 const cancelSupport =
-    document.getElementById("cancelSupport");
+    document.getElementById(
+        "cancelSupport"
+    );
 
 const formSuccess =
-    document.getElementById("formSuccess");
+    document.getElementById(
+        "formSuccess"
+    );
 
 const successClose =
-    document.getElementById("successClose");
+    document.getElementById(
+        "successClose"
+    );
 
 
 /* =========================
@@ -54,19 +148,29 @@ const successClose =
 ========================= */
 
 const paymentMethod =
-    document.getElementById("paymentMethod");
+    document.getElementById(
+        "paymentMethod"
+    );
 
 const paymentMethodDropdown =
-    document.getElementById("paymentMethodDropdown");
+    document.getElementById(
+        "paymentMethodDropdown"
+    );
 
 const paymentMethodTrigger =
-    document.getElementById("paymentMethodTrigger");
+    document.getElementById(
+        "paymentMethodTrigger"
+    );
 
 const paymentMethodLabel =
-    document.getElementById("paymentMethodLabel");
+    document.getElementById(
+        "paymentMethodLabel"
+    );
 
 const paymentMethodMenu =
-    document.getElementById("paymentMethodMenu");
+    document.getElementById(
+        "paymentMethodMenu"
+    );
 
 const paymentMethodOptions =
     document.querySelectorAll(
@@ -109,7 +213,9 @@ const copyPaymentBtn =
 ========================= */
 
 const currency =
-    document.getElementById("currency");
+    document.getElementById(
+        "currency"
+    );
 
 const currencyDropdown =
     document.getElementById(
@@ -163,77 +269,141 @@ const messageCount =
 
 
 /* =========================
-   SORT
+   FUNDING DISPLAY
 ========================= */
 
-const sortFilter =
-    document.querySelector(
-        ".sort-filter"
-    );
-
-const sortTrigger =
+const raisedAmountKofi =
     document.getElementById(
-        "sortTrigger"
+        "raisedAmountKofi"
     );
 
-const sortLabel =
+const fundingTargetKofi =
     document.getElementById(
-        "sortLabel"
+        "fundingTargetKofi"
     );
 
-const sortDropdown =
+const progressPercentKofi =
     document.getElementById(
-        "sortDropdown"
+        "progressPercentKofi"
     );
 
-const sortOptions =
-    document.querySelectorAll(
-        ".sort-option"
-    );
-
-const sortSelect =
+const progressFillKofi =
     document.getElementById(
-        "sortSelect"
+        "progressFillKofi"
+    );
+
+
+const raisedAmountEwallet =
+    document.getElementById(
+        "raisedAmountEwallet"
+    );
+
+const fundingTargetEwallet =
+    document.getElementById(
+        "fundingTargetEwallet"
+    );
+
+const progressPercentEwallet =
+    document.getElementById(
+        "progressPercentEwallet"
+    );
+
+const progressFillEwallet =
+    document.getElementById(
+        "progressFillEwallet"
     );
 
 
 /* =========================
-   FUNDING DISPLAY
+   FUNDING DATA
 ========================= */
 
-const transactionList =
+const goalListKofi =
     document.getElementById(
-        "transactionList"
+        "goalListKofi"
     );
 
-const currencySummary =
+const goalListEwallet =
     document.getElementById(
-        "currencySummary"
+        "goalListEwallet"
     );
 
-const raisedAmount =
+
+const currencySummaryKofi =
     document.getElementById(
-        "raisedAmount"
+        "currencySummaryKofi"
     );
 
-const fundingTarget =
+const currencySummaryEwallet =
     document.getElementById(
-        "fundingTarget"
+        "currencySummaryEwallet"
     );
 
-const progressPercent =
+
+const transactionListKofi =
     document.getElementById(
-        "progressPercent"
+        "transactionListKofi"
     );
 
-const progressFill =
+const transactionListEwallet =
     document.getElementById(
-        "progressFill"
+        "transactionListEwallet"
     );
 
-const goalList =
+
+/* =========================
+   SORT
+========================= */
+
+const sortFilterKofi =
     document.getElementById(
-        "goalList"
+        "sortFilterKofi"
+    );
+
+const sortTriggerKofi =
+    document.getElementById(
+        "sortTriggerKofi"
+    );
+
+const sortDropdownKofi =
+    document.getElementById(
+        "sortDropdownKofi"
+    );
+
+const sortLabelKofi =
+    document.getElementById(
+        "sortLabelKofi"
+    );
+
+const sortSelectKofi =
+    document.getElementById(
+        "sortSelectKofi"
+    );
+
+
+const sortFilterEwallet =
+    document.getElementById(
+        "sortFilterEwallet"
+    );
+
+const sortTriggerEwallet =
+    document.getElementById(
+        "sortTriggerEwallet"
+    );
+
+const sortDropdownEwallet =
+    document.getElementById(
+        "sortDropdownEwallet"
+    );
+
+const sortLabelEwallet =
+    document.getElementById(
+        "sortLabelEwallet"
+    );
+
+const sortSelectEwallet =
+    document.getElementById(
+        "sortSelectEwallet"
     );
 
 
@@ -242,29 +412,17 @@ const goalList =
 ========================= */
 
 let transactions = [];
+
 let fundingGoals = [];
 
 let campaignTargetUSD = 0;
 
 
-/* =========================
+/* =========================================================
    PAYMENT INFORMATION
-========================= */
+========================================================= */
 
 const paymentInfo = {
-
-    paypal: {
-
-        logo:
-            "../images/pay/paypal.png",
-
-        alt:
-            "PayPal",
-
-        value:
-            "paypal@example.com"
-
-    },
 
     qris: {
 
@@ -279,6 +437,7 @@ const paymentInfo = {
 
     },
 
+
     gcash: {
 
         logo:
@@ -289,7 +448,9 @@ const paymentInfo = {
 
         value:
             "Scan the QR code above to send your support."
+
     },
+
 
     other: {
 
@@ -311,7 +472,9 @@ const paymentInfo = {
    CUSTOM DROPDOWN
 ========================================================= */
 
-function closeAllDropdowns(except = null) {
+function closeAllDropdowns(
+    except = null
+) {
 
     document
         .querySelectorAll(
@@ -321,11 +484,17 @@ function closeAllDropdowns(except = null) {
         )
         .forEach(dropdown => {
 
-            if (dropdown === except) return;
+            if (
+                dropdown === except
+            ) {
+                return;
+            }
+
 
             dropdown.classList.remove(
                 "active"
             );
+
 
             const menu =
                 dropdown.querySelector(
@@ -334,10 +503,13 @@ function closeAllDropdowns(except = null) {
                     ".sort-dropdown"
                 );
 
+
             if (menu) {
+
                 menu.classList.remove(
                     "active"
                 );
+
             }
 
         });
@@ -355,9 +527,13 @@ function toggleDropdown(
             "active"
         );
 
+
     closeAllDropdowns(
-        isOpen ? null : container
+        isOpen
+            ? null
+            : container
     );
+
 
     if (isOpen) {
 
@@ -400,6 +576,7 @@ if (
 
             event.stopPropagation();
 
+
             toggleDropdown(
                 paymentMethodDropdown,
                 paymentMethodMenu
@@ -411,54 +588,60 @@ if (
 }
 
 
-paymentMethodOptions.forEach(option => {
+paymentMethodOptions.forEach(
+    option => {
 
-    option.addEventListener(
-        "click",
-        event => {
+        option.addEventListener(
+            "click",
+            event => {
 
-            event.stopPropagation();
-
-            const value =
-                option.dataset.value;
-
-            const text =
-                option.textContent.trim();
+                event.stopPropagation();
 
 
-            paymentMethod.value =
-                value;
-
-            paymentMethodLabel.textContent =
-                text;
+                const value =
+                    option.dataset.value;
 
 
-            paymentMethodOptions.forEach(
-                item => {
-
-                    item.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
+                const text =
+                    option.textContent.trim();
 
 
-            option.classList.add(
-                "active"
-            );
+                paymentMethod.value =
+                    value;
 
 
-            closeAllDropdowns();
+                paymentMethodLabel.textContent =
+                    text;
 
-            updatePaymentDestination(
-                value
-            );
 
-        }
-    );
+                paymentMethodOptions.forEach(
+                    item => {
 
-});
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                option.classList.add(
+                    "active"
+                );
+
+
+                closeAllDropdowns();
+
+
+                updatePaymentDestination(
+                    value
+                );
+
+            }
+        );
+
+    }
+);
 
 
 /* =========================================================
@@ -477,6 +660,7 @@ if (
 
             event.stopPropagation();
 
+
             toggleDropdown(
                 currencyDropdown,
                 currencyMenu
@@ -488,129 +672,178 @@ if (
 }
 
 
-currencyOptions.forEach(option => {
+currencyOptions.forEach(
+    option => {
 
-    option.addEventListener(
+        option.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+
+                const value =
+                    option.dataset.value;
+
+
+                const text =
+                    option.textContent.trim();
+
+
+                currency.value =
+                    value;
+
+
+                currencyLabel.textContent =
+                    text;
+
+
+                currencyOptions.forEach(
+                    item => {
+
+                        item.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                option.classList.add(
+                    "active"
+                );
+
+
+                closeAllDropdowns();
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SORT DROPDOWN SETUP
+========================================================= */
+
+function setupSortDropdown(
+    filter,
+    trigger,
+    dropdown,
+    label,
+    select
+) {
+
+    if (
+        !filter ||
+        !trigger ||
+        !dropdown ||
+        !label ||
+        !select
+    ) {
+        return;
+    }
+
+
+    trigger.addEventListener(
         "click",
         event => {
 
             event.stopPropagation();
 
-            const value =
-                option.dataset.value;
 
-            const text =
-                option.textContent.trim();
+            toggleDropdown(
+                filter,
+                dropdown
+            );
 
-
-            currency.value =
-                value;
-
-            currencyLabel.textContent =
-                text;
+        }
+    );
 
 
-            currencyOptions.forEach(
-                item => {
+    dropdown
+        .querySelectorAll(
+            ".sort-option"
+        )
+        .forEach(option => {
 
-                    item.classList.remove(
+            option.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+
+                    const value =
+                        option.dataset.value;
+
+
+                    const text =
+                        option.textContent.trim();
+
+
+                    select.value =
+                        value;
+
+
+                    label.textContent =
+                        text;
+
+
+                    dropdown
+                        .querySelectorAll(
+                            ".sort-option"
+                        )
+                        .forEach(
+                            item => {
+
+                                item.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    option.classList.add(
                         "active"
                     );
+
+
+                    closeAllDropdowns();
+
+
+                    sortTransactions();
 
                 }
             );
 
-
-            option.classList.add(
-                "active"
-            );
-
-
-            closeAllDropdowns();
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   SORT DROPDOWN
-========================================================= */
-
-if (
-    sortTrigger &&
-    sortFilter &&
-    sortDropdown
-) {
-
-    sortTrigger.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            toggleDropdown(
-                sortFilter,
-                sortDropdown
-            );
-
-        }
-    );
+        });
 
 }
 
 
-sortOptions.forEach(option => {
-
-    option.addEventListener(
-        "click",
-        event => {
-
-            event.stopPropagation();
-
-            const value =
-                option.dataset.value;
-
-            const text =
-                option.textContent.trim();
+setupSortDropdown(
+    sortFilterKofi,
+    sortTriggerKofi,
+    sortDropdownKofi,
+    sortLabelKofi,
+    sortSelectKofi
+);
 
 
-            sortSelect.value =
-                value;
-
-            sortLabel.textContent =
-                text;
-
-
-            sortOptions.forEach(
-                item => {
-
-                    item.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-
-            option.classList.add(
-                "active"
-            );
-
-
-            closeAllDropdowns();
-
-            sortTransactions();
-
-        }
-    );
-
-});
+setupSortDropdown(
+    sortFilterEwallet,
+    sortTriggerEwallet,
+    sortDropdownEwallet,
+    sortLabelEwallet,
+    sortSelectEwallet
+);
 
 
 /* =========================================================
-   CLOSE DROPDOWNS WHEN CLICKING OUTSIDE
+   CLOSE DROPDOWNS OUTSIDE
 ========================================================= */
 
 document.addEventListener(
@@ -634,6 +867,7 @@ function updatePaymentDestination(
     const info =
         paymentInfo[method];
 
+
     if (!info) {
 
         paymentDestination.hidden =
@@ -648,17 +882,15 @@ function updatePaymentDestination(
         false;
 
 
-    /* =========================
-       LOGO
-    ========================= */
-
     if (info.logo) {
 
         paymentMethodLogo.hidden =
             false;
 
+
         paymentLogo.src =
             info.logo;
+
 
         paymentLogo.alt =
             info.alt || "";
@@ -668,18 +900,16 @@ function updatePaymentDestination(
         paymentMethodLogo.hidden =
             true;
 
+
         paymentLogo.src =
             "";
+
 
         paymentLogo.alt =
             "";
 
     }
 
-
-    /* =========================
-       DESTINATION
-    ========================= */
 
     destinationContent.textContent =
         info.value;
@@ -704,7 +934,10 @@ if (copyPaymentBtn) {
             const value =
                 copyPaymentBtn.dataset.value;
 
-            if (!value) return;
+
+            if (!value) {
+                return;
+            }
 
 
             try {
@@ -713,19 +946,25 @@ if (copyPaymentBtn) {
                     value
                 );
 
+
                 const originalText =
                     copyPaymentBtn.textContent;
+
 
                 copyPaymentBtn.textContent =
                     "Copied!";
 
 
-                setTimeout(() => {
+                setTimeout(
+                    () => {
 
-                    copyPaymentBtn.textContent =
-                        originalText;
+                        copyPaymentBtn.textContent =
+                            originalText;
 
-                }, 1500);
+                    },
+                    1500
+                );
+
 
             } catch (error) {
 
@@ -755,12 +994,18 @@ if (supportBtn) {
             supportSection.hidden =
                 false;
 
+
             formSuccess.hidden =
                 true;
 
+
             supportSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
+                behavior:
+                    "smooth",
+
+                block:
+                    "start"
+
             });
 
         }
@@ -782,6 +1027,7 @@ if (cancelSupport) {
             supportSection.hidden =
                 true;
 
+
             closeAllDropdowns();
 
         }
@@ -802,6 +1048,7 @@ if (paymentProof) {
 
             const file =
                 paymentProof.files[0];
+
 
             if (!file) {
 
@@ -854,11 +1101,9 @@ if (supportForm) {
             event.preventDefault();
 
 
-            /* =========================
-               VALIDATION
-            ========================= */
-
-            if (!supportForm.checkValidity()) {
+            if (
+                !supportForm.checkValidity()
+            ) {
 
                 supportForm.reportValidity();
 
@@ -870,8 +1115,10 @@ if (supportForm) {
             const selectedMethod =
                 paymentMethod.value;
 
+
             const selectedCurrency =
                 currency.value;
+
 
             const amount =
                 document.getElementById(
@@ -901,7 +1148,10 @@ if (supportForm) {
             }
 
 
-            if (!amount || Number(amount) <= 0) {
+            if (
+                !amount ||
+                Number(amount) <= 0
+            ) {
 
                 alert(
                     "Please enter a valid amount."
@@ -912,12 +1162,9 @@ if (supportForm) {
             }
 
 
-            /* =========================
-               PAYMENT PROOF
-            ========================= */
-
             const file =
                 paymentProof.files[0];
+
 
             if (!file) {
 
@@ -930,19 +1177,11 @@ if (supportForm) {
             }
 
 
-            /* =========================
-               DISPLAY NAME
-            ========================= */
-
             const displayName =
                 supportForm.querySelector(
                     'input[name="displayName"]:checked'
                 );
 
-
-            /* =========================
-               FORM DATA
-            ========================= */
 
             const formData = {
 
@@ -950,9 +1189,12 @@ if (supportForm) {
                     "submitFunding",
 
                 name:
-                    document.getElementById(
-                        "supporterName"
-                    ).value.trim(),
+                    document
+                        .getElementById(
+                            "supporterName"
+                        )
+                        .value
+                        .trim(),
 
                 method:
                     selectedMethod,
@@ -972,14 +1214,12 @@ if (supportForm) {
                         : "public",
 
                 proof:
-                    await fileToBase64(file)
+                    await fileToBase64(
+                        file
+                    )
 
             };
 
-
-            /* =========================
-               SUBMIT
-            ========================= */
 
             try {
 
@@ -993,6 +1233,7 @@ if (supportForm) {
 
                     submitButton.disabled =
                         true;
+
 
                     submitButton.textContent =
                         "Submitting...";
@@ -1009,8 +1250,10 @@ if (supportForm) {
                                 "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "text/plain;charset=utf-8"
+
                             },
 
                             body:
@@ -1036,25 +1279,20 @@ if (supportForm) {
                 }
 
 
-                /* =========================
-                   SUCCESS
-                ========================= */
-
                 supportForm.hidden =
                     true;
+
 
                 formSuccess.hidden =
                     false;
 
 
-                /* =========================
-                   RESET
-                ========================= */
-
                 supportForm.reset();
+
 
                 paymentMethod.value =
                     "";
+
 
                 paymentMethodLabel.textContent =
                     "Select payment method";
@@ -1073,6 +1311,7 @@ if (supportForm) {
 
                 currency.value =
                     "";
+
 
                 currencyLabel.textContent =
                     "Select currency";
@@ -1128,6 +1367,7 @@ if (supportForm) {
                     submitButton.disabled =
                         false;
 
+
                     submitButton.textContent =
                         "Submit Support";
 
@@ -1154,8 +1394,10 @@ if (successClose) {
             formSuccess.hidden =
                 true;
 
+
             supportForm.hidden =
                 false;
+
 
             supportSection.hidden =
                 true;
@@ -1184,14 +1426,21 @@ function formatCurrency(
         return new Intl.NumberFormat(
             "en-US",
             {
-                style: "currency",
-                currency: currencyCode,
+
+                style:
+                    "currency",
+
+                currency:
+                    currencyCode,
+
                 maximumFractionDigits:
                     currencyCode === "IDR"
                         ? 0
                         : 2
+
             }
         ).format(number);
+
 
     } catch (error) {
 
@@ -1233,9 +1482,16 @@ function formatDate(
     return date.toLocaleDateString(
         "en-US",
         {
-            year: "numeric",
-            month: "short",
-            day: "numeric"
+
+            year:
+                "numeric",
+
+            month:
+                "short",
+
+            day:
+                "numeric"
+
         }
     );
 
@@ -1272,8 +1528,12 @@ function convertToEstimatedUSD(
     const number =
         Number(amount) || 0;
 
+
     const rate =
-        estimatedRates[currencyCode] || 0;
+        estimatedRates[
+            currencyCode
+        ] || 0;
+
 
     return number * rate;
 
@@ -1288,7 +1548,10 @@ function updateProgress() {
 
     const totalUSD =
         transactions.reduce(
-            (total, transaction) => {
+            (
+                total,
+                transaction
+            ) => {
 
                 return total +
                     convertToEstimatedUSD(
@@ -1301,35 +1564,109 @@ function updateProgress() {
         );
 
 
-    raisedAmount.textContent =
-        `~$${Math.round(totalUSD).toLocaleString("en-US")}`;
+    const raisedText =
+        `~$${Math.round(
+            totalUSD
+        ).toLocaleString(
+            "en-US"
+        )}`;
 
 
-    if (campaignTargetUSD > 0) {
+    const targetText =
+        campaignTargetUSD > 0
+            ? `$${Math.round(
+                campaignTargetUSD
+            ).toLocaleString(
+                "en-US"
+            )}`
+            : "~$0";
 
-        const percentage =
+
+    if (raisedAmountKofi) {
+
+        raisedAmountKofi.textContent =
+            raisedText;
+
+    }
+
+
+    if (raisedAmountEwallet) {
+
+        raisedAmountEwallet.textContent =
+            raisedText;
+
+    }
+
+
+    if (fundingTargetKofi) {
+
+        fundingTargetKofi.textContent =
+            targetText;
+
+    }
+
+
+    if (fundingTargetEwallet) {
+
+        fundingTargetEwallet.textContent =
+            targetText;
+
+    }
+
+
+    let percentage = 0;
+
+
+    if (
+        campaignTargetUSD > 0
+    ) {
+
+        percentage =
             Math.min(
-                (totalUSD /
-                    campaignTargetUSD) *
-                    100,
+                (
+                    totalUSD /
+                    campaignTargetUSD
+                ) * 100,
                 100
             );
 
-
-        progressPercent.textContent =
-            `${Math.round(percentage)}%`;
+    }
 
 
-        progressFill.style.width =
+    const percentageText =
+        `${Math.round(
+            percentage
+        )}%`;
+
+
+    if (progressPercentKofi) {
+
+        progressPercentKofi.textContent =
+            percentageText;
+
+    }
+
+
+    if (progressPercentEwallet) {
+
+        progressPercentEwallet.textContent =
+            percentageText;
+
+    }
+
+
+    if (progressFillKofi) {
+
+        progressFillKofi.style.width =
             `${percentage}%`;
 
-    } else {
+    }
 
-        progressPercent.textContent =
-            "0%";
 
-        progressFill.style.width =
-            "0%";
+    if (progressFillEwallet) {
+
+        progressFillEwallet.style.width =
+            `${percentage}%`;
 
     }
 
@@ -1340,9 +1677,13 @@ function updateProgress() {
    RENDER CURRENCY SUMMARY
 ========================================================= */
 
-function renderCurrencySummary() {
+function renderCurrencySummary(
+    container
+) {
 
-    if (!currencySummary) return;
+    if (!container) {
+        return;
+    }
 
 
     const totals = {};
@@ -1354,13 +1695,16 @@ function renderCurrencySummary() {
             const code =
                 transaction.currency;
 
+
             const amount =
                 Number(
                     transaction.actualReceived
                 ) || 0;
 
 
-            if (!code) return;
+            if (!code) {
+                return;
+            }
 
 
             if (!totals[code]) {
@@ -1375,12 +1719,14 @@ function renderCurrencySummary() {
 
 
     const currencies =
-        Object.keys(totals);
+        Object.keys(
+            totals
+        );
 
 
     if (!currencies.length) {
 
-        currencySummary.innerHTML =
+        container.innerHTML =
             "";
 
         return;
@@ -1388,26 +1734,35 @@ function renderCurrencySummary() {
     }
 
 
-    currencySummary.innerHTML =
+    container.innerHTML =
         currencies
             .sort()
-            .map(code => {
+            .map(
+                code => {
 
-                return `
-                    <div class="currency-total">
-                        <span>${escapeHTML(code)}</span>
-                        <strong>
-                            ${escapeHTML(
-                                formatCurrency(
-                                    totals[code],
+                    return `
+                        <div class="currency-total">
+
+                            <span>
+                                ${escapeHTML(
                                     code
-                                )
-                            )}
-                        </strong>
-                    </div>
-                `;
+                                )}
+                            </span>
 
-            })
+                            <strong>
+                                ${escapeHTML(
+                                    formatCurrency(
+                                        totals[code],
+                                        code
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+                    `;
+
+                }
+            )
             .join("");
 
 }
@@ -1417,14 +1772,18 @@ function renderCurrencySummary() {
    RENDER FUNDING GOALS
 ========================================================= */
 
-function renderFundingGoals() {
+function renderFundingGoals(
+    container
+) {
 
-    if (!goalList) return;
+    if (!container) {
+        return;
+    }
 
 
     if (!fundingGoals.length) {
 
-        goalList.innerHTML = `
+        container.innerHTML = `
             <div class="empty-state">
                 No funding goals available.
             </div>
@@ -1435,69 +1794,88 @@ function renderFundingGoals() {
     }
 
 
-    goalList.innerHTML =
+    container.innerHTML =
         fundingGoals
-            .filter(goal => isActive(goal))
-            .map(goal => {
+            .filter(
+                goal =>
+                    isActive(goal)
+            )
+            .map(
+                goal => {
 
-                const icon =
-                    goal.icon || "💚";
-
-                const goalName =
-                    goal.goal || "";
-
-                const description =
-                    goal.description || "";
-
-                const amount =
-                    Number(goal.amount) || 0;
-
-                const code =
-                    goal.currency || "USD";
+                    const icon =
+                        goal.icon ||
+                        "💚";
 
 
-                return `
-                    <div class="funding-goal">
+                    const goalName =
+                        goal.goal ||
+                        "";
 
-                        <div class="goal-icon">
-                            ${escapeHTML(icon)}
+
+                    const description =
+                        goal.description ||
+                        "";
+
+
+                    const amount =
+                        Number(
+                            goal.amount
+                        ) || 0;
+
+
+                    const code =
+                        goal.currency ||
+                        "USD";
+
+
+                    return `
+                        <div class="funding-goal">
+
+                            <div class="goal-icon">
+                                ${escapeHTML(
+                                    icon
+                                )}
+                            </div>
+
+                            <div class="goal-content">
+
+                                <strong>
+                                    ${escapeHTML(
+                                        goalName
+                                    )}
+                                </strong>
+
+                                ${
+                                    description
+                                        ? `
+                                            <p>
+                                                ${escapeHTML(
+                                                    description
+                                                )}
+                                            </p>
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                            <div class="goal-amount">
+
+                                ${escapeHTML(
+                                    formatCurrency(
+                                        amount,
+                                        code
+                                    )
+                                )}
+
+                            </div>
+
                         </div>
+                    `;
 
-                        <div class="goal-content">
-
-                            <strong>
-                                ${escapeHTML(goalName)}
-                            </strong>
-
-                            ${
-                                description
-                                    ? `
-                                        <p>
-                                            ${escapeHTML(
-                                                description
-                                            )}
-                                        </p>
-                                    `
-                                    : ""
-                            }
-
-                        </div>
-
-                        <div class="goal-amount">
-
-                            ${escapeHTML(
-                                formatCurrency(
-                                    amount,
-                                    code
-                                )
-                            )}
-
-                        </div>
-
-                    </div>
-                `;
-
-            })
+                }
+            )
             .join("");
 
 
@@ -1507,15 +1885,26 @@ function renderFundingGoals() {
 
     const targetGoal =
         fundingGoals
-            .filter(goal => isActive(goal))
+            .filter(
+                goal =>
+                    isActive(goal)
+            )
             .reduce(
-                (total, goal) => {
+                (
+                    total,
+                    goal
+                ) => {
 
                     const amount =
-                        Number(goal.amount) || 0;
+                        Number(
+                            goal.amount
+                        ) || 0;
+
 
                     const code =
-                        goal.currency || "USD";
+                        goal.currency ||
+                        "USD";
+
 
                     return total +
                         convertToEstimatedUSD(
@@ -1528,20 +1917,12 @@ function renderFundingGoals() {
             );
 
 
-    if (targetGoal > 0) {
+    if (
+        targetGoal > 0
+    ) {
 
         campaignTargetUSD =
             targetGoal;
-
-
-        if (fundingTarget) {
-
-            fundingTarget.textContent =
-                `$${Math.round(
-                    targetGoal
-                ).toLocaleString("en-US")}`;
-
-        }
 
     }
 
@@ -1555,14 +1936,18 @@ function renderFundingGoals() {
    RENDER TRANSACTIONS
 ========================================================= */
 
-function renderTransactions() {
+function renderTransactions(
+    container
+) {
 
-    if (!transactionList) return;
+    if (!container) {
+        return;
+    }
 
 
     if (!transactions.length) {
 
-        transactionList.innerHTML = `
+        container.innerHTML = `
             <div class="empty-state">
                 No verified contributions yet.
             </div>
@@ -1573,89 +1958,96 @@ function renderTransactions() {
     }
 
 
-    transactionList.innerHTML =
+    container.innerHTML =
         transactions
-            .map(transaction => {
+            .map(
+                transaction => {
 
-                const name =
-                    transaction.displayName ===
-                    "anonymous"
+                    const name =
+                        transaction.displayName ===
+                        "anonymous"
 
-                        ? "Anonymous"
+                            ? "Anonymous"
 
-                        : (
-                            transaction.name ||
-                            "Supporter"
+                            : (
+                                transaction.name ||
+                                "Supporter"
+                            );
+
+
+                    const currencyCode =
+                        transaction.currency ||
+                        "USD";
+
+
+                    const amount =
+                        Number(
+                            transaction.actualReceived
+                        ) || 0;
+
+
+                    const message =
+                        transaction.message ||
+                        transaction.note ||
+                        "";
+
+
+                    const date =
+                        formatDate(
+                            getTransactionDate(
+                                transaction
+                            )
                         );
 
 
-                const currencyCode =
-                    transaction.currency ||
-                    "USD";
+                    return `
+                        <div class="transaction-item">
 
+                            <div class="transaction-main">
 
-                const amount =
-                    Number(
-                        transaction.actualReceived
-                    ) || 0;
+                                <div class="transaction-name">
+                                    ${escapeHTML(
+                                        name
+                                    )}
+                                </div>
 
+                                ${
+                                    message
+                                        ? `
+                                            <div class="transaction-message">
+                                                ${escapeHTML(
+                                                    message
+                                                )}
+                                            </div>
+                                        `
+                                        : ""
+                                }
 
-                const message =
-                    transaction.message ||
-                    transaction.note ||
-                    "";
+                                <div class="transaction-date">
+                                    ${escapeHTML(
+                                        date
+                                    )}
+                                </div>
 
-
-                const date =
-                    formatDate(
-                        getTransactionDate(
-                            transaction
-                        )
-                    );
-
-
-                return `
-                    <div class="transaction-item">
-
-                        <div class="transaction-main">
-
-                            <div class="transaction-name">
-                                ${escapeHTML(name)}
                             </div>
 
-                            ${
-                                message
-                                    ? `
-                                        <div class="transaction-message">
-                                            ${escapeHTML(
-                                                message
-                                            )}
-                                        </div>
-                                    `
-                                    : ""
-                            }
 
-                            <div class="transaction-date">
-                                ${escapeHTML(date)}
+                            <div class="transaction-amount">
+
+                                ${escapeHTML(
+                                    formatCurrency(
+                                        amount,
+                                        currencyCode
+                                    )
+                                )}
+
                             </div>
 
                         </div>
+                    `;
 
-                        <div class="transaction-amount">
-
-                            ${escapeHTML(
-                                formatCurrency(
-                                    amount,
-                                    currencyCode
-                                )
-                            )}
-
-                        </div>
-
-                    </div>
-                `;
-
-            })
+                }
+            )
             .join("");
 
 }
@@ -1668,47 +2060,67 @@ function renderTransactions() {
 function sortTransactions() {
 
     const mode =
-        sortSelect.value || "latest";
+        sortSelectEwallet?.value ||
+        sortSelectKofi?.value ||
+        "latest";
 
 
     transactions.sort(
-        (a, b) => {
+        (
+            a,
+            b
+        ) => {
 
-            if (mode === "latest") {
+            if (
+                mode === "latest"
+            ) {
 
                 return (
                     new Date(
-                        getTransactionDate(b)
+                        getTransactionDate(
+                            b
+                        )
                     ) -
                     new Date(
-                        getTransactionDate(a)
+                        getTransactionDate(
+                            a
+                        )
                     )
                 );
 
             }
 
 
-            if (mode === "oldest") {
+            if (
+                mode === "oldest"
+            ) {
 
                 return (
                     new Date(
-                        getTransactionDate(a)
+                        getTransactionDate(
+                            a
+                        )
                     ) -
                     new Date(
-                        getTransactionDate(b)
+                        getTransactionDate(
+                            b
+                        )
                     )
                 );
 
             }
 
 
-            if (mode === "highest") {
+            if (
+                mode === "highest"
+            ) {
 
                 const amountA =
                     convertToEstimatedUSD(
                         a.actualReceived,
                         a.currency
                     );
+
 
                 const amountB =
                     convertToEstimatedUSD(
@@ -1717,22 +2129,26 @@ function sortTransactions() {
                     );
 
 
-                return amountB - amountA;
+                return (
+                    amountB -
+                    amountA
+                );
 
             }
 
 
-            if (mode === "currency") {
+            if (
+                mode === "currency"
+            ) {
 
-                const currencyA =
-                    a.currency || "";
-
-                const currencyB =
-                    b.currency || "";
-
-
-                return currencyA.localeCompare(
-                    currencyB
+                return (
+                    (
+                        a.currency ||
+                        ""
+                    ).localeCompare(
+                        b.currency ||
+                        ""
+                    )
                 );
 
             }
@@ -1744,7 +2160,14 @@ function sortTransactions() {
     );
 
 
-    renderTransactions();
+    renderTransactions(
+        transactionListKofi
+    );
+
+
+    renderTransactions(
+        transactionListEwallet
+    );
 
 }
 
@@ -1755,7 +2178,8 @@ function sortTransactions() {
 
 async function loadFundingData() {
 
-    if (!API_URL ||
+    if (
+        !API_URL ||
         API_URL ===
         "YOUR_APPS_SCRIPT_WEB_APP_URL"
     ) {
@@ -1764,8 +2188,26 @@ async function loadFundingData() {
             "Funding API URL has not been configured."
         );
 
-        renderFundingGoals();
-        renderTransactions();
+
+        renderFundingGoals(
+            goalListKofi
+        );
+
+
+        renderFundingGoals(
+            goalListEwallet
+        );
+
+
+        renderTransactions(
+            transactionListKofi
+        );
+
+
+        renderTransactions(
+            transactionListEwallet
+        );
+
 
         return;
 
@@ -1813,7 +2255,9 @@ async function loadFundingData() {
             )
 
                 ? data.transactions
-                    .map(normalizeTransaction)
+                    .map(
+                        normalizeTransaction
+                    )
                     .filter(
                         transaction =>
                             isReceived(
@@ -1834,20 +2278,41 @@ async function loadFundingData() {
             )
 
                 ? data.goals
-                    .map(normalizeGoal)
+                    .map(
+                        normalizeGoal
+                    )
                     .filter(
                         goal =>
-                            isActive(goal)
+                            isActive(
+                                goal
+                            )
                     )
 
                 : [];
 
 
-        renderFundingGoals();
+        renderFundingGoals(
+            goalListKofi
+        );
+
+
+        renderFundingGoals(
+            goalListEwallet
+        );
+
 
         sortTransactions();
 
-        renderCurrencySummary();
+
+        renderCurrencySummary(
+            currencySummaryKofi
+        );
+
+
+        renderCurrencySummary(
+            currencySummaryEwallet
+        );
+
 
         updateProgress();
 
@@ -1860,9 +2325,9 @@ async function loadFundingData() {
         );
 
 
-        if (goalList) {
+        if (goalListKofi) {
 
-            goalList.innerHTML = `
+            goalListKofi.innerHTML = `
                 <div class="empty-state">
                     Unable to load funding goals.
                 </div>
@@ -1871,9 +2336,31 @@ async function loadFundingData() {
         }
 
 
-        if (transactionList) {
+        if (goalListEwallet) {
 
-            transactionList.innerHTML = `
+            goalListEwallet.innerHTML = `
+                <div class="empty-state">
+                    Unable to load funding goals.
+                </div>
+            `;
+
+        }
+
+
+        if (transactionListKofi) {
+
+            transactionListKofi.innerHTML = `
+                <div class="empty-state">
+                    Unable to load verified contributions.
+                </div>
+            `;
+
+        }
+
+
+        if (transactionListEwallet) {
+
+            transactionListEwallet.innerHTML = `
                 <div class="empty-state">
                     Unable to load verified contributions.
                 </div>
@@ -1901,21 +2388,25 @@ function normalizeTransaction(
             item.id ??
             "",
 
+
         submittedAt:
             item["Submitted At"] ??
             item.submittedAt ??
             item.date ??
             "",
 
+
         name:
             item.Name ??
             item.name ??
             "",
 
+
         method:
             item.Method ??
             item.method ??
             "",
+
 
         currency:
             String(
@@ -1923,6 +2414,7 @@ function normalizeTransaction(
                 item.currency ??
                 "USD"
             ).toUpperCase(),
+
 
         submittedAmount:
             Number(
@@ -1932,6 +2424,7 @@ function normalizeTransaction(
                 0
             ),
 
+
         actualReceived:
             Number(
                 item["Actual Received"] ??
@@ -1939,10 +2432,12 @@ function normalizeTransaction(
                 0
             ),
 
+
         proof:
             item.Proof ??
             item.proof ??
             "",
+
 
         note:
             item.Note ??
@@ -1951,6 +2446,7 @@ function normalizeTransaction(
             item.message ??
             "",
 
+
         message:
             item.Note ??
             item.note ??
@@ -1958,12 +2454,14 @@ function normalizeTransaction(
             item.message ??
             "",
 
+
         displayName:
             String(
                 item.Display ??
                 item.displayName ??
                 "public"
             ).toLowerCase(),
+
 
         received:
             item.Received ??
@@ -1990,20 +2488,24 @@ function normalizeGoal(
             item.id ??
             "",
 
+
         icon:
             item.Icon ??
             item.icon ??
             "💚",
+
 
         goal:
             item.Goal ??
             item.goal ??
             "",
 
+
         description:
             item.Description ??
             item.description ??
             "",
+
 
         amount:
             Number(
@@ -2012,12 +2514,14 @@ function normalizeGoal(
                 0
             ),
 
+
         currency:
             String(
                 item.Currency ??
                 item.currency ??
                 "USD"
             ).toUpperCase(),
+
 
         active:
             item.Active ??
@@ -2130,7 +2634,10 @@ function fileToBase64(
 ) {
 
     return new Promise(
-        (resolve, reject) => {
+        (
+            resolve,
+            reject
+        ) => {
 
             const reader =
                 new FileReader();
@@ -2143,18 +2650,15 @@ function fileToBase64(
                         reader.result;
 
 
-                    /*
-                       Remove:
-                       data:image/png;base64,
-                       etc.
-                    */
-
                     const base64 =
-                        String(result)
-                            .split(",")[1];
+                        String(
+                            result
+                        ).split(",")[1];
 
 
-                    resolve(base64);
+                    resolve(
+                        base64
+                    );
 
                 };
 
@@ -2162,7 +2666,9 @@ function fileToBase64(
             reader.onerror =
                 error => {
 
-                    reject(error);
+                    reject(
+                        error
+                    );
 
                 };
 
@@ -2211,38 +2717,6 @@ function escapeHTML(
 
 }
 
-// =========================
-// FUNDING TABS
-// =========================
-
-const fundingMethodFilters =
-    document.querySelectorAll(".funding-method-filter");
-
-const fundingMethodContents =
-    document.querySelectorAll(".funding-method-content");
-
-fundingMethodFilters.forEach(button => {
-    button.addEventListener("click", () => {
-
-        const target = button.dataset.method;
-
-        fundingMethodFilters.forEach(tab => {
-            tab.classList.remove("active");
-        });
-
-        button.classList.add("active");
-
-        fundingMethodContents.forEach(content => {
-            const isActive =
-                content.id === `funding-${target}`;
-
-            content.hidden = !isActive;
-            content.classList.toggle("active", isActive);
-        });
-
-    });
-});
-
 
 /* =========================================================
    INITIALIZE
@@ -2254,9 +2728,17 @@ function initializeFunding() {
        DEFAULT SORT
     ========================= */
 
-    if (sortSelect) {
+    if (sortSelectKofi) {
 
-        sortSelect.value =
+        sortSelectKofi.value =
+            "latest";
+
+    }
+
+
+    if (sortSelectEwallet) {
+
+        sortSelectEwallet.value =
             "latest";
 
     }
@@ -2266,36 +2748,76 @@ function initializeFunding() {
        INITIAL DISPLAY
     ========================= */
 
-    if (raisedAmount) {
+    [
+        raisedAmountKofi,
+        raisedAmountEwallet
+    ]
+        .forEach(
+            element => {
 
-        raisedAmount.textContent =
-            "~$0";
+                if (element) {
 
-    }
+                    element.textContent =
+                        "~$0";
 
+                }
 
-    if (fundingTarget) {
-
-        fundingTarget.textContent =
-            "~$0";
-
-    }
-
-
-    if (progressPercent) {
-
-        progressPercent.textContent =
-            "0%";
-
-    }
+            }
+        );
 
 
-    if (progressFill) {
+    [
+        fundingTargetKofi,
+        fundingTargetEwallet
+    ]
+        .forEach(
+            element => {
 
-        progressFill.style.width =
-            "0%";
+                if (element) {
 
-    }
+                    element.textContent =
+                        "~$0";
+
+                }
+
+            }
+        );
+
+
+    [
+        progressPercentKofi,
+        progressPercentEwallet
+    ]
+        .forEach(
+            element => {
+
+                if (element) {
+
+                    element.textContent =
+                        "0%";
+
+                }
+
+            }
+        );
+
+
+    [
+        progressFillKofi,
+        progressFillEwallet
+    ]
+        .forEach(
+            element => {
+
+                if (element) {
+
+                    element.style.width =
+                        "0%";
+
+                }
+
+            }
+        );
 
 
     /* =========================
@@ -2326,4 +2848,3 @@ if (
     initializeFunding();
 
 }
-
