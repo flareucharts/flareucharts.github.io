@@ -55,13 +55,9 @@ let campaignTargetUSD = 0;
 const EXCHANGE_RATES = {
 
     USD: 1,
-
     IDR: 1 / 17000,
-
     THB: 1 / 32,
-
     TWD: 1 / 31,
-
     PHP: 1 / 58
 
 };
@@ -1750,22 +1746,16 @@ const copyPaymentBtn =
 
 const paymentInfo = {
 
-    qris: {
-        value: "",
-        logo: "",
-        alt: "QRIS"
-    },
+qris: {
+    value: "QRIS",
+    logo: "../images/qris.png",
+    alt: "QRIS"
+}
 
-    gcash: {
-        value: "",
-        logo: "",
-        alt: "G-Cash"
-    },
-
-    other: {
-        value: "",
-        logo: "",
-        alt: "Other"
+other: {
+        value: "Other",
+        logo: "../images/other.png",
+        alt: "Other Payment"
     }
 
 };
