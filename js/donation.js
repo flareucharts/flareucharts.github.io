@@ -2921,26 +2921,6 @@ function renderGoals(method) {
 
 function renderAll() {
 
-    renderGoals(
-        "ewallet"
-    );
-
-    renderCurrencySummary(
-        "ewallet"
-    );
-
-    renderTransactions(
-        "ewallet"
-    );
-
-}
-
-/* =========================================================
-   RENDER ALL
-========================================================= */
-
-function renderAll() {
-
     /*
        Ko-fi:
        No FLARE U campaign calculation.
