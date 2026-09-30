@@ -723,29 +723,10 @@ function getVerifiedFunding() {
    NORMALIZE METHOD
 ========================================================= */
 
-function normalizeMethod(value) {
-
-    return cleanString(
-        value
-    )
-        .toLowerCase()
-        .replace(
-            /[\s_-]+/g,
-            ""
-        );
-
-}
-
-
 function methodMatches(
     fundingMethod,
     targetMethod
 ) {
-
-    const item =
-        normalizeMethod(
-            fundingMethod
-        );
 
     const target =
         normalizeMethod(
@@ -753,20 +734,34 @@ function methodMatches(
         );
 
 
+    /*
+       Ko-fi is NOT stored in FUNDING.
+       Therefore it never belongs to
+       the E-Wallet transparency data.
+    */
+
     if (
         target === "kofi"
     ) {
 
-        return item === "kofi";
+        return false;
 
     }
 
+
+    /*
+       Every verified record inside FUNDING
+       belongs to the E-Wallet system.
+
+       Payment Method itself can be:
+       QRIS, GCash, or any other method.
+    */
 
     if (
         target === "ewallet"
     ) {
 
-        return item === "ewallet";
+        return true;
 
     }
 
@@ -774,7 +769,6 @@ function methodMatches(
     return false;
 
 }
-
 
 /* =========================================================
    TRANSACTIONS
