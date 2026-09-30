@@ -35,7 +35,6 @@ let campaignTargetUSD = 0;
 
 /* =========================================================
    MANUAL EXCHANGE RATES
-   VALUE = USD EQUIVALENT
 ========================================================= */
 
 const EXCHANGE_RATES = {
@@ -96,9 +95,11 @@ function toNumber(value) {
     }
 
     if (typeof value === "number") {
+
         return Number.isFinite(value)
             ? value
             : 0;
+
     }
 
     const number =
@@ -134,7 +135,7 @@ function normalizeBoolean(value) {
         return true;
     }
 
-    const valueString =
+    const text =
         cleanString(value)
             .toLowerCase();
 
@@ -145,7 +146,7 @@ function normalizeBoolean(value) {
         "1",
         "received",
         "checked"
-    ].includes(valueString);
+    ].includes(text);
 }
 
 
@@ -481,32 +482,12 @@ function normalizeExpense(
 
 
 /* =========================================================
-   FUNDING CLOSE / OPEN
+   FUNDING OPEN / CLOSE
 ========================================================= */
 
 function applyFundingState() {
 
-    if (FUNDING_ENABLED) {
-
-        if (fundingClosed) {
-            fundingClosed.hidden = true;
-        }
-
-        if (fundingMethodTabs) {
-            fundingMethodTabs.hidden = false;
-        }
-
-        fundingContents.forEach(
-            content => {
-
-                content.hidden =
-                    content.id !==
-                    `funding-${currentMethod}`;
-
-            }
-        );
-
-    } else {
+    if (!FUNDING_ENABLED) {
 
         if (fundingClosed) {
             fundingClosed.hidden = false;
@@ -518,13 +499,116 @@ function applyFundingState() {
 
         fundingContents.forEach(
             content => {
-
                 content.hidden = true;
-
             }
         );
 
+        return;
     }
+
+
+    if (fundingClosed) {
+        fundingClosed.hidden = true;
+    }
+
+    if (fundingMethodTabs) {
+        fundingMethodTabs.hidden = false;
+    }
+
+    switchFundingMethod(
+        currentMethod
+    );
+}
+
+
+/* =========================================================
+   SWITCH FUNDING METHOD
+========================================================= */
+
+function switchFundingMethod(
+    method
+) {
+
+    method =
+        cleanString(method)
+            .toLowerCase();
+
+
+    if (
+        method !== "kofi" &&
+        method !== "ewallet"
+    ) {
+        method = "kofi";
+    }
+
+
+    currentMethod =
+        method;
+
+
+    /* =========================
+       ACTIVE TAB
+    ========================= */
+
+    fundingMethodFilters.forEach(
+        button => {
+
+            const buttonMethod =
+                cleanString(
+                    button.dataset.method
+                ).toLowerCase();
+
+            button.classList.toggle(
+                "active",
+                buttonMethod === method
+            );
+
+        }
+    );
+
+
+    /* =========================
+       SHOW ONLY CURRENT CONTENT
+    ========================= */
+
+    fundingContents.forEach(
+        content => {
+
+            const contentMethod =
+                cleanString(
+                    content.id
+                        .replace(
+                            "funding-",
+                            ""
+                        )
+                )
+                .toLowerCase();
+
+            content.hidden =
+                contentMethod !== method;
+
+        }
+    );
+
+
+    /* =========================
+       CLOSE E-WALLET FORM
+    ========================= */
+
+    const supportSection =
+        document.getElementById(
+            "supportSection"
+        );
+
+    if (
+        supportSection &&
+        method !== "ewallet"
+    ) {
+
+        supportSection.hidden = true;
+
+    }
+
 }
 
 
@@ -541,63 +625,9 @@ function setupMethodTabs() {
                 "click",
                 () => {
 
-                    const method =
-                        cleanString(
-                            button.dataset.method
-                        ).toLowerCase();
-
-                    if (!method) {
-                        return;
-                    }
-
-                    currentMethod =
-                        method;
-
-
-                    fundingMethodFilters
-                        .forEach(
-                            item => {
-
-                                item.classList.toggle(
-                                    "active",
-                                    item === button
-                                );
-
-                            }
-                        );
-
-
-                    fundingContents
-                        .forEach(
-                            content => {
-
-                                content.hidden =
-                                    content.id !==
-                                    `funding-${method}`;
-
-                            }
-                        );
-
-
-                    /*
-                       Close E-Wallet form
-                       when leaving the E-Wallet tab.
-                    */
-
-                    const supportSection =
-                        document.getElementById(
-                            "supportSection"
-                        );
-
-                    if (
-                        supportSection &&
-                        method !== "ewallet"
-                    ) {
-
-                        supportSection.hidden =
-                            true;
-
-                    }
+                    switchFundingMethod(
+                        button.dataset.method
+                    );
 
                 }
             );
@@ -606,7 +636,9 @@ function setupMethodTabs() {
     );
 
 
-    applyFundingState();
+    switchFundingMethod(
+        currentMethod
+    );
 }
 
 
@@ -617,6 +649,7 @@ function setupMethodTabs() {
 function calculateCampaignTarget() {
 
     campaignTargetUSD = 0;
+
 
     allGoals.forEach(
         goal => {
@@ -633,7 +666,6 @@ function calculateCampaignTarget() {
 
         }
     );
-
 }
 
 
@@ -653,14 +685,17 @@ function getVerifiedFunding() {
 
 
 /* =========================================================
-   METHOD MATCH
+   NORMALIZE METHOD
 ========================================================= */
 
 function normalizeMethod(value) {
 
     return cleanString(value)
         .toLowerCase()
-        .replace(/[\s_-]+/g, "");
+        .replace(
+            /[\s_-]+/g,
+            ""
+        );
 }
 
 
@@ -683,7 +718,6 @@ function methodMatches(
     if (target === "kofi") {
 
         return (
-            item === "kofi" ||
             item === "kofi"
         );
 
@@ -725,11 +759,13 @@ function getRaisedUSD(
                 item
             ) => {
 
-                return total +
+                return (
+                    total +
                     estimateUSD(
                         item.actualReceived,
                         item.currency
-                    );
+                    )
+                );
 
             },
             0
@@ -885,60 +921,57 @@ function renderFundingGoals(
     container.innerHTML =
         activeGoals
             .map(
-                goal => {
+                goal => `
 
-                    return `
-                        <div class="funding-goal">
+                    <div class="funding-goal">
 
-                            <div class="funding-goal-icon">
+                        <div class="funding-goal-icon">
+                            ${escapeHTML(
+                                goal.icon
+                            )}
+                        </div>
+
+                        <div class="funding-goal-content">
+
+                            <div class="funding-goal-title">
                                 ${escapeHTML(
-                                    goal.icon
+                                    goal.goal
                                 )}
                             </div>
 
-                            <div class="funding-goal-content">
-
-                                <div class="funding-goal-title">
-                                    ${escapeHTML(
-                                        goal.goal
-                                    )}
-                                </div>
-
-                                ${
-                                    goal.description
-                                        ? `
-                                            <div class="funding-goal-description">
-                                                ${escapeHTML(
-                                                    goal.description
-                                                )}
-                                            </div>
-                                          `
-                                        : ""
-                                }
-
-                            </div>
-
-                            <div class="funding-goal-amount">
-                                ${escapeHTML(
-                                    formatCurrency(
-                                        goal.amount,
-                                        goal.currency
-                                    )
-                                )}
-                            </div>
+                            ${
+                                goal.description
+                                    ? `
+                                        <div class="funding-goal-description">
+                                            ${escapeHTML(
+                                                goal.description
+                                            )}
+                                        </div>
+                                      `
+                                    : ""
+                            }
 
                         </div>
-                    `;
 
-                }
+                        <div class="funding-goal-amount">
+                            ${escapeHTML(
+                                formatCurrency(
+                                    goal.amount,
+                                    goal.currency
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+                `
             )
             .join("");
-
 }
 
 
 /* =========================================================
-   SORT TRANSACTIONS
+   TRANSACTIONS
 ========================================================= */
 
 function getTransactions(
@@ -1061,7 +1094,7 @@ function getDisplayName(
 
 
 /* =========================================================
-   TRANSACTIONS
+   RENDER TRANSACTIONS
 ========================================================= */
 
 function renderTransactions(
@@ -1128,6 +1161,7 @@ function renderTransactions(
 
 
                     return `
+
                         <div class="funding-transaction">
 
                             <div class="funding-transaction-main">
@@ -1171,12 +1205,12 @@ function renderTransactions(
                             </div>
 
                         </div>
+
                     `;
 
                 }
             )
             .join("");
-
 }
 
 
@@ -1256,25 +1290,20 @@ function renderCurrencySummary(
     container.innerHTML =
         Object.entries(summary)
             .map(
-                ([currency, amount]) => {
+                ([currency, amount]) => `
 
-                    return `
-                        <span class="currency-summary-item">
-                            ${escapeHTML(
-                                currency
-                            )}
-                            ${escapeHTML(
-                                amount.toLocaleString(
-                                    "en-US"
-                                )
-                            )}
-                        </span>
-                    `;
+                    <span class="currency-summary-item">
+                        ${escapeHTML(currency)}
+                        ${escapeHTML(
+                            amount.toLocaleString(
+                                "en-US"
+                            )
+                        )}
+                    </span>
 
-                }
+                `
             )
             .join("");
-
 }
 
 
@@ -1326,6 +1355,7 @@ function setupSortDropdown(
         event => {
 
             event.stopPropagation();
+
 
             document
                 .querySelectorAll(
@@ -1391,37 +1421,6 @@ function setupSortDropdown(
 
                     currentSort =
                         value;
-
-
-                    options.forEach(
-                        item =>
-                            item.classList
-                                .remove(
-                                    "active"
-                                )
-                    );
-
-
-                    option.classList.add(
-                        "active"
-                    );
-
-
-                    if (label) {
-
-                        label.textContent =
-                            option.textContent
-                                .trim();
-
-                    }
-
-
-                    if (select) {
-
-                        select.value =
-                            currentSort;
-
-                    }
 
 
                     syncSortDropdowns();
@@ -1670,9 +1669,9 @@ const copyPaymentBtn =
     );
 
 
-/*
-   Isi manual sesuai data pembayaranmu.
-*/
+/* =========================================================
+   PAYMENT INFORMATION
+========================================================= */
 
 const paymentInfo = {
 
@@ -1720,14 +1719,10 @@ function updatePaymentDestination() {
     ) {
 
         if (paymentDestination) {
-
-            paymentDestination.hidden =
-                true;
-
+            paymentDestination.hidden = true;
         }
 
         return;
-
     }
 
 
@@ -1780,6 +1775,10 @@ function updatePaymentDestination() {
 
 }
 
+
+/* =========================================================
+   PAYMENT METHOD DROPDOWN
+========================================================= */
 
 if (
     paymentMethodTrigger &&
@@ -1880,73 +1879,7 @@ if (
 
 
 /* =========================================================
-   COPY PAYMENT
-========================================================= */
-
-if (copyPaymentBtn) {
-
-    copyPaymentBtn.addEventListener(
-        "click",
-        async () => {
-
-            const method =
-                cleanString(
-                    paymentMethod?.value
-                );
-
-
-            const value =
-                paymentInfo[method]
-                    ?.value;
-
-
-            if (!value) {
-                return;
-            }
-
-
-            try {
-
-                await navigator.clipboard
-                    .writeText(value);
-
-
-                const original =
-                    copyPaymentBtn.textContent;
-
-
-                copyPaymentBtn.textContent =
-                    "Copied!";
-
-
-                setTimeout(
-                    () => {
-
-                        copyPaymentBtn.textContent =
-                            original;
-
-                    },
-                    1500
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Copy failed:",
-                    error
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   CURRENCY
+   CURRENCY DROPDOWN
 ========================================================= */
 
 const currency =
@@ -2185,6 +2118,53 @@ if (
 
 
 /* =========================================================
+   CLOSE DROPDOWNS WHEN CLICK OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    () => {
+
+        document
+            .querySelectorAll(
+                ".sort-dropdown.active"
+            )
+            .forEach(
+                dropdown => {
+
+                    dropdown.classList
+                        .remove(
+                            "active"
+                        );
+
+                }
+            );
+
+
+        if (paymentMethodMenu) {
+
+            paymentMethodMenu.classList
+                .remove(
+                    "active"
+                );
+
+        }
+
+
+        if (currencyMenu) {
+
+            currencyMenu.classList
+                .remove(
+                    "active"
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
    FORM SUBMIT
 ========================================================= */
 
@@ -2198,15 +2178,12 @@ if (supportForm) {
 
 
             /*
-               IMPORTANT:
+               READ = FIREBASE
 
-               Firebase is used for READ.
-
-               Apps Script is only needed here
-               if you want to submit the form
-               into Google Sheets.
+               WRITE TO GOOGLE SHEET
+               WILL BE CONNECTED HERE
+               THROUGH APPS SCRIPT.
             */
-
 
             alert(
                 "The funding form submission endpoint has not been configured yet."
@@ -2227,20 +2204,40 @@ function renderAll() {
     calculateCampaignTarget();
 
 
-    updateCampaign("kofi");
-    updateCampaign("ewallet");
+    updateCampaign(
+        "kofi"
+    );
+
+    updateCampaign(
+        "ewallet"
+    );
 
 
-    renderFundingGoals("kofi");
-    renderFundingGoals("ewallet");
+    renderFundingGoals(
+        "kofi"
+    );
+
+    renderFundingGoals(
+        "ewallet"
+    );
 
 
-    renderCurrencySummary("kofi");
-    renderCurrencySummary("ewallet");
+    renderCurrencySummary(
+        "kofi"
+    );
+
+    renderCurrencySummary(
+        "ewallet"
+    );
 
 
-    renderTransactions("kofi");
-    renderTransactions("ewallet");
+    renderTransactions(
+        "kofi"
+    );
+
+    renderTransactions(
+        "ewallet"
+    );
 
 }
 
@@ -2253,28 +2250,7 @@ function showLoading() {
 
     [
         "goalListKofi",
-        "goalListEwallet"
-    ].forEach(
-        id => {
-
-            const element =
-                document.getElementById(id);
-
-            if (element) {
-
-                element.innerHTML = `
-                    <div class="funding-loading">
-                        Loading...
-                    </div>
-                `;
-
-            }
-
-        }
-    );
-
-
-    [
+        "goalListEwallet",
         "transactionListKofi",
         "transactionListEwallet"
     ].forEach(
@@ -2283,15 +2259,15 @@ function showLoading() {
             const element =
                 document.getElementById(id);
 
-            if (element) {
-
-                element.innerHTML = `
-                    <div class="funding-loading">
-                        Loading...
-                    </div>
-                `;
-
+            if (!element) {
+                return;
             }
+
+            element.innerHTML = `
+                <div class="funding-loading">
+                    Loading...
+                </div>
+            `;
 
         }
     );
@@ -2450,10 +2426,6 @@ async function loadFundingData() {
         );
 
 
-        /*
-           Optional global access for debugging
-        */
-
         window.allFunding =
             allFunding;
 
@@ -2488,15 +2460,15 @@ async function loadFundingData() {
                 const element =
                     document.getElementById(id);
 
-                if (element) {
-
-                    element.innerHTML = `
-                        <div class="funding-error">
-                            Failed to load funding goals.
-                        </div>
-                    `;
-
+                if (!element) {
+                    return;
                 }
+
+                element.innerHTML = `
+                    <div class="funding-error">
+                        Failed to load funding goals.
+                    </div>
+                `;
 
             }
         );
@@ -2511,15 +2483,15 @@ async function loadFundingData() {
                 const element =
                     document.getElementById(id);
 
-                if (element) {
-
-                    element.innerHTML = `
-                        <div class="funding-error">
-                            Failed to load funding data.
-                        </div>
-                    `;
-
+                if (!element) {
+                    return;
                 }
+
+                element.innerHTML = `
+                    <div class="funding-error">
+                        Failed to load funding data.
+                    </div>
+                `;
 
             }
         );
@@ -2535,16 +2507,21 @@ async function loadFundingData() {
 
 function initFunding() {
 
-    applyFundingState();
-
     setupMethodTabs();
 
-    setupSortDropdown("kofi");
-    setupSortDropdown("ewallet");
+    setupSortDropdown(
+        "kofi"
+    );
+
+    setupSortDropdown(
+        "ewallet"
+    );
 
     syncSortDropdowns();
 
     updatePaymentDestination();
+
+    applyFundingState();
 
     loadFundingData();
 
