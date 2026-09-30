@@ -723,6 +723,12 @@ function getVerifiedFunding() {
    NORMALIZE METHOD
 ========================================================= */
 
+function normalizeMethod(value) {
+    return cleanString(value)
+        .toLowerCase()
+        .replace(/[\s_-]+/g, "");
+}
+
 function methodMatches(
     fundingMethod,
     targetMethod
