@@ -2966,46 +2966,6 @@ async function loadFundingData() {
 
 
         /* =================================================
-           FUNDING EXPENSES
-        ================================================= */
-
-        const expensesSnapshot =
-            await get(
-                ref(
-                    db,
-                    "fundingExpenses"
-                )
-            );
-
-
-        if (
-            expensesSnapshot.exists()
-        ) {
-
-            const firebaseData =
-                expensesSnapshot.val();
-
-
-            allExpenses =
-                Object.entries(
-                    firebaseData
-                )
-                .map(
-                    ([id, item]) =>
-                        normalizeExpense(
-                            item || {},
-                            id
-                        )
-                );
-
-        } else {
-
-            allExpenses = [];
-
-        }
-
-
-        /* =================================================
            DEBUG
         ================================================= */
 
@@ -3019,21 +2979,11 @@ async function loadFundingData() {
             allGoals
         );
 
-        console.log(
-            "FIREBASE FUNDING EXPENSES:",
-            allExpenses
-        );
-
-
         window.allFunding =
             allFunding;
 
         window.allFundingGoals =
             allGoals;
-
-        window.allFundingExpenses =
-            allExpenses;
-
 
         /* =================================================
            RENDER
