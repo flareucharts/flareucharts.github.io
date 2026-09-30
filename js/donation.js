@@ -2921,24 +2921,13 @@ function renderGoals(method) {
 
 function renderAll() {
 
-    /*
-       Ko-fi:
-       No FLARE U campaign calculation.
-       Ko-fi handles its own goal/progress.
-    */
+    renderEwalletProgress();
 
-    renderGoals(
-        "ewallet"
-    );
+    renderGoals("ewallet");
 
-    renderCurrencySummary(
-        "ewallet"
-    );
+    renderCurrencySummary("ewallet");
 
-    renderTransactions(
-        "ewallet"
-    );
-
+    renderTransactions("ewallet");
 }
 
 
