@@ -718,6 +718,64 @@ function getVerifiedFunding() {
 
 }
 
+function renderEwalletProgress() {
+
+    const verifiedFunding = getVerifiedFunding();
+
+    const raisedUSD = verifiedFunding
+        .filter(item => methodMatches(item.method, "ewallet"))
+        .reduce((total, item) => {
+            return total + estimateUSD(
+                item.actualReceived,
+                item.currency
+            );
+        }, 0);
+
+    const goalUSD = allGoals
+        .filter(goal => goal.active)
+        .reduce((total, goal) => {
+            return total + estimateUSD(
+                goal.amount,
+                goal.currency
+            );
+        }, 0);
+
+    const percent = goalUSD > 0
+        ? Math.min((raisedUSD / goalUSD) * 100, 100)
+        : 0;
+
+    const raisedElement =
+        document.getElementById("raisedAmountEwallet");
+
+    const goalElement =
+        document.getElementById("fundingTargetEwallet");
+
+    const fillElement =
+        document.getElementById("progressFillEwallet");
+
+    const percentElement =
+        document.getElementById("progressPercentEwallet");
+
+    if (raisedElement) {
+        raisedElement.textContent =
+            formatCurrency(raisedUSD, "USD");
+    }
+
+    if (goalElement) {
+        goalElement.textContent =
+            `Goal: ${formatCurrency(goalUSD, "USD")}`;
+    }
+
+    if (fillElement) {
+        fillElement.style.width = `${percent}%`;
+    }
+
+    if (percentElement) {
+        percentElement.textContent =
+            `${percent.toFixed(percent % 1 ? 1 : 0)}%`;
+    }
+}
+
 
 /* =========================================================
    NORMALIZE METHOD
