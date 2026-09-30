@@ -376,9 +376,10 @@ function normalizeFunding(
             "",
 
         method:
+            item["Payment Method"] ??
+            item.PaymentMethod ??
             item.Method ??
-            item.method ??
-            "",
+        item.method ?? "",
 
         currency:
             normalizeCurrency(
