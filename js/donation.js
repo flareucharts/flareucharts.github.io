@@ -3092,6 +3092,57 @@ function renderGoals(
 
 }
 
+function renderGoals(method) {
+    const suffix = method === "kofi" ? "Kofi" : "Ewallet";
+    const container = document.getElementById(`goalList${suffix}`);
+
+    if (!container) return;
+
+    const goals = allGoals.filter(goal => goal.active);
+
+    if (!goals.length) {
+        container.innerHTML = `
+            <div class="funding-empty">
+                No active funding goals yet.
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = goals.map(goal => `
+        <div class="funding-goal">
+            <div class="funding-goal-icon">
+                ${escapeHTML(goal.icon)}
+            </div>
+
+            <div class="funding-goal-content">
+                <div class="funding-goal-title">
+                    ${escapeHTML(goal.goal)}
+                </div>
+
+                ${
+                    goal.description
+                        ? `
+                            <div class="funding-goal-description">
+                                ${escapeHTML(goal.description)}
+                            </div>
+                          `
+                        : ""
+                }
+            </div>
+
+            <div class="funding-goal-amount">
+                ${escapeHTML(
+                    formatCurrency(
+                        goal.amount,
+                        goal.currency
+                    )
+                )}
+            </div>
+        </div>
+    `).join("");
+}
+
         /* =================================================
            RENDER
         ================================================= */
