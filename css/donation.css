@@ -1059,8 +1059,8 @@ button {
 .payment-method-logo img {
     display: block;
 
-    max-width: 100px;
-    max-height: 32px;
+    max-width: 200px;
+    max-height: 200px;
 
     object-fit: contain;
 }
