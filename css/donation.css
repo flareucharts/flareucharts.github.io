@@ -1052,36 +1052,29 @@ button {
 .payment-method-logo {
     display: flex;
     align-items: center;
-
+    justify-content: center;
     margin-bottom: 9px;
 }
 
 .payment-method-logo img {
     display: block;
-
-    max-width: 200px;
-    max-height: 200px;
-
+    max-width: 300px;
+    max-height: 300px;
     object-fit: contain;
 }
 
 #destinationContent {
     padding-right: 55px;
-
     font-size: 13px;
     font-weight: 600;
-
     word-break: break-word;
 }
 
 #copyPaymentBtn {
     position: absolute;
-
     right: 10px;
     bottom: 10px;
-
     padding: 5px 8px;
-
     border: 0;
 
     border-radius: 7px;
