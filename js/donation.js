@@ -65,8 +65,8 @@ let transactionVisibleCount = TRANSACTIONS_PER_PAGE;
 const EXCHANGE_RATES = {
 
     USD: 1,
-    IDR: 1 / 17000,
-    THB: 1 / 32,
+    IDR: 1 / 18000,
+    THB: 1 / 33,
     TWD: 1 / 31,
     PHP: 1 / 58
 
