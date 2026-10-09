@@ -20,7 +20,7 @@ window.discography = [
     melon: " ",
     genie: " ",
     bugs: " ",
-    tracks: " ",
+    tracks: "너의 계절이 차자와 (Bloom)|백일밤 (Hundred Nights) |False Alarm|Madly in Love|Window View|잠시 너를 잊았어 (Never Ever)",
     video: " "
   },
 
