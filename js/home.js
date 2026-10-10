@@ -34,13 +34,13 @@ const homePlaySheet =
 
 const bannerConfig = {
 
-  title: "WAY 2 U",
+  title: "너의 계절이 차자와 (Bloom)",
 
   subtitle:
     "Official MV Out Now!",
 
   albumSlug:
-    "youth-error"
+    "love-hood"
 
 };
 
