@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
        CONFIG
     ===================================================== */
 
-    const TARGET_SONG = "WAY 2 U";
+    const TARGET_SONG = "너의 계절이 차자와 (Bloom)";
 
 
     const CHARTS = [
