@@ -15,12 +15,12 @@
       "songs": [
         {
           "rank": 65,
-          "previous_rank": null,
+          "previous_rank": 64,
           "title": "너의 계절이 찾아와 (Bloom)",
           "artist": "FLARE U (플레어 유)",
           "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
           "likes": 893,
-          "rank_change": 0,
+          "rank_change": -1,
           "score": null,
           "track_id": null
         }
