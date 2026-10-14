@@ -28,7 +28,7 @@ function initHomeChart() {
        CONFIG
     ===================================================== */
 
-    const TARGET_SONG = "너의 계절이 차자와 (Bloom)";
+    const TARGET_SONG = "너의 계절이 찾아와 (Bloom)";
 
 
     const CHARTS = [
