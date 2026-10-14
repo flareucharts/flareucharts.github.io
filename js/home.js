@@ -40,7 +40,7 @@ const bannerConfig = {
     "Official MV Out Now!",
 
   albumSlug:
-    "love-hood"
+    "lovehood"
 
 };
 
