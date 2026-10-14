@@ -196,32 +196,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
+======/* =====================================================
        FIND TITLE SONG
     ===================================================== */
+
+    function normalizeTitle(value) {
+        return String(value || "")
+            .normalize("NFC")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLowerCase();
+    }
 
     function findSong(songs) {
 
         if (!Array.isArray(songs)) {
-
             return null;
-
         }
 
+        const target = normalizeTitle(TARGET_SONG);
 
-        return songs.find(song => {
-
-            const title =
-                String(song?.title || "")
-                    .trim()
-                    .toLowerCase();
-
-
-            return title ===
-                TARGET_SONG
-                    .toLowerCase();
-
-        }) || null;
+        return songs.find(song =>
+            normalizeTitle(song?.title) === target
+        ) || null;
 
     }
 
