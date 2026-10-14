@@ -1051,166 +1051,124 @@ def collect_melon_top100():
     )
 
 
+
 # =========================================================
-# 2. MELON HOT100
+# 2. MELON HOT100 — GUYSOME
 # =========================================================
 
-def collect_melon_hot100(
-    days,
-    key
-):
+def collect_melon_hot100(days, key):
 
     print()
     print("=" * 70)
-    print(
-        f"MELON HOT100 — {days} DAYS"
-    )
+    print(f"MELON HOT100 — {days} DAYS — GUYSOME")
     print("=" * 70)
 
     if days == 30:
-
         url = MELON_HOT100_30_URL
-
     elif days == 100:
-
         url = MELON_HOT100_100_URL
-
     else:
-
-        print(
-            f"Hot100 {days} Days tidak valid → SKIP"
-        )
-
+        print(f"Hot100 {days} Days tidak valid → SKIP")
         return
 
-    print(
-        "URL:",
-        url
-    )
+    print("URL:", url)
 
-    response = request_url(
-        url
-    )
+    response = request_url(url)
 
     if not response:
+        print("Request gagal → SKIP")
         return
 
-    print(
-        "STATUS:",
-        response.status_code
-    )
+    print("STATUS:", response.status_code)
 
     if response.status_code != 200:
-
         print("SKIP")
         return
 
-    soup = BeautifulSoup(
-        response.text,
-        "html.parser"
-    )
+    soup = BeautifulSoup(response.text, "html.parser")
 
     songs = []
 
-    rows = soup.select(
-        "tr.lst50, tr.lst100"
-    )
+    # Menggunakan selector Guysome, sama seperti realtime
+    rows = soup.select("tr")
 
-    print(
-        "ROWS:",
-        len(rows)
-    )
+    print("ROWS:", len(rows))
 
     for row in rows:
 
+        artist_el = row.select_one(
+            ".subject .singer"
+        )
+
         rank_el = row.select_one(
-            ".rank"
+            ".ranking span[class^='no']"
         )
 
         title_el = row.select_one(
-            ".rank01 span a"
+            ".subject p[title]"
         )
 
-        artist_el = row.select_one(
-            ".rank02 span a"
-        )
-
-        if not (
-            rank_el
-            and title_el
-            and artist_el
-        ):
-
+        if not (artist_el and rank_el and title_el):
             continue
 
-        artist = artist_el.get_text(
-            " ",
-            strip=True
-        )
+        artist = artist_el.get("title", "").strip()
 
-        if not (
-            "FLARE U" in artist.upper()
-            or "플레어 유" in artist
-        ):
-
+        if artist != TARGET_ARTIST:
             continue
 
         try:
-
-            rank = int(
-                rank_el.get_text(
-                    strip=True
-                )
-            )
-
-        except ValueError:
-
+            rank_text = rank_el.get_text(strip=True)
+            rank = int(rank_text)
+        except (ValueError, TypeError):
             continue
 
-        title = title_el.get_text(
-            " ",
-            strip=True
-        )
+        title = title_el.get("title", "").strip()
 
         cover_el = row.select_one(
-            ".image_typeAll img"
+            ".albumimg img"
         )
 
         cover = ""
 
         if cover_el:
-
             cover = (
-                cover_el.get("src")
-                or
-                cover_el.get(
-                    "data-original",
-                    ""
+                cover_el.get("src", "")
+                or cover_el.get("data-src", "")
+            ).strip()
+
+        likes_el = row.select_one(
+            ".count .like"
+        )
+
+        likes = None
+
+        if likes_el:
+            try:
+                likes = int(
+                    likes_el.get_text(strip=True).replace(",", "")
                 )
-            )
+            except (ValueError, TypeError):
+                pass
 
         songs.append(
             normalize_song(
                 rank=rank,
                 title=title,
                 artist=artist,
-                cover=cover
+                cover=cover,
+                likes=likes
             )
         )
 
-    print(
-        "FLARE U SONGS:",
-        len(songs)
-    )
+    print("FLARE U SONGS:", len(songs))
 
     save_snapshot(
         key=key,
         platform="Melon",
         chart=f"HOT100 ({days} Days)",
-        source="Melon",
+        source="Guysome",
         songs=songs
     )
-
 
 # =========================================================
 # 3. GUYSOME
