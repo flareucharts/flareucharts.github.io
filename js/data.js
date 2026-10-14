@@ -10,18 +10,18 @@ function makeSlug(title){
 window.discography = [
 {
     albumType: "2nd Mini Album",
-    title: "LOVE HOOD",
+    title: "LOVEHOOD",
     artist: "FLARE U",
     releaseDate: "2026-10-14",
     cover: "love-hood.png",
-    spotify: " ",
-    apple: " ",
-    youtubeMusic: " ",
-    melon: " ",
-    genie: " ",
-    bugs: " ",
+    spotify: "https://open.spotify.com/album/7kpbcgA7A1AUDSdV3P8Bzv?si=1QkP1l49R1Sjk5dS7PLzUw&utm_source=copy-link",
+    apple: "https://music.apple.com/id/album/lovehood-ep/6822125948?ls",
+    youtubeMusic: "https://music.youtube.com/playlist?list=OLAK5uy_lleQwWIz-iixrq0BJpdu4KB8CsBGQ442M&si=-82YXWZX2xbtM69H",
+    melon: "https://kko.to/2xElK8Wu4d",
+    genie: "http://genie.co.kr/GNQZ14",
+    bugs: "https://music.bugs.co.kr/album/4156224",
     tracks: "너의 계절이 차자와 (Bloom)|백일밤 (Hundred Nights) |False Alarm|Madly in Love|Window View|잠시 너를 잊았어 (Never Ever)",
-    video: "https://youtu.be/-XWS534vrqM?si=1wwLs1oBwIZcF8iw"
+    video: "https://youtu.be/pPjVu5ovYaM?si=c5s-_UR1CdoTqi92"
   },
 
 {
