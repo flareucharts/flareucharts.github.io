@@ -1,7 +1,7 @@
 console.log("HOME CHART JS LOADED");
 
-
-document.addEventListener("DOMContentLoaded", () => {
+function initHomeChart() {
+    console.log("HOME CHART INIT STARTED");
 
     /* =====================================================
        ELEMENTS
@@ -593,6 +593,15 @@ document.addEventListener("DOMContentLoaded", () => {
        START
     ===================================================== */
 
-    loadHomeChart();
+        loadHomeChart();
+}
 
-});
+if (document.readyState === "loading") {
+    document.addEventListener(
+        "DOMContentLoaded",
+        initHomeChart,
+        { once: true }
+    );
+} else {
+    initHomeChart();
+}
