@@ -78,12 +78,12 @@ MELON_TOP100_URL = (
 
 MELON_HOT100_30_URL = (
     "https://xn--o39an51b2re.com/"
-    "chart/melon/hot100-d100"
+    "chart/melon/hot100-d30"
 )
 
 MELON_HOT100_100_URL = (
     "https://xn--o39an51b2re.com/"
-    "chart/melon/hot100-d30"
+    "chart/melon/hot100-d100"
 )
 
 GUYSOME_BASE_URL = (
