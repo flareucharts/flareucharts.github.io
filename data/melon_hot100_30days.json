@@ -5424,7 +5424,18 @@
       "platform": "Melon",
       "chart": "HOT100 (30 Days)",
       "source": "Melon",
-      "songs": []
+      "songs": [
+        {
+          "rank": 73,
+          "previous_rank": null,
+          "title": “너의 계절이 차자와 (Bloom)",
+          "artist": "FLARE U (플레어유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        }]
     },
     {
       "snapshot_time": "2026-10-14T20:00:00+09:00",
@@ -5433,7 +5444,19 @@
       "platform": "Melon",
       "chart": "HOT100 (30 Days)",
       "source": "Melon",
-      "songs": []
+      "songs": [
+        {
+          "rank": 64,
+          "previous_rank": null,
+          "title": “너의 계절이 차자와 (Bloom",
+          "artist": "FLARE U (플레어유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": null,
+          "rank_change": +9,
+          "score": null,
+          "track_id": null
+        }
+]
     }
   ]
 }
