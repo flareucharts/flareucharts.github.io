@@ -3,7 +3,7 @@
   "chart": "HOT100 (30 Days)",
   "source": "Guysome",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-17T04:00:00+09:00",
+  "updated_at": "2026-10-17T07:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-10-14T21:00:00+09:00",
@@ -375,6 +375,27 @@
           "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
           "likes": 1348,
           "rank_change": 10,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-10-17T07:00:00+09:00",
+      "date": "2026-10-17",
+      "hour": 7,
+      "platform": "Melon",
+      "chart": "HOT100 (30 Days)",
+      "source": "Guysome",
+      "songs": [
+        {
+          "rank": 91,
+          "previous_rank": 77,
+          "title": "너의 계절이 찾아와 (Bloom)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": 1355,
+          "rank_change": -14,
           "score": null,
           "track_id": null
         }
