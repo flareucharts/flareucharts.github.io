@@ -3,7 +3,7 @@
   "chart": "Domestic",
   "source": "VIBE API",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-18T06:00:00+09:00",
+  "updated_at": "2026-10-18T08:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-23T10:00:00+09:00",
@@ -3253,6 +3253,49 @@
       "chart": "Domestic",
       "source": "VIBE API",
       "songs": []
+    },
+    {
+      "snapshot_time": "2026-10-18T08:00:00+09:00",
+      "date": "2026-10-18",
+      "hour": 8,
+      "platform": "VIBE",
+      "chart": "Domestic",
+      "source": "VIBE API",
+      "songs": [
+        {
+          "rank": null,
+          "previous_rank": null,
+          "title": "국내 급상승",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": "top100-realtime-DOMESTIC_RISING_NOW_V3"
+        },
+        {
+          "rank": null,
+          "previous_rank": null,
+          "title": "백일밤 (Hundred Nights)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": 108405520
+        },
+        {
+          "rank": null,
+          "previous_rank": null,
+          "title": "Madly in Love",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": 108405522
+        }
+      ]
     }
   ]
 }
