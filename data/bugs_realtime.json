@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "Bugs",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-17T07:00:00+09:00",
+  "updated_at": "2026-10-17T10:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -11153,6 +11153,15 @@
           "track_id": null
         }
       ]
+    },
+    {
+      "snapshot_time": "2026-10-17T10:00:00+09:00",
+      "date": "2026-10-17",
+      "hour": 10,
+      "platform": "Bugs",
+      "chart": "Real-time",
+      "source": "Bugs",
+      "songs": []
     }
   ]
 }
