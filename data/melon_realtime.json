@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "Guysome",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-20T23:00:00+09:00",
+  "updated_at": "2026-10-21T03:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T09:22:00.128199+09:00",
@@ -8823,6 +8823,15 @@
       "snapshot_time": "2026-10-20T23:00:00+09:00",
       "date": "2026-10-20",
       "hour": 23,
+      "platform": "Melon",
+      "chart": "Real-time",
+      "source": "Guysome",
+      "songs": []
+    },
+    {
+      "snapshot_time": "2026-10-21T03:00:00+09:00",
+      "date": "2026-10-21",
+      "hour": 3,
       "platform": "Melon",
       "chart": "Real-time",
       "source": "Guysome",
