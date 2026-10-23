@@ -3,7 +3,7 @@
   "chart": "TOP200",
   "source": "Genie",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-24T03:00:00+09:00",
+  "updated_at": "2026-10-24T06:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -10207,6 +10207,27 @@
         {
           "rank": 142,
           "previous_rank": null,
+          "title": "너의 계절이 찾아와 (Bloom)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/088/260/890/88260890_1791274298809_1_140x140.JPG/dims/resize/Q_80,0",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": ""
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-10-24T06:00:00+09:00",
+      "date": "2026-10-24",
+      "hour": 6,
+      "platform": "Genie",
+      "chart": "TOP200",
+      "source": "Genie",
+      "songs": [
+        {
+          "rank": 142,
+          "previous_rank": 142,
           "title": "너의 계절이 찾아와 (Bloom)",
           "artist": "FLARE U (플레어 유)",
           "cover": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/088/260/890/88260890_1791274298809_1_140x140.JPG/dims/resize/Q_80,0",
