@@ -3,7 +3,7 @@
   "chart": "Real-time",
   "source": "Bugs",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-24T09:00:00+09:00",
+  "updated_at": "2026-10-24T14:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-17T15:00:00+09:00",
@@ -11860,6 +11860,27 @@
           "cover": "https://image.bugsm.co.kr/album/images/50/41562/4156224.jpg?version=20261015005654",
           "likes": null,
           "rank_change": -41,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-10-24T14:00:00+09:00",
+      "date": "2026-10-24",
+      "hour": 14,
+      "platform": "Bugs",
+      "chart": "Real-time",
+      "source": "Bugs",
+      "songs": [
+        {
+          "rank": 99,
+          "previous_rank": 52,
+          "title": "너의 계절이 찾아와 (Bloom)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://image.bugsm.co.kr/album/images/50/41562/4156224.jpg?version=20261015005654",
+          "likes": null,
+          "rank_change": -47,
           "score": null,
           "track_id": null
         }
