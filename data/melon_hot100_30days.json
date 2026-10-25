@@ -3,7 +3,7 @@
   "chart": "HOT100 (30 Days)",
   "source": "Guysome",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-26T03:00:00+09:00",
+  "updated_at": "2026-10-26T06:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-10-14T21:00:00+09:00",
@@ -960,6 +960,71 @@
         {
           "rank": 100,
           "previous_rank": null,
+          "title": "False Alarm",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": 573,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-10-26T06:00:00+09:00",
+      "date": "2026-10-26",
+      "hour": 6,
+      "platform": "Melon",
+      "chart": "HOT100 (30 Days)",
+      "source": "Guysome",
+      "songs": [
+        {
+          "rank": 84,
+          "previous_rank": 84,
+          "title": "너의 계절이 찾아와 (Bloom)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": 1569,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 96,
+          "previous_rank": 96,
+          "title": "잠시 너를 잊었어 (Never Ever)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": 550,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 98,
+          "previous_rank": 98,
+          "title": "Window View",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": 589,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 99,
+          "previous_rank": 99,
+          "title": "Madly in Love",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
+          "likes": 586,
+          "rank_change": 0,
+          "score": null,
+          "track_id": null
+        },
+        {
+          "rank": 100,
+          "previous_rank": 100,
           "title": "False Alarm",
           "artist": "FLARE U (플레어 유)",
           "cover": "https://cdn.guyso.me/image/album/melon/14645816.jpg?v=1791972326935&size=80",
