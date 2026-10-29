@@ -3,7 +3,7 @@
   "chart": "Domestic",
   "source": "VIBE API",
   "artist": "FLARE U (플레어 유)",
-  "updated_at": "2026-10-30T01:00:00+09:00",
+  "updated_at": "2026-10-30T06:00:00+09:00",
   "snapshots": [
     {
       "snapshot_time": "2026-08-23T10:00:00+09:00",
@@ -4278,6 +4278,38 @@
       "snapshot_time": "2026-10-30T01:00:00+09:00",
       "date": "2026-10-30",
       "hour": 1,
+      "platform": "VIBE",
+      "chart": "Domestic",
+      "source": "VIBE API",
+      "songs": [
+        {
+          "rank": null,
+          "previous_rank": null,
+          "title": "국내 급상승",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": "top100-realtime-DOMESTIC_RISING_NOW_V3"
+        },
+        {
+          "rank": null,
+          "previous_rank": null,
+          "title": "너의 계절이 찾아와 (Bloom)",
+          "artist": "FLARE U (플레어 유)",
+          "cover": "",
+          "likes": null,
+          "rank_change": 0,
+          "score": null,
+          "track_id": 108405519
+        }
+      ]
+    },
+    {
+      "snapshot_time": "2026-10-30T06:00:00+09:00",
+      "date": "2026-10-30",
+      "hour": 6,
       "platform": "VIBE",
       "chart": "Domestic",
       "source": "VIBE API",
